@@ -2,7 +2,9 @@
 @import "partials/dark-mode-variables";
 
 body[data-theme="light"] {
+  background-color: $bg-light;
 }
 
 body[data-theme="dark"] {
+  background-color: $bg-dark;
 }
