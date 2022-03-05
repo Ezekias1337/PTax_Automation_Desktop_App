@@ -24,8 +24,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "build-css": "node-sass ./src/css/sass_css/styles.scss ./src/css/vanilla_css/styles.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\"",
     "eject": "react-scripts eject",
-    "app": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\""
+    "app": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\" \"npm run watch-css\""
   },
   "eslintConfig": {
     "extends": [
@@ -44,5 +46,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "node-sass": "^7.0.1",
+    "nodemon": "^2.0.15"
   }
 }

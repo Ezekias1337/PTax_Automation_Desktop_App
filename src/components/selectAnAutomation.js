@@ -1,6 +1,8 @@
+import "../css/vanilla_css/styles.css"
+
 export const SelectAnAutomation = () => {
     return (
-        <div>
+        <div className="test">
             On the select page
         </div>
     );

@@ -1,0 +1,8 @@
+@import "partials/light-mode-variables";
+@import "partials/dark-mode-variables";
+
+body[data-theme="light"] {
+}
+
+body[data-theme="dark"] {
+}
