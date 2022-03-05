@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "../src/images/PTax_Logo.png";
+import "./App.css";
+import { Button } from "reactstrap";
+import { HashRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { SelectAnAutomation } from "./components/selectAnAutomation";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <Link to={"/select-an-automation"}>
+            <Button className="mt-5">Start Automation</Button>
+          </Link>
+        </header>
+      </div>
+      <Routes>
+        <Route
+          path="/select-an-automation"
+          element={<SelectAnAutomation />}
+        ></Route>
+      </Routes>
+    </Router>
   );
 }
 
