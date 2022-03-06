@@ -1,10 +1,15 @@
 @import "partials/light-mode-variables";
 @import "partials/dark-mode-variables";
 
-body[data-theme="light"] {
+div[data-theme="light"] {
   background-color: $bg-light;
 }
 
-body[data-theme="dark"] {
+div[data-theme="dark"] {
   background-color: $bg-dark;
+}
+
+button.select-automation-button {
+  width: 100%;
+  height: 100%;
 }

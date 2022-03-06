@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow, Tray, nativeImage } = require("electron");
+const { app, BrowserWindow, Tray, nativeImage, ipcMain } = require("electron");
 const path = require("path");
 const Store = require("electron-store");
 
@@ -18,6 +18,8 @@ function createWindow() {
     transparent: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
+      contextIsolation: false,
+    nodeIntegration: true
     },
     icon: path.join(__dirname, "public/images/icon.ico"),
   });
@@ -87,9 +89,19 @@ app.on("window-all-closed", function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-const store = new Store();
+let store = new Store();
 
-/* store.set("userSettings.theme", "dark");
+/* ipcMain.on('save-color-theme', (event, arg) => {
+  console.log('heyyyy', arg); // prints "heyyyy ping"
 
-console.log("theme: ", store.get("userSettings.theme"))
-console.log(app.getPath("userData")); */
+//Save them to the store
+  //store.set('test', arg);
+  store.set("userSettings.theme", arg);
+
+  console.log('store', store.get('userSettings.theme'));
+}); */
+
+/*store.set("userSettings.theme", "dark"); */
+
+ //console.log("theme: ", store.get("userSettings.theme"))
+/*console.log(app.getPath("userData")); */
