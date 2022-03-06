@@ -1,16 +1,16 @@
 import "../css/vanilla_css/styles.css";
-import { listOfAutomations } from "../data/listOfAutomations";
+import { listOfSettings } from "../data/listOfSettings";
 import { Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-export const SelectAnAutomation = () => {
+export const Settings = () => {
   //console.log(store.get(userSettings.theme))
-  const arrayOfAutomations = [];
-  for (const item of Object.entries(listOfAutomations)) {
+  const arrayOfSettings = [];
+  for (const item of Object.entries(listOfSettings)) {
     console.log(item[1].name);
-    arrayOfAutomations.push(
+    arrayOfSettings.push(
       <div className="col col-6 mt-2">
         <Button className="select-automation-button">{item[1].name}</Button>
       </div>
@@ -19,12 +19,12 @@ export const SelectAnAutomation = () => {
 
   return (
     <div className="container">
-      <div className="row">{arrayOfAutomations}</div>
+      <div className="row">{arrayOfSettings}</div>
       <div className="row">
         <div className="col col-12 mt-5">
           <Link to={"/"}>
             <Button>
-              <FontAwesomeIcon icon={faHouse} />
+            <FontAwesomeIcon icon={faHouse} />
             </Button>
           </Link>
         </div>
