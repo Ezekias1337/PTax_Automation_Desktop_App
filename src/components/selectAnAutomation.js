@@ -1,32 +1,28 @@
 import "../css/vanilla_css/styles.css";
-import { listOfAutomations } from "../data/listOfAutomations";
+import { listOfAutomationsArrayExport } from "../data/listOfAutomations";
 import { Button } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { HomeButton } from "./buttons/homeButton";
 import { Link } from "react-router-dom";
 
 export const SelectAnAutomation = () => {
-  //console.log(store.get(userSettings.theme))
   const arrayOfAutomations = [];
-  for (const item of Object.entries(listOfAutomations)) {
-    console.log(item[1].name);
+
+  for (const item of listOfAutomationsArrayExport) {
     arrayOfAutomations.push(
-      <div className="col col-6 mt-2">
-        <Button className="select-automation-button">{item[1].name}</Button>
+      <div key={item.key} className="col col-6 mt-3">
+        <Link to={`/${item.name.split(" ").join("-").toLowerCase()}`}>
+          <Button className="select-automation-button">{item.name}</Button>
+        </Link>
       </div>
     );
   }
 
   return (
-    <div className="container">
+    <div className="container-fluid" data-theme="dark">
       <div className="row">{arrayOfAutomations}</div>
       <div className="row">
         <div className="col col-12 mt-5">
-          <Link to={"/"}>
-            <Button>
-              <FontAwesomeIcon icon={faHouse} />
-            </Button>
-          </Link>
+          <HomeButton></HomeButton>
         </div>
       </div>
     </div>

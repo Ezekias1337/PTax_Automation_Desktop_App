@@ -1,4 +1,4 @@
-export const listOfAutomations = {
+const listOfAutomations = {
   assessmentNotices: {
     key: 1,
     name: "Assessment Notices",
@@ -38,19 +38,34 @@ export const listOfAutomations = {
         key: 1,
         state: "California",
         subLocations: [
-          { key: 1, name: "Los Angeles", /* function: paymentConfirmations */ },
-          { key: 2, name: "Orange County", /* function: paymentConfirmations */ },
-          { key: 3, name: "Riverside County", /* function: paymentConfirmations */ },
-          { key: 4, name: "San Bernardino", /* function: paymentConfirmations */ },
-          { key: 5, name: "San Diego", /* function: paymentConfirmations */ },
-          { key: 4, name: "Ventura County", /* function: paymentConfirmations */ },
+          { key: 1, name: "Los Angeles" /* function: paymentConfirmations */ },
+          {
+            key: 2,
+            name: "Orange County" /* function: paymentConfirmations */,
+          },
+          {
+            key: 3,
+            name: "Riverside County" /* function: paymentConfirmations */,
+          },
+          {
+            key: 4,
+            name: "San Bernardino" /* function: paymentConfirmations */,
+          },
+          { key: 5, name: "San Diego" /* function: paymentConfirmations */ },
+          {
+            key: 4,
+            name: "Ventura County" /* function: paymentConfirmations */,
+          },
         ],
       },
       {
         key: 2,
         state: "Pennsylvania",
         subLocations: [
-          { key: 1, name: "Multnomah County", /* function: paymentConfirmations */ },
+          {
+            key: 1,
+            name: "Multnomah County" /* function: paymentConfirmations */,
+          },
         ],
       },
     ],
@@ -68,18 +83,23 @@ export const listOfAutomations = {
         key: 1,
         state: "California",
         subLocations: [
-          { key: 1, name: "Los Angeles [No Data Entry]", /* function: taxBills */ },
+          {
+            key: 1,
+            name: "Los Angeles [No Data Entry]" /* function: taxBills */,
+          },
         ],
       },
       {
         key: 2,
         state: "New York",
-        subLocations: [{ key: 1, name: "New York", /* function: taxBills */ }],
+        subLocations: [{ key: 1, name: "New York" /* function: taxBills */ }],
       },
       {
         key: 3,
         state: "Illinois",
-        subLocations: [{ key: 1, name: "Cook County", /* function: taxBills */ }],
+        subLocations: [
+          { key: 1, name: "Cook County" /* function: taxBills */ },
+        ],
       },
     ],
     operations: [
@@ -100,7 +120,7 @@ export const listOfAutomations = {
   },
   checkWebsiteURLs: {
     key: 9,
-    name: "Check all the links for Assessors/Collectors",
+    name: "Check Assessor and Collector Links",
     /* function: checkWebsiteURLs, */
   },
   pullParcelInformationFromRealquest: {
@@ -109,3 +129,11 @@ export const listOfAutomations = {
     WIP: true,
   },
 };
+
+const listOfAutomationsArray = [];
+
+for (const item of Object.entries(listOfAutomations)) {
+  listOfAutomationsArray.push(item[1]);
+}
+
+export const listOfAutomationsArrayExport = listOfAutomationsArray;

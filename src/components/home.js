@@ -3,17 +3,18 @@ import "../App.css";
 import "../css/vanilla_css/styles.css";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
-import React, { useState, useLayoutEffect } from "react";
+import React, { useLayoutEffect } from "react";
 import { HomeFunction } from "../functions/homeFunctions";
+import { SettingsButton } from "./buttons/settingsButton";
 
 export const Home = () => {
-  
   useLayoutEffect(() => {
-    HomeFunction();
+    const backgroundInterval = HomeFunction();
+    return function cleanup() {
+      clearInterval(backgroundInterval);
+    };
   });
-  
+
   return (
     <div className="Home">
       <header className="App-header home-body">
@@ -21,12 +22,7 @@ export const Home = () => {
         <Link to={"/select-an-automation"}>
           <Button className="mt-5">Start Automation</Button>
         </Link>
-
-        <Link to={"/settings"}>
-          <Button className="mt-3">
-            <FontAwesomeIcon icon={faGear} />
-          </Button>
-        </Link>
+        <SettingsButton></SettingsButton>
       </header>
     </div>
   );

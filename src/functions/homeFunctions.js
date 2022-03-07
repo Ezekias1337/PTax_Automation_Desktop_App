@@ -86,6 +86,7 @@ export const HomeFunction = () => {
   const causeHomeToAnimate = () => {
     const homeBackGround = document.getElementsByClassName("home-body")[0];
     const numberToDetermineBGPlacement = getRandomArbitrary(1, 72);
+    homeBackGround.classList.add("animation-started");
 
     if (numberToDetermineBGPlacement <= 8) {
       homeBackGround.dataset.animationName = "animate-to-top-left";
@@ -117,5 +118,6 @@ export const HomeFunction = () => {
     }
   };
 
-  setInterval(causeHomeToAnimate, 5500);
+  const backGroundAnimationInterval = setInterval(causeHomeToAnimate, 5500);
+  return backGroundAnimationInterval;
 };
