@@ -1,5 +1,6 @@
 import logo from "../../src/images/PTax_Logo.png";
 import "../App.css";
+import "../css/vanilla_css/styles.css";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
