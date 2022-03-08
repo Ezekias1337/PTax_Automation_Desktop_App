@@ -11,7 +11,7 @@ export const SelectAnAutomation = () => {
     arrayOfAutomations.push(
       <div key={item.key} className="col col-6 mt-3">
         <Link to={`/${item.name.split(" ").join("-").toLowerCase()}`}>
-          <Button className="select-automation-button">{item.name}</Button>
+          <Button className="full-width-button brown-button">{item.name}</Button>
         </Link>
       </div>
     );

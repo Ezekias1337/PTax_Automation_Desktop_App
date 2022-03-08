@@ -12,19 +12,21 @@ export const Settings = () => {
     console.log(item[1].name);
     arrayOfSettings.push(
       <div className="col col-6 mt-2">
-        <Button className="select-automation-button">{item[1].name}</Button>
+        <Button className="full-width-button brown-button">
+          {item[1].name}
+        </Button>
       </div>
     );
   }
 
   return (
-    <div className="container">
+    <div className="container-fluid" data-theme="dark">
       <div className="row">{arrayOfSettings}</div>
       <div className="row">
         <div className="col col-12 mt-5">
           <Link to={"/"}>
-            <Button>
-            <FontAwesomeIcon icon={faHouse} />
+            <Button className="brown-button">
+              <FontAwesomeIcon icon={faHouse} />
             </Button>
           </Link>
         </div>

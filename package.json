@@ -27,7 +27,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "build-css": "node-sass ./src/css/sass_css/styles.scss ./src/css/vanilla_css/styles.css",
+    "build-css": "node-sass ./src/css/sass_css/styles.scss ./src/css/vanilla_css/styles.css && node-sass ./src/css/sass_css/home.scss ./src/css/vanilla_css/home.css && node-sass ./src/css/sass_css/select-an-automation.scss ./src/css/vanilla_css/select-an-automation.css && node-sass ./src/css/sass_css/settings.scss ./src/css/vanilla_css/settings.css",
     "watch-css": "nodemon -e scss -x \"npm run build-css\"",
     "eject": "react-scripts eject",
     "app": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\" \"npm run watch-css\""
