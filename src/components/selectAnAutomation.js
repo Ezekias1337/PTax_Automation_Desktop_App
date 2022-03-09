@@ -1,4 +1,5 @@
 import "../css/vanilla_css/styles.css";
+import "../css/vanilla_css/select-an-automation.css"
 import { listOfAutomationsArrayExport } from "../data/listOfAutomations";
 import { Button } from "reactstrap";
 import { HomeButton } from "./buttons/homeButton";

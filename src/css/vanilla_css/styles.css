@@ -218,7 +218,8 @@ div[data-theme="light"] {
   background-color: #fcfcfc; }
   div[data-theme="light"] button.brown-button {
     background-color: #d4967d;
-    color: white; }
+    color: white;
+    border-radius: 1px solid #fcfcfc; }
   div[data-theme="light"] button.brown-button:hover {
     background-color: white;
     color: #d4967d;
@@ -228,11 +229,20 @@ div[data-theme="dark"] {
   background-color: #333333; }
   div[data-theme="dark"] button.brown-button {
     background-color: #d4967d;
-    color: #333333; }
+    color: #333333;
+    border-radius: 1px solid #333333; }
   div[data-theme="dark"] button.brown-button:hover {
     background-color: #333333;
     color: #d4967d;
     border: 1px solid #d4967d; }
+
+div#root {
+  width: 100vw;
+  height: 100vh; }
+
+div.container-fluid {
+  width: 100%;
+  height: 100%; }
 
 button.full-width-button {
   width: 100%;
