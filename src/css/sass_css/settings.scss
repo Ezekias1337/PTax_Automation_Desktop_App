@@ -1,11 +1,89 @@
 @import "variables/light-mode-variables";
 @import "variables/dark-mode-variables";
-
+@import "variables/common-variables";
 
 div[data-theme="light"] {
-  
+  .col-form-label {
+    color: $black !important;
+  }
+  .brown-input {
+    background-color: $brown;
+    color: $white;
+    border: 1px solid $bg-light;
+  }
+
+  .brown-input:hover {
+    background-color: $white;
+    color: $brown;
+    border: 1px solid $brown;
+    box-shadow: 0px 0px 10px $brown;
+  }
+  .brown-input:focus,
+  .brown-input:active,
+  .brown-input:focus-visible,
+  .brown-input:focus-within {
+    box-shadow: 0px 0px 10px $brown;
+    border: 1px solid $black;
+  }
+  ::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $white;
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: $white;
+  }
+
+  ::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: $white;
+  }
 }
 
 div[data-theme="dark"] {
-  
+  .col-form-label {
+    color: $white !important;
+  }
+  .brown-input {
+    background-color: $brown;
+    color: $bg-dark;
+    border: 1px solid $bg-dark;
+  }
+
+  .brown-input:hover {
+    background-color: $bg-dark;
+    color: $brown;
+    border: 1px solid $brown;
+    box-shadow: 0px 0px 10px $brown;
+  }
+
+  .brown-input:focus,
+  .brown-input:active,
+  .brown-input:focus-visible,
+  .brown-input:focus-within {
+    box-shadow: 0px 0px 10px $brown;
+    border: 1px solid $brown;
+  }
+  ::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $black;
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: $black;
+  }
+
+  ::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: $black;
+  }
+}
+
+.brown-input:hover::placeholder {
+  color: $brown;
+  opacity: 1;
 }
