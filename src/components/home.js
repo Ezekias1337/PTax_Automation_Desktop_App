@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import React, { useLayoutEffect } from "react";
 import { HomeFunction } from "../functions/homeFunctions";
 import { SettingsButton } from "./buttons/settingsButton";
+const { ipcRenderer } = window.require('electron');
 
 export const Home = () => {
   useLayoutEffect(() => {
@@ -14,7 +15,7 @@ export const Home = () => {
     return function cleanup() {
       clearInterval(backgroundInterval);
     };
-  });
+  }, );
 
   return (
     <div className="Home" data-theme="dark">

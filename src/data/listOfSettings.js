@@ -11,6 +11,10 @@ export const listOfSettings = {
         key: 2,
         choice: "Dark",
       },
+      {
+        key: 3,
+        choice: "Gradient",
+      },
     ],
     acceptsCustomInput: false,
     customInputType: null

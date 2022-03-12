@@ -2,6 +2,7 @@
 const { app, BrowserWindow, Tray, nativeImage, ipcMain } = require("electron");
 const path = require("path");
 const Store = require("electron-store");
+const { dialog } = require("electron");
 
 let tray, window;
 
@@ -19,7 +20,7 @@ function createWindow() {
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: false,
-    nodeIntegration: true
+      nodeIntegration: true,
     },
     icon: path.join(__dirname, "public/images/icon.ico"),
   });
@@ -90,18 +91,3 @@ app.on("window-all-closed", function () {
 // code. You can also put them in separate files and require them here.
 
 let store = new Store();
-
-/* ipcMain.on('save-color-theme', (event, arg) => {
-  console.log('heyyyy', arg); // prints "heyyyy ping"
-
-//Save them to the store
-  //store.set('test', arg);
-  store.set("userSettings.theme", arg);
-
-  console.log('store', store.get('userSettings.theme'));
-}); */
-
-/*store.set("userSettings.theme", "dark"); */
-
- //console.log("theme: ", store.get("userSettings.theme"))
-/*console.log(app.getPath("userData")); */

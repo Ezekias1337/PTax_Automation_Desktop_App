@@ -4,12 +4,9 @@ import { SelectAnAutomation } from "./components/selectAnAutomation";
 import { Home } from "./components/home";
 import { Settings } from "./components/settings";
 import React from "react";
-/* const { ipcRenderer, ipcMain } = window.require('electron'); */
+
 
 const App = () => {
-  /* const store = new Store();
-
-  store.set("userSettings.theme", "dark"); */
 
   return (
     <Router>

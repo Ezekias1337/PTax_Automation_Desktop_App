@@ -2,7 +2,7 @@
 @import "variables/dark-mode-variables";
 @import "variables/common-variables";
 
-div[data-theme="light"] {
+[data-theme="light"] {
   .col-form-label {
     color: $black !important;
   }
@@ -25,24 +25,9 @@ div[data-theme="light"] {
     box-shadow: 0px 0px 10px $brown;
     border: 1px solid $black;
   }
-  ::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: $white;
-    opacity: 1; /* Firefox */
-  }
-
-  :-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: $white;
-  }
-
-  ::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: $white;
-  }
 }
 
-div[data-theme="dark"] {
+[data-theme="dark"] {
   .col-form-label {
     color: $white !important;
   }
@@ -65,21 +50,6 @@ div[data-theme="dark"] {
   .brown-input:focus-within {
     box-shadow: 0px 0px 10px $brown;
     border: 1px solid $brown;
-  }
-  ::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: $black;
-    opacity: 1; /* Firefox */
-  }
-
-  :-ms-input-placeholder {
-    /* Internet Explorer 10-11 */
-    color: $black;
-  }
-
-  ::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: $black;
   }
 }
 
