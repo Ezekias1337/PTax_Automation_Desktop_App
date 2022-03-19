@@ -6,96 +6,29 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { SaveButton } from "./buttons/saveButton";
-import { getUserSettings } from "../utils/getUserSettings";
-import { useEffect, useState } from "react";
-const Store = window.require("electron-store");
-
-const store = new Store();
-
-const saveUserSettings = () => {
-  const arrayOfOptionElements = document.getElementsByClassName("brown-input");
-  const listOfCaseSensitiveSettings = [
-    "username",
-    "password",
-    "defaultDownloadDirectory",
-    "defaultUploadandScanDirectory",
-  ];
-
-  for (const item of arrayOfOptionElements) {
-    const labelInnerText = item.previousElementSibling.innerText;
-    const labelToCamelCase =
-      labelInnerText.charAt(0).toLowerCase() + labelInnerText.slice(1);
-    const labelToCamelCaseJoined = labelToCamelCase.split(" ").join("");
-
-    let inputValue;
-
-    if (item?.options) {
-      inputValue = item.options[item.selectedIndex].text;
-    } else {
-      inputValue = item.value;
-    }
-
-    if (inputValue === "") {
-      continue;
-    }
-
-    if (!listOfCaseSensitiveSettings.includes(labelToCamelCaseJoined)) {
-      store.set(
-        "userSettings." + labelToCamelCaseJoined,
-        inputValue.toLowerCase()
-      );
-    } else if (listOfCaseSensitiveSettings.includes(labelToCamelCaseJoined)) {
-      store.set("userSettings." + labelToCamelCaseJoined, inputValue);
-    }
-  }
-  const settingsToReturn = store.get("userSettings");
-  console.log("User settings saved!", settingsToReturn);
-  return settingsToReturn;
-};
-
-const renderDropdownOptions = (objToParse) => {
-  const arrayOfOptionElements = [];
-  for (const [index, nestedItem] of objToParse.options.entries()) {
-    arrayOfOptionElements.push(
-      <option value={index} key={nestedItem.key}>
-        {nestedItem.choice}
-      </option>
-    );
-  }
-  return arrayOfOptionElements;
-};
+import { useEffect, useState, useLayoutEffect } from "react";
+import { animateGradientBackground } from "../functions/animateGradientBackground";
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../redux/allActions";
+import { renderDropdownOptions } from "../functions/renderDropdownOptions";
+import { saveUserSettings } from "../functions/saveUserSettings";
 
 export const Settings = () => {
-  const [settings, setSettings] = useState();
-  const [colorTheme, setColorTheme] = useState();
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { saveSettings } = bindActionCreators(actionCreators, dispatch);
 
-  useEffect(() => {
-    onloadFetchTheme();
+  useLayoutEffect(() => {
+    const backgroundInterval = animateGradientBackground();
+    return function cleanup() {
+      clearInterval(backgroundInterval);
+    };
   }, []);
-
-  const onloadFetchTheme = () => {
-    let fetchedSettings = getUserSettings(store);
-    setSettings(fetchedSettings);
-
-    if (fetchedSettings?.colorTheme) {
-      setColorTheme(fetchedSettings.colorTheme);
-    }
-  };
-
-  const applyThemePostSave = (settings) => {
-    setSettings(getUserSettings(store));
-    if (settings?.colorTheme) {
-      setColorTheme(settings.colorTheme);
-    }
-  };
-
-  const promiseSaveThemeReRender = () => {
-    const settings = saveUserSettings();
-    applyThemePostSave(settings);
-  };
 
   const arrayOfSettings = [];
   let counter = 1;
+
   for (const item of Object.entries(listOfSettings)) {
     if (item[1]?.options !== null) {
       const arrayOfOptionElements = renderDropdownOptions(item[1]);
@@ -133,14 +66,19 @@ export const Settings = () => {
   }
 
   return (
-    <div className="container-fluid" data-theme={colorTheme}>
+    <div
+      className="container-fluid"
+      data-theme={state.settings.colorTheme}
+      id="element-to-animate"
+    >
       <div className="row">{arrayOfSettings}</div>
       <div className="row mt-5">
         <div className="col col-5"></div>
         <div className="col col-2">
           <SaveButton
             onClickHandler={() => {
-              promiseSaveThemeReRender();
+              const settingsToPass = saveUserSettings();
+              saveSettings(settingsToPass);
             }}
           />
         </div>

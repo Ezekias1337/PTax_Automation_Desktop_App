@@ -1,41 +1,54 @@
 import logo from "../../src/images/PTax_Logo.png";
 import "../App.css";
 import "../css/vanilla_css/styles.css";
-import "../css/vanilla_css/home.css"
+import "../css/vanilla_css/home.css";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import React, { useLayoutEffect } from "react";
-import { HomeFunction } from "../functions/homeFunctions";
+import { animateGradientBackground } from "../functions/animateGradientBackground";
 import { SettingsButton } from "./buttons/settingsButton";
-const { ipcRenderer } = window.require('electron');
+import { useSelector } from "react-redux";
+import { usePersistentSettings } from "../functions/usePersistentSettings";
+import { checkIfFirstTimeRunning } from "../functions/checkIfFirstTimeRunning";
+import { FirstRunAlert } from "./firstRunAlert";
 
 export const Home = () => {
+  const isFirstTimeRunning = checkIfFirstTimeRunning();
+  usePersistentSettings();
+
   useLayoutEffect(() => {
-    const backgroundInterval = HomeFunction();
+    const backgroundInterval = animateGradientBackground();
     return function cleanup() {
       clearInterval(backgroundInterval);
     };
-  }, );
+  });
+
+  const state = useSelector((state) => state);
 
   return (
-    <div className="Home" data-theme="dark">
+    <div
+      className="Home"
+      id="element-to-animate"
+      data-theme={state.settings.colorTheme}
+    >
       <header className="App-header home-body">
         <img src={logo} className="App-logo mb-5" alt="logo" />
         <div className="container">
           <div className="row">
-          <div className="col col-3"></div>
-            <div className="col col-3">
+            <div className="col col-2"></div>
+            <div className="col col-4">
               <Link to={"/select-an-automation"}>
                 <Button className="full-width-button brown-button">
                   Select an Automation
                 </Button>
               </Link>
             </div>
-            <div className="col col-3">
-              <SettingsButton></SettingsButton>
+            <div className="col col-4">
+              <SettingsButton isAnimated={isFirstTimeRunning}></SettingsButton>
             </div>
-            <div className="col col-3"></div>
+            <div className="col col-2"></div>
           </div>
+          <FirstRunAlert isVisible={isFirstTimeRunning}></FirstRunAlert>
         </div>
       </header>
     </div>

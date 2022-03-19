@@ -1,25 +1,43 @@
 import "../css/vanilla_css/styles.css";
-import "../css/vanilla_css/select-an-automation.css"
+import "../css/vanilla_css/select-an-automation.css";
 import { listOfAutomationsArrayExport } from "../data/listOfAutomations";
 import { Button } from "reactstrap";
 import { HomeButton } from "./buttons/homeButton";
 import { Link } from "react-router-dom";
+import { animateGradientBackground } from "../functions/animateGradientBackground";
+import { useLayoutEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export const SelectAnAutomation = () => {
+  const state = useSelector((state) => state);
+
+  useLayoutEffect(() => {
+    const backgroundInterval = animateGradientBackground();
+    return function cleanup() {
+      clearInterval(backgroundInterval);
+    };
+  }, []);
+
   const arrayOfAutomations = [];
 
   for (const item of listOfAutomationsArrayExport) {
     arrayOfAutomations.push(
       <div key={item.key} className="col col-6 mt-3">
         <Link to={`/${item.name.split(" ").join("-").toLowerCase()}`}>
-          <Button className="full-width-button brown-button">{item.name}</Button>
+          <Button className="full-width-button brown-button">
+            {item.name}
+          </Button>
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="container-fluid" data-theme="dark">
+    <div
+      className="container-fluid"
+      data-theme={state.settings.colorTheme}
+      id="element-to-animate"
+    >
       <div className="row">{arrayOfAutomations}</div>
       <div className="row">
         <div className="col col-12 mt-5">

@@ -2,6 +2,9 @@
 @import "variables/dark-mode-variables";
 @import "variables/common-variables";
 
+[data-theme="gradient"] {
+}
+
 [data-theme="light"] {
   .col-form-label {
     color: $black !important;

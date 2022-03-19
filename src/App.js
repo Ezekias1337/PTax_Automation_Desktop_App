@@ -5,9 +5,7 @@ import { Home } from "./components/home";
 import { Settings } from "./components/settings";
 import React from "react";
 
-
 const App = () => {
-
   return (
     <Router>
       <Routes>

@@ -1,58 +1,58 @@
-export const HomeFunction = () => {
+export const animateGradientBackground = () => {
   const getRandomArbitrary = (min, max) => {
     return Math.random() * (max - min) + min;
   };
 
   const setTopLeft = () => {
-    const homeBackGround = document.getElementsByClassName("home-body")[0];
+    const homeBackGround = document.getElementById("element-to-animate");
     homeBackGround.style.backgroundPositionX = "0%";
     homeBackGround.style.backgroundPositionY = "0%";
   };
 
   const setTopCenter = () => {
-    const homeBackGround = document.getElementsByClassName("home-body")[0];
+    const homeBackGround = document.getElementById("element-to-animate");
     homeBackGround.style.backgroundPositionX = "50%";
     homeBackGround.style.backgroundPositionY = "0%";
   };
 
   const setTopRight = () => {
-    const homeBackGround = document.getElementsByClassName("home-body")[0];
+    const homeBackGround = document.getElementById("element-to-animate");
     homeBackGround.style.backgroundPositionX = "100%";
     homeBackGround.style.backgroundPositionY = "0%";
   };
 
   const setCenterLeft = () => {
-    const homeBackGround = document.getElementsByClassName("home-body")[0];
+    const homeBackGround = document.getElementById("element-to-animate");
     homeBackGround.style.backgroundPositionX = "0%";
     homeBackGround.style.backgroundPositionY = "50%";
   };
 
   const setCenterCenter = () => {
-    const homeBackGround = document.getElementsByClassName("home-body")[0];
+    const homeBackGround = document.getElementById("element-to-animate");
     homeBackGround.style.backgroundPositionX = "50%";
     homeBackGround.style.backgroundPositionY = "50%";
   };
 
   const setCenterRight = () => {
-    const homeBackGround = document.getElementsByClassName("home-body")[0];
+    const homeBackGround = document.getElementById("element-to-animate");
     homeBackGround.style.backgroundPositionX = "100%";
     homeBackGround.style.backgroundPositionY = "50%";
   };
 
   const setBottomLeft = () => {
-    const homeBackGround = document.getElementsByClassName("home-body")[0];
+    const homeBackGround = document.getElementById("element-to-animate");
     homeBackGround.style.backgroundPositionX = "0%";
     homeBackGround.style.backgroundPositionY = "100%";
   };
 
   const setBottomCenter = () => {
-    const homeBackGround = document.getElementsByClassName("home-body")[0];
+    const homeBackGround = document.getElementById("element-to-animate");
     homeBackGround.style.backgroundPositionX = "50%";
     homeBackGround.style.backgroundPositionY = "100%";
   };
 
   const setBottomRight = () => {
-    const homeBackGround = document.getElementsByClassName("home-body")[0];
+    const homeBackGround = document.getElementById("element-to-animate");
     homeBackGround.style.backgroundPositionX = "100%";
     homeBackGround.style.backgroundPositionY = "100%";
   };
@@ -84,9 +84,8 @@ export const HomeFunction = () => {
   generateHomeBackgroundRandom();
 
   const causeHomeToAnimate = () => {
-    const homeBackGround = document.getElementsByClassName("home-body")[0];
+    const homeBackGround = document.getElementById("element-to-animate");
     const numberToDetermineBGPlacement = getRandomArbitrary(1, 72);
-    homeBackGround.classList.add("animation-started");
 
     if (numberToDetermineBGPlacement <= 8) {
       homeBackGround.dataset.animationName = "animate-to-top-left";

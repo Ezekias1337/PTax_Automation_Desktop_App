@@ -1,6 +1,8 @@
 @import "variables/light-mode-variables";
 @import "variables/dark-mode-variables";
-@import "partials/background-animations";
+
+[data-theme="gradient"] {
+}
 
 [data-theme="light"] {
 }
@@ -8,7 +10,7 @@
 [data-theme="dark"] {
 }
 
-.home-body {
-  background-image: url("../../images//Gradient-Outline.jpg");
+div.Home {
+  background-image: url("../../images/Gradient-Outline.jpg");
   overflow-y: hidden;
 }

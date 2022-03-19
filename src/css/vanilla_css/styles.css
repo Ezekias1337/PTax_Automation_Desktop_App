@@ -214,6 +214,9 @@
     background-position-x: 100%;
     background-position-y: 100%; } }
 
+[data-theme="gradient"] {
+  background-image: url("../../images/Gradient-Outline.jpg"); }
+
 [data-theme="light"] {
   background-color: #fcfcfc; }
   [data-theme="light"] button.brown-button {
@@ -275,3 +278,31 @@ button.full-width-button {
 
 button.brown-button:focus {
   box-shadow: 0 0 0 0.25rem #e7c4b6; }
+
+button.animated-button {
+  -webkit-animation-name: animate-button;
+  animation-name: animate-button;
+  -webkit-animation-duration: 1.5s;
+  animation-duration: 1.5s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  animation-direction: alternate; }
+
+@keyframes animate-button {
+  from {
+    box-shadow: 0px 0px 10px transparent; }
+  to {
+    box-shadow: 0px 0px 10px #cff4fc;
+    background-color: #cff4fc;
+    border: 1px solid black;
+    color: black; } }
+
+@-webkit-keyframes animate-button {
+  from {
+    box-shadow: 0px 0px 10px transparent; }
+  to {
+    box-shadow: 0px 0px 10px #cff4fc;
+    background-color: #cff4fc;
+    border: 1px solid black;
+    color: black; } }

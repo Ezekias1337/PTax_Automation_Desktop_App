@@ -91,3 +91,5 @@ app.on("window-all-closed", function () {
 // code. You can also put them in separate files and require them here.
 
 let store = new Store();
+
+console.log("Settings path: ", app.getPath("userData"));
