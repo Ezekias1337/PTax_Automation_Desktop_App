@@ -6,13 +6,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { SaveButton } from "./buttons/saveButton";
-import { useEffect, useState, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { animateGradientBackground } from "../functions/animateGradientBackground";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../redux/allActions";
 import { renderDropdownOptions } from "../functions/renderDropdownOptions";
 import { saveUserSettings } from "../functions/saveUserSettings";
+import { camelCasifyString } from "../functions/camelCasifyString";
+import { inputFieldFillDefault } from "../functions/inputFieldFillDefault";
 
 export const Settings = () => {
   const state = useSelector((state) => state);
@@ -31,7 +33,7 @@ export const Settings = () => {
 
   for (const item of Object.entries(listOfSettings)) {
     if (item[1]?.options !== null) {
-      const arrayOfOptionElements = renderDropdownOptions(item[1]);
+      const arrayOfOptionElements = renderDropdownOptions(item[1], state);
       arrayOfSettings.push(
         <div key={counter} className="col col-6 mt-2">
           <label htmlFor={item[1].name} className="col-form-label">
@@ -41,6 +43,7 @@ export const Settings = () => {
           <select
             className="form-select full-width-button brown-input"
             aria-label={item[1].name}
+            id={camelCasifyString(item[1].name)}
           >
             {arrayOfOptionElements}
           </select>
@@ -58,6 +61,7 @@ export const Settings = () => {
             name={item[1].name}
             id={item[1].name.split(" ").join("")}
             placeholder={item[1]?.placeholder}
+            value={inputFieldFillDefault(item[1].name.split(" ").join(""), state, false)}
           ></input>
         </div>
       );

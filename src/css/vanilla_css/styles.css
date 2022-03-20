@@ -223,10 +223,13 @@
     background-color: #d4967d;
     color: white;
     border: 1px solid #fcfcfc; }
-  [data-theme="light"] button.brown-button:hover {
+  [data-theme="light"] button.brown-button:hover,
+  [data-theme="light"] button.brown-button:focus,
+  [data-theme="light"] button.brown-button:active {
     background-color: white;
     color: #d4967d;
-    border: 1px solid #d4967d; }
+    border: 1px solid #d4967d;
+    box-shadow: 0px 0px 10px #d4967d; }
   [data-theme="light"] ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #dadada;

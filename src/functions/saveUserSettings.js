@@ -1,3 +1,4 @@
+import { camelCasifyString } from "./camelCasifyString"
 const Store = window.require("electron-store");
 const store = new Store();
 
@@ -12,9 +13,7 @@ export const saveUserSettings = () => {
 
   for (const item of arrayOfOptionElements) {
     const labelInnerText = item.previousElementSibling.innerText;
-    const labelToCamelCase =
-      labelInnerText.charAt(0).toLowerCase() + labelInnerText.slice(1);
-    const labelToCamelCaseJoined = labelToCamelCase.split(" ").join("");
+    const labelToCamelCaseJoined = camelCasifyString(labelInnerText)
 
     let inputValue;
 

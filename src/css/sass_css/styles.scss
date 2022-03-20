@@ -15,10 +15,13 @@
     border: 1px solid $bg-light;
   }
 
-  button.brown-button:hover {
+  button.brown-button:hover,
+  button.brown-button:focus,
+  button.brown-button:active {
     background-color: $white;
     color: $brown;
     border: 1px solid $brown;
+    box-shadow: 0px 0px 10px $brown;
   }
 
   ::placeholder {
