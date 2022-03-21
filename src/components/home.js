@@ -10,7 +10,7 @@ import { SettingsButton } from "./buttons/settingsButton";
 import { useSelector } from "react-redux";
 import { usePersistentSettings } from "../functions/usePersistentSettings";
 import { checkIfFirstTimeRunning } from "../functions/checkIfFirstTimeRunning";
-import { FirstRunAlert } from "./firstRunAlert";
+import { GeneralAlert } from "./generalAlert";
 
 export const Home = () => {
   const isFirstTimeRunning = checkIfFirstTimeRunning();
@@ -48,7 +48,12 @@ export const Home = () => {
             </div>
             <div className="col col-2"></div>
           </div>
-          <FirstRunAlert isVisible={isFirstTimeRunning}></FirstRunAlert>
+          <GeneralAlert
+            isVisible={isFirstTimeRunning}
+            string="&nbsp;Looks like this is your first time running this application.
+            Click on the flashing settings button above to get started."
+            colorClassName="alert-info"
+          ></GeneralAlert>
         </div>
       </header>
     </div>

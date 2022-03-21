@@ -1,4 +1,4 @@
-import { camelCasifyString } from "./camelCasifyString"
+import { camelCasifyString } from "./camelCasifyString";
 const Store = window.require("electron-store");
 const store = new Store();
 
@@ -13,7 +13,7 @@ export const saveUserSettings = () => {
 
   for (const item of arrayOfOptionElements) {
     const labelInnerText = item.previousElementSibling.innerText;
-    const labelToCamelCaseJoined = camelCasifyString(labelInnerText)
+    const labelToCamelCaseJoined = camelCasifyString(labelInnerText);
 
     let inputValue;
 
@@ -42,6 +42,5 @@ export const saveUserSettings = () => {
     store.set("userSettings.firstTimeRunning", false);
   }
   const settingsToReturn = store.get("userSettings");
-  console.log("User settings saved!", settingsToReturn);
   return settingsToReturn;
 };

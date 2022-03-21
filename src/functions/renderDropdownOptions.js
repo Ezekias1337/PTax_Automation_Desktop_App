@@ -2,13 +2,13 @@ import { inputFieldFillDefault } from "./inputFieldFillDefault";
 
 export const renderDropdownOptions = (objToParse, state) => {
   const arrayOfOptionElements = [];
+  let selectedOption = false;
   for (const [index, nestedItem] of objToParse.options.entries()) {
     const isSelected = inputFieldFillDefault(nestedItem.choice, state, true);
 
     if (isSelected === true) {
       arrayOfOptionElements.push(
         <option
-          selected
           value={nestedItem.choice}
           key={nestedItem.key}
           name={nestedItem.choice}
@@ -16,6 +16,7 @@ export const renderDropdownOptions = (objToParse, state) => {
           {nestedItem.choice}
         </option>
       );
+      selectedOption = nestedItem.choice;
     } else {
       arrayOfOptionElements.push(
         <option
@@ -28,5 +29,5 @@ export const renderDropdownOptions = (objToParse, state) => {
       );
     }
   }
-  return arrayOfOptionElements;
+  return [arrayOfOptionElements, selectedOption];
 };

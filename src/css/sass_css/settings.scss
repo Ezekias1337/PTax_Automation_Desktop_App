@@ -3,9 +3,27 @@
 @import "variables/common-variables";
 
 [data-theme="gradient"] {
+  .brown-input:focus,
+  .brown-input:active,
+  .brown-input:focus-visible,
+  .brown-input:focus-within {
+    box-shadow: 0px 0px 10px $brown;
+    border: 1px solid $white;
+  }
 }
 
 [data-theme="light"] {
+  .brown-input:focus,
+  .brown-input:active,
+  .brown-input:focus-visible,
+  .brown-input:focus-within {
+    box-shadow: 0px 0px 10px $brown;
+    border: 1px solid $black;
+  }
+}
+
+[data-theme="light"],
+[data-theme="gradient"] {
   .col-form-label {
     color: $black !important;
   }
@@ -20,13 +38,6 @@
     color: $brown;
     border: 1px solid $brown;
     box-shadow: 0px 0px 10px $brown;
-  }
-  .brown-input:focus,
-  .brown-input:active,
-  .brown-input:focus-visible,
-  .brown-input:focus-within {
-    box-shadow: 0px 0px 10px $brown;
-    border: 1px solid $black;
   }
 }
 

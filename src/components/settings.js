@@ -15,6 +15,8 @@ import { renderDropdownOptions } from "../functions/renderDropdownOptions";
 import { saveUserSettings } from "../functions/saveUserSettings";
 import { camelCasifyString } from "../functions/camelCasifyString";
 import { inputFieldFillDefault } from "../functions/inputFieldFillDefault";
+import { popUpAlert } from "../functions/popUpAlert";
+import { GeneralAlert } from "./generalAlert";
 
 export const Settings = () => {
   const state = useSelector((state) => state);
@@ -33,7 +35,10 @@ export const Settings = () => {
 
   for (const item of Object.entries(listOfSettings)) {
     if (item[1]?.options !== null) {
-      const arrayOfOptionElements = renderDropdownOptions(item[1], state);
+      const [arrayOfOptionElements, selectedOption] = renderDropdownOptions(
+        item[1],
+        state
+      );
       arrayOfSettings.push(
         <div key={counter} className="col col-6 mt-2">
           <label htmlFor={item[1].name} className="col-form-label">
@@ -44,6 +49,7 @@ export const Settings = () => {
             className="form-select full-width-button brown-input"
             aria-label={item[1].name}
             id={camelCasifyString(item[1].name)}
+            defaultValue={selectedOption ? selectedOption : null}
           >
             {arrayOfOptionElements}
           </select>
@@ -61,7 +67,19 @@ export const Settings = () => {
             name={item[1].name}
             id={item[1].name.split(" ").join("")}
             placeholder={item[1]?.placeholder}
-            value={inputFieldFillDefault(item[1].name.split(" ").join(""), state, false)}
+            defaultValue={
+              inputFieldFillDefault(
+                item[1].name.split(" ").join(""),
+                state,
+                false
+              )
+                ? inputFieldFillDefault(
+                    item[1].name.split(" ").join(""),
+                    state,
+                    false
+                  )
+                : ""
+            }
           ></input>
         </div>
       );
@@ -80,9 +98,11 @@ export const Settings = () => {
         <div className="col col-5"></div>
         <div className="col col-2">
           <SaveButton
+            idForButton="save-button"
             onClickHandler={() => {
               const settingsToPass = saveUserSettings();
               saveSettings(settingsToPass);
+              popUpAlert("alert-to-animate");
             }}
           />
         </div>
@@ -97,6 +117,12 @@ export const Settings = () => {
           </Link>
         </div>
       </div>
+      <GeneralAlert
+        id="alert-to-animate"
+        isVisible={false}
+        string="&nbsp;Settings saved successfully!"
+        colorClassName="alert-success"
+      ></GeneralAlert>
     </div>
   );
 };
