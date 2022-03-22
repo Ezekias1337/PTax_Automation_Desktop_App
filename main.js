@@ -92,4 +92,20 @@ app.on("window-all-closed", function () {
 
 let store = new Store();
 
+const promptForFile = () => {
+  dialog.showOpenDialog({ properties: ["openFile"] });
+};
+
+const promptForDirectory = () => {
+  dialog.showOpenDialog({ properties: ["openDirectory"] });
+};
+
+ipcMain.on("filePrompted", () => {
+  promptForFile();
+});
+
+ipcMain.on("directoryPrompted", () => {
+  promptForDirectory();
+});
+
 console.log("Settings path: ", app.getPath("userData"));

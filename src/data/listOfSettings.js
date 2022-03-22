@@ -17,7 +17,8 @@ export const listOfSettings = {
       },
     ],
     acceptsCustomInput: false,
-    customInputType: null
+    customInputType: null,
+    promptFileDirectory: false,
   },
   screenResolution: {
     key: 2,
@@ -25,7 +26,8 @@ export const listOfSettings = {
     options: null,
     acceptsCustomInput: true,
     customInputType: "text",
-    placeholder: "1920x1080"
+    placeholder: "1920x1080",
+    promptFileDirectory: false,
   },
   username: {
     key: 3,
@@ -33,7 +35,8 @@ export const listOfSettings = {
     options: null,
     acceptsCustomInput: true,
     customInputType: "text",
-    placeholder: "Username"
+    placeholder: "Username",
+    promptFileDirectory: false,
   },
   password: {
     key: 4,
@@ -41,7 +44,8 @@ export const listOfSettings = {
     options: null,
     acceptsCustomInput: true,
     customInputType: "password",
-    placeholder: "******"
+    placeholder: "******",
+    promptFileDirectory: false,
   },
   defaultDownloadDirectory: {
     key: 5,
@@ -49,7 +53,11 @@ export const listOfSettings = {
     options: null,
     acceptsCustomInput: true,
     customInputType: "text",
-    placeholder: "C:/Users/Name/Downloads/"
+    placeholder: "C:/Users/Name/Downloads/",
+    promptFileDirectory: {
+      prompt: true,
+      promptType: "directory",
+    },
   },
   defaultUploadAndScanDirectory: {
     key: 6,
@@ -57,6 +65,10 @@ export const listOfSettings = {
     options: null,
     acceptsCustomInput: true,
     customInputType: "text",
-    placeholder: "C:/Users/Name/Downloads/"
+    placeholder: "C:/Users/Name/Downloads/",
+    promptFileDirectory: {
+      prompt: true,
+      promptType: "directory",
+    },
   },
 };

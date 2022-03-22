@@ -11,12 +11,12 @@ import { animateGradientBackground } from "../functions/animateGradientBackgroun
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../redux/allActions";
-import { renderDropdownOptions } from "../functions/renderDropdownOptions";
 import { saveUserSettings } from "../functions/saveUserSettings";
-import { camelCasifyString } from "../functions/camelCasifyString";
-import { inputFieldFillDefault } from "../functions/inputFieldFillDefault";
 import { popUpAlert } from "../functions/popUpAlert";
 import { GeneralAlert } from "./generalAlert";
+import { DropDown } from "./inputFields/dropdown";
+import { FileOrDirectoryPicker } from "./inputFields/fileOrDirectoryPicker";
+import { TextInput } from "./inputFields/textInput";
 
 export const Settings = () => {
   const state = useSelector((state) => state);
@@ -35,53 +35,32 @@ export const Settings = () => {
 
   for (const item of Object.entries(listOfSettings)) {
     if (item[1]?.options !== null) {
-      const [arrayOfOptionElements, selectedOption] = renderDropdownOptions(
-        item[1],
-        state
-      );
       arrayOfSettings.push(
-        <div key={counter} className="col col-6 mt-2">
-          <label htmlFor={item[1].name} className="col-form-label">
-            {item[1].name}
-          </label>
-
-          <select
-            className="form-select full-width-button brown-input"
-            aria-label={item[1].name}
-            id={camelCasifyString(item[1].name)}
-            defaultValue={selectedOption ? selectedOption : null}
-          >
-            {arrayOfOptionElements}
-          </select>
-        </div>
+        <DropDown
+          key={counter}
+          counter={counter}
+          data={item[1]}
+          state={state}
+        />
+      );
+    } else if (item[1]?.promptFileDirectory?.prompt === true) {
+      arrayOfSettings.push(
+        <FileOrDirectoryPicker
+          key={counter}
+          counter={counter}
+          data={item[1]}
+          state={state}
+          promptType="directory"
+        />
       );
     } else if (item[1]?.acceptsCustomInput !== false) {
       arrayOfSettings.push(
-        <div key={counter} className="col col-6 mt-2">
-          <label htmlFor={item[1].name} className="col-form-label">
-            {item[1].name}
-          </label>
-          <input
-            type={item[1].customInputType}
-            className="form-control brown-input"
-            name={item[1].name}
-            id={item[1].name.split(" ").join("")}
-            placeholder={item[1]?.placeholder}
-            defaultValue={
-              inputFieldFillDefault(
-                item[1].name.split(" ").join(""),
-                state,
-                false
-              )
-                ? inputFieldFillDefault(
-                    item[1].name.split(" ").join(""),
-                    state,
-                    false
-                  )
-                : ""
-            }
-          ></input>
-        </div>
+        <TextInput
+          key={counter}
+          counter={counter}
+          data={item[1]}
+          state={state}
+        />
       );
     }
     counter++;
