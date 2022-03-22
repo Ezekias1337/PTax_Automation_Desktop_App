@@ -92,20 +92,28 @@ app.on("window-all-closed", function () {
 
 let store = new Store();
 
-const promptForFile = () => {
-  dialog.showOpenDialog({ properties: ["openFile"] });
+const promptForFile = async () => {
+  const filePath = await dialog.showOpenDialog({ properties: ["openFile"] });
+  return filePath;
 };
 
-const promptForDirectory = () => {
-  dialog.showOpenDialog({ properties: ["openDirectory"] });
+const promptForDirectory = async () => {
+  const filePath = await dialog.showOpenDialog({
+    properties: ["openDirectory"],
+  });
+  return filePath;
 };
 
 ipcMain.on("filePrompted", () => {
-  promptForFile();
+  promptForFile().then((result) => {
+    window.webContents.send("filePathRetrieved", result);
+  });
 });
 
 ipcMain.on("directoryPrompted", () => {
-  promptForDirectory();
+  promptForDirectory().then((result) => {
+    window.webContents.send("directoryPathRetrieved", result);
+  });
 });
 
 console.log("Settings path: ", app.getPath("userData"));
