@@ -101,6 +101,7 @@ const promptForDirectory = async () => {
   const filePath = await dialog.showOpenDialog({
     properties: ["openDirectory"],
   });
+  console.log("filePath", filePath)
   return filePath;
 };
 
@@ -110,9 +111,10 @@ ipcMain.on("filePrompted", () => {
   });
 });
 
-ipcMain.on("directoryPrompted", () => {
+ipcMain.on("directoryPrompted", (event, message) => {
+  console.log("message", message)
   promptForDirectory().then((result) => {
-    window.webContents.send("directoryPathRetrieved", result);
+    window.webContents.send("directoryPathRetrieved", [result, message]);
   });
 });
 
