@@ -25,27 +25,39 @@
   .brown-input:focus-visible,
   .brown-input:focus-within {
     box-shadow: 0px 0px 10px $brown;
-    border: 1px solid $white;
+  }
+
+  .form-select {
+    background-image: url("../../images/Black_Dropdown_Arrow.png") !important;
+    background-size: 10px 5px;
+    background-repeat: no-repeat;
+  }
+
+  .form-select:hover {
+    background-image: url("../../images/Brown_Dropdown_Arrow.png") !important;
+    background-size: 10px 5px;
+    background-repeat: no-repeat;
   }
 
   .form-switch .form-check-input {
+    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    border: 1.5px solid $brown;
+    background-color: $bg-secondary-dark;
+  }
+
+  .form-switch .form-check-input:checked {
     background-color: $brown;
     border: 1.25px solid $bg-secondary-dark;
     background-image: url("../../images/Black_Switch_BG.png") !important;
   }
 
-  .form-switch .form-check-input:checked {
-    background-image: url("../../images/Black_Switch_BG.png") !important;
-    border: 1.5px solid $bg-secondary-dark;
-  }
-
   .form-switch .form-check-input:active,
   .form-switch .form-check-input:hover,
   .form-switch .form-check-input:focus {
-    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    background-image: url("../../images/Black_Switch_BG.png") !important;
     box-shadow: 0px 0px 10px $brown;
-    border: 1.5px solid $brown;
-    background-color: $bg-dark;
+    border: 1.5px solid $bg-secondary-dark;
+    background-color: $brown;
   }
 
   .form-switch .form-check-input:checked:active,
@@ -54,7 +66,7 @@
     background-image: url("../../images/Brown_Switch_BG.png") !important;
     box-shadow: 0px 0px 10px $brown;
     border: 1.5px solid $brown;
-    background-color: $bg-dark;
+    background-color: $bg-secondary-dark;
   }
 }
 
@@ -87,10 +99,22 @@
     border: 1.5px solid $brown;
   }
 
+  .form-select {
+    background-image: url("../../images/White_Dropdown_Arrow.png") !important;
+    background-size: 10px 5px;
+    background-repeat: no-repeat;
+  }
+
+  .form-select:hover {
+    background-image: url("../../images/Brown_Dropdown_Arrow.png") !important;
+    background-size: 10px 5px;
+    background-repeat: no-repeat;
+  }
+
   .form-switch .form-check-input {
     border: 1.5px solid $bg-secondary-light;
-    background-color: $brown;
-    background-image: url("../../images/White_Switch_BG.png") !important;
+    background-color: $bg-light;
+    background-image: url("../../images/Brown_Switch_BG.png") !important;
   }
 
   .form-switch .form-check-input:checked {
@@ -100,10 +124,10 @@
   .form-switch .form-check-input:active,
   .form-switch .form-check-input:hover,
   .form-switch .form-check-input:focus {
-    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    background-image: url("../../images/White_Switch_BG.png") !important;
     box-shadow: 0px 0px 10px $brown;
     border: 1.5px solid $brown;
-    background-color: $bg-light;
+    background-color: $brown;
   }
 
   .form-switch .form-check-input:checked:active,
@@ -138,27 +162,39 @@
   .brown-input:focus-visible,
   .brown-input:focus-within {
     box-shadow: 0px 0px 10px $brown;
-    border: 1px solid $brown;
+  }
+
+  .form-select {
+    background-image: url("../../images/Black_Dropdown_Arrow.png") !important;
+    background-size: 10px 5px;
+    background-repeat: no-repeat;
+  }
+
+  .form-select:hover {
+    background-image: url("../../images/Brown_Dropdown_Arrow.png") !important;
+    background-size: 10px 5px;
+    background-repeat: no-repeat;
   }
 
   .form-switch .form-check-input {
-    background-color: $brown;
-    border: 1.25px solid $bg-secondary-dark;
-    background-image: url("../../images/White_Switch_BG.png") !important;
+    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    border: 1.5px solid $brown;
+    background-color: $bg-dark;
   }
 
   .form-switch .form-check-input:checked {
+    background-color: $brown;
+    border: 1.25px solid $bg-secondary-dark;
     background-image: url("../../images/Black_Switch_BG.png") !important;
-    border: 1.5px solid $bg-secondary-dark;
   }
 
   .form-switch .form-check-input:active,
   .form-switch .form-check-input:hover,
   .form-switch .form-check-input:focus {
-    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    background-image: url("../../images/Black_Switch_BG.png") !important;
     box-shadow: 0px 0px 10px $brown;
-    border: 1.5px solid $brown;
-    background-color: $bg-dark;
+    border: 1.5px solid $bg-secondary-dark;
+    background-color: $brown;
   }
 
   .form-switch .form-check-input:checked:active,
