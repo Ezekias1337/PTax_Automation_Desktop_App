@@ -218,26 +218,26 @@
   background-image: url("../../images/Gradient-Outline.jpg"); }
   [data-theme="gradient"] button.brown-button {
     background-color: #d4967d;
-    color: white;
-    border: 1px solid #fcfcfc; }
+    color: #6b6b6b;
+    border: 1.5px solid #6b6b6b; }
   [data-theme="gradient"] button.brown-button:hover,
   [data-theme="gradient"] button.brown-button:focus,
   [data-theme="gradient"] button.brown-button:active {
-    background-color: white;
+    background-color: #333333;
     color: #d4967d;
     border: 1px solid #d4967d;
     box-shadow: 0px 0px 10px #d4967d; }
   [data-theme="gradient"] ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #dadada;
+    color: #6b6b6b;
     opacity: 1;
     /* Firefox */ }
   [data-theme="gradient"] :-ms-input-placeholder {
     /* Internet Explorer 10-11 */
-    color: #dadada; }
+    color: #6b6b6b; }
   [data-theme="gradient"] ::-ms-input-placeholder {
     /* Microsoft Edge */
-    color: #dadada; }
+    color: #6b6b6b; }
   [data-theme="gradient"] .animated-alert {
     animation-name: animated-alert;
     -webkit-animation-duration: 2.5s;
@@ -267,25 +267,25 @@
   [data-theme="light"] button.brown-button {
     background-color: #d4967d;
     color: white;
-    border: 1px solid #fcfcfc; }
+    border: 1.5px solid #bebebe; }
   [data-theme="light"] button.brown-button:hover,
   [data-theme="light"] button.brown-button:focus,
   [data-theme="light"] button.brown-button:active {
     background-color: white;
     color: #d4967d;
-    border: 1px solid #d4967d;
+    border: 1.5px solid #d4967d;
     box-shadow: 0px 0px 10px #d4967d; }
   [data-theme="light"] ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #dadada;
+    color: #bebebe;
     opacity: 1;
     /* Firefox */ }
   [data-theme="light"] :-ms-input-placeholder {
     /* Internet Explorer 10-11 */
-    color: #dadada; }
+    color: #bebebe; }
   [data-theme="light"] ::-ms-input-placeholder {
     /* Microsoft Edge */
-    color: #dadada; }
+    color: #bebebe; }
   [data-theme="light"] .animated-alert {
     animation-name: animated-alert-light;
     -webkit-animation-duration: 1.5s;
@@ -315,14 +315,35 @@
   [data-theme="dark"] button.brown-button {
     background-color: #d4967d;
     color: #333333;
-    border: 1px solid #333333; }
+    border: 1.5px solid #6b6b6b; }
   [data-theme="dark"] button.brown-button:hover,
   [data-theme="dark"] button.brown-button:focus,
   [data-theme="dark"] button.brown-button:active {
     background-color: #333333;
     color: #d4967d;
-    border: 1px solid #d4967d;
+    border: 1.5px solid #d4967d;
     box-shadow: 0px 0px 10px #d4967d; }
+  [data-theme="dark"] .form-switch .form-check-input {
+    background-color: #d4967d;
+    border: 1.25px solid #6b6b6b;
+    background-image: url("../../images/White_Switch_BG.png") !important; }
+  [data-theme="dark"] .form-switch .form-check-input:checked {
+    background-image: url("../../images/Black_Switch_BG.png") !important;
+    border: 1.5px solid #6b6b6b; }
+  [data-theme="dark"] .form-switch .form-check-input:active,
+  [data-theme="dark"] .form-switch .form-check-input:hover,
+  [data-theme="dark"] .form-switch .form-check-input:focus {
+    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    box-shadow: 0px 0px 10px #d4967d;
+    border: 1.5px solid #d4967d;
+    background-color: #333333; }
+  [data-theme="dark"] .form-switch .form-check-input:checked:active,
+  [data-theme="dark"] .form-switch .form-check-input:checked:hover,
+  [data-theme="dark"] .form-switch .form-check-input:checked:focus {
+    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    box-shadow: 0px 0px 10px #d4967d;
+    border: 1.5px solid #d4967d;
+    background-color: #333333; }
   [data-theme="dark"] ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #6b6b6b;
@@ -360,6 +381,11 @@
     opacity: 100%;
     box-shadow: 0px 0px 10px white; } }
 
+[data-theme="gradient"] .form-switch .form-check-input:checked,
+[data-theme="light"] .form-switch .form-check-input:checked,
+[data-theme="dark"] .form-switch .form-check-input:checked {
+  background-color: #d4967d; }
+
 div#root {
   width: 100vw;
   height: 100vh; }
@@ -371,6 +397,15 @@ div.container-fluid {
 button.full-width-button {
   width: 100%;
   height: 100%; }
+
+div.form-switch {
+  padding-left: 0px !important;
+  display: flex; }
+
+.form-switch .form-check-input {
+  margin-left: 1.5px !important;
+  margin-top: 0px !important;
+  align-self: flex-end; }
 
 button.brown-button:focus {
   box-shadow: 0 0 0 0.25rem #e7c4b6; }
@@ -391,7 +426,6 @@ button.animated-button {
   to {
     box-shadow: 0px 0px 10px #cff4fc;
     background-color: #cff4fc;
-    border: 1px solid black;
     color: black; } }
 
 @-webkit-keyframes animate-button {
@@ -400,5 +434,4 @@ button.animated-button {
   to {
     box-shadow: 0px 0px 10px #cff4fc;
     background-color: #cff4fc;
-    border: 1px solid black;
     color: black; } }

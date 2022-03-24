@@ -10,9 +10,10 @@ let tray, window;
 
 function createWindow() {
   // Create the browser window.
+  console.log(screenWidth, screenHeight);
   window = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: screenWidth,
+    height: screenHeight,
     frame: true,
     fullscreenable: true,
     resizable: true,
@@ -92,6 +93,25 @@ app.on("window-all-closed", function () {
 
 let store = new Store();
 
+let screenWidth;
+let screenHeight;
+let screenData = store.get("userSettings.screenResolution");
+
+if (
+  typeof screenData === "string" &&
+  screenData !== null &&
+  screenData !== undefined
+) {
+  let screenResolutionSplit = store
+    .get("userSettings.screenResolution")
+    .split("x");
+  screenWidth = parseInt(screenResolutionSplit[0]);
+  screenHeight = parseInt(screenResolutionSplit[1]);
+} else {
+  screenWidth = 800;
+  screenHeight = 600;
+}
+
 const promptForFile = async () => {
   const filePath = await dialog.showOpenDialog({ properties: ["openFile"] });
   return filePath;
@@ -101,18 +121,17 @@ const promptForDirectory = async () => {
   const filePath = await dialog.showOpenDialog({
     properties: ["openDirectory"],
   });
-  console.log("filePath", filePath)
+  console.log("filePath", filePath);
   return filePath;
 };
 
-ipcMain.on("filePrompted", () => {
+ipcMain.on("filePrompted", (event, message) => {
   promptForFile().then((result) => {
-    window.webContents.send("filePathRetrieved", result);
+    window.webContents.send("filePathRetrieved", [result, message]);
   });
 });
 
 ipcMain.on("directoryPrompted", (event, message) => {
-  console.log("message", message)
   promptForDirectory().then((result) => {
     window.webContents.send("directoryPathRetrieved", [result, message]);
   });

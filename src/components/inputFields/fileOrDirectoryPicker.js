@@ -9,23 +9,17 @@ const passFilePathToInputField = (elementID, filePath) => {
 };
 
 export const FileOrDirectoryPicker = (props) => {
-
-
   ipcRenderer.on("filePathRetrieved", (event, message) => {
     const id = message[1];
-    console.log(message)
-    passFilePathToInputField(
-      id,
-      message[0].filePaths[0]
-    );
+    const pathBackslashesReplaced = message[0].filePaths[0].replace(/\\/g, "/");
+    passFilePathToInputField(id, pathBackslashesReplaced);
   });
   ipcRenderer.on("directoryPathRetrieved", (event, message) => {
     const id = message[1];
-    console.log(message)
-    passFilePathToInputField(
-      id,
-      message[0].filePaths[0]
-    );
+
+    const pathBackslashesReplaced = message[0].filePaths[0].replace(/\\/g, "/");
+
+    passFilePathToInputField(id, pathBackslashesReplaced);
   });
 
   if (props.promptType === "file") {
@@ -40,7 +34,12 @@ export const FileOrDirectoryPicker = (props) => {
           name={props.data.name}
           id={props.data.name.split(" ").join("")}
           placeholder={props?.data?.placeholder}
-          onClick={() => ipcRenderer.send("filePrompted", props.data.name.split(" ").join(""))}
+          onClick={() =>
+            ipcRenderer.send(
+              "filePrompted",
+              props.data.name.split(" ").join("")
+            )
+          }
           defaultValue={
             inputFieldFillDefault(
               props.data.name.split(" ").join(""),
@@ -69,7 +68,12 @@ export const FileOrDirectoryPicker = (props) => {
           name={props.data.name}
           id={props.data.name.split(" ").join("")}
           placeholder={props?.data?.placeholder}
-          onClick={() => ipcRenderer.send("directoryPrompted", props.data.name.split(" ").join(""))}
+          onClick={() =>
+            ipcRenderer.send(
+              "directoryPrompted",
+              props.data.name.split(" ").join("")
+            )
+          }
           defaultValue={
             inputFieldFillDefault(
               props.data.name.split(" ").join(""),

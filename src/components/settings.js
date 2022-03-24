@@ -1,5 +1,5 @@
 import "../css/vanilla_css/styles.css";
-import "../css/vanilla_css/settings.css";
+import "../css/vanilla_css/inputs.css";
 import { listOfSettings } from "../data/listOfSettings";
 import { Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,6 +17,7 @@ import { GeneralAlert } from "./generalAlert";
 import { DropDown } from "./inputFields/dropdown";
 import { FileOrDirectoryPicker } from "./inputFields/fileOrDirectoryPicker";
 import { TextInput } from "./inputFields/textInput";
+import { Switch } from "./inputFields/switch";
 
 export const Settings = () => {
   const state = useSelector((state) => state);
@@ -34,7 +35,7 @@ export const Settings = () => {
   let counter = 1;
 
   for (const item of Object.entries(listOfSettings)) {
-    if (item[1]?.options !== null) {
+    if (item[1]?.inputCategory === "dropdown") {
       arrayOfSettings.push(
         <DropDown
           key={counter}
@@ -43,7 +44,7 @@ export const Settings = () => {
           state={state}
         />
       );
-    } else if (item[1]?.promptFileDirectory?.prompt === true) {
+    } else if (item[1]?.inputCategory === "fileOrDirectory") {
       arrayOfSettings.push(
         <FileOrDirectoryPicker
           key={counter}
@@ -53,9 +54,19 @@ export const Settings = () => {
           promptType="directory"
         />
       );
-    } else if (item[1]?.acceptsCustomInput !== false) {
+    } else if (item[1]?.inputCategory === "text") {
       arrayOfSettings.push(
         <TextInput
+          key={counter}
+          counter={counter}
+          data={item[1]}
+          state={state}
+        />
+      );
+    } else if (item[1]?.inputCategory === "switch") {
+      arrayOfSettings.push(
+        <Switch
+          isChecked={false}
           key={counter}
           counter={counter}
           data={item[1]}
@@ -73,7 +84,7 @@ export const Settings = () => {
       id="element-to-animate"
     >
       <div className="row">{arrayOfSettings}</div>
-      <div className="row mt-5">
+      <div className="row mt-3">
         <div className="col col-5"></div>
         <div className="col col-2">
           <SaveButton

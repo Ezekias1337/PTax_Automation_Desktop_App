@@ -7,14 +7,14 @@
   background-image: url("../../images/Gradient-Outline.jpg");
   button.brown-button {
     background-color: $brown;
-    color: $white;
-    border: 1px solid $bg-light;
+    color: $bg-secondary-dark;
+    border: 1.5px solid $bg-secondary-dark;
   }
 
   button.brown-button:hover,
   button.brown-button:focus,
   button.brown-button:active {
-    background-color: $white;
+    background-color: $bg-dark;
     color: $brown;
     border: 1px solid $brown;
     box-shadow: 0px 0px 10px $brown;
@@ -22,18 +22,18 @@
 
   ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: $bg-secondary-light;
+    color: $bg-secondary-dark;
     opacity: 1; /* Firefox */
   }
 
   :-ms-input-placeholder {
     /* Internet Explorer 10-11 */
-    color: $bg-secondary-light;
+    color: $bg-secondary-dark;
   }
 
   ::-ms-input-placeholder {
     /* Microsoft Edge */
-    color: $bg-secondary-light;
+    color: $bg-secondary-dark;
   }
   .animated-alert {
     animation-name: animated-alert;
@@ -72,7 +72,7 @@
   button.brown-button {
     background-color: $brown;
     color: $white;
-    border: 1px solid $bg-light;
+    border: 1.5px solid $bg-secondary-light;
   }
 
   button.brown-button:hover,
@@ -80,7 +80,7 @@
   button.brown-button:active {
     background-color: $white;
     color: $brown;
-    border: 1px solid $brown;
+    border: 1.5px solid $brown;
     box-shadow: 0px 0px 10px $brown;
   }
 
@@ -136,7 +136,7 @@
   button.brown-button {
     background-color: $brown;
     color: $bg-dark;
-    border: 1px solid $bg-dark;
+    border: 1.5px solid $bg-secondary-dark;
   }
 
   button.brown-button:hover,
@@ -144,8 +144,37 @@
   button.brown-button:active {
     background-color: $bg-dark;
     color: $brown;
-    border: 1px solid $brown;
+    border: 1.5px solid $brown;
     box-shadow: 0px 0px 10px $brown;
+  }
+
+  .form-switch .form-check-input {
+    background-color: $brown;
+    border: 1.25px solid $bg-secondary-dark;
+    background-image: url("../../images/White_Switch_BG.png") !important;
+  }
+
+  .form-switch .form-check-input:checked {
+    background-image: url("../../images/Black_Switch_BG.png") !important;
+    border: 1.5px solid $bg-secondary-dark;
+  }
+
+  .form-switch .form-check-input:active,
+  .form-switch .form-check-input:hover,
+  .form-switch .form-check-input:focus {
+    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    box-shadow: 0px 0px 10px $brown;
+    border: 1.5px solid $brown;
+    background-color: $bg-dark;
+  }
+
+  .form-switch .form-check-input:checked:active,
+  .form-switch .form-check-input:checked:hover,
+  .form-switch .form-check-input:checked:focus {
+    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    box-shadow: 0px 0px 10px $brown;
+    border: 1.5px solid $brown;
+    background-color: $bg-dark;
   }
 
   ::placeholder {
@@ -199,6 +228,14 @@
   }
 }
 
+[data-theme="gradient"],
+[data-theme="light"],
+[data-theme="dark"] {
+  .form-switch .form-check-input:checked {
+    background-color: $brown;
+  }
+}
+
 div#root {
   width: 100vw;
   height: 100vh;
@@ -212,6 +249,17 @@ div.container-fluid {
 button.full-width-button {
   width: 100%;
   height: 100%;
+}
+
+div.form-switch {
+  padding-left: 0px !important;
+  display: flex;
+}
+
+.form-switch .form-check-input {
+  margin-left: 1.5px !important;
+  margin-top: 0px !important;
+  align-self: flex-end;
 }
 
 button.brown-button:focus {
@@ -236,7 +284,6 @@ button.animated-button {
   to {
     box-shadow: 0px 0px 10px $blue;
     background-color: $blue;
-    border: 1px solid $black;
     color: $black;
   }
 }
@@ -248,7 +295,6 @@ button.animated-button {
   to {
     box-shadow: 0px 0px 10px $blue;
     background-color: $blue;
-    border: 1px solid $black;
     color: $black;
   }
 }

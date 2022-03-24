@@ -1,0 +1,177 @@
+@import "variables/light-mode-variables";
+@import "variables/dark-mode-variables";
+@import "variables/common-variables";
+
+[data-theme="gradient"] {
+  .brown-input {
+    background-color: $brown;
+    color: $bg-dark;
+    border: 1.5px solid $bg-secondary-dark;
+  }
+
+  .brown-input:hover {
+    background-color: $bg-dark;
+    color: $brown;
+    border: 1.5px solid $brown;
+    box-shadow: 0px 0px 10px $brown;
+  }
+
+  .col-form-label {
+    color: $bg-dark !important;
+  }
+
+  .brown-input:focus,
+  .brown-input:active,
+  .brown-input:focus-visible,
+  .brown-input:focus-within {
+    box-shadow: 0px 0px 10px $brown;
+    border: 1px solid $white;
+  }
+
+  .form-switch .form-check-input {
+    background-color: $brown;
+    border: 1.25px solid $bg-secondary-dark;
+    background-image: url("../../images/Black_Switch_BG.png") !important;
+  }
+
+  .form-switch .form-check-input:checked {
+    background-image: url("../../images/Black_Switch_BG.png") !important;
+    border: 1.5px solid $bg-secondary-dark;
+  }
+
+  .form-switch .form-check-input:active,
+  .form-switch .form-check-input:hover,
+  .form-switch .form-check-input:focus {
+    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    box-shadow: 0px 0px 10px $brown;
+    border: 1.5px solid $brown;
+    background-color: $bg-dark;
+  }
+
+  .form-switch .form-check-input:checked:active,
+  .form-switch .form-check-input:checked:hover,
+  .form-switch .form-check-input:checked:focus {
+    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    box-shadow: 0px 0px 10px $brown;
+    border: 1.5px solid $brown;
+    background-color: $bg-dark;
+  }
+}
+
+[data-theme="light"] {
+  .brown-input {
+    border: 1.5px solid $bg-secondary-light;
+  }
+
+  .col-form-label {
+    color: $black !important;
+  }
+
+  .brown-input {
+    background-color: $brown;
+    color: $white;
+  }
+
+  .brown-input:hover {
+    background-color: $white;
+    color: $brown;
+    box-shadow: 0px 0px 10px $brown;
+    border: 1.5px solid $brown;
+  }
+
+  .brown-input:focus,
+  .brown-input:active,
+  .brown-input:focus-visible,
+  .brown-input:focus-within {
+    box-shadow: 0px 0px 10px $brown;
+    border: 1.5px solid $brown;
+  }
+
+  .form-switch .form-check-input {
+    border: 1.5px solid $bg-secondary-light;
+    background-color: $brown;
+    background-image: url("../../images/White_Switch_BG.png") !important;
+  }
+
+  .form-switch .form-check-input:checked {
+    background-image: url("../../images/White_Switch_BG.png") !important;
+  }
+
+  .form-switch .form-check-input:active,
+  .form-switch .form-check-input:hover,
+  .form-switch .form-check-input:focus {
+    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    box-shadow: 0px 0px 10px $brown;
+    border: 1.5px solid $brown;
+    background-color: $bg-light;
+  }
+
+  .form-switch .form-check-input:checked:active,
+  .form-switch .form-check-input:checked:hover,
+  .form-switch .form-check-input:checked:focus {
+    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    box-shadow: 0px 0px 10px $brown;
+    border: 1.5px solid $brown;
+    background-color: $bg-light;
+  }
+}
+
+[data-theme="dark"] {
+  .col-form-label {
+    color: $white !important;
+  }
+  .brown-input {
+    background-color: $brown;
+    color: $bg-dark;
+    border: 1.5px solid $bg-secondary-dark;
+  }
+
+  .brown-input:hover {
+    background-color: $bg-dark;
+    color: $brown;
+    border: 1.5px solid $brown;
+    box-shadow: 0px 0px 10px $brown;
+  }
+
+  .brown-input:focus,
+  .brown-input:active,
+  .brown-input:focus-visible,
+  .brown-input:focus-within {
+    box-shadow: 0px 0px 10px $brown;
+    border: 1px solid $brown;
+  }
+
+  .form-switch .form-check-input {
+    background-color: $brown;
+    border: 1.25px solid $bg-secondary-dark;
+    background-image: url("../../images/White_Switch_BG.png") !important;
+  }
+
+  .form-switch .form-check-input:checked {
+    background-image: url("../../images/Black_Switch_BG.png") !important;
+    border: 1.5px solid $bg-secondary-dark;
+  }
+
+  .form-switch .form-check-input:active,
+  .form-switch .form-check-input:hover,
+  .form-switch .form-check-input:focus {
+    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    box-shadow: 0px 0px 10px $brown;
+    border: 1.5px solid $brown;
+    background-color: $bg-dark;
+  }
+
+  .form-switch .form-check-input:checked:active,
+  .form-switch .form-check-input:checked:hover,
+  .form-switch .form-check-input:checked:focus {
+    background-image: url("../../images/Brown_Switch_BG.png") !important;
+    box-shadow: 0px 0px 10px $brown;
+    border: 1.5px solid $brown;
+    background-color: $bg-dark;
+  }
+}
+
+.brown-input:hover::placeholder {
+  color: $brown;
+  opacity: 1;
+}

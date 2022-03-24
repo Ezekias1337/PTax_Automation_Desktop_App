@@ -1,10 +1,13 @@
 import { inputFieldFillDefault } from "./inputFieldFillDefault";
+import { camelCasifyString } from "./camelCasifyString";
 
 export const renderDropdownOptions = (objToParse, state) => {
+  console.log(objToParse, state)
+  
   const arrayOfOptionElements = [];
   let selectedOption = false;
   for (const [index, nestedItem] of objToParse.options.entries()) {
-    const isSelected = inputFieldFillDefault(nestedItem.choice, state, true);
+    const isSelected = inputFieldFillDefault(nestedItem.choice, state, true, camelCasifyString(objToParse.name));
 
     if (isSelected === true) {
       arrayOfOptionElements.push(

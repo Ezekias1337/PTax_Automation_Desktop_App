@@ -4,12 +4,12 @@ export const inputFieldFillDefault = (
   inputField,
   state,
   isDropDown,
-  settingToCheckFor = "colorTheme"
+  settingToCheckFor
 ) => {
   if (isDropDown === true) {
     if (
-      inputField.toLowerCase() ===
-      state.settings[settingToCheckFor].toLowerCase()
+      inputField?.toLowerCase() ===
+      state?.settings[settingToCheckFor]?.toLowerCase()
     ) {
       return true;
     } else {

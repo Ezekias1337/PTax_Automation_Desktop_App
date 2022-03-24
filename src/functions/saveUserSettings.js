@@ -23,10 +23,6 @@ export const saveUserSettings = () => {
       inputValue = item.value;
     }
 
-    if (inputValue === "") {
-      continue;
-    }
-
     if (!listOfCaseSensitiveSettings.includes(labelToCamelCaseJoined)) {
       store.set(
         "userSettings." + labelToCamelCaseJoined,
