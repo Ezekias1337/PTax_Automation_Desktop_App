@@ -7,24 +7,43 @@ const { dialog } = require("electron");
 let tray, window;
 
 //app.dock.hide()
-
 function createWindow() {
   // Create the browser window.
   console.log(screenWidth, screenHeight);
-  window = new BrowserWindow({
-    width: screenWidth,
-    height: screenHeight,
-    frame: true,
-    fullscreenable: true,
-    resizable: true,
-    transparent: false,
-    webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
-      contextIsolation: false,
-      nodeIntegration: true,
-    },
-    icon: path.join(__dirname, "public/images/icon.ico"),
-  });
+  console.log(screenXCoordinate, screenYCoordinate)
+  if (isScreenPositionCustom === true) {
+    window = new BrowserWindow({
+      width: screenWidth,
+      height: screenHeight,
+      frame: true,
+      fullscreenable: true,
+      resizable: true,
+      transparent: false,
+      x: screenXCoordinate,
+      y: screenYCoordinate,
+      webPreferences: {
+        preload: path.join(__dirname, "preload.js"),
+        contextIsolation: false,
+        nodeIntegration: true,
+      },
+      icon: path.join(__dirname, "public/images/icon.ico"),
+    });
+  } else {
+    window = new BrowserWindow({
+      width: screenWidth,
+      height: screenHeight,
+      frame: true,
+      fullscreenable: true,
+      resizable: true,
+      transparent: false,
+      webPreferences: {
+        preload: path.join(__dirname, "preload.js"),
+        contextIsolation: false,
+        nodeIntegration: true,
+      },
+      icon: path.join(__dirname, "public/images/icon.ico"),
+    });
+  }
 
   window.on("closed", () => (window = null));
 
@@ -93,6 +112,8 @@ app.on("window-all-closed", function () {
 
 let store = new Store();
 
+//Handle Screen Resolution Preference
+
 let screenWidth;
 let screenHeight;
 let screenData = store.get("userSettings.screenResolution");
@@ -110,6 +131,21 @@ if (
 } else {
   screenWidth = 800;
   screenHeight = 600;
+}
+
+// Handle Screen Position Preference
+let screenXCoordinate;
+let screenYCoordinate;
+let screenCoordinates;
+let isScreenPositionCustom = store.get(
+  "userSettings.launchWindowinCurrentPosition"
+);
+if (isScreenPositionCustom === true) {
+  screenCoordinates = store.get(
+    "userSettings.launchWindowinCurrentPositionvalue"
+  );
+  screenXCoordinate = parseInt(screenCoordinates.split("x")[0]);
+  screenYCoordinate = parseInt(screenCoordinates.split("x")[1]);
 }
 
 const promptForFile = async () => {

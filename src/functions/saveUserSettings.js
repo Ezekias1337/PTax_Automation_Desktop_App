@@ -1,4 +1,5 @@
 import { camelCasifyString } from "./camelCasifyString";
+import { getWindowPosition } from "../functions/getWindowPosition";
 const Store = window.require("electron-store");
 const store = new Store();
 
@@ -12,18 +13,38 @@ export const saveUserSettings = () => {
   ];
 
   for (const item of arrayOfOptionElements) {
-    const labelInnerText = item.previousElementSibling.innerText;
-    const labelToCamelCaseJoined = camelCasifyString(labelInnerText);
+    let labelInnerText;
+    let labelToCamelCaseJoined;
+
+    if (item?.type === "checkbox") {
+      const textToPass = item.name;
+      labelInnerText = document.querySelector(`[for='${textToPass}']`).innerText;
+      labelToCamelCaseJoined = camelCasifyString(labelInnerText);
+    } else {
+      labelInnerText = item.previousElementSibling.innerText;
+      labelToCamelCaseJoined = camelCasifyString(labelInnerText);
+    }
 
     let inputValue;
 
     if (item?.options) {
       inputValue = item.options[item.selectedIndex].text;
+    } else if (item?.type === "checkbox") {
+      inputValue = item.checked;
     } else {
       inputValue = item.value;
     }
 
-    if (!listOfCaseSensitiveSettings.includes(labelToCamelCaseJoined)) {
+    if (typeof inputValue === "boolean") {
+      store.set("userSettings." + labelToCamelCaseJoined, inputValue);
+      if (labelToCamelCaseJoined === "launchWindowinCurrentPosition") {
+        const currentScreenPosition = getWindowPosition();
+        store.set(
+          "userSettings." + labelToCamelCaseJoined + "value",
+          currentScreenPosition
+        );
+      }
+    } else if (!listOfCaseSensitiveSettings.includes(labelToCamelCaseJoined)) {
       store.set(
         "userSettings." + labelToCamelCaseJoined,
         inputValue.toLowerCase()

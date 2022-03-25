@@ -4,6 +4,7 @@ export const inputFieldFillDefault = (
   inputField,
   state,
   isDropDown,
+  isSwitch,
   settingToCheckFor
 ) => {
   if (isDropDown === true) {
@@ -11,6 +12,12 @@ export const inputFieldFillDefault = (
       inputField?.toLowerCase() ===
       state?.settings[settingToCheckFor]?.toLowerCase()
     ) {
+      return true;
+    } else {
+      return false;
+    }
+  } else if (isSwitch === true) {
+    if (state?.settings[settingToCheckFor] === true) {
       return true;
     } else {
       return false;

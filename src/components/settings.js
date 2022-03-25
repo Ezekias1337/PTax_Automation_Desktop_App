@@ -66,7 +66,6 @@ export const Settings = () => {
     } else if (item[1]?.inputCategory === "switch") {
       arrayOfSettings.push(
         <Switch
-          isChecked={false}
           key={counter}
           counter={counter}
           data={item[1]}

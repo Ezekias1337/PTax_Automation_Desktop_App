@@ -44,11 +44,13 @@ export const FileOrDirectoryPicker = (props) => {
             inputFieldFillDefault(
               props.data.name.split(" ").join(""),
               props.state,
+              false,
               false
             )
               ? inputFieldFillDefault(
                   props.data.name.split(" ").join(""),
                   props.state,
+                  false,
                   false
                 )
               : ""
@@ -78,11 +80,13 @@ export const FileOrDirectoryPicker = (props) => {
             inputFieldFillDefault(
               props.data.name.split(" ").join(""),
               props.state,
+              false,
               false
             )
               ? inputFieldFillDefault(
                   props.data.name.split(" ").join(""),
                   props.state,
+                  false,
                   false
                 )
               : null

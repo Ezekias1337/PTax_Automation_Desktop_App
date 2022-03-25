@@ -16,11 +16,13 @@ export const TextInput = (props) => {
           inputFieldFillDefault(
             props.data.name.split(" ").join(""),
             props.state,
+            false,
             false
           )
             ? inputFieldFillDefault(
                 props.data.name.split(" ").join(""),
                 props.state,
+                false,
                 false
               )
             : ""

@@ -1,7 +1,7 @@
 const reducer = (
   state = {
     colorTheme: "gradient",
-    screenResolution: "1920x1080",
+    screenResolution: "800x600",
     firstTimeRunning: true,
   },
   action

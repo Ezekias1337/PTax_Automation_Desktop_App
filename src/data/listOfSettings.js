@@ -43,14 +43,18 @@ export const listOfSettings = {
       },
       {
         key: 5,
-        choice: "1536x864",
+        choice: "1040x810",
       },
       {
         key: 6,
-        choice: "414x896",
+        choice: "1536x864",
       },
       {
         key: 7,
+        choice: "414x896",
+      },
+      {
+        key: 8,
         choice: "375x667",
       },
     ],
