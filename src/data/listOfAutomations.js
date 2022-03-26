@@ -125,7 +125,7 @@ const listOfAutomations = {
   },
   pullParcelInformationFromRealquest: {
     key: 10,
-    name: "Pull parcel information from Realquest",
+    name: "Pull Parcel Information From Realquest",
     WIP: true,
   },
 };

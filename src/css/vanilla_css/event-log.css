@@ -1,0 +1,14 @@
+[data-theme="gradient"] div.event-log {
+  background-color: #6b6b6b; }
+
+[data-theme="light"] div.event-log {
+  background-color: #bebebe; }
+
+[data-theme="dark"] div.event-log {
+  background-color: #6b6b6b; }
+
+div.event-log {
+  overflow-y: scroll; }
+
+div.event-log::-webkit-scrollbar {
+  display: none; }

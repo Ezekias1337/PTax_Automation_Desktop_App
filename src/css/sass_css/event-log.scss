@@ -1,0 +1,28 @@
+@import "variables/light-mode-variables";
+@import "variables/dark-mode-variables";
+
+[data-theme="gradient"] {
+  div.event-log {
+    background-color: $bg-secondary-dark;
+  }
+}
+
+[data-theme="light"] {
+  div.event-log {
+    background-color: $bg-secondary-light;
+  }
+}
+
+[data-theme="dark"] {
+  div.event-log {
+    background-color: $bg-secondary-dark;
+  }
+}
+
+div.event-log {
+  overflow-y: scroll;
+}
+
+div.event-log::-webkit-scrollbar {
+  display: none;
+}
