@@ -15,6 +15,7 @@ import { GeneralAlert } from "./generalAlert";
 export const Home = () => {
   const isFirstTimeRunning = checkIfFirstTimeRunning();
   usePersistentSettings();
+  const state = useSelector((state) => state);
 
   useLayoutEffect(() => {
     const backgroundInterval = animateGradientBackground();
@@ -23,7 +24,7 @@ export const Home = () => {
     };
   });
 
-  const state = useSelector((state) => state);
+  
 
   return (
     <div

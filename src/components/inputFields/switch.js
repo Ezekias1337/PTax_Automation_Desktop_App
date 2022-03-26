@@ -2,11 +2,16 @@ import { camelCasifyString } from "../../functions/camelCasifyString";
 import { inputFieldFillDefault } from "../../functions/inputFieldFillDefault";
 
 export const Switch = (props) => {
+  const isCheckedHelper = camelCasifyString(
+    props.data.name.split(" ").join("")
+  );
+
   const isChecked = inputFieldFillDefault(
     props.data.name.split(" ").join(""),
     props.state,
     false,
-    true
+    true,
+    isCheckedHelper
   );
 
   return (

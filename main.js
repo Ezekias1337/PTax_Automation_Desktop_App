@@ -10,7 +10,7 @@ let tray, window;
 function createWindow() {
   // Create the browser window.
   console.log(screenWidth, screenHeight);
-  console.log(screenXCoordinate, screenYCoordinate)
+  console.log(screenXCoordinate, screenYCoordinate);
   if (isScreenPositionCustom === true) {
     window = new BrowserWindow({
       width: screenWidth,
@@ -146,6 +146,8 @@ if (isScreenPositionCustom === true) {
   );
   screenXCoordinate = parseInt(screenCoordinates.split("x")[0]);
   screenYCoordinate = parseInt(screenCoordinates.split("x")[1]);
+} else if (isScreenPositionCustom === false) {
+  store.delete("userSettings.launchWindowinCurrentPositionvalue");
 }
 
 const promptForFile = async () => {

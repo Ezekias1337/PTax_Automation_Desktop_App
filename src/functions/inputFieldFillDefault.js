@@ -17,6 +17,7 @@ export const inputFieldFillDefault = (
       return false;
     }
   } else if (isSwitch === true) {
+    console.log(state.settings /* [settingToCheckFor] */);
     if (state?.settings[settingToCheckFor] === true) {
       return true;
     } else {

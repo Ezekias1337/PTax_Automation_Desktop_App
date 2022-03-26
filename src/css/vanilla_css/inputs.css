@@ -149,12 +149,12 @@
 [data-theme="dark"] .form-switch .form-check-input:checked {
   background-color: #d4967d;
   border: 1.25px solid #6b6b6b;
-  background-image: url("../../images/Black_Switch_BG.png") !important; }
+  background-image: url("../../images/Dark_Black_Switch_BG.png") !important; }
 
 [data-theme="dark"] .form-switch .form-check-input:active,
 [data-theme="dark"] .form-switch .form-check-input:hover,
 [data-theme="dark"] .form-switch .form-check-input:focus {
-  background-image: url("../../images/Black_Switch_BG.png") !important;
+  background-image: url("../../images/Dark_Black_Switch_BG.png") !important;
   box-shadow: 0px 0px 10px #d4967d;
   border: 1.5px solid #6b6b6b;
   background-color: #d4967d; }

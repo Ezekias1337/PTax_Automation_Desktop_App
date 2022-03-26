@@ -185,13 +185,13 @@
   .form-switch .form-check-input:checked {
     background-color: $brown;
     border: 1.25px solid $bg-secondary-dark;
-    background-image: url("../../images/Black_Switch_BG.png") !important;
+    background-image: url("../../images/Dark_Black_Switch_BG.png") !important;
   }
 
   .form-switch .form-check-input:active,
   .form-switch .form-check-input:hover,
   .form-switch .form-check-input:focus {
-    background-image: url("../../images/Black_Switch_BG.png") !important;
+    background-image: url("../../images/Dark_Black_Switch_BG.png") !important;
     box-shadow: 0px 0px 10px $brown;
     border: 1.5px solid $bg-secondary-dark;
     background-color: $brown;
