@@ -215,14 +215,16 @@
     background-position-y: 100%; } }
 
 [data-theme="gradient"] {
-  background-image: url("../../images/Gradient-Outline.jpg"); }
-  [data-theme="gradient"] button.brown-button {
+  background-image: url("../../images/Gradient-Outline.jpg");
+  /* Handle */
+  /* Handle on hover */ }
+  [data-theme="gradient"] button.styled-button {
     background-color: #d4967d;
     color: #6b6b6b;
     border: 1.5px solid #6b6b6b; }
-  [data-theme="gradient"] button.brown-button:hover,
-  [data-theme="gradient"] button.brown-button:focus,
-  [data-theme="gradient"] button.brown-button:active {
+  [data-theme="gradient"] button.styled-button:hover,
+  [data-theme="gradient"] button.styled-button:focus,
+  [data-theme="gradient"] button.styled-button:active {
     background-color: #333333;
     color: #d4967d;
     border: 1px solid #d4967d;
@@ -238,6 +240,10 @@
   [data-theme="gradient"] ::-ms-input-placeholder {
     /* Microsoft Edge */
     color: #6b6b6b; }
+  [data-theme="gradient"] ::-webkit-scrollbar-thumb {
+    background: #333333; }
+  [data-theme="gradient"] ::-webkit-scrollbar-thumb:hover {
+    background: #bebebe; }
   [data-theme="gradient"] .animated-alert {
     animation-name: animated-alert;
     -webkit-animation-duration: 2.5s;
@@ -263,14 +269,16 @@
     box-shadow: 0px 0px 10px white; } }
 
 [data-theme="light"] {
-  background-color: #fcfcfc; }
-  [data-theme="light"] button.brown-button {
+  background-color: #fcfcfc;
+  /* Handle */
+  /* Handle on hover */ }
+  [data-theme="light"] button.styled-button {
     background-color: #d4967d;
     color: white;
     border: 1.5px solid #bebebe; }
-  [data-theme="light"] button.brown-button:hover,
-  [data-theme="light"] button.brown-button:focus,
-  [data-theme="light"] button.brown-button:active {
+  [data-theme="light"] button.styled-button:hover,
+  [data-theme="light"] button.styled-button:focus,
+  [data-theme="light"] button.styled-button:active {
     background-color: white;
     color: #d4967d;
     border: 1.5px solid #d4967d;
@@ -286,6 +294,10 @@
   [data-theme="light"] ::-ms-input-placeholder {
     /* Microsoft Edge */
     color: #bebebe; }
+  [data-theme="light"] ::-webkit-scrollbar-thumb {
+    background: #fcfcfc; }
+  [data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+    background: #6b6b6b; }
   [data-theme="light"] .animated-alert {
     animation-name: animated-alert-light;
     -webkit-animation-duration: 1.5s;
@@ -311,14 +323,16 @@
     box-shadow: 0px 0px 10px black; } }
 
 [data-theme="dark"] {
-  background-color: #333333; }
-  [data-theme="dark"] button.brown-button {
+  background-color: #333333;
+  /* Handle */
+  /* Handle on hover */ }
+  [data-theme="dark"] button.styled-button {
     background-color: #d4967d;
     color: #333333;
     border: 1.5px solid #6b6b6b; }
-  [data-theme="dark"] button.brown-button:hover,
-  [data-theme="dark"] button.brown-button:focus,
-  [data-theme="dark"] button.brown-button:active {
+  [data-theme="dark"] button.styled-button:hover,
+  [data-theme="dark"] button.styled-button:focus,
+  [data-theme="dark"] button.styled-button:active {
     background-color: #333333;
     color: #d4967d;
     border: 1.5px solid #d4967d;
@@ -355,6 +369,10 @@
   [data-theme="dark"] ::-ms-input-placeholder {
     /* Microsoft Edge */
     color: #6b6b6b; }
+  [data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: #333333; }
+  [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: #bebebe; }
 
 [data-theme="gradient"] .animated-alert,
 [data-theme="dark"] .animated-alert {
@@ -381,10 +399,23 @@
     opacity: 100%;
     box-shadow: 0px 0px 10px white; } }
 
-[data-theme="gradient"] .form-switch .form-check-input:checked,
-[data-theme="light"] .form-switch .form-check-input:checked,
-[data-theme="dark"] .form-switch .form-check-input:checked {
-  background-color: #d4967d; }
+[data-theme="gradient"],
+[data-theme="light"],
+[data-theme="dark"] {
+  /* width */
+  /* Track */ }
+  [data-theme="gradient"] .form-switch .form-check-input:checked,
+  [data-theme="light"] .form-switch .form-check-input:checked,
+  [data-theme="dark"] .form-switch .form-check-input:checked {
+    background-color: #d4967d; }
+  [data-theme="gradient"] ::-webkit-scrollbar,
+  [data-theme="light"] ::-webkit-scrollbar,
+  [data-theme="dark"] ::-webkit-scrollbar {
+    width: 10px; }
+  [data-theme="gradient"] ::-webkit-scrollbar-track,
+  [data-theme="light"] ::-webkit-scrollbar-track,
+  [data-theme="dark"] ::-webkit-scrollbar-track {
+    background: #d4967d; }
 
 div#root {
   width: 100vw;
@@ -410,7 +441,7 @@ div.form-switch {
   margin-top: 0px !important;
   align-self: flex-end; }
 
-button.brown-button:focus {
+button.styled-button:focus {
   box-shadow: 0 0 0 0.25rem #e7c4b6; }
 
 button.animated-button {

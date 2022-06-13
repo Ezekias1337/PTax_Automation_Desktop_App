@@ -5,15 +5,15 @@
 
 [data-theme="gradient"] {
   background-image: url("../../images/Gradient-Outline.jpg");
-  button.brown-button {
+  button.styled-button {
     background-color: $brown;
     color: $bg-secondary-dark;
     border: 1.5px solid $bg-secondary-dark;
   }
 
-  button.brown-button:hover,
-  button.brown-button:focus,
-  button.brown-button:active {
+  button.styled-button:hover,
+  button.styled-button:focus,
+  button.styled-button:active {
     background-color: $bg-dark;
     color: $brown;
     border: 1px solid $brown;
@@ -35,6 +35,17 @@
     /* Microsoft Edge */
     color: $bg-secondary-dark;
   }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: $bg-dark;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: $bg-secondary-light;
+  }
+
   .animated-alert {
     animation-name: animated-alert;
     -webkit-animation-duration: 2.5s;
@@ -69,15 +80,15 @@
 
 [data-theme="light"] {
   background-color: $bg-light;
-  button.brown-button {
+  button.styled-button {
     background-color: $brown;
     color: $white;
     border: 1.5px solid $bg-secondary-light;
   }
 
-  button.brown-button:hover,
-  button.brown-button:focus,
-  button.brown-button:active {
+  button.styled-button:hover,
+  button.styled-button:focus,
+  button.styled-button:active {
     background-color: $white;
     color: $brown;
     border: 1.5px solid $brown;
@@ -99,6 +110,17 @@
     /* Microsoft Edge */
     color: $bg-secondary-light;
   }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: $bg-light;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: $bg-secondary-dark;
+  }
+
   .animated-alert {
     animation-name: animated-alert-light;
     -webkit-animation-duration: 1.5s;
@@ -133,15 +155,15 @@
 
 [data-theme="dark"] {
   background-color: $bg-dark;
-  button.brown-button {
+  button.styled-button {
     background-color: $brown;
     color: $bg-dark;
     border: 1.5px solid $bg-secondary-dark;
   }
 
-  button.brown-button:hover,
-  button.brown-button:focus,
-  button.brown-button:active {
+  button.styled-button:hover,
+  button.styled-button:focus,
+  button.styled-button:active {
     background-color: $bg-dark;
     color: $brown;
     border: 1.5px solid $brown;
@@ -192,6 +214,16 @@
     /* Microsoft Edge */
     color: $bg-secondary-dark;
   }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: $bg-dark;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: $bg-secondary-light;
+  }
 }
 
 [data-theme="gradient"],
@@ -234,6 +266,15 @@
   .form-switch .form-check-input:checked {
     background-color: $brown;
   }
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: $brown;
+  }
 }
 
 div#root {
@@ -266,7 +307,7 @@ div.form-switch {
   align-self: flex-end;
 }
 
-button.brown-button:focus {
+button.styled-button:focus {
   box-shadow: 0 0 0 0.25rem lighten($brown, 15);
 }
 

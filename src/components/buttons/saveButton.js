@@ -5,7 +5,7 @@ import { Button } from "reactstrap";
 export const SaveButton = (props) => {
   return (
     <Button
-      className="full-width-button brown-button"
+      className="full-width-button styled-button"
       onClick={props.onClickHandler !== undefined ? props.onClickHandler : null}
       alt="save-button"
       id={props.idForButton ? props.idForButton : null}

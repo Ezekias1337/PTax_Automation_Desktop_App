@@ -6,7 +6,7 @@ import { Button } from "reactstrap";
 export const HomeButton = () => {
   return (
     <Link to={"/"}>
-      <Button className="brown-button" alt="home-button">
+      <Button className="styled-button" alt="home-button">
         <FontAwesomeIcon icon={faHouse} />
       </Button>
     </Link>

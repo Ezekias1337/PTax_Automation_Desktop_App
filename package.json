@@ -23,19 +23,22 @@
     "reactstrap": "^9.0.1",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
+    "request": "^2.88.2",
+    "selenium-webdriver": "^4.2.0",
     "url": "^0.11.0",
     "wait-on": "^6.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "main": "main.js",
   "scripts": {
+    "app": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\" \"npm run watch-css\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "build-css": "node-sass ./src/css/sass_css/ -o ./src/css/vanilla_css/",
     "watch-css": "nodemon -e scss -x \"npm run build-css\"",
-    "eject": "react-scripts eject",
-    "app": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\" \"npm run watch-css\""
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

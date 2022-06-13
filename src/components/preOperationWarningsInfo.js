@@ -1,5 +1,5 @@
 import "../css/vanilla_css/styles.css";
-import "../css/vanilla_css/select-an-automation.css";
+import "../css/vanilla_css/pre-operation-warnings-info.css";
 import { listOfAutomationsArrayExport } from "../data/listOfAutomations";
 import { Button } from "reactstrap";
 import { HomeButton } from "./buttons/homeButton";
@@ -8,7 +8,7 @@ import { animateGradientBackground } from "../functions/animateGradientBackgroun
 import { useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 
-export const SelectAnAutomation = () => {
+export const PreOperationWarningsInfo = () => {
   const state = useSelector((state) => state);
 
   useLayoutEffect(() => {

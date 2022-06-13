@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClipboard } from "@fortawesome/free-solid-svg-icons";
+import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "reactstrap";
 
-export const ClipboardButton = (props) => {
+export const SpreadsheetButton = (props) => {
   return (
     <Button
       className="styled-button"
@@ -10,7 +10,7 @@ export const ClipboardButton = (props) => {
       alt="clipboard-button"
       id={props.idForButton ? props.idForButton : null}
     >
-      <FontAwesomeIcon icon={faClipboard} />
+      <FontAwesomeIcon icon={faFileExcel} />
     </Button>
   );
 };

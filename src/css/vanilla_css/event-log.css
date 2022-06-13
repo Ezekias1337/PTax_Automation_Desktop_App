@@ -1,14 +1,21 @@
+div.event-log {
+  border-radius: 2px; }
+
 [data-theme="gradient"] div.event-log {
-  background-color: #6b6b6b; }
+  background-color: #6b6b6b;
+  color: #fcfcfc;
+  border: 1px solid #fcfcfc; }
 
 [data-theme="light"] div.event-log {
-  background-color: #bebebe; }
+  background-color: #bebebe;
+  color: #333333;
+  border: 1px solid #333333; }
 
 [data-theme="dark"] div.event-log {
-  background-color: #6b6b6b; }
+  background-color: #6b6b6b;
+  color: #fcfcfc;
+  border: 1px solid #fcfcfc; }
 
 div.event-log {
-  overflow-y: scroll; }
-
-div.event-log::-webkit-scrollbar {
-  display: none; }
+  overflow-y: scroll;
+  max-height: 75vh; }

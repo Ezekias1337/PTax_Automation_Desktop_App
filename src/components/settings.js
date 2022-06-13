@@ -100,7 +100,7 @@ export const Settings = () => {
       <div className="row">
         <div className="col col-12 mt-5">
           <Link to={"/"}>
-            <Button className="brown-button">
+            <Button className="styled-button">
               <FontAwesomeIcon icon={faHouse} />
             </Button>
           </Link>

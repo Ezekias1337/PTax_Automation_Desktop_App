@@ -9,7 +9,7 @@ const goBackOnePage = () => {
 export const BackButton = () => {
   return (
     <Button
-      className="brown-button backButton me-1"
+      className="styled-button backButton me-1"
       alt="back-button"
       onClick={() => goBackOnePage()}
     >

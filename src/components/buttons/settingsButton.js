@@ -9,8 +9,8 @@ export const SettingsButton = (isAnimated) => {
       <Button
         className={
           isAnimated.isAnimated
-            ? "full-width-button brown-button animated-button"
-            : "full-width-button brown-button"
+            ? "full-width-button styled-button animated-button"
+            : "full-width-button styled-button"
         }
         alt="settings-button"
       >

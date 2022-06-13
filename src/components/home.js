@@ -37,7 +37,7 @@ export const Home = () => {
             <div className="col col-2"></div>
             <div className="col col-4">
               <Link to={"/select-an-automation"}>
-                <Button className="full-width-button brown-button">
+                <Button className="full-width-button styled-button">
                   Select an Automation
                 </Button>
               </Link>

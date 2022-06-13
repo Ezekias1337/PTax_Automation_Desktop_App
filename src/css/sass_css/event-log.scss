@@ -1,28 +1,36 @@
 @import "variables/light-mode-variables";
 @import "variables/dark-mode-variables";
 
+div.event-log {
+  border-radius: 2px;
+}
+
 [data-theme="gradient"] {
   div.event-log {
     background-color: $bg-secondary-dark;
+    color: $color-text-dark;
+    border: 1px solid $bg-light;
   }
 }
 
 [data-theme="light"] {
   div.event-log {
     background-color: $bg-secondary-light;
+    color: $color-text-light;
+    border: 1px solid $bg-dark;
   }
 }
 
 [data-theme="dark"] {
   div.event-log {
     background-color: $bg-secondary-dark;
+    color: $color-text-dark;
+    border: 1px solid $bg-light;
   }
 }
 
 div.event-log {
   overflow-y: scroll;
+  max-height: 75vh;
 }
 
-div.event-log::-webkit-scrollbar {
-  display: none;
-}

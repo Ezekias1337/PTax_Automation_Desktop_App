@@ -2,10 +2,19 @@
 @import "variables/dark-mode-variables";
 
 [data-theme="gradient"] {
+    h1 {
+        color: black;
+    }
 }
 
 [data-theme="light"] {
+    h1 {
+        color: black;
+    }
 }
 
 [data-theme="dark"] {
+    h1 {
+        color: white;
+    }
 }
