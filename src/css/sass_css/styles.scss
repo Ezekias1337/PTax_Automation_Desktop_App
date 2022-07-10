@@ -7,8 +7,8 @@
   background-image: url("../../images/Gradient-Outline.jpg");
   button.styled-button {
     background-color: $brown;
-    color: $bg-secondary-dark;
-    border: 1.5px solid $bg-secondary-dark;
+    color: $bg-dark;
+    border: 1.5px solid $bg-dark;
   }
 
   button.styled-button:hover,
@@ -36,9 +36,15 @@
     color: $bg-secondary-dark;
   }
 
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 5px;
+  }
+
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: $bg-dark;
+    border-radius: 5px;
   }
 
   /* Handle on hover */
@@ -111,9 +117,15 @@
     color: $bg-secondary-light;
   }
 
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 5px;
+  }
+
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: $bg-light;
+    border-radius: 5px;
   }
 
   /* Handle on hover */
@@ -215,9 +227,15 @@
     color: $bg-secondary-dark;
   }
 
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 5px;
+  }
+
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: $bg-dark;
+    border-radius: 5px;
   }
 
   /* Handle on hover */

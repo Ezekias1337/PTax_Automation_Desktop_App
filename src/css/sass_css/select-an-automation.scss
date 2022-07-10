@@ -1,20 +1,21 @@
 @import "variables/light-mode-variables";
 @import "variables/dark-mode-variables";
+@import "variables/common-variables";
 
 [data-theme="gradient"] {
-    h1 {
-        color: black;
-    }
+  h1 {
+    color: $black;
+  }
 }
 
 [data-theme="light"] {
-    h1 {
-        color: black;
-    }
+  h1 {
+    color: $black;
+  }
 }
 
 [data-theme="dark"] {
-    h1 {
-        color: white;
-    }
+  h1 {
+    color: $white;
+  }
 }

@@ -42,6 +42,7 @@ export const Settings = () => {
           counter={counter}
           data={item[1]}
           state={state}
+          settingsOrAutomation="settings"
         />
       );
     } else if (item[1]?.inputCategory === "fileOrDirectory") {

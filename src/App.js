@@ -18,47 +18,47 @@ const App = () => {
         <Route path="/settings" element={<Settings />}></Route>
         <Route
           path="/assessment-notices"
-          element={<Automation pageTitle="Assessment Notices" />}
+          element={<Automation automationName="Assessment Notices" />}
         ></Route>
 
         <Route
           path="/change-mailing-address"
-          element={<Automation pageTitle="Change Mailing Address" />}
+          element={<Automation automationName="Change Mailing Address" />}
         ></Route>
         <Route
           path="/check-requests"
-          element={<Automation pageTitle="Check Requests" />}
+          element={<Automation automationName="Check Requests" />}
         ></Route>
         <Route
           path="/payment-confirmations"
-          element={<Automation pageTitle="Payment Confirmations" />}
+          element={<Automation automationName="Payment Confirmations" />}
         ></Route>
         <Route
           path="/property-point-of-contact"
-          element={<Automation pageTitle="Property Point of Contact" />}
+          element={<Automation automationName="Property Point of Contact" />}
         ></Route>
         <Route
           path="/property-tax-bills"
-          element={<Automation pageTitle="Property Tax Bills" />}
+          element={<Automation automationName="Property Tax Bills" />}
         ></Route>
         <Route
           path="/add-new-parcels"
-          element={<Automation pageTitle="Add New Parcels" />}
+          element={<Automation automationName="Add New Parcels" />}
         ></Route>
         <Route
           path="/update-parcel-names"
-          element={<Automation pageTitle="Update Parcel Names" />}
+          element={<Automation automationName="Update Parcel Names" />}
         ></Route>
         <Route
           path="/check-assessor-and-collector-links"
           element={
-            <Automation pageTitle="Check Assessor and Collector Links" />
+            <Automation automationName="Check Assessor and Collector Links" />
           }
         ></Route>
         <Route
           path="/pull-parcel-information-from-realquest"
           element={
-            <Automation pageTitle="Pull Parcel Information From Realquest" />
+            <Automation automationName="Pull Parcel Information From Realquest" />
           }
         ></Route>
       </Routes>

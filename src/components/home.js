@@ -26,7 +26,7 @@ export const Home = () => {
 
   return (
     <div
-      className="Home"
+      className="home"
       id="element-to-animate"
       data-theme={state.settings.colorTheme}
     >

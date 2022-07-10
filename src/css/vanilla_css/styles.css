@@ -216,12 +216,13 @@
 
 [data-theme="gradient"] {
   background-image: url("../../images/Gradient-Outline.jpg");
+  /* Track */
   /* Handle */
   /* Handle on hover */ }
   [data-theme="gradient"] button.styled-button {
     background-color: #d4967d;
-    color: #6b6b6b;
-    border: 1.5px solid #6b6b6b; }
+    color: #333333;
+    border: 1.5px solid #333333; }
   [data-theme="gradient"] button.styled-button:hover,
   [data-theme="gradient"] button.styled-button:focus,
   [data-theme="gradient"] button.styled-button:active {
@@ -240,8 +241,11 @@
   [data-theme="gradient"] ::-ms-input-placeholder {
     /* Microsoft Edge */
     color: #6b6b6b; }
+  [data-theme="gradient"] ::-webkit-scrollbar-track {
+    border-radius: 5px; }
   [data-theme="gradient"] ::-webkit-scrollbar-thumb {
-    background: #333333; }
+    background: #333333;
+    border-radius: 5px; }
   [data-theme="gradient"] ::-webkit-scrollbar-thumb:hover {
     background: #bebebe; }
   [data-theme="gradient"] .animated-alert {
@@ -270,6 +274,7 @@
 
 [data-theme="light"] {
   background-color: #fcfcfc;
+  /* Track */
   /* Handle */
   /* Handle on hover */ }
   [data-theme="light"] button.styled-button {
@@ -294,8 +299,11 @@
   [data-theme="light"] ::-ms-input-placeholder {
     /* Microsoft Edge */
     color: #bebebe; }
+  [data-theme="light"] ::-webkit-scrollbar-track {
+    border-radius: 5px; }
   [data-theme="light"] ::-webkit-scrollbar-thumb {
-    background: #fcfcfc; }
+    background: #fcfcfc;
+    border-radius: 5px; }
   [data-theme="light"] ::-webkit-scrollbar-thumb:hover {
     background: #6b6b6b; }
   [data-theme="light"] .animated-alert {
@@ -324,6 +332,7 @@
 
 [data-theme="dark"] {
   background-color: #333333;
+  /* Track */
   /* Handle */
   /* Handle on hover */ }
   [data-theme="dark"] button.styled-button {
@@ -369,8 +378,11 @@
   [data-theme="dark"] ::-ms-input-placeholder {
     /* Microsoft Edge */
     color: #6b6b6b; }
+  [data-theme="dark"] ::-webkit-scrollbar-track {
+    border-radius: 5px; }
   [data-theme="dark"] ::-webkit-scrollbar-thumb {
-    background: #333333; }
+    background: #333333;
+    border-radius: 5px; }
   [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
     background: #bebebe; }
 

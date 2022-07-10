@@ -2,7 +2,7 @@
 @import "variables/dark-mode-variables";
 
 div.event-log {
-  border-radius: 2px;
+  border-radius: 5px;
 }
 
 [data-theme="gradient"] {
@@ -33,4 +33,3 @@ div.event-log {
   overflow-y: scroll;
   max-height: 75vh;
 }
-
