@@ -40,7 +40,7 @@ div.event-log {
 
 [data-theme="dark"] div.event-log > div.row > div.red-message,
 [data-theme="gradient"] div.event-log > div.row > div.red-message {
-  color: red; }
+  color: #f66060; }
 
 [data-theme="dark"] div.event-log > div.row > div.orange-message,
 [data-theme="gradient"] div.event-log > div.row > div.orange-message {
@@ -52,12 +52,12 @@ div.event-log {
 
 [data-theme="dark"] div.event-log > div.row > div.green-message,
 [data-theme="gradient"] div.event-log > div.row > div.green-message {
-  color: green; }
+  color: #5bb65b; }
 
 [data-theme="dark"] div.event-log > div.row > div.blue-message,
 [data-theme="gradient"] div.event-log > div.row > div.blue-message {
-  color: blue; }
+  color: #28aafb; }
 
 [data-theme="dark"] div.event-log > div.row > div.purple-message,
 [data-theme="gradient"] div.event-log > div.row > div.purple-message {
-  color: purple; }
+  color: #fa71fa; }

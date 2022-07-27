@@ -49,7 +49,7 @@ export const Automation = (props) => {
             <div className="col col-12">
               <DropDown data={arrayOfStates} stateSelector={true} />
             </div>
-            <div className="col col-12">
+            {/* <div className="col col-12">
               <DropDown data={arrayOfStates} stateSelector={true} />
             </div>
             <div className="col col-12">
@@ -57,7 +57,7 @@ export const Automation = (props) => {
             </div>
             <div className="col col-12">
               <DropDown data={arrayOfStates} stateSelector={true} />
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="col col-6 mt-2">

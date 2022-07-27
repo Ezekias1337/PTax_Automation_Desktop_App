@@ -47,4 +47,4 @@ app.on("window-all-closed", function () {
 ---------------------------END OF BASE TEMPLATE---------------------------
 */
 
-//console.log("Settings path: ", app.getPath("userData"));
+console.log("Settings path: ", app.getPath("userData"));
