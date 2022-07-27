@@ -19,3 +19,45 @@ div.event-log {
 div.event-log {
   overflow-y: scroll;
   max-height: 75vh; }
+
+[data-theme="light"] div.event-log > div.row > div.red-message {
+  color: red; }
+
+[data-theme="light"] div.event-log > div.row > div.orange-message {
+  color: orange; }
+
+[data-theme="light"] div.event-log > div.row > div.yellow-message {
+  color: yellow; }
+
+[data-theme="light"] div.event-log > div.row > div.green-message {
+  color: green; }
+
+[data-theme="light"] div.event-log > div.row > div.blue-message {
+  color: blue; }
+
+[data-theme="light"] div.event-log > div.row > div.purple-message {
+  color: purple; }
+
+[data-theme="dark"] div.event-log > div.row > div.red-message,
+[data-theme="gradient"] div.event-log > div.row > div.red-message {
+  color: red; }
+
+[data-theme="dark"] div.event-log > div.row > div.orange-message,
+[data-theme="gradient"] div.event-log > div.row > div.orange-message {
+  color: orange; }
+
+[data-theme="dark"] div.event-log > div.row > div.yellow-message,
+[data-theme="gradient"] div.event-log > div.row > div.yellow-message {
+  color: yellow; }
+
+[data-theme="dark"] div.event-log > div.row > div.green-message,
+[data-theme="gradient"] div.event-log > div.row > div.green-message {
+  color: green; }
+
+[data-theme="dark"] div.event-log > div.row > div.blue-message,
+[data-theme="gradient"] div.event-log > div.row > div.blue-message {
+  color: blue; }
+
+[data-theme="dark"] div.event-log > div.row > div.purple-message,
+[data-theme="gradient"] div.event-log > div.row > div.purple-message {
+  color: purple; }

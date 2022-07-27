@@ -33,3 +33,50 @@ div.event-log {
   overflow-y: scroll;
   max-height: 75vh;
 }
+
+[data-theme="light"] {
+  div.event-log > div.row > div {
+    &.red-message {
+      color: $red-message-light;
+    }
+    &.orange-message {
+      color: $orange-message-light;
+    }
+    &.yellow-message {
+      color: $yellow-message-light;
+    }
+    &.green-message {
+      color: $green-message-light;
+    }
+    &.blue-message {
+      color: $blue-message-light;
+    }
+    &.purple-message {
+      color: $purple-message-light;
+    }
+  }
+}
+
+[data-theme="dark"],
+[data-theme="gradient"] {
+  div.event-log > div.row > div {
+    &.red-message {
+      color: $red-message-dark;
+    }
+    &.orange-message {
+      color: $orange-message-dark;
+    }
+    &.yellow-message {
+      color: $yellow-message-dark;
+    }
+    &.green-message {
+      color: $green-message-dark;
+    }
+    &.blue-message {
+      color: $blue-message-dark;
+    }
+    &.purple-message {
+      color: $purple-message-dark;
+    }
+  }
+}
