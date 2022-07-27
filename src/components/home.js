@@ -34,18 +34,18 @@ export const Home = () => {
         <img src={logo} className="App-logo mb-5" alt="logo" />
         <div className="container">
           <div className="row">
-            <div className="col col-2"></div>
-            <div className="col col-4">
+            <div className="col col-12 col-lg-3"></div>
+            <div className="col col-6 col-lg-3">
               <Link to={"/select-an-automation"}>
                 <Button className="full-width-button styled-button">
                   Select an Automation
                 </Button>
               </Link>
             </div>
-            <div className="col col-4">
+            <div className="col col-6 col-lg-3">
               <SettingsButton isAnimated={isFirstTimeRunning}></SettingsButton>
             </div>
-            <div className="col col-2"></div>
+            <div className="col col-12 col-lg-3"></div>
           </div>
           <GeneralAlert
             isVisible={isFirstTimeRunning}

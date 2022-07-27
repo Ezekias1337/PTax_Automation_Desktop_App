@@ -1,7 +1,7 @@
 import { inputFieldFillDefault } from "./inputFieldFillDefault";
 import { camelCasifyString } from "./camelCasifyString";
 
-export const renderDropdownAutomations = (arrayToParse, state) => {
+export const renderDropdownOperations = (arrayToParse, state) => {
   const arrayOfOptionElements = [];
   let selectedOption = false;
   for (const item of arrayToParse) {

@@ -12,21 +12,23 @@ import { listOfAutomationsArrayExport as listOfAutomations } from "../data/listO
 export const Automation = (props) => {
   const state = useSelector((state) => state);
   const [arrayOfStates, setArrayOfStates] = useState([]);
+  const [arrayOfSubLocations, setArrayOfSubLocations] = useState([]);
+  const [arrayOfOperations, setArrayOfOperations] = useState([]);
 
   useLayoutEffect(() => {
     const backgroundInterval = animateGradientBackground();
-    
-    
+    let tempArrayOfStates = [];
+
     for (const item of listOfAutomations) {
       if (item?.locations && item.name === props.automationName) {
-        console.log(item)
         for (const nestedItem of item.locations) {
-          setArrayOfStates((oldArray) => [...oldArray, nestedItem]);
+          tempArrayOfStates.push(nestedItem);
         }
       }
     }
-    console.log("listOfAutomations: ", listOfAutomations)
-    console.log(arrayOfStates);
+
+    setArrayOfStates(tempArrayOfStates);
+
     return function cleanup() {
       clearInterval(backgroundInterval);
     };
@@ -42,12 +44,23 @@ export const Automation = (props) => {
         <h1>{props.automationName}</h1>
       </div>
       <div className="row">
-        <div className="col col-6 mt-1">
-          {/* <DropDown 
-            data={arrayOfStates}
-          /> */}
+        <div className="col col-6 mt-2">
+          <div className="row">
+            <div className="col col-12">
+              <DropDown data={arrayOfStates} stateSelector={true} />
+            </div>
+            <div className="col col-12">
+              <DropDown data={arrayOfStates} stateSelector={true} />
+            </div>
+            <div className="col col-12">
+              <DropDown data={arrayOfStates} stateSelector={true} />
+            </div>
+            <div className="col col-12">
+              <DropDown data={arrayOfStates} stateSelector={true} />
+            </div>
+          </div>
         </div>
-        <div className="col col-6 mt-1">
+        <div className="col col-6 mt-2">
           <EventLog></EventLog>
         </div>
       </div>
