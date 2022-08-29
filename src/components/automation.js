@@ -26,7 +26,11 @@ export const Automation = (props) => {
         }
       }
     }
-
+/* 
+    ⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠    
+      Need to notify user that they must let the script run in fullscreen
+    ⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠ 
+*/
     setArrayOfStates(tempArrayOfStates);
 
     return function cleanup() {
