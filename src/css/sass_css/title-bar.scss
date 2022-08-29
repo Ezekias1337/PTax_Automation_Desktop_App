@@ -1,0 +1,42 @@
+@import "variables/light-mode-variables";
+@import "variables/dark-mode-variables";
+@import "variables/common-variables";
+
+[data-theme="gradient"] {
+  #titleBar {
+    background-color: $bg-secondary-dark;
+  }
+}
+
+[data-theme="light"] {
+  #titleBar {
+    background-color: $bg-secondary-light;
+  }
+}
+
+[data-theme="dark"] {
+  #titleBar {
+    background-color: $bg-secondary-dark;
+  }
+
+  #titleBarButtonContainer svg {
+    color: $color-text-dark;
+    opacity: 85%;
+  }
+  
+  #titleBarButtonContainer button {
+    color: $color-text-dark;
+    opacity: 85%;
+  }
+}
+
+#titleBar {
+  height: 32px;
+  width: calc(100% - 10px);
+}
+
+#titleBarButtonContainer {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}

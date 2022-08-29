@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { usePersistentSettings } from "../functions/usePersistentSettings";
 import { checkIfFirstTimeRunning } from "../functions/checkIfFirstTimeRunning";
 import { GeneralAlert } from "./generalAlert";
+import { TitleBar } from "./titlebar"
 
 export const Home = () => {
   const isFirstTimeRunning = checkIfFirstTimeRunning();
@@ -30,6 +31,7 @@ export const Home = () => {
       id="element-to-animate"
       data-theme={state.settings.colorTheme}
     >
+      <TitleBar />
       <header className="App-header home-body">
         <img src={logo} className="App-logo mb-5" alt="logo" />
         <div className="container">

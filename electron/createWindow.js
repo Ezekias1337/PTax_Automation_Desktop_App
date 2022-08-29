@@ -14,7 +14,7 @@ const createWindow = (window, tray, directoryName, process, store) => {
     window = new BrowserWindow({
       width: screenWidth,
       height: screenHeight,
-      frame: true,
+      frame: false,
       fullscreenable: true,
       resizable: true,
       transparent: false,
@@ -31,7 +31,7 @@ const createWindow = (window, tray, directoryName, process, store) => {
     window = new BrowserWindow({
       width: screenWidth,
       height: screenHeight,
-      frame: true,
+      frame: false,
       fullscreenable: true,
       resizable: true,
       transparent: false,

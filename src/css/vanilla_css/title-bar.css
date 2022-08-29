@@ -1,0 +1,21 @@
+[data-theme="gradient"] #titleBar {
+  background-color: #6b6b6b; }
+
+[data-theme="light"] #titleBar {
+  background-color: #bebebe; }
+
+[data-theme="dark"] #titleBar {
+  background-color: #6b6b6b; }
+
+[data-theme="dark"] #titleBarButtonContainer svg {
+  color: #fcfcfc;
+  opacity: 85%; }
+
+#titleBar {
+  height: 32px;
+  width: calc(100% - 10px); }
+
+#titleBarButtonContainer {
+  display: flex;
+  justify-content: right;
+  align-items: center; }
