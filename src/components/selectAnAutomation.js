@@ -36,10 +36,13 @@ export const SelectAnAutomation = () => {
   return (
     <div data-theme={state.settings.colorTheme} id="element-to-animate">
       <TitleBar />
-      <div className="row mx-1">{arrayOfAutomations}</div>
-      <div className="row">
-        <div className="col col-12 mt-5 mx-1">
-          <HomeButton />
+
+      <div className="container-for-scroll">
+        <div className="row mx-1">{arrayOfAutomations}</div>
+        <div className="row">
+          <div className="col col-12 mt-5 mx-1">
+            <HomeButton />
+          </div>
         </div>
       </div>
     </div>

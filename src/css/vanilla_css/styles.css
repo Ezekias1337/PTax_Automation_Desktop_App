@@ -438,6 +438,12 @@ div#root {
   width: 100%;
   height: 100%; }
 
+.container-for-scroll {
+  height: 90%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 10px; }
+
 button.full-width-button {
   width: 100%;
   height: 100%; }

@@ -76,30 +76,33 @@ export const Settings = () => {
   return (
     <div data-theme={state.settings.colorTheme} id="element-to-animate">
       <TitleBar />
-      <div className="row mx-1">{arrayOfSettings}</div>
-      <div className="row mt-3">
-        <div className="col col-5"></div>
-        <div className="col col-2">
-          <SaveButton
-            idForButton="save-button"
-            onClickHandler={() => {
-              const settingsToPass = saveUserSettings();
-              saveSettings(settingsToPass);
-              popUpAlert("alert-to-animate");
-            }}
-          />
+      <div className="container-for-scroll">
+        <div className="row mx-1">{arrayOfSettings}</div>
+        <div className="row mt-3">
+          <div className="col col-5"></div>
+          <div className="col col-2">
+            <SaveButton
+              idForButton="save-button"
+              onClickHandler={() => {
+                const settingsToPass = saveUserSettings();
+                saveSettings(settingsToPass);
+                popUpAlert("alert-to-animate");
+              }}
+            />
+          </div>
+          <div className="col col-5"></div>
         </div>
-        <div className="col col-5"></div>
-      </div>
-      <div className="row mx-1">
-        <div className="col col-12 mt-5">
-          <Link to={"/"}>
-            <Button className="styled-button">
-              <FontAwesomeIcon icon={faHouse} />
-            </Button>
-          </Link>
+        <div className="row mx-1">
+          <div className="col col-12 mt-5">
+            <Link to={"/"}>
+              <Button className="styled-button">
+                <FontAwesomeIcon icon={faHouse} />
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
+
       <GeneralAlert
         id="alert-to-animate"
         isVisible={false}

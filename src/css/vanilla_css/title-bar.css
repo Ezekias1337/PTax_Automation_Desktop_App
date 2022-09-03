@@ -5,7 +5,7 @@
   background-color: #bebebe; }
 
 [data-theme="dark"] #titleBar {
-  background-color: #6b6b6b; }
+  background-color: rgba(107, 107, 107, 0.5); }
 
 [data-theme="dark"] #titleBarButtonContainer svg {
   color: #fcfcfc;

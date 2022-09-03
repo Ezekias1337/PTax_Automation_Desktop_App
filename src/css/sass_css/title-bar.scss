@@ -16,7 +16,7 @@
 
 [data-theme="dark"] {
   #titleBar {
-    background-color: $bg-secondary-dark;
+    background-color: rgba($bg-secondary-dark, 0.5);
   }
 
   #titleBarButtonContainer svg {

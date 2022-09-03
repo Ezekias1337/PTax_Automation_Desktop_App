@@ -16,7 +16,6 @@ export const TitleBar = () => {
       <div className="row" id="titleBarRow">
         <div id="titleBarLogoContainer" className="col col-9">
           <img src={logo} className="title-logo" />
-          <h5>PTax Automation Assistant</h5>
         </div>
         <div id="titleBarButtonContainer" className="col col-3">
           <TitleBarButton
