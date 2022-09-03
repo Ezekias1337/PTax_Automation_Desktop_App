@@ -31,6 +31,9 @@
   [data-theme="dark"] #titleBarButtonContainer .title-bar-button-close:hover svg {
     color: #fcfcfc; }
 
+[data-theme="dark"] #titleBarLogoContainer h5 {
+  color: #fcfcfc; }
+
 #titleBar {
   height: 32px;
   width: 100%; }
@@ -52,3 +55,18 @@
 .title-bar-button,
 .title-bar-button-close {
   max-height: 100%; }
+  .title-bar-button:focus,
+  .title-bar-button-close:focus {
+    box-shadow: none; }
+
+#titleBarLogoContainer {
+  display: flex;
+  align-items: center;
+  -webkit-app-region: drag; }
+
+#titleBarLogoContainer h5 {
+  margin-bottom: 0px;
+  margin-left: 5px; }
+
+.title-logo {
+  max-height: 28px; }

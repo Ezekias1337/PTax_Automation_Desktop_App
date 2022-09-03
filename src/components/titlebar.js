@@ -1,19 +1,23 @@
 import {
   faWindowMinimize,
   faWindowMaximize,
-  faWindowClose,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { TitleBarButton } from "./buttons/titleBarButton";
 import { closeWindow } from "../functions/window/closeWindow";
 import { maximizeWindow } from "../functions/window/maximizeWindow";
 import { minimizeWindow } from "../functions/window/minimizeWindow";
+import logo from "../../src/images/PTax_Logo.png";
 import "../css/vanilla_css/title-bar.css";
 
 export const TitleBar = () => {
   return (
     <div id="titleBar">
       <div className="row" id="titleBarRow">
-        <div className="col col-9"></div>
+        <div id="titleBarLogoContainer" className="col col-9">
+          <img src={logo} className="title-logo" />
+          <h5>PTax Automation Assistant</h5>
+        </div>
         <div id="titleBarButtonContainer" className="col col-3">
           <TitleBarButton
             buttonIcon={faWindowMinimize}
@@ -24,7 +28,7 @@ export const TitleBar = () => {
             buttonClickHandler={maximizeWindow}
           />
           <TitleBarButton
-            buttonIcon={faWindowClose}
+            buttonIcon={faXmark}
             buttonClickHandler={closeWindow}
             isClose={true}
           />

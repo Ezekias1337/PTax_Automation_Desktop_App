@@ -1,5 +1,4 @@
-import "../css/vanilla_css/styles.css";
-import "../css/vanilla_css/select-an-automation.css";
+import { TitleBar } from "./titlebar";
 import { listOfAutomationsArrayExport } from "../data/listOfAutomations";
 import { Button } from "reactstrap";
 import { HomeButton } from "./buttons/homeButton";
@@ -7,6 +6,8 @@ import { Link } from "react-router-dom";
 import { animateGradientBackground } from "../functions/animateGradientBackground";
 import { useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
+import "../css/vanilla_css/styles.css";
+import "../css/vanilla_css/select-an-automation.css";
 
 export const SelectAnAutomation = () => {
   const state = useSelector((state) => state);
@@ -33,14 +34,11 @@ export const SelectAnAutomation = () => {
   }
 
   return (
-    <div
-      className="container-fluid"
-      data-theme={state.settings.colorTheme}
-      id="element-to-animate"
-    >
-      <div className="row">{arrayOfAutomations}</div>
+    <div data-theme={state.settings.colorTheme} id="element-to-animate">
+      <TitleBar />
+      <div className="row mx-1">{arrayOfAutomations}</div>
       <div className="row">
-        <div className="col col-12 mt-5">
+        <div className="col col-12 mt-5 mx-1">
           <HomeButton />
         </div>
       </div>

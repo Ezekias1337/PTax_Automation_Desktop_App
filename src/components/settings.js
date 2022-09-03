@@ -1,5 +1,4 @@
-import "../css/vanilla_css/styles.css";
-import "../css/vanilla_css/inputs.css";
+import { TitleBar } from "./titlebar";
 import { listOfSettings } from "../data/listOfSettings";
 import { Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +17,8 @@ import { DropDown } from "./inputFields/dropdown";
 import { FileOrDirectoryPicker } from "./inputFields/fileOrDirectoryPicker";
 import { TextInput } from "./inputFields/textInput";
 import { Switch } from "./inputFields/switch";
+import "../css/vanilla_css/styles.css";
+import "../css/vanilla_css/inputs.css";
 
 export const Settings = () => {
   const state = useSelector((state) => state);
@@ -66,24 +67,16 @@ export const Settings = () => {
       );
     } else if (item[1]?.inputCategory === "switch") {
       arrayOfSettings.push(
-        <Switch
-          key={counter}
-          counter={counter}
-          data={item[1]}
-          state={state}
-        />
+        <Switch key={counter} counter={counter} data={item[1]} state={state} />
       );
     }
     counter++;
   }
 
   return (
-    <div
-      className="container-fluid"
-      data-theme={state.settings.colorTheme}
-      id="element-to-animate"
-    >
-      <div className="row">{arrayOfSettings}</div>
+    <div data-theme={state.settings.colorTheme} id="element-to-animate">
+      <TitleBar />
+      <div className="row mx-1">{arrayOfSettings}</div>
       <div className="row mt-3">
         <div className="col col-5"></div>
         <div className="col col-2">
@@ -98,7 +91,7 @@ export const Settings = () => {
         </div>
         <div className="col col-5"></div>
       </div>
-      <div className="row">
+      <div className="row mx-1">
         <div className="col col-12 mt-5">
           <Link to={"/"}>
             <Button className="styled-button">

@@ -49,6 +49,12 @@
       color: $color-text-dark;
     }
   }
+
+  #titleBarLogoContainer {
+    h5 {
+      color: $color-text-dark;
+    }
+  }
 }
 
 #titleBar {
@@ -76,4 +82,24 @@
 .title-bar-button,
 .title-bar-button-close {
   max-height: 100%;
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+#titleBarLogoContainer {
+  display: flex;
+  align-items: center;
+  -webkit-app-region: drag;
+}
+
+#titleBarLogoContainer {
+  h5 {
+    margin-bottom: 0px;
+    margin-left: 5px;
+  }
+}
+
+.title-logo {
+  max-height: 28px;
 }

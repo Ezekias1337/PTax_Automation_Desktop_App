@@ -1,6 +1,6 @@
-import "../css/vanilla_css/styles.css";
 import { useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import "../css/vanilla_css/styles.css";
 
 export const DisplayStatus = (props) => {
   const state = useSelector((state) => state);

@@ -1,5 +1,4 @@
-import "../css/vanilla_css/styles.css";
-import "../css/vanilla_css/select-an-automation.css";
+import { TitleBar } from "./titlebar";
 import { HomeButton } from "./buttons/homeButton";
 import { BackButton } from "./buttons/backButton";
 import { DropDown } from "./inputFields/dropdown";
@@ -8,6 +7,8 @@ import { useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { EventLog } from "./eventLog";
 import { listOfAutomationsArrayExport as listOfAutomations } from "../data/listOfAutomations";
+import "../css/vanilla_css/styles.css";
+import "../css/vanilla_css/select-an-automation.css";
 
 export const Automation = (props) => {
   const state = useSelector((state) => state);
@@ -26,7 +27,7 @@ export const Automation = (props) => {
         }
       }
     }
-/* 
+    /* 
     ⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠    
       Need to notify user that they must let the script run in fullscreen
     ⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠⚠ 
@@ -40,14 +41,15 @@ export const Automation = (props) => {
 
   return (
     <div
-      className="automation container-fluid"
+      className="automation"
       id="element-to-animate"
       data-theme={state.settings.colorTheme}
     >
+      <TitleBar />
       <div className="row page-title">
         <h1>{props.automationName}</h1>
       </div>
-      <div className="row">
+      <div className="row mx-1">
         <div className="col col-6 mt-2">
           <div className="row">
             <div className="col col-12">

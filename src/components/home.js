@@ -1,7 +1,3 @@
-import logo from "../../src/images/PTax_Logo.png";
-import "../App.css";
-import "../css/vanilla_css/styles.css";
-import "../css/vanilla_css/home.css";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import React, { useLayoutEffect } from "react";
@@ -11,7 +7,11 @@ import { useSelector } from "react-redux";
 import { usePersistentSettings } from "../functions/usePersistentSettings";
 import { checkIfFirstTimeRunning } from "../functions/checkIfFirstTimeRunning";
 import { GeneralAlert } from "./generalAlert";
-import { TitleBar } from "./titlebar"
+import { TitleBar } from "./titlebar";
+import logo from "../../src/images/PTax_Logo.png";
+import "../App.css";
+import "../css/vanilla_css/styles.css";
+import "../css/vanilla_css/home.css";
 
 export const Home = () => {
   const isFirstTimeRunning = checkIfFirstTimeRunning();

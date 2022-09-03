@@ -1,7 +1,7 @@
-import "../css/vanilla_css/styles.css";
-import "../css/vanilla_css/event-log.css";
 import { ClipboardButton } from "./buttons/clipboardButton";
 import { SpreadsheetButton } from "./buttons/spreadsheetButton";
+import "../css/vanilla_css/styles.css";
+import "../css/vanilla_css/event-log.css";
 
 export const EventLog = (props) => {
   return (
