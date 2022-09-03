@@ -11,11 +11,44 @@
   color: #fcfcfc;
   opacity: 85%; }
 
+[data-theme="dark"] #titleBarButtonContainer .title-bar-button,
+[data-theme="dark"] #titleBarButtonContainer .title-bar-button-close {
+  color: #fcfcfc;
+  opacity: 85%;
+  border-radius: 0px; }
+
+[data-theme="dark"] #titleBarButtonContainer .title-bar-button-close {
+  color: #fcfcfc;
+  opacity: 85%; }
+
+[data-theme="dark"] #titleBarButtonContainer .title-bar-button:hover {
+  background-color: rgba(252, 252, 252, 0.8); }
+  [data-theme="dark"] #titleBarButtonContainer .title-bar-button:hover svg {
+    color: #333333; }
+
+[data-theme="dark"] #titleBarButtonContainer .title-bar-button-close:hover {
+  background-color: rgba(246, 96, 96, 0.8); }
+  [data-theme="dark"] #titleBarButtonContainer .title-bar-button-close:hover svg {
+    color: #fcfcfc; }
+
 #titleBar {
   height: 32px;
-  width: calc(100% - 10px); }
+  width: 100%; }
+
+#titleBarRow {
+  margin-left: 0px;
+  margin-right: 0px; }
+
+#titleBarRow,
+#titleBarRow div.col {
+  max-height: 32px; }
 
 #titleBarButtonContainer {
   display: flex;
   justify-content: right;
-  align-items: center; }
+  align-items: center;
+  padding-right: 0px; }
+
+.title-bar-button,
+.title-bar-button-close {
+  max-height: 100%; }

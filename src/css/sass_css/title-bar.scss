@@ -23,20 +23,57 @@
     color: $color-text-dark;
     opacity: 85%;
   }
-  
-  #titleBarButtonContainer button {
+
+  #titleBarButtonContainer .title-bar-button,
+  #titleBarButtonContainer .title-bar-button-close {
     color: $color-text-dark;
     opacity: 85%;
+    border-radius: 0px;
+  }
+
+  #titleBarButtonContainer .title-bar-button-close {
+    color: $color-text-dark;
+    opacity: 85%;
+  }
+
+  #titleBarButtonContainer .title-bar-button:hover {
+    background-color: rgba($color-text-dark, 0.8);
+    svg {
+      color: $bg-dark;
+    }
+  }
+
+  #titleBarButtonContainer .title-bar-button-close:hover {
+    background-color: rgba($red-message-dark, 0.8);
+    svg {
+      color: $color-text-dark;
+    }
   }
 }
 
 #titleBar {
   height: 32px;
-  width: calc(100% - 10px);
+  width: 100%;
+}
+
+#titleBarRow {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+#titleBarRow,
+#titleBarRow div.col {
+  max-height: 32px;
 }
 
 #titleBarButtonContainer {
   display: flex;
   justify-content: right;
   align-items: center;
+  padding-right: 0px;
+}
+
+.title-bar-button,
+.title-bar-button-close {
+  max-height: 100%;
 }

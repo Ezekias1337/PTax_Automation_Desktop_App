@@ -1,8 +1,11 @@
-const { BrowserWindow } = require("electron");
+const { BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const { createTray } = require("./createTray");
 const { handleResolutionPref } = require("./handleResolutionPref");
 const { handlePositionPref } = require("./handlePositionPref");
+const { maximizeWindow } = require("./maximizeWindow");
+const { minimizeWindow } = require("./minimizeWindow");
+const { closeWindow } = require("./closeWindow");
 
 const createWindow = (window, tray, directoryName, process, store) => {
   const [screenWidth, screenHeight] = handleResolutionPref(store);
@@ -45,12 +48,15 @@ const createWindow = (window, tray, directoryName, process, store) => {
   }
 
   window.on("closed", () => (window = null));
-
   window.loadURL("http://localhost:3000");
-
   if (tray === undefined) {
     createTray(window, tray, directoryName, process);
   }
+
+  // Handle window toggling for custom titlebar
+  ipcMain.on("windowMinimize", () => minimizeWindow(window));
+  ipcMain.on("windowMaximize", () => maximizeWindow(window));
+  ipcMain.on("windowClose", () => closeWindow(window));
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
