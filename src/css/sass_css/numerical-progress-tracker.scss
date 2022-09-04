@@ -8,14 +8,19 @@
   align-items: center;
 }
 
+[data-theme="gradient"] {
+  #numericalProgressTracker {
+    color: $bg-dark;
+  }
+}
+
 [data-theme="light"] {
   #numericalProgressTracker {
     color: $bg-secondary-light;
   }
 }
 
-[data-theme="dark"],
-[data-theme="gradient"] {
+[data-theme="dark"] {
   #numericalProgressTracker {
     color: $bg-secondary-dark;
   }

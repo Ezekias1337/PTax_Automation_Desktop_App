@@ -51,9 +51,10 @@ export const Automation = (props) => {
       <div className="row page-title">
         <h1>{props.automationName}</h1>
       </div>
-      <NumericalProgressTracker />
-      <ProgressBar />
+
       <div className="container-for-scroll">
+        <NumericalProgressTracker />
+        <ProgressBar />
         <div className="row mx-1">
           <div className="col col-6 mt-2">
             <div className="row">

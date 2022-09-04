@@ -3,9 +3,11 @@
   justify-content: center;
   align-items: center; }
 
+[data-theme="gradient"] #numericalProgressTracker {
+  color: #333333; }
+
 [data-theme="light"] #numericalProgressTracker {
   color: #bebebe; }
 
-[data-theme="dark"] #numericalProgressTracker,
-[data-theme="gradient"] #numericalProgressTracker {
+[data-theme="dark"] #numericalProgressTracker {
   color: #6b6b6b; }
