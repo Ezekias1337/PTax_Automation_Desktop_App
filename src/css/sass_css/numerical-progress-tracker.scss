@@ -1,0 +1,22 @@
+@import "variables/light-mode-variables";
+@import "variables/dark-mode-variables";
+@import "variables/common-variables";
+
+#numericalProgressTracker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+[data-theme="light"] {
+  #numericalProgressTracker {
+    color: $bg-secondary-light;
+  }
+}
+
+[data-theme="dark"],
+[data-theme="gradient"] {
+  #numericalProgressTracker {
+    color: $bg-secondary-dark;
+  }
+}

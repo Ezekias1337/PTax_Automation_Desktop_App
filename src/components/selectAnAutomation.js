@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { animateGradientBackground } from "../functions/animateGradientBackground";
 import { useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
-import "../css/vanilla_css/styles.css";
-import "../css/vanilla_css/select-an-automation.css";
+import "../css/sass_css/styles.scss";
+
 
 export const SelectAnAutomation = () => {
   const state = useSelector((state) => state);

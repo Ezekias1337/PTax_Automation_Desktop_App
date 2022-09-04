@@ -6,9 +6,11 @@ import { animateGradientBackground } from "../functions/animateGradientBackgroun
 import { useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { EventLog } from "./eventLog";
+import { ProgressBar } from "./progressBar";
+import { NumericalProgressTracker } from "./numericalProgressTracker";
 import { listOfAutomationsArrayExport as listOfAutomations } from "../data/listOfAutomations";
-import "../css/vanilla_css/styles.css";
-import "../css/vanilla_css/select-an-automation.css";
+import "../css/sass_css/styles.scss";
+import "../css/sass_css/automation.scss";
 
 export const Automation = (props) => {
   const state = useSelector((state) => state);
@@ -49,6 +51,8 @@ export const Automation = (props) => {
       <div className="row page-title">
         <h1>{props.automationName}</h1>
       </div>
+      <NumericalProgressTracker />
+      <ProgressBar />
       <div className="container-for-scroll">
         <div className="row mx-1">
           <div className="col col-6 mt-2">
@@ -71,7 +75,7 @@ export const Automation = (props) => {
             <EventLog></EventLog>
           </div>
         </div>
-        <div className="row">
+        <div className="row mx-1">
           <div className="col col-12 mt-5">
             <BackButton></BackButton>
             <HomeButton></HomeButton>

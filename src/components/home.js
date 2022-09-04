@@ -10,8 +10,8 @@ import { GeneralAlert } from "./generalAlert";
 import { TitleBar } from "./titlebar";
 import logo from "../../src/images/PTax_Logo.png";
 import "../App.css";
-import "../css/vanilla_css/styles.css";
-import "../css/vanilla_css/home.css";
+import "../css/sass_css/styles.scss";
+import "../css/sass_css/home.scss";
 
 export const Home = () => {
   const isFirstTimeRunning = checkIfFirstTimeRunning();

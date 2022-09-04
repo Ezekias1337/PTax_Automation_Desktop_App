@@ -1,0 +1,11 @@
+#numericalProgressTracker {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+[data-theme="light"] #numericalProgressTracker {
+  color: #bebebe; }
+
+[data-theme="dark"] #numericalProgressTracker,
+[data-theme="gradient"] #numericalProgressTracker {
+  color: #6b6b6b; }

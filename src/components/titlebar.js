@@ -3,19 +3,22 @@ import {
   faWindowMaximize,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import { TitleBarButton } from "./buttons/titleBarButton";
 import { closeWindow } from "../functions/window/closeWindow";
 import { maximizeWindow } from "../functions/window/maximizeWindow";
 import { minimizeWindow } from "../functions/window/minimizeWindow";
 import logo from "../../src/images/PTax_Logo.png";
-import "../css/vanilla_css/title-bar.css";
+import "../css/sass_css/title-bar.scss";
 
 export const TitleBar = () => {
   return (
     <div id="titleBar">
       <div className="row" id="titleBarRow">
         <div id="titleBarLogoContainer" className="col col-9">
-          <img src={logo} className="title-logo" />
+          <Link to={"/"}>
+            <img src={logo} className="title-logo" />
+          </Link>
         </div>
         <div id="titleBarButtonContainer" className="col col-3">
           <TitleBarButton

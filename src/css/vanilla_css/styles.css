@@ -228,7 +228,7 @@
   [data-theme="gradient"] button.styled-button:active {
     background-color: #333333;
     color: #d4967d;
-    border: 1px solid #d4967d;
+    border: 1.5px solid #d4967d;
     box-shadow: 0px 0px 10px #d4967d; }
   [data-theme="gradient"] ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -439,10 +439,10 @@ div#root {
   height: 100%; }
 
 .container-for-scroll {
-  height: 90%;
+  height: 85%;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-bottom: 10px; }
+  padding-bottom: 30px; }
 
 button.full-width-button {
   width: 100%;
@@ -460,9 +460,9 @@ div.form-switch {
   margin-top: 0px !important;
   align-self: flex-end; }
 
-button.styled-button:focus {
-  box-shadow: 0 0 0 0.25rem #e7c4b6; }
-
+/* button.styled-button {
+  box-shadow: 0px 0px 10px transparent;
+} */
 button.animated-button {
   -webkit-animation-name: animate-button;
   animation-name: animate-button;

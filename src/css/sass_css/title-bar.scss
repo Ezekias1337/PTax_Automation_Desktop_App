@@ -2,18 +2,50 @@
 @import "variables/dark-mode-variables";
 @import "variables/common-variables";
 
-[data-theme="gradient"] {
-  #titleBar {
-    background-color: $bg-secondary-dark;
-  }
-}
-
 [data-theme="light"] {
   #titleBar {
-    background-color: $bg-secondary-light;
+    background-color: rgba($bg-secondary-light, 0.5);
+  }
+
+  #titleBarButtonContainer svg {
+    color: $color-text-light;
+    opacity: 85%;
+  }
+
+  #titleBarButtonContainer .title-bar-button,
+  #titleBarButtonContainer .title-bar-button-close {
+    color: $color-text-light;
+    opacity: 85%;
+    border-radius: 0px;
+  }
+
+  #titleBarButtonContainer .title-bar-button-close {
+    color: $color-text-light;
+    opacity: 85%;
+  }
+
+  #titleBarButtonContainer .title-bar-button:hover {
+    background-color: rgba($color-text-light, 0.8);
+    svg {
+      color: $bg-light;
+    }
+  }
+
+  #titleBarButtonContainer .title-bar-button-close:hover {
+    background-color: rgba($red-message-light, 0.8);
+    svg {
+      color: $color-text-light;
+    }
+  }
+
+  #titleBarLogoContainer {
+    h5 {
+      color: $color-text-light;
+    }
   }
 }
 
+[data-theme="gradient"],
 [data-theme="dark"] {
   #titleBar {
     background-color: rgba($bg-secondary-dark, 0.5);
