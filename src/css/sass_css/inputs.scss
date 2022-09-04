@@ -207,6 +207,26 @@
   }
 }
 
+.brown-input:hover::-webkit-input-placeholder {
+  color: $brown;
+  opacity: 1;
+}
+
+.brown-input:hover::-moz-placeholder {
+  color: $brown;
+  opacity: 1;
+}
+
+.brown-input:hover:-ms-input-placeholder {
+  color: $brown;
+  opacity: 1;
+}
+
+.brown-input:hover::-ms-input-placeholder {
+  color: $brown;
+  opacity: 1;
+}
+
 .brown-input:hover::placeholder {
   color: $brown;
   opacity: 1;

@@ -20,6 +20,30 @@
     box-shadow: 0px 0px 10px $brown;
   }
 
+  ::-webkit-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $bg-secondary-dark;
+    opacity: 1; /* Firefox */
+  }
+
+  ::-moz-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $bg-secondary-dark;
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $bg-secondary-dark;
+    opacity: 1; /* Firefox */
+  }
+
+  ::-ms-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $bg-secondary-dark;
+    opacity: 1; /* Firefox */
+  }
+
   ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: $bg-secondary-dark;
@@ -53,6 +77,7 @@
   }
 
   .animated-alert {
+    -webkit-animation-name: animated-alert;
     animation-name: animated-alert;
     -webkit-animation-duration: 2.5s;
     animation-duration: 2.5s;
@@ -101,6 +126,30 @@
     box-shadow: 0px 0px 10px $brown;
   }
 
+  ::-webkit-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $bg-secondary-light;
+    opacity: 1; /* Firefox */
+  }
+
+  ::-moz-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $bg-secondary-light;
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $bg-secondary-light;
+    opacity: 1; /* Firefox */
+  }
+
+  ::-ms-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $bg-secondary-light;
+    opacity: 1; /* Firefox */
+  }
+
   ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: $bg-secondary-light;
@@ -134,6 +183,7 @@
   }
 
   .animated-alert {
+    -webkit-animation-name: animated-alert-light;
     animation-name: animated-alert-light;
     -webkit-animation-duration: 1.5s;
     animation-duration: 1.5s;
@@ -211,6 +261,30 @@
     background-color: $bg-dark;
   }
 
+  ::-webkit-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $bg-secondary-dark;
+    opacity: 1; /* Firefox */
+  }
+
+  ::-moz-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $bg-secondary-dark;
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $bg-secondary-dark;
+    opacity: 1; /* Firefox */
+  }
+
+  ::-ms-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $bg-secondary-dark;
+    opacity: 1; /* Firefox */
+  }
+
   ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: $bg-secondary-dark;
@@ -247,6 +321,7 @@
 [data-theme="gradient"],
 [data-theme="dark"] {
   .animated-alert {
+    -webkit-animation-name: animated-alert;
     animation-name: animated-alert;
     -webkit-animation-duration: 1.5s;
     animation-duration: 1.5s;

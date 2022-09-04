@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { EventLog } from "./eventLog";
 import { ProgressBar } from "./progressBar";
 import { NumericalProgressTracker } from "./numericalProgressTracker";
+import { Loader } from "./loader";
 import { listOfAutomationsArrayExport as listOfAutomations } from "../data/listOfAutomations";
 import "../css/sass_css/styles.scss";
 import "../css/sass_css/automation.scss";
@@ -55,6 +56,7 @@ export const Automation = (props) => {
       <div className="container-for-scroll">
         <NumericalProgressTracker />
         <ProgressBar />
+        <Loader />
         <div className="row mx-1">
           <div className="col col-6 mt-2">
             <div className="row">
