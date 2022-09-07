@@ -1,8 +1,8 @@
 import "../css/sass_css/time-tracker.scss";
 
 export const TimeTracker = ({
-  timeElapsed = 50,
-  estimatedTimeRemaining = 50,
+  timeElapsed = "0:50",
+  estimatedTimeRemaining = "0:52",
 }) => {
   return (
     <div className="container mt-1" id="timeTrackerWrapper">
