@@ -9,7 +9,6 @@ require("./ipc-listeners/allListeners");
 ---------------------------START OF BASE TEMPLATE---------------------------
 */
 
-let tray, window, isScreenPositionCustom;
 let store = new Store();
 
 /* 
@@ -18,8 +17,9 @@ let store = new Store();
   Some APIs can only be used after this event occurs. 
 */
 app.whenReady().then(() => {
-  createTray(window, tray, __dirname, process);
-  createWindow(window, tray, __dirname, process, store);
+  const window = createWindow(__dirname, process, store);
+  const tray = createTray(window, __dirname, process);
+  
 
   app.on("activate", function () {
     /* 

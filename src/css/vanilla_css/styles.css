@@ -230,6 +230,26 @@
     color: #d4967d;
     border: 1.5px solid #d4967d;
     box-shadow: 0px 0px 10px #d4967d; }
+  [data-theme="gradient"] ::-webkit-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #6b6b6b;
+    opacity: 1;
+    /* Firefox */ }
+  [data-theme="gradient"] ::-moz-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #6b6b6b;
+    opacity: 1;
+    /* Firefox */ }
+  [data-theme="gradient"] :-ms-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #6b6b6b;
+    opacity: 1;
+    /* Firefox */ }
+  [data-theme="gradient"] ::-ms-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #6b6b6b;
+    opacity: 1;
+    /* Firefox */ }
   [data-theme="gradient"] ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #6b6b6b;
@@ -249,6 +269,7 @@
   [data-theme="gradient"] ::-webkit-scrollbar-thumb:hover {
     background: #bebebe; }
   [data-theme="gradient"] .animated-alert {
+    -webkit-animation-name: animated-alert;
     animation-name: animated-alert;
     -webkit-animation-duration: 2.5s;
     animation-duration: 2.5s;
@@ -288,6 +309,26 @@
     color: #d4967d;
     border: 1.5px solid #d4967d;
     box-shadow: 0px 0px 10px #d4967d; }
+  [data-theme="light"] ::-webkit-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #bebebe;
+    opacity: 1;
+    /* Firefox */ }
+  [data-theme="light"] ::-moz-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #bebebe;
+    opacity: 1;
+    /* Firefox */ }
+  [data-theme="light"] :-ms-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #bebebe;
+    opacity: 1;
+    /* Firefox */ }
+  [data-theme="light"] ::-ms-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #bebebe;
+    opacity: 1;
+    /* Firefox */ }
   [data-theme="light"] ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #bebebe;
@@ -307,6 +348,7 @@
   [data-theme="light"] ::-webkit-scrollbar-thumb:hover {
     background: #6b6b6b; }
   [data-theme="light"] .animated-alert {
+    -webkit-animation-name: animated-alert-light;
     animation-name: animated-alert-light;
     -webkit-animation-duration: 1.5s;
     animation-duration: 1.5s;
@@ -367,6 +409,26 @@
     box-shadow: 0px 0px 10px #d4967d;
     border: 1.5px solid #d4967d;
     background-color: #333333; }
+  [data-theme="dark"] ::-webkit-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #6b6b6b;
+    opacity: 1;
+    /* Firefox */ }
+  [data-theme="dark"] ::-moz-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #6b6b6b;
+    opacity: 1;
+    /* Firefox */ }
+  [data-theme="dark"] :-ms-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #6b6b6b;
+    opacity: 1;
+    /* Firefox */ }
+  [data-theme="dark"] ::-ms-input-placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #6b6b6b;
+    opacity: 1;
+    /* Firefox */ }
   [data-theme="dark"] ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #6b6b6b;
@@ -388,6 +450,7 @@
 
 [data-theme="gradient"] .animated-alert,
 [data-theme="dark"] .animated-alert {
+  -webkit-animation-name: animated-alert;
   animation-name: animated-alert;
   -webkit-animation-duration: 1.5s;
   animation-duration: 1.5s;

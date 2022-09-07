@@ -7,10 +7,12 @@ const { maximizeWindow } = require("./maximizeWindow");
 const { minimizeWindow } = require("./minimizeWindow");
 const { closeWindow } = require("./closeWindow");
 
-const createWindow = (window, tray, directoryName, process, store) => {
+const createWindow = (directoryName, process, store) => {
   const [screenWidth, screenHeight] = handleResolutionPref(store);
   const [screenXCoordinate, screenYCoordinate, isScreenPositionCustom] =
     handlePositionPref(store);
+
+  let window = null;
 
   // Create the browser window.
   if (isScreenPositionCustom === true) {
@@ -49,9 +51,6 @@ const createWindow = (window, tray, directoryName, process, store) => {
 
   window.on("closed", () => (window = null));
   window.loadURL("http://localhost:3000");
-  if (tray === undefined) {
-    createTray(window, tray, directoryName, process);
-  }
 
   // Handle window toggling for custom titlebar
   ipcMain.on("windowMinimize", () => minimizeWindow(window));
@@ -60,6 +59,8 @@ const createWindow = (window, tray, directoryName, process, store) => {
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
+
+  return window;
 };
 
 module.exports = { createWindow };

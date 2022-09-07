@@ -167,6 +167,22 @@
   border: 1.5px solid #d4967d;
   background-color: #333333; }
 
+.brown-input:hover::-webkit-input-placeholder {
+  color: #d4967d;
+  opacity: 1; }
+
+.brown-input:hover::-moz-placeholder {
+  color: #d4967d;
+  opacity: 1; }
+
+.brown-input:hover:-ms-input-placeholder {
+  color: #d4967d;
+  opacity: 1; }
+
+.brown-input:hover::-ms-input-placeholder {
+  color: #d4967d;
+  opacity: 1; }
+
 .brown-input:hover::placeholder {
   color: #d4967d;
   opacity: 1; }
