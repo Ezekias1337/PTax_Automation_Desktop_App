@@ -1,0 +1,27 @@
+@import "variables/light-mode-variables";
+@import "variables/dark-mode-variables";
+@import "variables/common-variables";
+
+#spreadsheetPreviewer th,
+#spreadsheetPreviewer td {
+  text-align: center;
+}
+
+[data-theme="light"] {
+  #spreadsheetPreviewer th,
+  #spreadsheetPreviewer td {
+    background-color: $bg-secondary-light;
+    color: $black;
+    border: 1px solid $black;
+  }
+}
+
+[data-theme="gradient"],
+[data-theme="dark"] {
+  #spreadsheetPreviewer th,
+  #spreadsheetPreviewer td {
+    background-color: $bg-secondary-dark;
+    color: $white;
+    border: 1px solid $white;
+  }
+}

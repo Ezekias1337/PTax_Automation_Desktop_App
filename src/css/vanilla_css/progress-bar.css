@@ -11,7 +11,7 @@
 
 #progressBar,
 #progressBarFrostEffect {
-  height: 100%;
+  height: 103%;
   position: absolute; }
 
 #progressBar {
@@ -34,12 +34,15 @@
   justify-content: right;
   align-items: center; }
 
+[data-theme="gradient"] #progressBarWrapper {
+  background-color: #6b6b6b;
+  border: 1px solid #bebebe; }
+
 [data-theme="light"] #progressBarWrapper {
   background-color: #bebebe;
   border: 1px solid #bebebe; }
 
-[data-theme="dark"] #progressBarWrapper,
-[data-theme="gradient"] #progressBarWrapper {
+[data-theme="dark"] #progressBarWrapper {
   background-color: #6b6b6b;
   border: 1px solid #6b6b6b; }
 

@@ -1,0 +1,17 @@
+#timeElapsed,
+#estimatedTimeRemaining {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+[data-theme="gradient"] #timeElapsed,
+[data-theme="gradient"] #estimatedTimeRemaining {
+  color: white; }
+
+[data-theme="light"] #timeElapsed,
+[data-theme="light"] #estimatedTimeRemaining {
+  color: black; }
+
+[data-theme="dark"] #timeElapsed,
+[data-theme="dark"] #estimatedTimeRemaining {
+  color: white; }

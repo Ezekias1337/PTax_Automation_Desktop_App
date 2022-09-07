@@ -2,26 +2,30 @@
 @import "variables/dark-mode-variables";
 @import "variables/common-variables";
 
-#numericalProgressTracker {
+#timeElapsed,
+#estimatedTimeRemaining {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 [data-theme="gradient"] {
-  #numericalProgressTracker {
+  #timeElapsed,
+  #estimatedTimeRemaining {
     color: $white;
   }
 }
 
 [data-theme="light"] {
-  #numericalProgressTracker {
+  #timeElapsed,
+  #estimatedTimeRemaining {
     color: $black;
   }
 }
 
 [data-theme="dark"] {
-  #numericalProgressTracker {
+  #timeElapsed,
+  #estimatedTimeRemaining {
     color: $white;
   }
 }

@@ -1,0 +1,17 @@
+#spreadsheetPreviewer th,
+#spreadsheetPreviewer td {
+  text-align: center; }
+
+[data-theme="light"] #spreadsheetPreviewer th,
+[data-theme="light"] #spreadsheetPreviewer td {
+  background-color: #bebebe;
+  color: black;
+  border: 1px solid black; }
+
+[data-theme="gradient"] #spreadsheetPreviewer th,
+[data-theme="gradient"] #spreadsheetPreviewer td,
+[data-theme="dark"] #spreadsheetPreviewer th,
+[data-theme="dark"] #spreadsheetPreviewer td {
+  background-color: #6b6b6b;
+  color: white;
+  border: 1px solid white; }

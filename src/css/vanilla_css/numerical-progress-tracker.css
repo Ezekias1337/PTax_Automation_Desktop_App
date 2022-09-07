@@ -4,10 +4,10 @@
   align-items: center; }
 
 [data-theme="gradient"] #numericalProgressTracker {
-  color: #333333; }
+  color: white; }
 
 [data-theme="light"] #numericalProgressTracker {
-  color: #bebebe; }
+  color: black; }
 
 [data-theme="dark"] #numericalProgressTracker {
-  color: #6b6b6b; }
+  color: white; }
