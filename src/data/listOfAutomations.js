@@ -7,16 +7,91 @@ const listOfAutomations = {
         key: 1,
         state: "Nevada",
         subLocations: [
-          /* { key: 1, name: "Clark County", function: assessmentNotices }, */
+          {
+            key: 1,
+            name: "Clark County",
+            /* function: assessmentNotices, */
+            availableOperations: [
+              "Data Entry",
+              "Download Document",
+              "Data Entry, Download Document, & Upload Document",
+            ],
+          },
         ],
       },
       {
         key: 2,
         state: "New York",
         subLocations: [
-          /* { key: 1, name: "New York", function: assessmentNotices }, */
+          {
+            key: 1,
+            name: "New York",
+            /* function: assessmentNotices, */
+            availableOperations: [
+              "Data Entry",
+              "Download Document",
+              "Data Entry, Download Document, & Upload Document",
+            ],
+          },
         ],
       },
+      {
+        key: 3,
+        state: "California",
+        subLocations: [
+          {
+            key: 1,
+            name: "Kern",
+            /* function: assessmentNotices, */
+            availableOperations: [
+              "Data Entry",
+              "Download Document",
+              "Data Entry, Download Document, & Upload Document",
+            ],
+          },
+          {
+            key: 2,
+            name: "Los Angeles",
+            /* function: assessmentNotices, */
+            availableOperations: [
+              "Data Entry",
+              "Download Document",
+              "Data Entry, Download Document, & Upload Document",
+            ],
+          },
+          {
+            key: 3,
+            name: "Riverside",
+            /* function: assessmentNotices, */
+            availableOperations: [
+              "Data Entry",
+              "Download Document",
+              "Data Entry, Download Document, & Upload Document",
+            ],
+          },
+          {
+            key: 4,
+            name: "San Bernardino",
+            /* function: assessmentNotices, */
+            availableOperations: [
+              "Data Entry",
+              "Download Document",
+              "Data Entry, Download Document, & Upload Document",
+            ],
+          },
+          {
+            key: 5,
+            name: "San Diego",
+            /* function: assessmentNotices, */
+            availableOperations: ["Download Document"],
+          },
+        ],
+      },
+    ],
+    operations: [
+      { key: 1, name: "Data Entry" },
+      { key: 2, name: "Download Files" },
+      { key: 3, name: "Data Entry And Download Files" },
     ],
   },
   changeMailingAddress: {
@@ -85,20 +160,46 @@ const listOfAutomations = {
         subLocations: [
           {
             key: 1,
-            name: "Los Angeles [No Data Entry]" /* function: taxBills */,
+            name: "Los Angeles",
+            /* function: taxBills, */
+            availableOperations: [
+              "Data Entry",
+              "Download Document",
+              "Data Entry, Download Document, & Upload Document",
+            ],
           },
         ],
       },
       {
         key: 2,
         state: "New York",
-        subLocations: [{ key: 1, name: "New York" /* function: taxBills */ }],
+        subLocations: [
+          {
+            key: 1,
+            name: "New York",
+            /* function: taxBills, */
+            availableOperations: [
+              "Data Entry",
+              "Download Document",
+              "Data Entry, Download Document, & Upload Document",
+            ],
+          },
+        ],
       },
       {
         key: 3,
         state: "Illinois",
         subLocations: [
-          { key: 1, name: "Cook County" /* function: taxBills */ },
+          {
+            key: 1,
+            name: "Cook County",
+            /* function: taxBills, */
+            availableOperations: [
+              "Data Entry",
+              "Download Document",
+              "Data Entry, Download Document, & Upload Document",
+            ],
+          },
         ],
       },
     ],
@@ -116,20 +217,19 @@ const listOfAutomations = {
   updateParcelNames: {
     key: 8,
     name: "Update Parcel Names",
-    WIP: true,
+    /* function: updateParcelNames, */
   },
   checkWebsiteURLs: {
     key: 9,
-    name: "Check Assessor and Collector Links",
+    name: "Check all the links for Assessors/Collectors",
     /* function: checkWebsiteURLs, */
   },
   pullParcelInformationFromRealquest: {
     key: 10,
-    name: "Pull Parcel Information From Realquest",
+    name: "Pull parcel information from Realquest",
     WIP: true,
   },
 };
-
 const listOfAutomationsArray = [];
 
 for (const item of Object.entries(listOfAutomations)) {

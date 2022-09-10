@@ -19,7 +19,6 @@ let store = new Store();
 app.whenReady().then(() => {
   const window = createWindow(__dirname, process, store);
   const tray = createTray(window, __dirname, process);
-  
 
   app.on("activate", function () {
     /* 
@@ -29,6 +28,14 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0)
       createWindow(window, tray, __dirname, process, store);
   });
+});
+
+/* 
+  Prevent Tray Icon Duplication
+*/
+
+app.on("before-quit", function () {
+  tray.destroy();
 });
 
 /* 
