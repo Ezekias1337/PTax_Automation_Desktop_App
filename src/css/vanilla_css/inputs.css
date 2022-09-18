@@ -1,167 +1,167 @@
-[data-theme="gradient"] .brown-input {
+[data-theme="Gradient"] .brown-input {
   background-color: #d4967d;
   color: #333333;
   border: 1.5px solid #6b6b6b; }
 
-[data-theme="gradient"] .brown-input:hover {
+[data-theme="Gradient"] .brown-input:hover {
   background-color: #333333;
   color: #d4967d;
   border: 1.5px solid #d4967d;
   box-shadow: 0px 0px 10px #d4967d; }
 
-[data-theme="gradient"] .col-form-label {
+[data-theme="Gradient"] .col-form-label {
   color: #333333 !important; }
 
-[data-theme="gradient"] .brown-input:focus,
-[data-theme="gradient"] .brown-input:active,
-[data-theme="gradient"] .brown-input:focus-visible,
-[data-theme="gradient"] .brown-input:focus-within {
+[data-theme="Gradient"] .brown-input:focus,
+[data-theme="Gradient"] .brown-input:active,
+[data-theme="Gradient"] .brown-input:focus-visible,
+[data-theme="Gradient"] .brown-input:focus-within {
   box-shadow: 0px 0px 10px #d4967d; }
 
-[data-theme="gradient"] .form-select {
+[data-theme="Gradient"] .form-select {
   background-image: url("../../images/Black_Dropdown_Arrow.png") !important;
   background-size: 10px 5px;
   background-repeat: no-repeat; }
 
-[data-theme="gradient"] .form-select:hover {
+[data-theme="Gradient"] .form-select:hover {
   background-image: url("../../images/Brown_Dropdown_Arrow.png") !important;
   background-size: 10px 5px;
   background-repeat: no-repeat; }
 
-[data-theme="gradient"] .form-switch .form-check-input {
+[data-theme="Gradient"] .form-switch .form-check-input {
   background-image: url("../../images/Brown_Switch_BG.png") !important;
   border: 1.5px solid #d4967d;
   background-color: #6b6b6b; }
 
-[data-theme="gradient"] .form-switch .form-check-input:checked {
+[data-theme="Gradient"] .form-switch .form-check-input:checked {
   background-color: #d4967d;
   border: 1.25px solid #6b6b6b;
   background-image: url("../../images/Black_Switch_BG.png") !important; }
 
-[data-theme="gradient"] .form-switch .form-check-input:active,
-[data-theme="gradient"] .form-switch .form-check-input:hover,
-[data-theme="gradient"] .form-switch .form-check-input:focus {
+[data-theme="Gradient"] .form-switch .form-check-input:active,
+[data-theme="Gradient"] .form-switch .form-check-input:hover,
+[data-theme="Gradient"] .form-switch .form-check-input:focus {
   background-image: url("../../images/Black_Switch_BG.png") !important;
   box-shadow: 0px 0px 10px #d4967d;
   border: 1.5px solid #6b6b6b;
   background-color: #d4967d; }
 
-[data-theme="gradient"] .form-switch .form-check-input:checked:active,
-[data-theme="gradient"] .form-switch .form-check-input:checked:hover,
-[data-theme="gradient"] .form-switch .form-check-input:checked:focus {
+[data-theme="Gradient"] .form-switch .form-check-input:checked:active,
+[data-theme="Gradient"] .form-switch .form-check-input:checked:hover,
+[data-theme="Gradient"] .form-switch .form-check-input:checked:focus {
   background-image: url("../../images/Brown_Switch_BG.png") !important;
   box-shadow: 0px 0px 10px #d4967d;
   border: 1.5px solid #d4967d;
   background-color: #6b6b6b; }
 
-[data-theme="light"] .brown-input {
+[data-theme="Light"] .brown-input {
   border: 1.5px solid #bebebe; }
 
-[data-theme="light"] .col-form-label {
+[data-theme="Light"] .col-form-label {
   color: black !important; }
 
-[data-theme="light"] .brown-input {
+[data-theme="Light"] .brown-input {
   background-color: #d4967d;
   color: white; }
 
-[data-theme="light"] .brown-input:hover {
+[data-theme="Light"] .brown-input:hover {
   background-color: white;
   color: #d4967d;
   box-shadow: 0px 0px 10px #d4967d;
   border: 1.5px solid #d4967d; }
 
-[data-theme="light"] .brown-input:focus,
-[data-theme="light"] .brown-input:active,
-[data-theme="light"] .brown-input:focus-visible,
-[data-theme="light"] .brown-input:focus-within {
+[data-theme="Light"] .brown-input:focus,
+[data-theme="Light"] .brown-input:active,
+[data-theme="Light"] .brown-input:focus-visible,
+[data-theme="Light"] .brown-input:focus-within {
   box-shadow: 0px 0px 10px #d4967d;
   border: 1.5px solid #d4967d; }
 
-[data-theme="light"] .form-select {
+[data-theme="Light"] .form-select {
   background-image: url("../../images/White_Dropdown_Arrow.png") !important;
   background-size: 10px 5px;
   background-repeat: no-repeat; }
 
-[data-theme="light"] .form-select:hover {
+[data-theme="Light"] .form-select:hover {
   background-image: url("../../images/Brown_Dropdown_Arrow.png") !important;
   background-size: 10px 5px;
   background-repeat: no-repeat; }
 
-[data-theme="light"] .form-switch .form-check-input {
+[data-theme="Light"] .form-switch .form-check-input {
   border: 1.5px solid #bebebe;
   background-color: #fcfcfc;
   background-image: url("../../images/Brown_Switch_BG.png") !important; }
 
-[data-theme="light"] .form-switch .form-check-input:checked {
+[data-theme="Light"] .form-switch .form-check-input:checked {
   background-image: url("../../images/White_Switch_BG.png") !important; }
 
-[data-theme="light"] .form-switch .form-check-input:active,
-[data-theme="light"] .form-switch .form-check-input:hover,
-[data-theme="light"] .form-switch .form-check-input:focus {
+[data-theme="Light"] .form-switch .form-check-input:active,
+[data-theme="Light"] .form-switch .form-check-input:hover,
+[data-theme="Light"] .form-switch .form-check-input:focus {
   background-image: url("../../images/White_Switch_BG.png") !important;
   box-shadow: 0px 0px 10px #d4967d;
   border: 1.5px solid #d4967d;
   background-color: #d4967d; }
 
-[data-theme="light"] .form-switch .form-check-input:checked:active,
-[data-theme="light"] .form-switch .form-check-input:checked:hover,
-[data-theme="light"] .form-switch .form-check-input:checked:focus {
+[data-theme="Light"] .form-switch .form-check-input:checked:active,
+[data-theme="Light"] .form-switch .form-check-input:checked:hover,
+[data-theme="Light"] .form-switch .form-check-input:checked:focus {
   background-image: url("../../images/Brown_Switch_BG.png") !important;
   box-shadow: 0px 0px 10px #d4967d;
   border: 1.5px solid #d4967d;
   background-color: #fcfcfc; }
 
-[data-theme="dark"] .col-form-label {
+[data-theme="Dark"] .col-form-label {
   color: white !important; }
 
-[data-theme="dark"] .brown-input {
+[data-theme="Dark"] .brown-input {
   background-color: #d4967d;
   color: #333333;
   border: 1.5px solid #6b6b6b; }
 
-[data-theme="dark"] .brown-input:hover {
+[data-theme="Dark"] .brown-input:hover {
   background-color: #333333;
   color: #d4967d;
   border: 1.5px solid #d4967d;
   box-shadow: 0px 0px 10px #d4967d; }
 
-[data-theme="dark"] .brown-input:focus,
-[data-theme="dark"] .brown-input:active,
-[data-theme="dark"] .brown-input:focus-visible,
-[data-theme="dark"] .brown-input:focus-within {
+[data-theme="Dark"] .brown-input:focus,
+[data-theme="Dark"] .brown-input:active,
+[data-theme="Dark"] .brown-input:focus-visible,
+[data-theme="Dark"] .brown-input:focus-within {
   box-shadow: 0px 0px 10px #d4967d; }
 
-[data-theme="dark"] .form-select {
+[data-theme="Dark"] .form-select {
   background-image: url("../../images/Black_Dropdown_Arrow.png") !important;
   background-size: 10px 5px;
   background-repeat: no-repeat; }
 
-[data-theme="dark"] .form-select:hover {
+[data-theme="Dark"] .form-select:hover {
   background-image: url("../../images/Brown_Dropdown_Arrow.png") !important;
   background-size: 10px 5px;
   background-repeat: no-repeat; }
 
-[data-theme="dark"] .form-switch .form-check-input {
+[data-theme="Dark"] .form-switch .form-check-input {
   background-image: url("../../images/Brown_Switch_BG.png") !important;
   border: 1.5px solid #d4967d;
   background-color: #333333; }
 
-[data-theme="dark"] .form-switch .form-check-input:checked {
+[data-theme="Dark"] .form-switch .form-check-input:checked {
   background-color: #d4967d;
   border: 1.25px solid #6b6b6b;
   background-image: url("../../images/Dark_Black_Switch_BG.png") !important; }
 
-[data-theme="dark"] .form-switch .form-check-input:active,
-[data-theme="dark"] .form-switch .form-check-input:hover,
-[data-theme="dark"] .form-switch .form-check-input:focus {
+[data-theme="Dark"] .form-switch .form-check-input:active,
+[data-theme="Dark"] .form-switch .form-check-input:hover,
+[data-theme="Dark"] .form-switch .form-check-input:focus {
   background-image: url("../../images/Dark_Black_Switch_BG.png") !important;
   box-shadow: 0px 0px 10px #d4967d;
   border: 1.5px solid #6b6b6b;
   background-color: #d4967d; }
 
-[data-theme="dark"] .form-switch .form-check-input:checked:active,
-[data-theme="dark"] .form-switch .form-check-input:checked:hover,
-[data-theme="dark"] .form-switch .form-check-input:checked:focus {
+[data-theme="Dark"] .form-switch .form-check-input:checked:active,
+[data-theme="Dark"] .form-switch .form-check-input:checked:hover,
+[data-theme="Dark"] .form-switch .form-check-input:checked:focus {
   background-image: url("../../images/Brown_Switch_BG.png") !important;
   box-shadow: 0px 0px 10px #d4967d;
   border: 1.5px solid #d4967d;

@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import { renderDropdownOptionsSettings } from "../../functions/renderDropdownOptionsSettings";
 import { renderDropdownStates } from "../../functions/renderDropdownStates";
 import { renderDropdownSublocations } from "../../functions/renderDropdownSublocations";
-import { renderDropdownOperations } from "../../functions/renderDropdownOperations";
-import { camelCasifyString } from "../../functions/camelCasifyString";
+/* import { renderDropdownOperations } from "../../functions/renderDropdownOperations"; */
+import { camelCasifyString } from "../../utils/camelCasifyString";
+import { handleFormChange } from "../../functions/forms/handleFormChange";
+import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
 
 export const DropDown = ({
   settingsOrAutomation,
@@ -12,7 +14,7 @@ export const DropDown = ({
   stateSelector,
   operationSelector,
   subLocationSelector,
-  setStateHook = null,
+  setStateHook,
 }) => {
   let arrayOfOptionElements,
     selectedOption = null;
@@ -40,31 +42,32 @@ export const DropDown = ({
   } else if (operationSelector) {
   }
 
-  
   /* 
     Set the statehook upon load
   */
- 
-  /* useEffect(() => {
-    if(setStateHook !== null) {
-      setStateHook(arrayOfOptionElements[0])
+
+  useEffect(() => {
+    if (selectedOption !== null) {
+      const e = generateEventTargetStructure(data.name, selectedOption);
+      handleFormChange(e, setStateHook);
     }
-  }, [setStateHook]) */
-  
+  }, [data.name, setStateHook, selectedOption]);
+
   return (
     <div className="col col-6 mt-2">
-      <label htmlFor={dropdownLabel} className="col-form-label">
+      <label htmlFor={camelCasifyString(data.name)} className="col-form-label">
         {dropdownLabel}
       </label>
 
       <select
         className="form-select full-width-button brown-input"
-        aria-label={data.name}
+        name={camelCasifyString(data.name)}
+        aria-label={camelCasifyString(data.name)}
         id={dropdownID}
         defaultValue={selectedOption !== null ? selectedOption : null}
-        onChange={
-          setStateHook !== null ? (e) => setStateHook(e.target.value) : null
-        }
+        onChange={(e) => {
+          handleFormChange(e, setStateHook);
+        }}
       >
         {arrayOfOptionElements}
       </select>

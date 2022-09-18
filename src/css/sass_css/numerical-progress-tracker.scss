@@ -8,19 +8,19 @@
   align-items: center;
 }
 
-[data-theme="gradient"] {
+[data-theme="Gradient"] {
   #numericalProgressTracker {
     color: $white;
   }
 }
 
-[data-theme="light"] {
+[data-theme="Light"] {
   #numericalProgressTracker {
     color: $black;
   }
 }
 
-[data-theme="dark"] {
+[data-theme="Dark"] {
   #numericalProgressTracker {
     color: $white;
   }

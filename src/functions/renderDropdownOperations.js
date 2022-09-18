@@ -1,5 +1,5 @@
 import { inputFieldFillDefault } from "./inputFieldFillDefault";
-import { camelCasifyString } from "./camelCasifyString";
+import { camelCasifyString } from "../utils/camelCasifyString";
 
 export const renderDropdownOperations = (arrayToParse, state) => {
   const arrayOfOptionElements = [];

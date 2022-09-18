@@ -5,7 +5,7 @@ div.event-log {
   border-radius: 5px;
 }
 
-[data-theme="gradient"] {
+[data-theme="Gradient"] {
   div.event-log {
     background-color: $bg-secondary-dark;
     color: $color-text-dark;
@@ -13,7 +13,7 @@ div.event-log {
   }
 }
 
-[data-theme="light"] {
+[data-theme="Light"] {
   div.event-log {
     background-color: $bg-secondary-light;
     color: $color-text-light;
@@ -21,7 +21,7 @@ div.event-log {
   }
 }
 
-[data-theme="dark"] {
+[data-theme="Dark"] {
   div.event-log {
     background-color: $bg-secondary-dark;
     color: $color-text-dark;
@@ -34,7 +34,7 @@ div.event-log {
   max-height: 75vh;
 }
 
-[data-theme="light"] {
+[data-theme="Light"] {
   div.event-log > div.row > div {
     &.red-message {
       color: $red-message-light;
@@ -57,8 +57,8 @@ div.event-log {
   }
 }
 
-[data-theme="dark"],
-[data-theme="gradient"] {
+[data-theme="Dark"],
+[data-theme="Gradient"] {
   div.event-log > div.row > div {
     &.red-message {
       color: $red-message-dark;

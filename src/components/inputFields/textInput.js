@@ -1,32 +1,60 @@
+import { useEffect, useState } from "react";
 import { inputFieldFillDefault } from "../../functions/inputFieldFillDefault";
+import { camelCasifyString } from "../../utils/camelCasifyString";
+import { handleFormChange } from "../../functions/forms/handleFormChange";
+import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
 
-export const TextInput = (props) => {
+export const TextInput = ({ data, state, setStateHook }) => {
+  const [defaultValueProp, setDefaultValueProp] = useState(null);
+
+  useEffect(() => {
+    let tempValueProp = inputFieldFillDefault(
+      data.name.split(" ").join(""),
+      state,
+      false,
+      false
+    );
+    if (tempValueProp !== null) {
+      setDefaultValueProp(tempValueProp);
+    }
+  }, [data.name, state]);
+
+  useEffect(() => {
+    if (defaultValueProp !== null) {
+      const e = generateEventTargetStructure(data.name, defaultValueProp);
+      handleFormChange(e, setStateHook);
+    }
+  }, [data.name, setStateHook, defaultValueProp]);
+
   return (
     <div className="col col-6 mt-2">
-      <label htmlFor={props.data.name} className="col-form-label">
-        {props.data.name}
+      <label htmlFor={camelCasifyString(data.name)} className="col-form-label">
+        {data.name}
       </label>
       <input
-        type={props.data.customInputType}
+        type={data.customInputType}
         className="form-control brown-input"
-        name={props.data.name}
-        id={props.data.name.split(" ").join("")}
-        placeholder={props?.data?.placeholder}
+        name={camelCasifyString(data.name)}
+        id={camelCasifyString(data.name)}
+        placeholder={data?.placeholder}
         defaultValue={
           inputFieldFillDefault(
-            props.data.name.split(" ").join(""),
-            props.state,
+            data.name.split(" ").join(""),
+            state,
             false,
             false
           )
             ? inputFieldFillDefault(
-                props.data.name.split(" ").join(""),
-                props.state,
+                data.name.split(" ").join(""),
+                state,
                 false,
                 false
               )
             : ""
         }
+        onChange={(e) => {
+          handleFormChange(e, setStateHook);
+        }}
       ></input>
     </div>
   );

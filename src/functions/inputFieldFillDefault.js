@@ -1,4 +1,4 @@
-import { camelCasifyString } from "./camelCasifyString";
+import { camelCasifyString } from "../utils/camelCasifyString";
 
 export const inputFieldFillDefault = (
   inputField,

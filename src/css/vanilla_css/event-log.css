@@ -1,17 +1,17 @@
 div.event-log {
   border-radius: 5px; }
 
-[data-theme="gradient"] div.event-log {
+[data-theme="Gradient"] div.event-log {
   background-color: #6b6b6b;
   color: #fcfcfc;
   border: 1px solid #fcfcfc; }
 
-[data-theme="light"] div.event-log {
+[data-theme="Light"] div.event-log {
   background-color: #bebebe;
   color: #333333;
   border: 1px solid #333333; }
 
-[data-theme="dark"] div.event-log {
+[data-theme="Dark"] div.event-log {
   background-color: #6b6b6b;
   color: #fcfcfc;
   border: 1px solid #fcfcfc; }
@@ -20,44 +20,44 @@ div.event-log {
   overflow-y: scroll;
   max-height: 75vh; }
 
-[data-theme="light"] div.event-log > div.row > div.red-message {
+[data-theme="Light"] div.event-log > div.row > div.red-message {
   color: red; }
 
-[data-theme="light"] div.event-log > div.row > div.orange-message {
+[data-theme="Light"] div.event-log > div.row > div.orange-message {
   color: orange; }
 
-[data-theme="light"] div.event-log > div.row > div.yellow-message {
+[data-theme="Light"] div.event-log > div.row > div.yellow-message {
   color: yellow; }
 
-[data-theme="light"] div.event-log > div.row > div.green-message {
+[data-theme="Light"] div.event-log > div.row > div.green-message {
   color: green; }
 
-[data-theme="light"] div.event-log > div.row > div.blue-message {
+[data-theme="Light"] div.event-log > div.row > div.blue-message {
   color: blue; }
 
-[data-theme="light"] div.event-log > div.row > div.purple-message {
+[data-theme="Light"] div.event-log > div.row > div.purple-message {
   color: purple; }
 
-[data-theme="dark"] div.event-log > div.row > div.red-message,
-[data-theme="gradient"] div.event-log > div.row > div.red-message {
+[data-theme="Dark"] div.event-log > div.row > div.red-message,
+[data-theme="Gradient"] div.event-log > div.row > div.red-message {
   color: #f66060; }
 
-[data-theme="dark"] div.event-log > div.row > div.orange-message,
-[data-theme="gradient"] div.event-log > div.row > div.orange-message {
+[data-theme="Dark"] div.event-log > div.row > div.orange-message,
+[data-theme="Gradient"] div.event-log > div.row > div.orange-message {
   color: orange; }
 
-[data-theme="dark"] div.event-log > div.row > div.yellow-message,
-[data-theme="gradient"] div.event-log > div.row > div.yellow-message {
+[data-theme="Dark"] div.event-log > div.row > div.yellow-message,
+[data-theme="Gradient"] div.event-log > div.row > div.yellow-message {
   color: yellow; }
 
-[data-theme="dark"] div.event-log > div.row > div.green-message,
-[data-theme="gradient"] div.event-log > div.row > div.green-message {
+[data-theme="Dark"] div.event-log > div.row > div.green-message,
+[data-theme="Gradient"] div.event-log > div.row > div.green-message {
   color: #5bb65b; }
 
-[data-theme="dark"] div.event-log > div.row > div.blue-message,
-[data-theme="gradient"] div.event-log > div.row > div.blue-message {
+[data-theme="Dark"] div.event-log > div.row > div.blue-message,
+[data-theme="Gradient"] div.event-log > div.row > div.blue-message {
   color: #28aafb; }
 
-[data-theme="dark"] div.event-log > div.row > div.purple-message,
-[data-theme="gradient"] div.event-log > div.row > div.purple-message {
+[data-theme="Dark"] div.event-log > div.row > div.purple-message,
+[data-theme="Gradient"] div.event-log > div.row > div.purple-message {
   color: #fa71fa; }

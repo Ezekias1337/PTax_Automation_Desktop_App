@@ -9,21 +9,21 @@
   align-items: center;
 }
 
-[data-theme="gradient"] {
+[data-theme="Gradient"] {
   #timeElapsed,
   #estimatedTimeRemaining {
     color: $white;
   }
 }
 
-[data-theme="light"] {
+[data-theme="Light"] {
   #timeElapsed,
   #estimatedTimeRemaining {
     color: $black;
   }
 }
 
-[data-theme="dark"] {
+[data-theme="Dark"] {
   #timeElapsed,
   #estimatedTimeRemaining {
     color: $white;

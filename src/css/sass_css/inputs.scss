@@ -2,7 +2,7 @@
 @import "variables/dark-mode-variables";
 @import "variables/common-variables";
 
-[data-theme="gradient"] {
+[data-theme="Gradient"] {
   .brown-input {
     background-color: $brown;
     color: $bg-dark;
@@ -70,7 +70,7 @@
   }
 }
 
-[data-theme="light"] {
+[data-theme="Light"] {
   .brown-input {
     border: 1.5px solid $bg-secondary-light;
   }
@@ -140,7 +140,7 @@
   }
 }
 
-[data-theme="dark"] {
+[data-theme="Dark"] {
   .col-form-label {
     color: $white !important;
   }

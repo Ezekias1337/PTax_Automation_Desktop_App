@@ -3,11 +3,11 @@
   justify-content: center;
   align-items: center; }
 
-[data-theme="gradient"] #numericalProgressTracker {
+[data-theme="Gradient"] #numericalProgressTracker {
   color: white; }
 
-[data-theme="light"] #numericalProgressTracker {
+[data-theme="Light"] #numericalProgressTracker {
   color: black; }
 
-[data-theme="dark"] #numericalProgressTracker {
+[data-theme="Dark"] #numericalProgressTracker {
   color: white; }

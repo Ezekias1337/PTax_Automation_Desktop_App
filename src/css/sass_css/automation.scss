@@ -2,19 +2,19 @@
 @import "variables/dark-mode-variables";
 @import "variables/common-variables";
 
-[data-theme="gradient"] {
+[data-theme="Gradient"] {
   h1 {
     color: $white;
   }
 }
 
-[data-theme="light"] {
+[data-theme="Light"] {
   h1 {
     color: $bg-dark;
   }
 }
 
-[data-theme="dark"] {
+[data-theme="Dark"] {
   h1 {
     color: $white;
   }

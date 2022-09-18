@@ -1,35 +1,62 @@
-import { camelCasifyString } from "../../functions/camelCasifyString";
+import { useEffect, useState } from "react";
+import { camelCasifyString } from "../../utils/camelCasifyString";
 import { inputFieldFillDefault } from "../../functions/inputFieldFillDefault";
+import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
+import { handleFormChange } from "../../functions/forms/handleFormChange";
 
-export const Switch = (props) => {
-  const isCheckedHelper = camelCasifyString(
-    props.data.name.split(" ").join("")
-  );
+export const Switch = ({ data, state, setStateHook = null }) => {
+  const [isChecked, setIsChecked] = useState(false);
 
-  const isChecked = inputFieldFillDefault(
-    props.data.name.split(" ").join(""),
-    props.state,
-    false,
-    true,
-    isCheckedHelper
-  );
+  /* 
+    Prepare default value for input field if it exists
+  */
+
+  useEffect(() => {
+    const isCheckedHelper = camelCasifyString(data.name.split(" ").join(""));
+    const isCheckedTemp = inputFieldFillDefault(
+      data.name.split(" ").join(""),
+      state,
+      false,
+      true,
+      isCheckedHelper
+    );
+
+    setIsChecked(isCheckedTemp);
+
+    /* 
+      Ensure the parent components form data state is updated if the 
+      default input value from electron-store is different from what is 
+      defined in useState's default
+    */
+
+    const e = generateEventTargetStructure(data.name, isCheckedTemp);
+    handleFormChange(e, setStateHook);
+  }, [data.name, setStateHook, state]);
 
   return (
     <div className="col col-6 mt-2">
       <div className="form-check form-switch row">
         <div className="col col-12">
-          <label htmlFor={props.data.name} className="col-form-label">
-            {props.data.name}
+          <label
+            htmlFor={camelCasifyString(data.name)}
+            className="col-form-label"
+          >
+            {data.name}
           </label>
         </div>
         <div className="col col-12">
           <input
             className="form-check-input brown-input"
-            name={props.data.name}
+            name={data.name}
             type="checkbox"
-            aria-label={props.data.name}
-            id={camelCasifyString(props.data.name)}
-            defaultChecked={isChecked ? true : false}
+            aria-label={data.name}
+            id={camelCasifyString(data.name)}
+            checked={isChecked}
+            onChange={() => {
+              const e = generateEventTargetStructure(data.name, !isChecked);
+              handleFormChange(e, setStateHook);
+              setIsChecked(!isChecked);
+            }}
           ></input>
         </div>
       </div>

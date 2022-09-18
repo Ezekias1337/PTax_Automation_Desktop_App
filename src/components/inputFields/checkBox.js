@@ -1,29 +1,46 @@
-export const CheckBox = (props) => {
-  if (props.isChecked === true) {
+import { camelCasifyString } from "../../functions/camelCasifyString";
+import { handleFormChange } from "../../functions/forms/handleFormChange";
+
+export const CheckBox = ({ data, isChecked, setStateHook }) => {
+  if (isChecked === true) {
     return (
-      <div class="form-check">
+      <div className="form-check">
         <input
-          class="form-check-input"
+          className="form-check-input"
+          name={data.name}
           type="checkbox"
           value=""
           id="flexCheckDefault"
+          onChange={(e) => {
+            handleFormChange(e, setStateHook);
+          }}
         ></input>
-        <label class="form-check-label" for="flexCheckDefault">
+        <label
+          className="form-check-label"
+          htmlFor={camelCasifyString(data.name)}
+        >
           Default checkbox
         </label>
       </div>
     );
-  } else if (props.isChecked === false) {
+  } else if (isChecked === false) {
     return (
-      <div class="form-check">
+      <div className="form-check">
         <input
-          class="form-check-input"
+          className="form-check-input"
+          name={data.name}
           type="checkbox"
           value=""
           id="flexCheckChecked"
+          onChange={(e) => {
+            handleFormChange(e, setStateHook);
+          }}
           checked
         ></input>
-        <label class="form-check-label" for="flexCheckChecked">
+        <label
+          className="form-check-label"
+          htmlFor={camelCasifyString(data.name)}
+        >
           Checked checkbox
         </label>
       </div>

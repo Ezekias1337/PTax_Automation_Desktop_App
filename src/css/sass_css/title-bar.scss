@@ -2,7 +2,7 @@
 @import "variables/dark-mode-variables";
 @import "variables/common-variables";
 
-[data-theme="light"] {
+[data-theme="Light"] {
   #titleBar {
     background-color: rgba($bg-secondary-light, 0.5);
   }
@@ -45,8 +45,8 @@
   }
 }
 
-[data-theme="gradient"],
-[data-theme="dark"] {
+[data-theme="Gradient"],
+[data-theme="Dark"] {
   #titleBar {
     background-color: rgba($bg-secondary-dark, 0.5);
   }

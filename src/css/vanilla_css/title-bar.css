@@ -1,71 +1,71 @@
-[data-theme="light"] #titleBar {
+[data-theme="Light"] #titleBar {
   background-color: rgba(190, 190, 190, 0.5); }
 
-[data-theme="light"] #titleBarButtonContainer svg {
+[data-theme="Light"] #titleBarButtonContainer svg {
   color: #333333;
   opacity: 85%; }
 
-[data-theme="light"] #titleBarButtonContainer .title-bar-button,
-[data-theme="light"] #titleBarButtonContainer .title-bar-button-close {
+[data-theme="Light"] #titleBarButtonContainer .title-bar-button,
+[data-theme="Light"] #titleBarButtonContainer .title-bar-button-close {
   color: #333333;
   opacity: 85%;
   border-radius: 0px; }
 
-[data-theme="light"] #titleBarButtonContainer .title-bar-button-close {
+[data-theme="Light"] #titleBarButtonContainer .title-bar-button-close {
   color: #333333;
   opacity: 85%; }
 
-[data-theme="light"] #titleBarButtonContainer .title-bar-button:hover {
+[data-theme="Light"] #titleBarButtonContainer .title-bar-button:hover {
   background-color: rgba(51, 51, 51, 0.8); }
-  [data-theme="light"] #titleBarButtonContainer .title-bar-button:hover svg {
+  [data-theme="Light"] #titleBarButtonContainer .title-bar-button:hover svg {
     color: #fcfcfc; }
 
-[data-theme="light"] #titleBarButtonContainer .title-bar-button-close:hover {
+[data-theme="Light"] #titleBarButtonContainer .title-bar-button-close:hover {
   background-color: rgba(255, 0, 0, 0.8); }
-  [data-theme="light"] #titleBarButtonContainer .title-bar-button-close:hover svg {
+  [data-theme="Light"] #titleBarButtonContainer .title-bar-button-close:hover svg {
     color: #333333; }
 
-[data-theme="light"] #titleBarLogoContainer h5 {
+[data-theme="Light"] #titleBarLogoContainer h5 {
   color: #333333; }
 
-[data-theme="gradient"] #titleBar,
-[data-theme="dark"] #titleBar {
+[data-theme="Gradient"] #titleBar,
+[data-theme="Dark"] #titleBar {
   background-color: rgba(107, 107, 107, 0.5); }
 
-[data-theme="gradient"] #titleBarButtonContainer svg,
-[data-theme="dark"] #titleBarButtonContainer svg {
+[data-theme="Gradient"] #titleBarButtonContainer svg,
+[data-theme="Dark"] #titleBarButtonContainer svg {
   color: #fcfcfc;
   opacity: 85%; }
 
-[data-theme="gradient"] #titleBarButtonContainer .title-bar-button,
-[data-theme="gradient"] #titleBarButtonContainer .title-bar-button-close,
-[data-theme="dark"] #titleBarButtonContainer .title-bar-button,
-[data-theme="dark"] #titleBarButtonContainer .title-bar-button-close {
+[data-theme="Gradient"] #titleBarButtonContainer .title-bar-button,
+[data-theme="Gradient"] #titleBarButtonContainer .title-bar-button-close,
+[data-theme="Dark"] #titleBarButtonContainer .title-bar-button,
+[data-theme="Dark"] #titleBarButtonContainer .title-bar-button-close {
   color: #fcfcfc;
   opacity: 85%;
   border-radius: 0px; }
 
-[data-theme="gradient"] #titleBarButtonContainer .title-bar-button-close,
-[data-theme="dark"] #titleBarButtonContainer .title-bar-button-close {
+[data-theme="Gradient"] #titleBarButtonContainer .title-bar-button-close,
+[data-theme="Dark"] #titleBarButtonContainer .title-bar-button-close {
   color: #fcfcfc;
   opacity: 85%; }
 
-[data-theme="gradient"] #titleBarButtonContainer .title-bar-button:hover,
-[data-theme="dark"] #titleBarButtonContainer .title-bar-button:hover {
+[data-theme="Gradient"] #titleBarButtonContainer .title-bar-button:hover,
+[data-theme="Dark"] #titleBarButtonContainer .title-bar-button:hover {
   background-color: rgba(252, 252, 252, 0.8); }
-  [data-theme="gradient"] #titleBarButtonContainer .title-bar-button:hover svg,
-  [data-theme="dark"] #titleBarButtonContainer .title-bar-button:hover svg {
+  [data-theme="Gradient"] #titleBarButtonContainer .title-bar-button:hover svg,
+  [data-theme="Dark"] #titleBarButtonContainer .title-bar-button:hover svg {
     color: #333333; }
 
-[data-theme="gradient"] #titleBarButtonContainer .title-bar-button-close:hover,
-[data-theme="dark"] #titleBarButtonContainer .title-bar-button-close:hover {
+[data-theme="Gradient"] #titleBarButtonContainer .title-bar-button-close:hover,
+[data-theme="Dark"] #titleBarButtonContainer .title-bar-button-close:hover {
   background-color: rgba(246, 96, 96, 0.8); }
-  [data-theme="gradient"] #titleBarButtonContainer .title-bar-button-close:hover svg,
-  [data-theme="dark"] #titleBarButtonContainer .title-bar-button-close:hover svg {
+  [data-theme="Gradient"] #titleBarButtonContainer .title-bar-button-close:hover svg,
+  [data-theme="Dark"] #titleBarButtonContainer .title-bar-button-close:hover svg {
     color: #fcfcfc; }
 
-[data-theme="gradient"] #titleBarLogoContainer h5,
-[data-theme="dark"] #titleBarLogoContainer h5 {
+[data-theme="Gradient"] #titleBarLogoContainer h5,
+[data-theme="Dark"] #titleBarLogoContainer h5 {
   color: #fcfcfc; }
 
 #titleBar {

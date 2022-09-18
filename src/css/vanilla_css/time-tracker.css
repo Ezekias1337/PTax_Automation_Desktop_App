@@ -4,14 +4,14 @@
   justify-content: center;
   align-items: center; }
 
-[data-theme="gradient"] #timeElapsed,
-[data-theme="gradient"] #estimatedTimeRemaining {
+[data-theme="Gradient"] #timeElapsed,
+[data-theme="Gradient"] #estimatedTimeRemaining {
   color: white; }
 
-[data-theme="light"] #timeElapsed,
-[data-theme="light"] #estimatedTimeRemaining {
+[data-theme="Light"] #timeElapsed,
+[data-theme="Light"] #estimatedTimeRemaining {
   color: black; }
 
-[data-theme="dark"] #timeElapsed,
-[data-theme="dark"] #estimatedTimeRemaining {
+[data-theme="Dark"] #timeElapsed,
+[data-theme="Dark"] #estimatedTimeRemaining {
   color: white; }
