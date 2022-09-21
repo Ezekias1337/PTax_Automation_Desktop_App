@@ -21,8 +21,9 @@ export const Settings = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { saveSettings } = bindActionCreators(actionCreators, dispatch);
+  const [arrayOfSettings, setArrayOfSettings] = useState([]);
   const [userSettings, setUserSettings] = useState({
-    colorTheme: "gradient",
+    colorTheme: "Gradient",
     firstTimeRunning: false,
     screenResolution: "800x600",
     username: "",
@@ -40,59 +41,67 @@ export const Settings = () => {
     };
   }, []);
 
-  const arrayOfSettings = [];
-  let counter = 1;
+  useEffect(() => {
+    const tempArrayOfSettings = [];
+    let counter = 1;
 
-  for (const item of Object.entries(listOfSettings)) {
-    if (item[1]?.inputCategory === "dropdown") {
-      arrayOfSettings.push(
-        <DropDown
-          key={counter}
-          data={item[1]}
-          state={state}
-          settingsOrAutomation="settings"
-          setStateHook={setUserSettings}
-        />
-      );
-    } else if (item[1]?.inputCategory === "fileOrDirectory") {
-      let inputValueState;
-      if (item[1]?.name === "Default Download Directory") {
-        inputValueState = userSettings?.defaultDownloadDirectory;
-      } else if (item[1]?.name === "Default Upload and Scan Directory") {
-        inputValueState = userSettings?.defaultUploadandScanDirectory;
+    for (const item of Object.entries(listOfSettings)) {
+      if (item[1]?.inputCategory === "dropdown") {
+        tempArrayOfSettings.push(
+          <DropDown
+            key={counter}
+            data={item[1]}
+            state={state}
+            settingsOrAutomation="settings"
+            setStateHook={setUserSettings}
+          />
+        );
+      } else if (item[1]?.inputCategory === "fileOrDirectory") {
+        let inputValueState;
+        if (item[1]?.name === "Default Download Directory") {
+          inputValueState = userSettings?.defaultDownloadDirectory;
+        } else if (item[1]?.name === "Default Upload and Scan Directory") {
+          inputValueState = userSettings?.defaultUploadandScanDirectory;
+        }
+
+        tempArrayOfSettings.push(
+          <FileOrDirectoryPicker
+            key={counter}
+            data={item[1]}
+            state={state}
+            promptType="directory"
+            setStateHook={setUserSettings}
+            inputValueState={inputValueState}
+          />
+        );
+      } else if (item[1]?.inputCategory === "text") {
+        tempArrayOfSettings.push(
+          <TextInput
+            key={counter}
+            data={item[1]}
+            state={state}
+            setStateHook={setUserSettings}
+          />
+        );
+      } else if (item[1]?.inputCategory === "switch") {
+        tempArrayOfSettings.push(
+          <Switch
+            key={counter}
+            data={item[1]}
+            state={state}
+            setStateHook={setUserSettings}
+          />
+        );
       }
-
-      arrayOfSettings.push(
-        <FileOrDirectoryPicker
-          key={counter}
-          data={item[1]}
-          state={state}
-          promptType="directory"
-          setStateHook={setUserSettings}
-          inputValueState={inputValueState}
-        />
-      );
-    } else if (item[1]?.inputCategory === "text") {
-      arrayOfSettings.push(
-        <TextInput
-          key={counter}
-          data={item[1]}
-          state={state}
-          setStateHook={setUserSettings}
-        />
-      );
-    } else if (item[1]?.inputCategory === "switch") {
-      arrayOfSettings.push(
-        <Switch
-          key={counter}
-          data={item[1]}
-          state={state}
-          setStateHook={setUserSettings}
-        />
-      );
+      counter++;
     }
-    counter++;
-  }
+
+    setArrayOfSettings(tempArrayOfSettings);
+  }, [
+    state,
+    userSettings.defaultDownloadDirectory,
+    userSettings.defaultUploadandScanDirectory,
+  ]);
 
   return (
     <div data-theme={state.settings.colorTheme} id="element-to-animate">

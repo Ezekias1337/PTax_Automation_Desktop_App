@@ -6,12 +6,12 @@
 
 [data-theme="Gradient"] #timeElapsed,
 [data-theme="Gradient"] #estimatedTimeRemaining {
-  color: white; }
+  color: #e1dfdf; }
 
 [data-theme="Light"] #timeElapsed,
 [data-theme="Light"] #estimatedTimeRemaining {
-  color: black; }
+  color: #0b0b0b; }
 
 [data-theme="Dark"] #timeElapsed,
 [data-theme="Dark"] #estimatedTimeRemaining {
-  color: white; }
+  color: #e1dfdf; }

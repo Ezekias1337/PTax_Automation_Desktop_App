@@ -1,10 +1,11 @@
-import "./App.css";
+import React from "react";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
-import { SelectAnAutomation } from "./components/selectAnAutomation";
 import { Home } from "./components/home";
+import { SelectAnAutomation } from "./components/selectAnAutomation";
 import { Settings } from "./components/settings";
 import { Automation } from "./components/automation";
-import React from "react";
+import { assessmentNoticeQuestions } from "./constants/assessmentNoticeQuestions"
+import "./App.css";
 
 const App = () => {
   return (
@@ -21,44 +22,7 @@ const App = () => {
           element={
             <Automation
               automationName="Assessment Notices"
-              preOperationQuestions={[
-                {
-                  key: 0,
-                  name: "State",
-                  parentQuestion: null,
-                  inputType: "Dropdown",
-                },
-                {
-                  key: 1,
-                  name: "Sublocation",
-                  parentQuestion: "State",
-                  inputType: "Dropdown",
-                },
-                {
-                  key: 2,
-                  name: "Operation",
-                  parentQuestion: "Sublocation",
-                  inputType: "Dropdown",
-                },
-                {
-                  key: 3,
-                  name: "Installment Number",
-                  parentQuestion: "Operation",
-                  inputType: "Dropdown",
-                },
-                {
-                  key: 4,
-                  name: "Upload Directory",
-                  parentQuestion: "Operation",
-                  inputType: "File",
-                },
-                {
-                  key: 5,
-                  name: "Download Directory",
-                  parentQuestion: "Operation",
-                  inputType: "Directory",
-                },
-              ]}
+              preOperationQuestions={assessmentNoticeQuestions}
             />
           }
         ></Route>

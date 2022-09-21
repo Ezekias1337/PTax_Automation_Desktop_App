@@ -15,6 +15,7 @@ export const DropDown = ({
   operationSelector,
   subLocationSelector,
   setStateHook,
+  availableChoices = null,
 }) => {
   let arrayOfOptionElements,
     selectedOption = null;
@@ -40,10 +41,15 @@ export const DropDown = ({
     dropdownID = data.subLocations;
     dropdownLabel = "Sublocations";
   } else if (operationSelector) {
+  } else if (availableChoices !== null) {
+    arrayOfOptionElements = availableChoices;
+    dropdownID = camelCasifyString(data.name);
+    dropdownLabel = data.name;
+    selectedOption = arrayOfOptionElements[0].props.name;
   }
 
   /* 
-    Set the statehook upon load
+    Use the statehook upon load
   */
 
   useEffect(() => {

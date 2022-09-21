@@ -5,13 +5,13 @@
 [data-theme="Light"] #spreadsheetPreviewer th,
 [data-theme="Light"] #spreadsheetPreviewer td {
   background-color: #bebebe;
-  color: black;
-  border: 1px solid black; }
+  color: #0b0b0b;
+  border: 1px solid #0b0b0b; }
 
 [data-theme="Gradient"] #spreadsheetPreviewer th,
 [data-theme="Gradient"] #spreadsheetPreviewer td,
 [data-theme="Dark"] #spreadsheetPreviewer th,
 [data-theme="Dark"] #spreadsheetPreviewer td {
   background-color: #6b6b6b;
-  color: white;
-  border: 1px solid white; }
+  color: #e1dfdf;
+  border: 1px solid #e1dfdf; }

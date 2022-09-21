@@ -10,7 +10,7 @@
   box-shadow: 0px 0px 10px #d4967d; }
 
 [data-theme="Gradient"] .col-form-label {
-  color: #333333 !important; }
+  color: #fcfcfc !important; }
 
 [data-theme="Gradient"] .brown-input:focus,
 [data-theme="Gradient"] .brown-input:active,
@@ -58,14 +58,14 @@
   border: 1.5px solid #bebebe; }
 
 [data-theme="Light"] .col-form-label {
-  color: black !important; }
+  color: #0b0b0b !important; }
 
 [data-theme="Light"] .brown-input {
   background-color: #d4967d;
-  color: white; }
+  color: #e1dfdf; }
 
 [data-theme="Light"] .brown-input:hover {
-  background-color: white;
+  background-color: #e1dfdf;
   color: #d4967d;
   box-shadow: 0px 0px 10px #d4967d;
   border: 1.5px solid #d4967d; }
@@ -112,7 +112,7 @@
   background-color: #fcfcfc; }
 
 [data-theme="Dark"] .col-form-label {
-  color: white !important; }
+  color: #e1dfdf !important; }
 
 [data-theme="Dark"] .brown-input {
   background-color: #d4967d;

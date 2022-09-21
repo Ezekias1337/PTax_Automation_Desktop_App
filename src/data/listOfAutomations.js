@@ -1,104 +1,158 @@
-const listOfAutomations = {
+export const listOfAutomations = {
   assessmentNotices: {
     key: 1,
     name: "Assessment Notices",
-    locations: [
+    state: [
       {
         key: 1,
-        state: "Nevada",
-        subLocations: [
+        name: "Nevada",
+        county: [
           {
             key: 1,
             name: "Clark County",
             /* function: assessmentNotices, */
-            availableOperations: [
-              "Data Entry",
-              "Download Document",
-              "Data Entry, Download Document, & Upload Document",
+            operation: [
+              {
+                key: 1,
+                name: "Data Entry",
+              },
+              {
+                key: 2,
+                name: "Download Document",
+              },
+              {
+                key: 3,
+                name: "Data Entry, Download, & Upload Document",
+              },
             ],
           },
         ],
       },
       {
         key: 2,
-        state: "New York",
-        subLocations: [
+        name: "New York",
+        county: [
           {
             key: 1,
             name: "New York",
             /* function: assessmentNotices, */
-            availableOperations: [
-              "Data Entry",
-              "Download Document",
-              "Data Entry, Download Document, & Upload Document",
+            operation: [
+              {
+                key: 1,
+                name: "Data Entry",
+              },
+              {
+                key: 2,
+                name: "Download Document",
+              },
+              {
+                key: 3,
+                name: "Data Entry, Download, & Upload Document",
+              },
             ],
           },
         ],
       },
       {
         key: 3,
-        state: "California",
-        subLocations: [
+        name: "California",
+        county: [
           {
             key: 1,
             name: "Kern",
             /* function: assessmentNotices, */
-            availableOperations: [
-              "Data Entry",
-              "Download Document",
-              "Data Entry, Download Document, & Upload Document",
+            operation: [
+              {
+                key: 1,
+                name: "Data Entry",
+              },
+              {
+                key: 2,
+                name: "Download Document",
+              },
+              {
+                key: 3,
+                name: "Data Entry, Download, & Upload Document",
+              },
             ],
           },
           {
             key: 2,
             name: "Los Angeles",
             /* function: assessmentNotices, */
-            availableOperations: [
-              "Data Entry",
-              "Download Document",
-              "Data Entry, Download Document, & Upload Document",
+            operation: [
+              {
+                key: 1,
+                name: "Data Entry",
+              },
+              {
+                key: 2,
+                name: "Download Document",
+              },
+              {
+                key: 3,
+                name: "Data Entry, Download, & Upload Document",
+              },
             ],
           },
           {
             key: 3,
             name: "Riverside",
             /* function: assessmentNotices, */
-            availableOperations: [
-              "Data Entry",
-              "Download Document",
-              "Data Entry, Download Document, & Upload Document",
+            operation: [
+              {
+                key: 1,
+                name: "Data Entry",
+              },
+              {
+                key: 2,
+                name: "Download Document",
+              },
+              {
+                key: 3,
+                name: "Data Entry, Download, & Upload Document",
+              },
             ],
           },
           {
             key: 4,
             name: "San Bernardino",
             /* function: assessmentNotices, */
-            availableOperations: [
-              "Data Entry",
-              "Download Document",
-              "Data Entry, Download Document, & Upload Document",
+            operation: [
+              {
+                key: 1,
+                name: "Data Entry",
+              },
+              {
+                key: 2,
+                name: "Download Document",
+              },
+              {
+                key: 3,
+                name: "Data Entry, Download, & Upload Document",
+              },
             ],
           },
           {
             key: 5,
             name: "San Diego",
             /* function: assessmentNotices, */
-            availableOperations: ["Download Document"],
+            operation: [
+              {
+                key: 1,
+                name: "Download Document",
+              },
+            ],
           },
         ],
       },
-    ],
-    operations: [
-      { key: 1, name: "Data Entry" },
-      { key: 2, name: "Download Files" },
-      { key: 3, name: "Data Entry And Download Files" },
     ],
   },
   changeMailingAddress: {
     key: 2,
     name: "Change Mailing Address",
     WIP: true,
-    /* locations: [{ key: 1, state: "", subLocations: [] }], */
+    /* state: [{ key: 1, name: "", county: [] }], */
   },
   checkRequests: {
     key: 3,
@@ -108,11 +162,11 @@ const listOfAutomations = {
   paymentConfirmations: {
     key: 4,
     name: "Payment Confirmations",
-    locations: [
+    state: [
       {
         key: 1,
-        state: "California",
-        subLocations: [
+        name: "California",
+        county: [
           { key: 1, name: "Los Angeles" /* function: paymentConfirmations */ },
           {
             key: 2,
@@ -135,8 +189,8 @@ const listOfAutomations = {
       },
       {
         key: 2,
-        state: "Pennsylvania",
-        subLocations: [
+        name: "Pennsylvania",
+        county: [
           {
             key: 1,
             name: "Multnomah County" /* function: paymentConfirmations */,
@@ -153,60 +207,82 @@ const listOfAutomations = {
   taxBills: {
     key: 6,
     name: "Property Tax Bills",
-    locations: [
+    state: [
       {
         key: 1,
-        state: "California",
-        subLocations: [
+        name: "California",
+        county: [
           {
             key: 1,
             name: "Los Angeles",
             /* function: taxBills, */
-            availableOperations: [
-              "Data Entry",
-              "Download Document",
-              "Data Entry, Download Document, & Upload Document",
+            operation: [
+              {
+                key: 1,
+                name: "Data Entry",
+              },
+              {
+                key: 2,
+                name: "Download Document",
+              },
+              {
+                key: 3,
+                name: "Data Entry, Download, & Upload Document",
+              },
             ],
           },
         ],
       },
       {
         key: 2,
-        state: "New York",
-        subLocations: [
+        name: "New York",
+        county: [
           {
             key: 1,
             name: "New York",
             /* function: taxBills, */
-            availableOperations: [
-              "Data Entry",
-              "Download Document",
-              "Data Entry, Download Document, & Upload Document",
+            operation: [
+              {
+                key: 1,
+                name: "Data Entry",
+              },
+              {
+                key: 2,
+                name: "Download Document",
+              },
+              {
+                key: 3,
+                name: "Data Entry, Download, & Upload Document",
+              },
             ],
           },
         ],
       },
       {
         key: 3,
-        state: "Illinois",
-        subLocations: [
+        name: "Illinois",
+        county: [
           {
             key: 1,
             name: "Cook County",
             /* function: taxBills, */
-            availableOperations: [
-              "Data Entry",
-              "Download Document",
-              "Data Entry, Download Document, & Upload Document",
+            operation: [
+              {
+                key: 1,
+                name: "Data Entry",
+              },
+              {
+                key: 2,
+                name: "Download Document",
+              },
+              {
+                key: 3,
+                name: "Data Entry, Download, & Upload Document",
+              },
             ],
           },
         ],
       },
-    ],
-    operations: [
-      { key: 1, name: "Data Entry" },
-      { key: 2, name: "Download Files" },
-      { key: 3, name: "Data Entry And Download Files" },
     ],
   },
   addNewParcels: {

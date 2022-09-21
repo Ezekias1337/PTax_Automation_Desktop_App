@@ -11,7 +11,7 @@
 
 #progressBar,
 #progressBarFrostEffect {
-  height: 103%;
+  height: 100%;
   position: absolute; }
 
 #progressBar {
@@ -22,7 +22,7 @@
 #progressBarFrostEffect {
   z-index: 2;
   width: 50%;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(225, 223, 223, 0.4);
   -webkit-animation: frostEffectAnimation 5s infinite;
   animation: frostEffectAnimation 5s infinite; }
 

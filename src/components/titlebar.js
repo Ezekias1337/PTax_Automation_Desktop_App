@@ -17,7 +17,7 @@ export const TitleBar = () => {
       <div className="row" id="titleBarRow">
         <div id="titleBarLogoContainer" className="col col-9">
           <Link to={"/"}>
-            <img src={logo} className="title-logo" />
+            <img src={logo} className="title-logo" alt="PTax Logo" />
           </Link>
         </div>
         <div id="titleBarButtonContainer" className="col col-3">

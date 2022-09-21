@@ -1,13 +1,16 @@
 import { ClipboardButton } from "./buttons/clipboardButton";
 import { SpreadsheetButton } from "./buttons/spreadsheetButton";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import "../css/sass_css/styles.scss";
 import "../css/sass_css/event-log.scss";
 
-export const EventLog = (props) => {
+export const EventLog = ({}) => {
+  const [animationParent] = useAutoAnimate();
+
   return (
     <>
       <div className="container-fluid event-log">
-        <div className="row">
+        <div className="row" ref={animationParent}>
           {/* {props.eventLogEntries.forEach(() => {
             <div className={`col col-12 ${logColor}-message`}>{logText}</div>
           })} */}

@@ -231,7 +231,7 @@
     border: 1.5px solid #d4967d;
     box-shadow: 0px 0px 10px #d4967d; }
   [data-theme="Gradient"] h1 {
-    color: #333333 !important; }
+    color: #e1dfdf !important; }
   [data-theme="Gradient"] ::-webkit-input-placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #6b6b6b;
@@ -286,14 +286,14 @@
     opacity: 0%; }
   to {
     opacity: 100%;
-    box-shadow: 0px 0px 10px white; } }
+    box-shadow: 0px 0px 10px #e1dfdf; } }
 
 @-webkit-keyframes animated-alert {
   from {
     opacity: 0%; }
   to {
     opacity: 100%;
-    box-shadow: 0px 0px 10px white; } }
+    box-shadow: 0px 0px 10px #e1dfdf; } }
 
 [data-theme="Light"] {
   background-color: #fcfcfc;
@@ -302,12 +302,12 @@
   /* Handle on hover */ }
   [data-theme="Light"] button.styled-button {
     background-color: #d4967d;
-    color: white;
+    color: #e1dfdf;
     border: 1.5px solid #bebebe; }
   [data-theme="Light"] button.styled-button:hover,
   [data-theme="Light"] button.styled-button:focus,
   [data-theme="Light"] button.styled-button:active {
-    background-color: white;
+    background-color: #e1dfdf;
     color: #d4967d;
     border: 1.5px solid #d4967d;
     box-shadow: 0px 0px 10px #d4967d; }
@@ -367,14 +367,14 @@
     opacity: 0%; }
   to {
     opacity: 100%;
-    box-shadow: 0px 0px 10px black; } }
+    box-shadow: 0px 0px 10px #0b0b0b; } }
 
 @-webkit-keyframes animated-alert-light {
   from {
     opacity: 0%; }
   to {
     opacity: 100%;
-    box-shadow: 0px 0px 10px black; } }
+    box-shadow: 0px 0px 10px #0b0b0b; } }
 
 [data-theme="Dark"] {
   background-color: #333333;
@@ -393,7 +393,7 @@
     border: 1.5px solid #d4967d;
     box-shadow: 0px 0px 10px #d4967d; }
   [data-theme="Dark"] h1 {
-    color: white; }
+    color: #e1dfdf; }
   [data-theme="Dark"] .form-switch .form-check-input {
     background-color: #d4967d;
     border: 1.25px solid #6b6b6b;
@@ -471,14 +471,14 @@
     opacity: 0%; }
   to {
     opacity: 100%;
-    box-shadow: 0px 0px 10px white; } }
+    box-shadow: 0px 0px 10px #e1dfdf; } }
 
 @-webkit-keyframes animated-alert {
   from {
     opacity: 0%; }
   to {
     opacity: 100%;
-    box-shadow: 0px 0px 10px white; } }
+    box-shadow: 0px 0px 10px #e1dfdf; } }
 
 [data-theme="Gradient"],
 [data-theme="Light"],
@@ -548,7 +548,7 @@ button.animated-button {
   to {
     box-shadow: 0px 0px 10px #cff4fc;
     background-color: #cff4fc;
-    color: black; } }
+    color: #0b0b0b; } }
 
 @-webkit-keyframes animate-button {
   from {
@@ -556,4 +556,4 @@ button.animated-button {
   to {
     box-shadow: 0px 0px 10px #cff4fc;
     background-color: #cff4fc;
-    color: black; } }
+    color: #0b0b0b; } }

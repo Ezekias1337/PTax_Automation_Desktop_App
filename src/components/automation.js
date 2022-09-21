@@ -10,15 +10,18 @@ import { ProgressBar } from "./progressBar";
 import { NumericalProgressTracker } from "./numericalProgressTracker";
 import { TimeTracker } from "./timeTracker";
 import { Loader } from "./loader";
-import { renderAutomationFields } from "../functions/renderInputFields/renderAutomationFields";
-import { listOfAutomationsArrayExport as listOfAutomations } from "../data/listOfAutomations";
+import { CascadingDropdown } from "./inputFields/cascadingDropdown";
+import { renderSelectOptions } from "../functions/renderInputFields/renderSelectOptions";
+import { listOfAutomations } from "../data/listOfAutomations";
 import "../css/sass_css/styles.scss";
 import "../css/sass_css/automation.scss";
+import { camelCasifyString } from "../utils/camelCasifyString";
 
 export const Automation = ({ automationName, preOperationQuestions }) => {
   const state = useSelector((state) => state);
-  const [arrayOfPreOperationQuestions, setArrayOfPreOperationQuestions] =
-    useState([]);
+  const [arrayOfDropdownQuestions, setArrayOfDropdownQuestions] = useState([]);
+  const [selectedChoices, setSelectedChoices] = useState({});
+  const [childrenChoices, setChildrenChoices] = useState([]);
 
   useLayoutEffect(() => {
     const backgroundInterval = animateGradientBackground();
@@ -29,10 +32,37 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   }, [automationName]);
 
   /* 
-    Parse through the preOperationQuestions
+    Get the list of questions that require a dropdown
   */
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    let tempArrayOfDropdownQuestions = [];
+    for (const question of preOperationQuestions) {
+      if (question.inputType === "Dropdown") {
+        tempArrayOfDropdownQuestions.push(question);
+      }
+    }
+
+    setArrayOfDropdownQuestions(tempArrayOfDropdownQuestions);
+  }, [preOperationQuestions]);
+
+  /* 
+    Get the list of selectedChoices that should change
+    when a parent is updated
+  */
+
+  useEffect(() => {
+    let tempChildrenChoices = [];
+
+    for (const item of preOperationQuestions) {
+      if (item?.parentQuestions !== null && item?.inputType === "Dropdown") {
+        tempChildrenChoices.push(item);
+      }
+    }
+
+    setChildrenChoices(tempChildrenChoices);
+  }, [setChildrenChoices, preOperationQuestions]);
+
 
   return (
     <div
@@ -53,7 +83,13 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
         <div className="row mx-1">
           <div className="col col-6 mt-2">
             <div className="row">
-              {renderAutomationFields(preOperationQuestions, listOfAutomations)}
+              <CascadingDropdown
+                arrayOfQuestions={arrayOfDropdownQuestions}
+                parentState={selectedChoices}
+                setStateHook={setSelectedChoices}
+                childrenChoices={childrenChoices}
+                optionObj={listOfAutomations[camelCasifyString(automationName)]}
+              />
             </div>
           </div>
           <div className="col col-6 mt-2">
