@@ -1,15 +1,29 @@
+[data-theme="Gradient"] #loaderElement div {
+  border: 5px solid #333333;
+  border-color: #333333 transparent transparent transparent; }
+
+[data-theme="Light"] #loaderElement div {
+  border: 5px solid #e1dfdf;
+  border-color: #e1dfdf transparent transparent transparent; }
+
+[data-theme="Dark"] #loaderElement div {
+  border: 5px solid #333333;
+  border-color: #333333 transparent transparent transparent; }
+
 #loaderElement {
   display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  width: 80px;
-  height: 80px; }
+  width: 100%;
+  min-height: 39px; }
 
 #loaderElement div {
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: 64px;
-  height: 64px;
+  min-width: 34px;
+  min-height: 34px;
   margin: 8px;
   border: 8px solid #d4967d;
   border-radius: 50%;
@@ -28,6 +42,12 @@
 #loaderElement div:nth-child(3) {
   -webkit-animation-delay: -0.15s;
   animation-delay: -0.15s; }
+
+.is-loading:hover > #loaderElement div,
+.is-loading:focus > #loaderElement div,
+.is-loading:active > #loaderElement div {
+  border: 5px solid #d4967d;
+  border-color: #d4967d transparent transparent transparent; }
 
 @-webkit-keyframes lds-ring {
   0% {

@@ -9,6 +9,7 @@ import { NumericalProgressTracker } from "./numericalProgressTracker";
 import { TimeTracker } from "./timeTracker";
 import { Loader } from "./loader";
 import { CascadingDropdown } from "./inputFields/cascadingDropdown";
+import { StartAutomationButton } from "./buttons/startAutomationButton";
 import { camelCasifyString } from "../utils/camelCasifyString";
 import { listOfAutomations } from "../data/listOfAutomations";
 import "../css/sass_css/styles.scss";
@@ -107,6 +108,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                 optionObj={listOfAutomations[camelCasifyString(automationName)]}
               />
             </div>
+            <StartAutomationButton />
           </div>
           <div className="col col-6 mt-2">
             <EventLog></EventLog>

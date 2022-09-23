@@ -4,7 +4,7 @@ div.event-log {
 [data-theme="Gradient"] div.event-log {
   background-color: #6b6b6b;
   color: #fcfcfc;
-  border: 1px solid #fcfcfc; }
+  border: 1px solid #e9e9e9; }
 
 [data-theme="Light"] div.event-log {
   background-color: #bebebe;
@@ -14,7 +14,7 @@ div.event-log {
 [data-theme="Dark"] div.event-log {
   background-color: #6b6b6b;
   color: #fcfcfc;
-  border: 1px solid #fcfcfc; }
+  border: 1px solid #e9e9e9; }
 
 div.event-log {
   overflow-y: scroll;
