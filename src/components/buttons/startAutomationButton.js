@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "reactstrap";
 
-export const SpreadsheetButton = ({ idForButton, onClickHandler }) => {
+export const startAutomationButton = () => {
   return (
     <Button
       className="styled-button mx-2"
@@ -10,7 +10,7 @@ export const SpreadsheetButton = ({ idForButton, onClickHandler }) => {
       alt="clipboard-button"
       id={idForButton ? idForButton : null}
     >
-      <FontAwesomeIcon icon={faFileExcel} />
+      <FontAwesomeIcon icon={faCirclePlay} />
     </Button>
   );
 };

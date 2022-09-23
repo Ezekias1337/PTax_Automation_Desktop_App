@@ -1,6 +1,6 @@
 import { TitleBar } from "./titlebar";
 import { listOfSettings } from "../data/listOfSettings";
-import { HomeButton } from "./buttons/homeButton";
+import { Header } from "./header";
 import { SaveButton } from "./buttons/saveButton";
 import { useLayoutEffect, useEffect, useState } from "react";
 import { animateGradientBackground } from "../functions/animateGradientBackground";
@@ -106,9 +106,7 @@ export const Settings = () => {
   return (
     <div data-theme={state.settings.colorTheme} id="element-to-animate">
       <TitleBar />
-      <div className="row page-title">
-        <h1>Settings</h1>
-      </div>
+      <Header pageTitle="Settings" includeArrow={false} />
       <div className="container-for-scroll">
         <div className="row mx-1">{arrayOfSettings}</div>
         <div className="row mt-3">
@@ -124,11 +122,6 @@ export const Settings = () => {
             />
           </div>
           <div className="col col-5"></div>
-        </div>
-        <div className="row mx-1">
-          <div className="col col-12 mt-5">
-            <HomeButton />
-          </div>
         </div>
       </div>
 

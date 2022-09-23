@@ -3,7 +3,7 @@ import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
 
-export const SettingsButton = (isAnimated) => {
+export const SettingsButton = ({ isAnimated }) => {
   return (
     <Link to={"/settings"}>
       <Button

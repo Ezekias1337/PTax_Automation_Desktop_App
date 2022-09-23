@@ -29,7 +29,7 @@ export const listOfAutomations = {
         ],
       },
       {
-        key: 1,
+        key: 2,
         name: "New York",
         county: [
           {

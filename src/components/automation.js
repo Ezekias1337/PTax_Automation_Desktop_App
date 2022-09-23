@@ -1,7 +1,5 @@
 import { TitleBar } from "./titlebar";
-import { HomeButton } from "./buttons/homeButton";
-import { BackButton } from "./buttons/backButton";
-import { DropDown } from "./inputFields/dropdown";
+import { Header } from "./header";
 import { animateGradientBackground } from "../functions/animateGradientBackground";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -11,11 +9,10 @@ import { NumericalProgressTracker } from "./numericalProgressTracker";
 import { TimeTracker } from "./timeTracker";
 import { Loader } from "./loader";
 import { CascadingDropdown } from "./inputFields/cascadingDropdown";
-import { renderSelectOptions } from "../functions/renderInputFields/renderSelectOptions";
+import { camelCasifyString } from "../utils/camelCasifyString";
 import { listOfAutomations } from "../data/listOfAutomations";
 import "../css/sass_css/styles.scss";
 import "../css/sass_css/automation.scss";
-import { camelCasifyString } from "../utils/camelCasifyString";
 
 export const Automation = ({ automationName, preOperationQuestions }) => {
   const state = useSelector((state) => state);
@@ -56,7 +53,10 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
     let tempParentChoices = [];
 
     for (const item of preOperationQuestions) {
-      if ((item?.parentQuestions === null || item?.parentQuestions?.length > 0) && item?.inputType === "Dropdown") {
+      if (
+        (item?.parentQuestions === null || item?.parentQuestions?.length > 0) &&
+        item?.inputType === "Dropdown"
+      ) {
         tempParentChoices.push(item);
       }
     }
@@ -88,9 +88,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
       data-theme={state.settings.colorTheme}
     >
       <TitleBar />
-      <div className="row page-title">
-        <h1>{automationName}</h1>
-      </div>
+      <Header pageTitle={automationName} />
 
       <div className="container-for-scroll">
         <NumericalProgressTracker />
@@ -112,12 +110,6 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
           </div>
           <div className="col col-6 mt-2">
             <EventLog></EventLog>
-          </div>
-        </div>
-        <div className="row mx-1">
-          <div className="col col-12 mt-5">
-            <BackButton></BackButton>
-            <HomeButton></HomeButton>
           </div>
         </div>
       </div>

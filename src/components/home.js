@@ -4,7 +4,7 @@ import React, { useLayoutEffect } from "react";
 import { animateGradientBackground } from "../functions/animateGradientBackground";
 import { SettingsButton } from "./buttons/settingsButton";
 import { useSelector } from "react-redux";
-import { usePersistentSettings } from "../functions/usePersistentSettings";
+import { usePersistentSettings } from "../hooks/usePersistentSettings";
 import { checkIfFirstTimeRunning } from "../functions/checkIfFirstTimeRunning";
 import { GeneralAlert } from "./generalAlert";
 import { TitleBar } from "./titlebar";
