@@ -10,8 +10,10 @@ export const Header = ({ pageTitle, includeArrow = true }) => {
           {includeArrow === true ? <HomeButton></HomeButton> : <></>}
         </div>
       </div>
-      <div className="row page-title">
-        <h1>{pageTitle}</h1>
+      <div className="row mx-1">
+        <div className="col col-12 page-title">
+          <h1>{pageTitle}</h1>
+        </div>
       </div>
     </>
   );

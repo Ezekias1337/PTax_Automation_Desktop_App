@@ -231,7 +231,7 @@
     border: 1.5px solid #d4967d;
     box-shadow: 0px 0px 10px #d4967d; }
   [data-theme="Gradient"] h1 {
-    color: #e1dfdf !important; }
+    color: #333333 !important; }
   [data-theme="Gradient"] ::-webkit-input-placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #6b6b6b;

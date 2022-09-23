@@ -6,7 +6,7 @@
 
 [data-theme="Gradient"] #timeElapsed,
 [data-theme="Gradient"] #estimatedTimeRemaining {
-  color: #e1dfdf; }
+  color: #333333; }
 
 [data-theme="Light"] #timeElapsed,
 [data-theme="Light"] #estimatedTimeRemaining {

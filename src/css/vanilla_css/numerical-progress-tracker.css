@@ -4,7 +4,7 @@
   align-items: center; }
 
 [data-theme="Gradient"] #numericalProgressTracker {
-  color: #e1dfdf; }
+  color: #333333; }
 
 [data-theme="Light"] #numericalProgressTracker {
   color: #0b0b0b; }
