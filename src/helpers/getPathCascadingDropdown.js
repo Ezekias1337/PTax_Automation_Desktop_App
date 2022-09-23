@@ -1,6 +1,10 @@
 import { camelCasifyString } from "../utils/camelCasifyString";
 
-export const getPathCascadingDropdown = (question, getFirst) => {
+export const getPathCascadingDropdown = (
+  question,
+  getFirst,
+  parentIndex = 0
+) => {
   /* 
     For the dependant dropdowns, when a parent's value is changed
     the children must change their available options. The path 
@@ -9,9 +13,13 @@ export const getPathCascadingDropdown = (question, getFirst) => {
 
   const levelsOfNesting = question.parentQuestions.length;
   let pathToDesiredElement = "";
+  let parentIndexAccountedFor = false;
 
   for (const [index, item] of question.parentQuestions.entries()) {
-    if (levelsOfNesting === index - 1) {
+    if (parentIndexAccountedFor === false) {
+      pathToDesiredElement += item + `[${parentIndex}].`;
+      parentIndexAccountedFor = true;
+    } else if (levelsOfNesting === index - 1) {
       pathToDesiredElement += item + "[0]";
     } else {
       pathToDesiredElement += item + "[0].";

@@ -29,12 +29,12 @@ export const listOfAutomations = {
         ],
       },
       {
-        key: 2,
+        key: 1,
         name: "New York",
         county: [
           {
             key: 1,
-            name: "New York",
+            name: "New York County",
             /* function: assessmentNotices, */
             operation: [
               {

@@ -1,6 +1,10 @@
 const findArrayIndexWithObject = (depth, array) => {
   for (const item of array) {
     if (item[1]?.key) {
+      /* 
+        console.log("item[1]: ", item[1]);
+        console.log("Object.entries(item[1]): ", Object.entries(item[1]));
+      */
       return Object.entries(item[1]);
     }
   }
@@ -15,18 +19,12 @@ export const accessNestedArray = (depth, array) => {
   while (numOfRecursions < depth) {
     if (currentArrayLayer === undefined) {
       currentArrayLayer = findArrayIndexWithObject(depth, topLvlArray);
-      /* console.log("currentArrayLayer: ", currentArrayLayer) */
     } else {
-      /* console.log("currentArrayLayer else: ", currentArrayLayer) */
       currentArrayLayer = findArrayIndexWithObject(depth, currentArrayLayer);
-      /* console.log("currentArrayLayer: ", currentArrayLayer); */
     }
 
     numOfRecursions++;
   }
-
-  /* desiredElement = currentArrayLayer.find((arr) => arr[0] === "name");
-  console.log("desiredElement: ", desiredElement) */
 
   return desiredElement;
 };

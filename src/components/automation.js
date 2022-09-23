@@ -21,6 +21,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const state = useSelector((state) => state);
   const [arrayOfDropdownQuestions, setArrayOfDropdownQuestions] = useState([]);
   const [selectedChoices, setSelectedChoices] = useState({});
+  const [parentChoices, setParentChoices] = useState([]);
   const [childrenChoices, setChildrenChoices] = useState([]);
 
   useLayoutEffect(() => {
@@ -47,6 +48,23 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   }, [preOperationQuestions]);
 
   /* 
+    Get the list of parentChoices that should change
+    the children upon updating
+  */
+
+  useEffect(() => {
+    let tempParentChoices = [];
+
+    for (const item of preOperationQuestions) {
+      if ((item?.parentQuestions === null || item?.parentQuestions?.length > 0) && item?.inputType === "Dropdown") {
+        tempParentChoices.push(item);
+      }
+    }
+
+    setParentChoices(tempParentChoices);
+  }, [setParentChoices, preOperationQuestions]);
+
+  /* 
     Get the list of selectedChoices that should change
     when a parent is updated
   */
@@ -62,7 +80,6 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
 
     setChildrenChoices(tempChildrenChoices);
   }, [setChildrenChoices, preOperationQuestions]);
-
 
   return (
     <div
@@ -87,6 +104,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                 arrayOfQuestions={arrayOfDropdownQuestions}
                 parentState={selectedChoices}
                 setStateHook={setSelectedChoices}
+                parentChoices={parentChoices}
                 childrenChoices={childrenChoices}
                 optionObj={listOfAutomations[camelCasifyString(automationName)]}
               />
