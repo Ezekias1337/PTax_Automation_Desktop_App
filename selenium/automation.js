@@ -1,7 +1,7 @@
-const mainMenu = require("./functions/userPrompts/mainMenu");
+const { mainMenu } = require("./functions/userPrompts/mainMenu");
 
-const automation = async () => {
-  await mainMenu();
+const automation = async (automationConfigObject) => {
+  await mainMenu(automationConfigObject);
 };
 
-module.exports = automation;
+module.exports = { automation };

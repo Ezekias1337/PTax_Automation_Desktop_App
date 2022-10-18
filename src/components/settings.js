@@ -28,8 +28,8 @@ export const Settings = () => {
     screenResolution: "800x600",
     username: "",
     password: "",
-    defaultDownloadDirectory: "",
-    defaultUploadandScanDirectory: "",
+    downloadDirectory: "",
+    uploadDirectory: "",
     launchWindowinCurrentPosition: false,
   });
 
@@ -58,10 +58,10 @@ export const Settings = () => {
         );
       } else if (item[1]?.inputCategory === "fileOrDirectory") {
         let inputValueState;
-        if (item[1]?.name === "Default Download Directory") {
-          inputValueState = userSettings?.defaultDownloadDirectory;
-        } else if (item[1]?.name === "Default Upload and Scan Directory") {
-          inputValueState = userSettings?.defaultUploadandScanDirectory;
+        if (item[1]?.name === "Download Directory") {
+          inputValueState = userSettings?.downloadDirectory;
+        } else if (item[1]?.name === "Upload Directory") {
+          inputValueState = userSettings?.uploadDirectory;
         }
 
         tempArrayOfSettings.push(
@@ -97,11 +97,7 @@ export const Settings = () => {
     }
 
     setArrayOfSettings(tempArrayOfSettings);
-  }, [
-    state,
-    userSettings.defaultDownloadDirectory,
-    userSettings.defaultUploadandScanDirectory,
-  ]);
+  }, [state, userSettings]);
 
   return (
     <div data-theme={state.settings.colorTheme} id="element-to-animate">

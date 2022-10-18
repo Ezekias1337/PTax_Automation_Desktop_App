@@ -1,9 +1,11 @@
 const findOptionByKey = (
   objToArraySelectAutomation,
-  selectedAutomationInput
+  selectedAutomationInput,
+  keyToFindMatch
 ) => {
+  
   const selectedAutomation = objToArraySelectAutomation.find(
-    (automation) => automation.key.toString() === selectedAutomationInput
+    (automation) => automation[keyToFindMatch] === selectedAutomationInput
   );
 
   return selectedAutomation;

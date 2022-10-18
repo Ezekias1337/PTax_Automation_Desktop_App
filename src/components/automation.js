@@ -8,7 +8,7 @@ import { ProgressBar } from "./progressBar";
 import { NumericalProgressTracker } from "./numericalProgressTracker";
 import { TimeTracker } from "./timeTracker";
 import { Loader } from "./loader";
-import { CascadingDropdown } from "./inputFields/cascadingDropdown";
+import { CascadingInputs } from "./inputFields/cascadingInputs";
 import { StartAutomationButton } from "./buttons/startAutomationButton";
 import { camelCasifyString } from "../utils/camelCasifyString";
 import { listOfAutomations } from "../data/listOfAutomations";
@@ -18,9 +18,12 @@ import "../css/sass_css/automation.scss";
 export const Automation = ({ automationName, preOperationQuestions }) => {
   const state = useSelector((state) => state);
   const [arrayOfDropdownQuestions, setArrayOfDropdownQuestions] = useState([]);
-  const [selectedChoices, setSelectedChoices] = useState({});
+  const [selectedChoices, setSelectedChoices] = useState({
+    automation: automationName,
+  });
   const [parentChoices, setParentChoices] = useState([]);
   const [childrenChoices, setChildrenChoices] = useState([]);
+  const [nonDropdownChoices, setNonDropdownChoices] = useState([]);
 
   useLayoutEffect(() => {
     const backgroundInterval = animateGradientBackground();
@@ -66,6 +69,23 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   }, [setParentChoices, preOperationQuestions]);
 
   /* 
+    Get the list of choices that don't use a dropdown
+    element
+  */
+
+  useEffect(() => {
+    let tempNonDropdownChoices = [];
+
+    for (const item of preOperationQuestions) {
+      if (item?.inputType !== "Dropdown") {
+        tempNonDropdownChoices.push(item);
+      }
+    }
+
+    setNonDropdownChoices(tempNonDropdownChoices);
+  }, [setNonDropdownChoices, preOperationQuestions]);
+
+  /* 
     Get the list of selectedChoices that should change
     when a parent is updated
   */
@@ -99,16 +119,18 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
         <div className="row mx-1">
           <div className="col col-6 mt-2">
             <div className="row">
-              <CascadingDropdown
+              <CascadingInputs
                 arrayOfQuestions={arrayOfDropdownQuestions}
+                reduxState={state}
                 parentState={selectedChoices}
                 setStateHook={setSelectedChoices}
                 parentChoices={parentChoices}
                 childrenChoices={childrenChoices}
+                nonDropdownChoices={nonDropdownChoices}
                 optionObj={listOfAutomations[camelCasifyString(automationName)]}
               />
             </div>
-            <StartAutomationButton />
+            <StartAutomationButton automationConfigObject={selectedChoices} />
           </div>
           <div className="col col-6 mt-2">
             <EventLog></EventLog>

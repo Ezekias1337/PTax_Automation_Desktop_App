@@ -1,9 +1,9 @@
 const { ipcMain } = require("electron");
-const { automation } = require("../../selenium/automation.s");
+const { automation } = require("../../selenium/automation");
 
 module.exports = {
   browserListener: ipcMain.on("launchBrowser", (event, message) => {
-    automation();
+    automation(message);
     /* .then((resp) => {
         console.log("resp: ", resp);
       })

@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-/* import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFile, faFolder } from "@fortawesome/free-solid-svg-icons"; */
 import { inputFieldFillDefault } from "../../functions/inputFieldFillDefault";
 import { camelCasifyString } from "../../utils/camelCasifyString";
 import { handlePathRetrieved } from "../../functions/ipc-renderer/handlePathRetrieved";
@@ -23,17 +21,34 @@ export const FileOrDirectoryPicker = ({
     Prepare default value for input field if it exists
   */
   useEffect(() => {
+    const inputNameCamelCasified = camelCasifyString(
+      data.name.split(" ").join("")
+    );
+    let settingToCheckFor;
+
+    if (promptType === "file") {
+      settingToCheckFor = "downloadDirectory";
+    } else if (promptType === "directory") {
+      settingToCheckFor = "uploadDirectory";
+    }
+
     const defaultInputValue = inputFieldFillDefault(
-      data.name.split(" ").join(""),
+      inputNameCamelCasified,
       state,
       false,
-      false
+      false,
+      settingToCheckFor
     );
+
     if (defaultInputValue !== null) {
-      const e = generateEventTargetStructure(data.name, defaultInputValue);
+      const e = generateEventTargetStructure(
+        inputNameCamelCasified,
+        defaultInputValue
+      );
+
       handleFormChange(e, setStateHook);
     }
-  }, [data.name, setStateHook, state]);
+  }, [data.name, setStateHook, promptType, state]);
 
   useEffect(() => {
     if (promptType === "file") {

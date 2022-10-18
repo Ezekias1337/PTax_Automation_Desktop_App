@@ -1,5 +1,3 @@
-const consoleLogKeyAndName = require("./consoleLogKeyAndName");
-
 const parseObjectMainMenu = (objectToParse, stateOrCityOrOperation) => {
   const objConvertedToArray = [];
 
@@ -7,7 +5,6 @@ const parseObjectMainMenu = (objectToParse, stateOrCityOrOperation) => {
     if (stateOrCityOrOperation === "state") {
       if (item?.key && item?.state) {
         objConvertedToArray.push(item);
-        consoleLogKeyAndName(item.key, item.state);
       }
     } else if (
       stateOrCityOrOperation === "city" ||
@@ -15,7 +12,6 @@ const parseObjectMainMenu = (objectToParse, stateOrCityOrOperation) => {
     ) {
       if (item?.key && item?.name) {
         objConvertedToArray.push(item);
-        consoleLogKeyAndName(item.key, item.name);
       }
     }
   }

@@ -1,43 +1,29 @@
-const colors = require("colors");
 const findOptionByKey = require("./parsing/findOptionByKey");
 const parseNestedObjectMainMenu = require("./parsing/parseNestedObjectMainMenu");
 const parseObjectMainMenu = require("./parsing/parseObjectMainMenu");
-const consoleLogLine = require("../general/consoleLogLine");
-const promptSelectAnAutomation = require("./individual/promptSelectAnAutomation");
-const promptForState = require("./individual/promptForState");
-const promptForSublocation = require("./individual/promptForSublocation");
-const promptForOperation = require("./individual/promptForOperation");
 const listOfAutomations = require("../../allAutomations/listOfAutomations/listOfAutomations");
 
+const mainMenu = async (automationConfigObject) => {
+  console.table(automationConfigObject);
 
-const mainMenu = async () => {
   /* 
     First select an automation that you want to perform
   */
 
-  consoleLogLine();
   const objToArraySelectAutomation =
     parseNestedObjectMainMenu(listOfAutomations);
-  const selectedAutomationInput = await promptSelectAnAutomation();
-  consoleLogLine();
+  const selectedAutomationInput = automationConfigObject.automation;
 
   let selectedOperation = null;
   const selectedAutomation = findOptionByKey(
     objToArraySelectAutomation,
-    selectedAutomationInput
+    selectedAutomationInput,
+    "name"
   );
 
-  
-  /*   If the automation has a function at the root level, run it
- 
-
-  if (selectedAutomation?.function) {
-    selectedAutomation.function();
-  } */
-
   /* 
-    If the automation has a state to select, prompt the user, 
-    otherwise run the automation
+    If the automation has a state to select, parse the object
+    to find the correct option
   */
 
   if (selectedAutomation?.locations?.length > 0) {
@@ -45,12 +31,12 @@ const mainMenu = async () => {
       selectedAutomation.locations,
       "state"
     );
-    const selectedStateInput = await promptForState();
-    consoleLogLine();
+    const selectedStateInput = automationConfigObject.state;
 
     const selectedState = findOptionByKey(
       objToArraySelectLocation,
-      selectedStateInput
+      selectedStateInput,
+      "state"
     );
 
     /* 
@@ -63,12 +49,12 @@ const mainMenu = async () => {
         selectedAutomation.operations,
         "operation"
       );
-      const selectedOperationInput = await promptForOperation();
-      consoleLogLine();
+      const selectedOperationInput = automationConfigObject.operation;
 
       selectedOperation = findOptionByKey(
         objToArraySelectOperation,
-        selectedOperationInput
+        selectedOperationInput,
+        "name"
       );
     }
 
@@ -85,25 +71,19 @@ const mainMenu = async () => {
         selectedState.subLocations,
         "city"
       );
-      const selectedSublocationInput = await promptForSublocation();
-      consoleLogLine();
+      const selectedSublocationInput = automationConfigObject.county;
 
       const selectedSublocation = findOptionByKey(
         objToArraySelectSublocation,
-        selectedSublocationInput
+        selectedSublocationInput,
+        "name"
       );
 
-      selectedSublocation.function(
-        selectedState.state,
-        selectedSublocation.name,
-        selectedOperation.name
-      );
+      selectedSublocation.function(automationConfigObject);
     }
   } else if (selectedAutomation?.function) {
-    selectedAutomation.function();
+    selectedAutomation.function(automationConfigObject);
   }
 };
 
-mainMenu();
-
-module.exports = mainMenu;
+module.exports = { mainMenu };

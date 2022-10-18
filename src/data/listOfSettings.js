@@ -86,7 +86,7 @@ export const listOfSettings = {
   },
   defaultDownloadDirectory: {
     key: 5,
-    name: "Default Download Directory",
+    name: "Download Directory",
     options: null,
     acceptsCustomInput: true,
     customInputType: "text",
@@ -99,7 +99,7 @@ export const listOfSettings = {
   },
   defaultUploadAndScanDirectory: {
     key: 6,
-    name: "Default Upload and Scan Directory",
+    name: "Upload Directory",
     options: null,
     acceptsCustomInput: true,
     customInputType: "text",

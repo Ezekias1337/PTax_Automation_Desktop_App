@@ -1,5 +1,3 @@
-const consoleLogKeyAndName = require("./consoleLogKeyAndName");
-
 const parseNestedObjectMainMenu = (objectToParse) => {
   const objConvertedToArray = [];
   const objectToParseEntries = Object.entries(objectToParse);
@@ -8,7 +6,6 @@ const parseNestedObjectMainMenu = (objectToParse) => {
     for (const nestedItem of item) {
       if (nestedItem?.key && nestedItem?.name) {
         objConvertedToArray.push(nestedItem);
-        consoleLogKeyAndName(nestedItem.key, nestedItem.name);
       }
     }
   }

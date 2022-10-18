@@ -4,14 +4,14 @@ import { Button } from "reactstrap";
 import { Loader } from "../loader";
 const { ipcRenderer } = window.require("electron");
 
-export const StartAutomationButton = ({}) => {
+export const StartAutomationButton = ({automationConfigObject}) => {
   return (
     <div className="row mt-5">
       <div className="col col-4"></div>
       <div className="col col-4 full-flex">
         <Button
           className="full-width-button styled-button is-loading mx-2"
-          onClick={() => ipcRenderer.send("launchBrowser", null)}
+          onClick={() => ipcRenderer.send("launchBrowser", automationConfigObject)}
           alt="clipboard-button"
           id="start-automation-button"
         >

@@ -18,15 +18,6 @@ export const CascadingDropdown = ({
   const [arrayOfDropdowns, setArrayOfDropdowns] = useState([]);
 
   /* 
-    Console log out the parent's state, delete later
-  */
-
-  useEffect(() => {
-    console.log("PARENT'S STATE");
-    console.table(parentState);
-  }, [parentState]);
-
-  /* 
     Handle getting the select elements rendered, assume the
     parent questions will have the first option selected by default
   */

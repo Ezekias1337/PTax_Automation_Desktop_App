@@ -1,5 +1,9 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require("electron");
+const {
+  default: installExtension,
+  REDUX_DEVTOOLS,
+} = require("electron-devtools-installer");
 const Store = require("electron-store");
 const { createWindow } = require("./electron/createWindow");
 const { createTray } = require("./electron/createTray");
@@ -10,15 +14,21 @@ require("./ipc-listeners/allListeners");
 */
 
 let store = new Store();
+let tray;
 
 /* 
   This method will be called when Electron has finished
   initialization and is ready to create browser windows.
   Some APIs can only be used after this event occurs. 
 */
+const reactDevToolsId = "fmkadmapgofadopljbjfkapdkoienihi";
+
 app.whenReady().then(() => {
+  installExtension([REDUX_DEVTOOLS, reactDevToolsId])
+    .then((name) => console.log(`Added Extension:  ${name}`))
+    .catch((err) => console.log("An error occurred: ", err));
   const window = createWindow(__dirname, process, store);
-  const tray = createTray(window, __dirname, process);
+  tray = createTray(window, __dirname, process);
 
   app.on("activate", function () {
     /* 
