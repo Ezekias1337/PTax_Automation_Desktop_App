@@ -100,7 +100,14 @@ export const Settings = () => {
   }, [state, userSettings]);
 
   return (
-    <div data-theme={state.settings.colorTheme} id="element-to-animate">
+    <div
+      data-theme={
+        state.settings.colorTheme !== undefined
+          ? state.settings.colorTheme
+          : "Gradient"
+      }
+      id="element-to-animate"
+    >
       <TitleBar />
       <Header pageTitle="Settings" includeArrow={false} />
       <div className="container-for-scroll">

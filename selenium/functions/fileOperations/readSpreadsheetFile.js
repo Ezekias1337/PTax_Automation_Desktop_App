@@ -4,7 +4,7 @@ const promptUploadOrScanDirectory = require("../userPrompts/individual/promptUpl
 const promptFileName = require("../userPrompts/individual/promptFileName");
 const removeQuotesFromObjectKeys = require("../general/removeQuotesFromObjectKeys");
 
-const readSpreadsheetFile = async () => {
+const readSpreadsheetFile = async (uploadDirectory) => {
   console.log(
     "\n",
     colors.red.bold(
@@ -12,7 +12,7 @@ const readSpreadsheetFile = async () => {
     )
   );
 
-  const uploadDirectoryPreSlashCheck = await promptUploadOrScanDirectory();
+  /* const uploadDirectoryPreSlashCheck = await promptUploadOrScanDirectory();
   const slashChecker = uploadDirectoryPreSlashCheck.charAt(
     uploadDirectoryPreSlashCheck.length - 1
   );
@@ -23,7 +23,7 @@ const readSpreadsheetFile = async () => {
     uploadDirectory = uploadDirectoryPreSlashCheck;
   } else {
     uploadDirectory = uploadDirectoryPreSlashCheck + "\\";
-  }
+  } */
 
   console.log(
     colors.green.bold(

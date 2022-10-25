@@ -25,7 +25,18 @@ const performDataEntrySanDiego = require("./cities/sanDiego/performOperations/pe
 const performDownloadSanDiego = require("./cities/sanDiego/performOperations/performDownloadSanDiego");
 const performDataEntryAndDownloadSanDiego = require("./cities/sanDiego/performOperations/performDataEntryAndDownloadSanDiego");
 
-const californiaAssessmentNotices = async (sublocation, operation) => {
+/* 
+  const californiaAssessmentNotices = async (sublocation, operation) => {
+*/
+
+const californiaAssessmentNotices = async ({
+  automation,
+  uploadDirectory,
+  downloadDirectory,
+  state,
+  county,
+  operation,
+}) => {
   console.log(
     colors.bold.red(
       "Warning: ensure the data in the Parcel Number column all follow the convention: "
@@ -38,63 +49,84 @@ const californiaAssessmentNotices = async (sublocation, operation) => {
 
   switch (operation) {
     case "Data Entry":
-      switch (sublocation) {
+      switch (county) {
         case "Kern":
-          await performDataEntryKern();
+          await performDataEntryKern(uploadDirectory, downloadDirectory);
           break;
         case "Los Angeles":
-          await performDataEntryLosAngeles();
+          await performDataEntryLosAngeles(uploadDirectory, downloadDirectory);
           break;
         case "Riverside":
-          await performDataEntryRiverside();
+          await performDataEntryRiverside(uploadDirectory, downloadDirectory);
           break;
         case "San Bernardino":
-          await performDataEntrySanBernardino();
+          await performDataEntrySanBernardino(
+            uploadDirectory,
+            downloadDirectory
+          );
           break;
         case "San Diego":
-          await performDataEntrySanDiego();
+          await performDataEntrySanDiego(uploadDirectory, downloadDirectory);
           break;
         default:
           break;
       }
       break;
     case "Download Files":
-      switch (sublocation) {
+      switch (county) {
         case "Kern":
-          await performDownloadKern();
+          await performDownloadKern(uploadDirectory, downloadDirectory);
           break;
         case "Los Angeles":
-          await performDownloadLosAngeles();
+          await performDownloadLosAngeles(uploadDirectory, downloadDirectory);
           break;
         case "Riverside":
-          await performDownloadRiverside();
+          await performDownloadRiverside(uploadDirectory, downloadDirectory);
           break;
         case "San Bernardino":
-          await performDownloadSanBernardino();
+          await performDownloadSanBernardino(
+            uploadDirectory,
+            downloadDirectory
+          );
           break;
         case "San Diego":
-          await performDownloadSanDiego();
+          await performDownloadSanDiego(uploadDirectory, downloadDirectory);
           break;
         default:
           break;
       }
       break;
-    case "Data Entry And Download Files":
-      switch (sublocation) {
+    case "Data Entry, Download, & Upload Document":
+      switch (county) {
         case "Kern":
-          await performDataEntryAndDownloadKern();
+          await performDataEntryAndDownloadKern(
+            uploadDirectory,
+            downloadDirectory
+          );
           break;
         case "Los Angeles":
-          await performDataEntryAndDownloadLosAngeles();
+          await performDataEntryAndDownloadLosAngeles(
+            uploadDirectory,
+            downloadDirectory
+          );
           break;
         case "Riverside":
-          await performDataEntryAndDownloadRiverside();
+          await performDataEntryAndDownloadRiverside(
+            uploadDirectory,
+            downloadDirectory
+          );
           break;
         case "San Bernardino":
-          await performDataEntryAndDownloadSanBernardino();
+          await performDataEntryAndDownloadSanBernardino(
+            uploadDirectory,
+            downloadDirectory
+          );
           break;
         case "San Diego":
-          await performDataEntryAndDownloadSanDiego();
+          await performDataEntryAndDownloadSanDiego(
+            uploadDirectory,
+            downloadDirectory
+          );
           break;
         default:
           break;

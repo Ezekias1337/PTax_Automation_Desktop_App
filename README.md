@@ -1,70 +1,29 @@
-# Getting Started with Create React App
+# Property Taxes Automation Desktop App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was made using Electron and React for the Front End, Node.js and Selenium for the backend.
+
+## Purpose
+
+In the property tax industry there is alot of monotonous work that involves visiting County's websites to retrieve Tax Bills, Assessment Notices, and other documents and subsequently upload this information to their system.
+
+However, with such monotony data entry errors are bound to be made. Also, a person's labor could be much better used towards something that requires more complex decision making while the automation runs in the background.
+
+Simply install the app, select an automation you want to run,  upload a spreadsheet with the list of data points needed and relax.
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run app`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+After installing the dependencies with npm install, you can run the application using this command.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Code And File Structure
 
-### `npm test`
+This app utilizes multiple technologies which are not typically used together. So I figured an explanation of the stack would be necessary.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Electron** is the base of the application's front end. It's what allows **Javascript/HTML/CSS** to be rendered in a desktop environment. Electron also serves as the communication bridge between the front and back end through **IPC listeners**. It is located in the **electron folder**. The listeners for the backend are located in **src/ipc-main-listeners**. The listeners for the front end are located in **src/ipc-renderer-listeners**. The entry point for electron is at the root directory and named **main.js**.
 
-### `npm run build`
+**React** is the Javascript framework used for the front end because of it's robust component reusability and state management. The overwhelming majority of the front end is located in the **src folder**.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Selenium** is the web automation framework being used to open the browser window and interact with the page via automation. Selenium is the **"backend"** for this application. It is located in the **selenium folder**.

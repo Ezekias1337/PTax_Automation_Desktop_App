@@ -5,9 +5,11 @@ const {
   REDUX_DEVTOOLS,
 } = require("electron-devtools-installer");
 const Store = require("electron-store");
+const { createIpcBusBridge } = require("./electron/createIpcBusBridge");
 const { createWindow } = require("./electron/createWindow");
 const { createTray } = require("./electron/createTray");
-require("./ipc-listeners/allListeners");
+require("./electron/ipc-main-listeners/allListeners");
+
 
 /* 
 ---------------------------START OF BASE TEMPLATE---------------------------
@@ -28,7 +30,12 @@ app.whenReady().then(() => {
     .then((name) => console.log(`Added Extension:  ${name}`))
     .catch((err) => console.log("An error occurred: ", err));
   const window = createWindow(__dirname, process, store);
+  if (tray !== undefined) {
+    tray.destroy();
+  }
+
   tray = createTray(window, __dirname, process);
+  createIpcBusBridge();
 
   app.on("activate", function () {
     /* 

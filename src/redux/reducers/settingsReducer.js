@@ -1,6 +1,6 @@
 const reducer = (
   state = {
-    colorTheme: "gradient",
+    colorTheme: "Gradient",
     screenResolution: "800x600",
     firstTimeRunning: true,
   },

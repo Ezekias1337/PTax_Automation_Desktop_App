@@ -14,6 +14,7 @@ import { camelCasifyString } from "../utils/camelCasifyString";
 import { listOfAutomations } from "../data/listOfAutomations";
 import "../css/sass_css/styles.scss";
 import "../css/sass_css/automation.scss";
+const { ipcRenderer } = window.require("electron");
 
 export const Automation = ({ automationName, preOperationQuestions }) => {
   const state = useSelector((state) => state);
@@ -24,6 +25,10 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const [parentChoices, setParentChoices] = useState([]);
   const [childrenChoices, setChildrenChoices] = useState([]);
   const [nonDropdownChoices, setNonDropdownChoices] = useState([]);
+
+  /* 
+    Handle theme preferences
+  */
 
   useLayoutEffect(() => {
     const backgroundInterval = animateGradientBackground();
@@ -101,6 +106,14 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
 
     setChildrenChoices(tempChildrenChoices);
   }, [setChildrenChoices, preOperationQuestions]);
+
+  /* 
+    Start the IPC bridge
+  */
+
+  useEffect(() => {
+    ipcRenderer.send("startIpcBusBroker", null);
+  }, []);
 
   return (
     <div

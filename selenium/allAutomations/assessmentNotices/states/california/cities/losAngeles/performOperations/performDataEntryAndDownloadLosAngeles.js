@@ -60,12 +60,15 @@ const assessmentWebsiteSelectors = {
 const arrayOfSuccessfulOperations = [];
 const arrayOfFailedOperations = [];
 
-const performDataEntryAndDownload = async () => {
+const performDataEntryAndDownload = async (
+  uploadDirectory,
+  downloadDirectory
+) => {
   try {
     console.log(`Running download Tax Bill automation: `);
 
-    const dataFromSpreadsheet = await readSpreadsheetFile();
-    const outputDirectory = await promptOutputDirectory();
+    const dataFromSpreadsheet = await readSpreadsheetFile(uploadDirectory);
+    const outputDirectory = downloadDirectory;
 
     const assessmentYear = await promptForYear();
     const assessmentYearEnd = parseInt(assessmentYear) + 1;
@@ -144,7 +147,12 @@ const performDataEntryAndDownload = async () => {
               `Parcel: ${item.ParcelNumber} has 0 value for land and improvements. Skipping...`
             )
           );
-          throw "Value === 0";
+          throw Object.assign(
+            new Error(
+              `Parcel: ${item.ParcelNumber} has 0 value for land and improvements. Skipping...`
+            ),
+            { code: 402 }
+          );
         }
 
         await switchToPTaxTab(driver, ptaxWindow);
@@ -163,7 +171,7 @@ const performDataEntryAndDownload = async () => {
         );
 
         await swapToIFrame0(driver);
-        propertySideBarXPath = generateDynamicXPath(
+        let propertySideBarXPath = generateDynamicXPath(
           "a",
           item.ParcelNumber,
           "contains"

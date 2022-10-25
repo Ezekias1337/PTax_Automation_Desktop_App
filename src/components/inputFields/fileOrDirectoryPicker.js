@@ -86,7 +86,7 @@ export const FileOrDirectoryPicker = ({
         onClick={() =>
           ipcRenderer.send(ipcEventEmitter, data.name.split(" ").join(""))
         }
-        value={inputValueState}
+        value={inputValueState !== null ? inputValueState : ""}
         onChange={() => {
           /* 
             The onChange is handled by the ipcEventListener,

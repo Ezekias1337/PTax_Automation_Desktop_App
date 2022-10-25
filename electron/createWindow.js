@@ -1,6 +1,5 @@
 const { BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
-const { createTray } = require("./createTray");
 const { handleResolutionPref } = require("./handleResolutionPref");
 const { handlePositionPref } = require("./handlePositionPref");
 const { maximizeWindow } = require("./maximizeWindow");
@@ -26,9 +25,10 @@ const createWindow = (directoryName, process, store) => {
       x: screenXCoordinate,
       y: screenYCoordinate,
       webPreferences: {
-        preload: path.join(directoryName, "preload.js"),
+        preload: path.join(directoryName, "preload.bundle.js"),
         contextIsolation: false,
         nodeIntegration: true,
+        sandbox: false,
       },
       icon: path.join(directoryName, "public/images/icon.ico"),
     });
@@ -41,9 +41,11 @@ const createWindow = (directoryName, process, store) => {
       resizable: true,
       transparent: false,
       webPreferences: {
-        preload: path.join(directoryName, "preload.js"),
+        preload: path.join(directoryName, "preload.bundle.js"),
+        /* preload: "preload-ipc.bundle.js", */
         contextIsolation: false,
         nodeIntegration: true,
+        sandbox: false,
       },
       icon: path.join(directoryName, "public/images/icon.ico"),
     });
@@ -58,7 +60,7 @@ const createWindow = (directoryName, process, store) => {
   ipcMain.on("windowClose", () => closeWindow(window));
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  // window.webContents.openDevTools()
 
   return window;
 };

@@ -21,7 +21,7 @@ const newYorkAssessmentNotices = async (sublocation, operation) => {
     case "Download Files":
       await performDownload();
       break;
-    case "Data Entry And Download Files":
+    case "Data Entry, Download, & Upload Document":
       await performDataEntryAndDownload();
       return;
     default:

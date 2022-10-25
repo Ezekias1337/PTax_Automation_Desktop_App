@@ -1,19 +1,20 @@
 const newYorkAssessmentNotices = require("./states/newYork/newYorkAssessmentNotices");
 const californiaAssessmentNotices = require("./states/california/californiaAssessmentNotices");
+const testMessage = require("../../ipc-main-messages/testMessage");
 
 const assessmentNotices = async (automationConfigObject) => {
-  console.log("INSIDE ASSESSMENT NOTICE FUNCTION");
-  console.table(automationConfigObject);
-  /* switch (state) {
+  await testMessage();
+
+  switch (automationConfigObject.state) {
     case "California":
-      await californiaAssessmentNotices(city, operation);
+      await californiaAssessmentNotices(automationConfigObject);
       break;
     case "New York":
-      await newYorkAssessmentNotices(city, operation);
+      await newYorkAssessmentNotices(automationConfigObject);
       break;
     default:
       break;
-  } */
+  }
 };
 
 module.exports = assessmentNotices;

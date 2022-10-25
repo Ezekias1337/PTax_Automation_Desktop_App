@@ -15,6 +15,7 @@ import "../css/sass_css/home.scss";
 
 export const Home = () => {
   const isFirstTimeRunning = checkIfFirstTimeRunning();
+
   usePersistentSettings();
   const state = useSelector((state) => state);
 
@@ -23,13 +24,17 @@ export const Home = () => {
     return function cleanup() {
       clearInterval(backgroundInterval);
     };
-  });
+  }, []);
 
   return (
     <div
       className="home"
       id="element-to-animate"
-      data-theme={state.settings.colorTheme}
+      data-theme={
+        state.settings.colorTheme !== undefined
+          ? state.settings.colorTheme
+          : "Gradient"
+      }
     >
       <TitleBar />
       <header className="App-header home-body">

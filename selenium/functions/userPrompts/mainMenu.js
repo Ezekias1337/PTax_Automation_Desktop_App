@@ -3,7 +3,7 @@ const parseNestedObjectMainMenu = require("./parsing/parseNestedObjectMainMenu")
 const parseObjectMainMenu = require("./parsing/parseObjectMainMenu");
 const listOfAutomations = require("../../allAutomations/listOfAutomations/listOfAutomations");
 
-const mainMenu = async (automationConfigObject) => {
+const mainMenu = async (automationConfigObject, ipcBusClientNodeMain) => {
   console.table(automationConfigObject);
 
   /* 
@@ -14,7 +14,6 @@ const mainMenu = async (automationConfigObject) => {
     parseNestedObjectMainMenu(listOfAutomations);
   const selectedAutomationInput = automationConfigObject.automation;
 
-  let selectedOperation = null;
   const selectedAutomation = findOptionByKey(
     objToArraySelectAutomation,
     selectedAutomationInput,
@@ -40,25 +39,6 @@ const mainMenu = async (automationConfigObject) => {
     );
 
     /* 
-      If the selected operation has a choice of specific operations, 
-      prompt the user
-    */
-
-    if (selectedAutomation?.operations?.length > 0) {
-      const objToArraySelectOperation = parseObjectMainMenu(
-        selectedAutomation.operations,
-        "operation"
-      );
-      const selectedOperationInput = automationConfigObject.operation;
-
-      selectedOperation = findOptionByKey(
-        objToArraySelectOperation,
-        selectedOperationInput,
-        "name"
-      );
-    }
-
-    /* 
       If the state has a list of sublocations, prompt the user
     */
 
@@ -79,10 +59,13 @@ const mainMenu = async (automationConfigObject) => {
         "name"
       );
 
-      selectedSublocation.function(automationConfigObject);
+      selectedSublocation.function(
+        automationConfigObject,
+        ipcBusClientNodeMain
+      );
     }
   } else if (selectedAutomation?.function) {
-    selectedAutomation.function(automationConfigObject);
+    selectedAutomation.function(automationConfigObject, ipcBusClientNodeMain);
   }
 };
 

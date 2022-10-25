@@ -51,7 +51,7 @@ const newYorkTaxBills = async (state, sublocation, operation) => {
     case "Download Files":
       await performDownload(state, sublocation, operation, taxWebsiteSelectors);
       break;
-    case "Data Entry And Download Files":
+    case "Data Entry, Download, & Upload Document":
       await performDataEntryAndDownload(state, sublocation, operation, taxWebsiteSelectors);
       return;
     default:

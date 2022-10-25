@@ -8,7 +8,7 @@ export const SettingsButton = ({ isAnimated }) => {
     <Link to={"/settings"}>
       <Button
         className={
-          isAnimated.isAnimated
+          isAnimated === true
             ? "full-width-button styled-button animated-button"
             : "full-width-button styled-button"
         }
