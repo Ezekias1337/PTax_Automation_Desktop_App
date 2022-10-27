@@ -5,11 +5,12 @@ const {
   REDUX_DEVTOOLS,
 } = require("electron-devtools-installer");
 const Store = require("electron-store");
-const { createIpcBusBridge } = require("./electron/createIpcBusBridge");
-const { createWindow } = require("./electron/createWindow");
-const { createTray } = require("./electron/createTray");
+const {
+  createIpcBusBridge,
+} = require("./electron/functions/ipc/createIpcBusBridge");
+const { createWindow } = require("./electron/functions/window/createWindow");
+const { createTray } = require("./electron/functions/tray/createTray");
 require("./electron/ipc-main-listeners/allListeners");
-
 
 /* 
 ---------------------------START OF BASE TEMPLATE---------------------------

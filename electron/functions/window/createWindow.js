@@ -42,7 +42,6 @@ const createWindow = (directoryName, process, store) => {
       transparent: false,
       webPreferences: {
         preload: path.join(directoryName, "preload.bundle.js"),
-        /* preload: "preload-ipc.bundle.js", */
         contextIsolation: false,
         nodeIntegration: true,
         sandbox: false,
