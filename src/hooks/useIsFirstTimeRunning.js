@@ -1,7 +1,7 @@
 const Store = window.require("electron-store");
 const store = new Store();
 
-export const checkIfFirstTimeRunning = () => {
+export const useIsFirstTimeRunning = () => {
   const isFirstTimeRunning = store.get("userSettings.firstTimeRunning");
 
   if (isFirstTimeRunning === undefined) {

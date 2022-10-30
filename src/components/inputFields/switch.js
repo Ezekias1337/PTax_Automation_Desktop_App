@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { camelCasifyString } from "../../utils/camelCasifyString";
-import { inputFieldFillDefault } from "../../functions/inputFieldFillDefault";
+import { camelCasifyString } from "../../utils/strings/camelCasifyString";
+import { inputFieldFillDefault } from "../../functions/forms/inputFieldFillDefault";
 import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
 import { handleFormChange } from "../../functions/forms/handleFormChange";
 

@@ -9,6 +9,26 @@ const taxBills = require("../taxBills/taxBills");
 const addNewParcels = require("../addNewParcels/addNewParcels");
 const updateParcelNames = require("../updateParcelNames/updateParcelNames");
 
+/* 
+  I wanted to place this in a shared folder at the root directory,
+  but because of the way react compiles files, you cant import files
+  from outside the src directory.
+  
+  
+  Because of this, the listOfAutomations.js file exists in two 
+  locations:
+  
+    1.) src/constants/listOfAutomations.js
+    2.) selenium/allAutomations/listOfAutomations/listOfAutomations.js
+
+  The only differences between the two is that:
+  
+    a.) The version living in the
+        selenium folder includes functions in the object representing different
+        automations
+    b.) The version in the src folder is exported as an array.
+*/
+
 const listOfAutomations = {
   assessmentNotices: {
     key: 1,

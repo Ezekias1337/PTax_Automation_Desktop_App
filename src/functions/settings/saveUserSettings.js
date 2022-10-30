@@ -1,4 +1,4 @@
-import { getWindowPosition } from "../functions/getWindowPosition";
+import { getWindowPosition } from "../../utils/window/getWindowPosition";
 const Store = window.require("electron-store");
 const store = new Store();
 

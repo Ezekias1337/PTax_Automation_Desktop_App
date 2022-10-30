@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboard } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "reactstrap";
-import { copyTextToClipboard } from "../../functions/copyTextToClipboard";
+import { copyTextToClipboard } from "../../utils/strings/copyTextToClipboard";
 
 export const ClipboardButton = ({idForButton, textForClipboard}) => {
   return (

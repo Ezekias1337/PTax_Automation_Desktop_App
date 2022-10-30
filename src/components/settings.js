@@ -1,14 +1,14 @@
 import { TitleBar } from "./titlebar";
-import { listOfSettings } from "../data/listOfSettings";
+import { listOfSettings } from "../constants/listOfSettings";
 import { Header } from "./header";
 import { SaveButton } from "./buttons/saveButton";
 import { useLayoutEffect, useEffect, useState } from "react";
-import { animateGradientBackground } from "../functions/animateGradientBackground";
+import { animateGradientBackground } from "../helpers/animateGradientBackground";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../redux/allActions";
-import { saveUserSettings } from "../functions/saveUserSettings";
-import { popUpAlert } from "../functions/popUpAlert";
+import { saveUserSettings } from "../functions/settings/saveUserSettings";
+import { popUpAlert } from "../functions/alert/popUpAlert";
 import { GeneralAlert } from "./generalAlert";
 import { DropDown } from "./inputFields/dropdown";
 import { FileOrDirectoryPicker } from "./inputFields/fileOrDirectoryPicker";
@@ -50,9 +50,9 @@ export const Settings = () => {
         tempArrayOfSettings.push(
           <DropDown
             key={counter}
+            isSettingsDropdown={true}
             data={item[1]}
             state={state}
-            settingsOrAutomation="settings"
             setStateHook={setUserSettings}
           />
         );

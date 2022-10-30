@@ -1,6 +1,6 @@
 import { TitleBar } from "./titlebar";
 import { Header } from "./header";
-import { animateGradientBackground } from "../functions/animateGradientBackground";
+import { animateGradientBackground } from "../helpers/animateGradientBackground";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { EventLog } from "./eventLog";
@@ -10,8 +10,8 @@ import { TimeTracker } from "./timeTracker";
 import { Loader } from "./loader";
 import { CascadingInputs } from "./inputFields/cascadingInputs";
 import { StartAutomationButton } from "./buttons/startAutomationButton";
-import { camelCasifyString } from "../utils/camelCasifyString";
-import { listOfAutomations } from "../data/listOfAutomations";
+import { camelCasifyString } from "../utils/strings/camelCasifyString";
+import { listOfAutomations } from "../constants/listOfAutomations";
 import "../css/sass_css/styles.scss";
 import "../css/sass_css/automation.scss";
 const { ipcRenderer } = window.require("electron");

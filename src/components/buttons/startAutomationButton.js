@@ -3,7 +3,7 @@ import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { Button } from "reactstrap";
 import { Loader } from "../loader";
-import { startAutomation } from "../../functions/startAutomation";
+import { startAutomation } from "../../functions/automation/startAutomation";
 const { ipcRenderer } = window.require("electron");
 
 export const StartAutomationButton = ({ automationConfigObject }) => {

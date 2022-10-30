@@ -1,4 +1,4 @@
-import { camelCasifyString } from "../../functions/camelCasifyString";
+import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 import { handleFormChange } from "../../functions/forms/handleFormChange";
 
 export const CheckBox = ({ data, isChecked, setStateHook }) => {

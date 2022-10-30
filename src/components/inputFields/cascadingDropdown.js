@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { DropDown } from "./dropdown";
-import { getNestedProperty } from "../../utils/getNestedProperty";
-import { camelCasifyString } from "../../utils/camelCasifyString";
-import { renderSelectOptions } from "../../functions/renderInputFields/renderSelectOptions";
+import { getNestedProperty } from "../../utils/objects/getNestedProperty";
+import { camelCasifyString } from "../../utils/strings/camelCasifyString";
+import { renderSelectOptions } from "../../functions/forms/renderSelectOptions";
 import { getPathCascadingDropdown } from "../../helpers/getPathCascadingDropdown";
-import { getObjByStringPath } from "../../utils/getObjByStringPath";
+import { getObjByStringPath } from "../../utils/objects/getObjByStringPath";
 import { findObjectPaths } from "find-object-paths";
 
 export const CascadingDropdown = ({
@@ -53,12 +53,9 @@ export const CascadingDropdown = ({
       tempArrayOfQuestions.push(
         <DropDown
           key={index}
-          settingsOrAutomation={null}
+          isSettingsDropdown={false}
           data={data}
           state={null}
-          stateSelector={null}
-          operationSelector={null}
-          subLocationSelector={null}
           setStateHook={setStateHook}
           availableChoices={availableDropdownChoices}
         >
@@ -121,12 +118,9 @@ export const CascadingDropdown = ({
       tempArrayOfQuestions.push(
         <DropDown
           key={index}
-          settingsOrAutomation={null}
+          isSettingsDropdown={null}
           data={data}
           state={null}
-          stateSelector={null}
-          operationSelector={null}
-          subLocationSelector={null}
           setStateHook={setStateHook}
           availableChoices={availableDropdownChoices}
         >
@@ -136,7 +130,14 @@ export const CascadingDropdown = ({
     }
 
     setArrayOfDropdowns(tempArrayOfQuestions);
-  }, [parentState, parentChoices, childrenChoices]);
+  }, [
+    parentState,
+    parentChoices,
+    childrenChoices,
+    arrayOfQuestions,
+    optionObj,
+    setStateHook,
+  ]);
 
   return arrayOfDropdowns;
 };

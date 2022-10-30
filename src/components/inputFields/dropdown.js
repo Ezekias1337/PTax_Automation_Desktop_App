@@ -1,19 +1,13 @@
 import { useEffect } from "react";
-import { renderDropdownOptionsSettings } from "../../functions/renderDropdownOptionsSettings";
-import { renderDropdownStates } from "../../functions/renderDropdownStates";
-import { renderDropdownSublocations } from "../../functions/renderDropdownSublocations";
-/* import { renderDropdownOperations } from "../../functions/renderDropdownOperations"; */
-import { camelCasifyString } from "../../utils/camelCasifyString";
+import { renderDropdownOptionsSettings } from "../../functions/forms/renderDropdownOptionsSettings";
+import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 import { handleFormChange } from "../../functions/forms/handleFormChange";
 import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
 
 export const DropDown = ({
-  settingsOrAutomation,
+  isSettingsDropdown,
   data,
   state,
-  stateSelector,
-  operationSelector,
-  subLocationSelector,
   setStateHook,
   availableChoices = null,
 }) => {
@@ -22,26 +16,14 @@ export const DropDown = ({
   let dropdownID = "";
   let dropdownLabel = "";
 
-  if (
-    settingsOrAutomation === "settings" ||
-    settingsOrAutomation === "automation"
-  ) {
+  if (isSettingsDropdown === true) {
     [arrayOfOptionElements, selectedOption] = renderDropdownOptionsSettings(
       data,
       state
     );
     dropdownID = camelCasifyString(data.name);
     dropdownLabel = data.name;
-  } else if (stateSelector) {
-    arrayOfOptionElements = renderDropdownStates(data);
-    dropdownID = data.state;
-    dropdownLabel = "State";
-  } else if (subLocationSelector) {
-    arrayOfOptionElements = renderDropdownSublocations(data);
-    dropdownID = data.subLocations;
-    dropdownLabel = "Sublocations";
-  } else if (operationSelector) {
-  } else if (availableChoices !== null) {
+  } else if(availableChoices !== null) {
     arrayOfOptionElements = availableChoices;
     dropdownID = camelCasifyString(data.name);
     dropdownLabel = data.name;

@@ -1,4 +1,4 @@
-const { testConnectivity } = require("./listeners/testConnectivity");
+const { testConnectivity } = require("../listeners/testConnectivity");
 const { IpcBusClient } = window.require("electron-common-ipc");
 
 export const createIpcBusClientRenderer = async (

@@ -1,8 +1,8 @@
-import { listOfAutomationsArrayExport } from "../data/listOfAutomations";
+import { listOfAutomationsArrayExport } from "../constants/listOfAutomations";
 import { Button } from "reactstrap";
 import { HomeButton } from "./buttons/homeButton";
 import { Link } from "react-router-dom";
-import { animateGradientBackground } from "../functions/animateGradientBackground";
+import { animateGradientBackground } from "../helpers/animateGradientBackground";
 import { useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import "../css/sass_css/styles.scss";

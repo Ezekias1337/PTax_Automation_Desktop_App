@@ -1,11 +1,11 @@
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import React, { useLayoutEffect } from "react";
-import { animateGradientBackground } from "../functions/animateGradientBackground";
+import { animateGradientBackground } from "../helpers/animateGradientBackground";
 import { SettingsButton } from "./buttons/settingsButton";
 import { useSelector } from "react-redux";
 import { usePersistentSettings } from "../hooks/usePersistentSettings";
-import { checkIfFirstTimeRunning } from "../functions/checkIfFirstTimeRunning";
+import { useIsFirstTimeRunning } from "../hooks/useIsFirstTimeRunning";
 import { GeneralAlert } from "./generalAlert";
 import { TitleBar } from "./titlebar";
 import logo from "../../src/images/PTax_Logo.png";
@@ -14,8 +14,7 @@ import "../css/sass_css/styles.scss";
 import "../css/sass_css/home.scss";
 
 export const Home = () => {
-  const isFirstTimeRunning = checkIfFirstTimeRunning();
-
+  const isFirstTimeRunning = useIsFirstTimeRunning();
   usePersistentSettings();
   const state = useSelector((state) => state);
 

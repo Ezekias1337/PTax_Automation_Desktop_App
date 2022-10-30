@@ -1,9 +1,9 @@
 import { TitleBar } from "./titlebar";
-import { listOfAutomationsArrayExport } from "../data/listOfAutomations";
+import { listOfAutomationsArrayExport } from "../constants/listOfAutomations";
 import { Header } from "./header";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
-import { animateGradientBackground } from "../functions/animateGradientBackground";
+import { animateGradientBackground } from "../helpers/animateGradientBackground";
 import { useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import "../css/sass_css/styles.scss";

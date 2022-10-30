@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { inputFieldFillDefault } from "../../functions/inputFieldFillDefault";
-import { camelCasifyString } from "../../utils/camelCasifyString";
-import { handlePathRetrieved } from "../../functions/ipc-renderer/handlePathRetrieved";
+import { inputFieldFillDefault } from "../../functions/forms/inputFieldFillDefault";
+import { camelCasifyString } from "../../utils/strings/camelCasifyString";
+import { handlePathRetrieved } from "../../functions/forms/handlePathRetrieved";
 import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
 import { handleFormChange } from "../../functions/forms/handleFormChange";
 const { ipcRenderer } = window.require("electron");

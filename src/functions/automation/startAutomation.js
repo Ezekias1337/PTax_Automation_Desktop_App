@@ -1,4 +1,4 @@
-import { createIpcBusClientRenderer } from "../functions/ipc-bus/createIpcBusClientRenderer";
+import { createIpcBusClientRenderer } from "../ipc/bus/create/createIpcBusClientRenderer";
 
 export const startAutomation = async (
   automationConfigObject,

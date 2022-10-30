@@ -1,4 +1,4 @@
-import { camelCasifyString } from "../utils/camelCasifyString";
+import { camelCasifyString } from "../utils/strings/camelCasifyString";
 
 export const getPathCascadingDropdown = (
   question,
