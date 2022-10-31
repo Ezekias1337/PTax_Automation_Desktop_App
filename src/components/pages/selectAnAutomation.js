@@ -1,12 +1,12 @@
-import { TitleBar } from "./titlebar";
-import { listOfAutomationsArrayExport } from "../constants/listOfAutomations";
-import { Header } from "./header";
+import { TitleBar } from "../general-page-layout/titlebar";
+import { Header } from "../general-page-layout/header";
+import { listOfAutomationsArrayExport } from "../../constants/listOfAutomations";
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom";
-import { animateGradientBackground } from "../helpers/animateGradientBackground";
+import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 import { useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
-import "../css/sass_css/styles.scss";
+import "../../css/sass_css/styles.scss";
 
 export const SelectAnAutomation = () => {
   const state = useSelector((state) => state);

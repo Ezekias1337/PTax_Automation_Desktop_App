@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { Button } from "reactstrap";
-import { Loader } from "../loader";
+import { Loader } from "../general-page-layout/loader";
 import { startAutomation } from "../../functions/automation/startAutomation";
 const { ipcRenderer } = window.require("electron");
 

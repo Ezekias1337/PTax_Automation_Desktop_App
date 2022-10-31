@@ -1,21 +1,21 @@
-import { TitleBar } from "./titlebar";
-import { listOfSettings } from "../constants/listOfSettings";
-import { Header } from "./header";
-import { SaveButton } from "./buttons/saveButton";
+import { TitleBar } from "../general-page-layout/titlebar";
+import { Header } from "../general-page-layout/header";
+import { listOfSettings } from "../../constants/listOfSettings";
+import { SaveButton } from "../buttons/saveButton";
 import { useLayoutEffect, useEffect, useState } from "react";
-import { animateGradientBackground } from "../helpers/animateGradientBackground";
+import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
-import { actionCreators } from "../redux/allActions";
-import { saveUserSettings } from "../functions/settings/saveUserSettings";
-import { popUpAlert } from "../functions/alert/popUpAlert";
-import { GeneralAlert } from "./generalAlert";
-import { DropDown } from "./inputFields/dropdown";
-import { FileOrDirectoryPicker } from "./inputFields/fileOrDirectoryPicker";
-import { TextInput } from "./inputFields/textInput";
-import { Switch } from "./inputFields/switch";
-import "../css/sass_css/styles.scss";
-import "../css/sass_css/inputs.scss";
+import { actionCreators } from "../../redux/allActions";
+import { saveUserSettings } from "../../functions/settings/saveUserSettings";
+import { popUpAlert } from "../../functions/alert/popUpAlert";
+import { GeneralAlert } from "../alert/generalAlert";
+import { DropDown } from "../input-fields/dropdown";
+import { FileOrDirectoryPicker } from "../input-fields/fileOrDirectoryPicker";
+import { TextInput } from "../input-fields/textInput";
+import { Switch } from "../input-fields/switch";
+import "../../css/sass_css/styles.scss";
+import "../../css/sass_css/inputs.scss";
 
 export const Settings = () => {
   const state = useSelector((state) => state);

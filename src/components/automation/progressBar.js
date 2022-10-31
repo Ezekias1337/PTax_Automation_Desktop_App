@@ -1,4 +1,4 @@
-import "../css/sass_css/progress-bar.scss";
+import "../../css/sass_css/progress-bar.scss";
 
 export const ProgressBar = ({ width = 100 }) => {
   return (

@@ -3,12 +3,11 @@ const Store = window.require("electron-store");
 const store = new Store();
 
 export const saveUserSettings = (userSettings) => {
-  store.set("userSettings", userSettings);
+  const settingsObject = { ...userSettings };
   const currentScreenPosition = getWindowPosition();
-  store.set(
-    "userSettings.launchWindowinCurrentPositionvalue",
-    currentScreenPosition
-  );
+
+  settingsObject.launchWindowinCurrentPositionvalue = currentScreenPosition;
+  store.set("userSettings", settingsObject);
 
   const settingsToReturn = store.get("userSettings");
   return settingsToReturn;

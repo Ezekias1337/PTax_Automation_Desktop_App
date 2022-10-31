@@ -1,4 +1,4 @@
-import "../css/sass_css/numerical-progress-tracker.scss";
+import "../../css/sass_css/numerical-progress-tracker.scss";
 
 export const NumericalProgressTracker = ({
   currentOperation = 52,

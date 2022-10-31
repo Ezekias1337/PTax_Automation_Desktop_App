@@ -1,9 +1,9 @@
 import React from "react";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
-import { Home } from "./components/home";
-import { SelectAnAutomation } from "./components/selectAnAutomation";
-import { Settings } from "./components/settings";
-import { Automation } from "./components/automation";
+import { Home } from "./components/pages/home";
+import { SelectAnAutomation } from "./components/pages/selectAnAutomation";
+import { Settings } from "./components/pages/settings";
+import { Automation } from "./components/pages/automation";
 import { assessmentNoticeQuestions } from "./constants/automationQuestions/assessmentNoticeQuestions"
 import "./App.css";
 

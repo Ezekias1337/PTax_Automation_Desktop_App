@@ -1,5 +1,5 @@
-import { BackButton } from "./buttons/backButton";
-import { HomeButton } from "./buttons/homeButton";
+import { BackButton } from "../buttons/backButton";
+import { HomeButton } from "../buttons/homeButton";
 
 export const Header = ({ pageTitle, includeArrow = true }) => {
   return (

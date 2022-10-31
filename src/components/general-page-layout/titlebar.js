@@ -4,12 +4,12 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { TitleBarButton } from "./buttons/titleBarButton";
-import { closeWindow } from "../functions/window/closeWindow";
-import { maximizeWindow } from "../functions/window/maximizeWindow";
-import { minimizeWindow } from "../functions/window/minimizeWindow";
-import logo from "../../src/images/PTax_Logo.png";
-import "../css/sass_css/title-bar.scss";
+import { TitleBarButton } from "../buttons/titleBarButton";
+import { closeWindow } from "../../functions/window/closeWindow";
+import { maximizeWindow } from "../../functions/window/maximizeWindow";
+import { minimizeWindow } from "../../functions/window/minimizeWindow";
+import logo from "../../../src/images/PTax_Logo.png";
+import "../../css/sass_css/title-bar.scss";
 
 export const TitleBar = () => {
   return (
