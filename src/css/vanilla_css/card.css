@@ -1,0 +1,21 @@
+/* 
+  General Styling
+*/
+/* 
+  Theme Specific Styling
+*/
+[data-theme="Light"] div.card {
+  background-color: #bebebe;
+  border: 1px solid #0b0b0b; }
+
+[data-theme="Light"] div.card-body {
+  color: #0b0b0b; }
+
+[data-theme="Gradient"] div.card,
+[data-theme="Dark"] div.card {
+  background-color: #6b6b6b;
+  border: 1px solid #e1dfdf; }
+
+[data-theme="Gradient"] div.card-body,
+[data-theme="Dark"] div.card-body {
+  color: #e1dfdf; }

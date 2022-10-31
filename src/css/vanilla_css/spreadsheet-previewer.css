@@ -1,0 +1,46 @@
+/* 
+  General Styling
+*/
+#spreadsheetPreviewer {
+  border-collapse: collapse;
+  border: 2px solid transparent; }
+
+#spreadsheetPreviewer thead {
+  border: 2px solid transparent; }
+
+#spreadsheetPreviewer th,
+#spreadsheetPreviewer td {
+  text-align: center; }
+
+#spreadsheetPreviewer td.row-numbers {
+  font-weight: bold; }
+
+/* 
+  Make the table round
+*/
+#spreadsheetPreviewer thead:first-of-type th:first-of-type {
+  border-top-left-radius: 10px; }
+
+#spreadsheetPreviewer thead:first-of-type th:last-of-type {
+  border-top-right-radius: 10px; }
+
+#spreadsheetPreviewer tbody tr:last-of-type td:first-of-type {
+  border-bottom-left-radius: 10px; }
+
+#spreadsheetPreviewer tbody tr:last-of-type td:last-of-type {
+  border-bottom-right-radius: 10px; }
+
+/* 
+  Theme Specific Styling
+*/
+[data-theme="Light"] #spreadsheetPreviewer th,
+[data-theme="Light"] #spreadsheetPreviewer td {
+  background-color: #bebebe;
+  color: #0b0b0b; }
+
+[data-theme="Gradient"] #spreadsheetPreviewer th,
+[data-theme="Gradient"] #spreadsheetPreviewer td,
+[data-theme="Dark"] #spreadsheetPreviewer th,
+[data-theme="Dark"] #spreadsheetPreviewer td {
+  background-color: #6b6b6b;
+  color: #e1dfdf; }

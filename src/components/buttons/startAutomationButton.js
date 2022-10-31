@@ -6,7 +6,11 @@ import { Loader } from "../general-page-layout/loader";
 import { startAutomation } from "../../functions/automation/startAutomation";
 const { ipcRenderer } = window.require("electron");
 
-export const StartAutomationButton = ({ automationConfigObject }) => {
+export const StartAutomationButton = ({
+  automationConfigObject,
+  automationStatus,
+  setAutomationStatus,
+}) => {
   const [busClientRenderer, setBusClientRenderer] = useState(null);
 
   return (
@@ -14,19 +18,23 @@ export const StartAutomationButton = ({ automationConfigObject }) => {
       <div className="col col-4"></div>
       <div className="col col-4 full-flex">
         <Button
-          className="full-width-button styled-button is-loading mx-2"
-          onClick={() =>
+          className="full-width-button styled-button flex-button async-button is-loading mx-2"
+          onClick={() => {
+            setAutomationStatus("In Progress");
             startAutomation(
               automationConfigObject,
               ipcRenderer,
               setBusClientRenderer
-            )
-          }
+            );
+          }}
           alt="clipboard-button"
           id="start-automation-button"
         >
-          {/* <FontAwesomeIcon icon={faCirclePlay} /> */}
-          <Loader showLoader={true} />
+          {automationStatus === "Idle" ? (
+            <FontAwesomeIcon icon={faCirclePlay} size="2x" />
+          ) : (
+            <Loader showLoader={true} />
+          )}
         </Button>
       </div>
       <div className="col col-4"></div>

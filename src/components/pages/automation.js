@@ -4,6 +4,7 @@ import { animateGradientBackground } from "../../helpers/animateGradientBackgrou
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { Card } from "../card/card";
 import { EventLog } from "../automation/eventLog";
 import { ProgressBar } from "../automation/progressBar";
 import { NumericalProgressTracker } from "../automation/numericalProgressTracker";
@@ -26,6 +27,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const [parentChoices, setParentChoices] = useState([]);
   const [childrenChoices, setChildrenChoices] = useState([]);
   const [nonDropdownChoices, setNonDropdownChoices] = useState([]);
+  const [configCardContents, setConfigCardContents] = useState([]);
   const [spreadsheetData, setSpreadsheetData] = useState([]);
   const [automationStatus, setAutomationStatus] = useState("Idle");
   const [animationParent] = useAutoAnimate();
@@ -112,6 +114,17 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   }, [setChildrenChoices, preOperationQuestions]);
 
   /* 
+    Update the contents of the Configuration card when the
+    selected options change
+  */
+
+  useEffect(() => {
+    const tempSelectedChoices = { ...selectedChoices };
+
+    setConfigCardContents(Object.entries(tempSelectedChoices));
+  }, [selectedChoices]);
+
+  /* 
     Start the IPC bridge
   */
 
@@ -133,25 +146,44 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
       <Header pageTitle={automationName} />
 
       <div className="container-for-scroll">
-        <NumericalProgressTracker />
-        <ProgressBar />
-        <Loader />
-        <TimeTracker />
+        {spreadsheetData !== undefined && automationStatus === "In Progress" ? (
+          <>
+            <NumericalProgressTracker />
+            <ProgressBar />
+            <TimeTracker />
+          </>
+        ) : (
+          <></>
+        )}
+
         <div className="row mx-1">
           <div className="col col-6 mt-2">
             <div className="row">
-              <CascadingInputs
-                arrayOfQuestions={arrayOfDropdownQuestions}
-                reduxState={state}
-                parentState={selectedChoices}
-                setStateHook={setSelectedChoices}
-                parentChoices={parentChoices}
-                childrenChoices={childrenChoices}
-                nonDropdownChoices={nonDropdownChoices}
-                optionObj={listOfAutomations[camelCasifyString(automationName)]}
-              />
+              {automationStatus === "Idle" ? (
+                <CascadingInputs
+                  arrayOfQuestions={arrayOfDropdownQuestions}
+                  reduxState={state}
+                  parentState={selectedChoices}
+                  setStateHook={setSelectedChoices}
+                  parentChoices={parentChoices}
+                  childrenChoices={childrenChoices}
+                  nonDropdownChoices={nonDropdownChoices}
+                  optionObj={
+                    listOfAutomations[camelCasifyString(automationName)]
+                  }
+                />
+              ) : (
+                <Card
+                  cardTitle="Automation Configuration"
+                  cardBody={configCardContents}
+                />
+              )}
             </div>
-            <StartAutomationButton automationConfigObject={selectedChoices} />
+            <StartAutomationButton
+              automationConfigObject={selectedChoices}
+              automationStatus={automationStatus}
+              setAutomationStatus={setAutomationStatus}
+            />
           </div>
           <div className="col col-6 mt-2" ref={animationParent}>
             {spreadsheetData === undefined && automationStatus === "Idle" ? (

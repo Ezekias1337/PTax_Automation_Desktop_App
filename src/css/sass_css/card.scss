@@ -1,0 +1,34 @@
+@import "variables/light-mode-variables";
+@import "variables/dark-mode-variables";
+@import "variables/common-variables";
+
+/* 
+  General Styling
+*/
+
+/* 
+  Theme Specific Styling
+*/
+
+[data-theme="Light"] {
+  div.card {
+    background-color: $bg-secondary-light;
+    border: 1px solid $black;
+  }
+
+  div.card-body {
+    color: $black;
+  }
+}
+
+[data-theme="Gradient"],
+[data-theme="Dark"] {
+  div.card {
+    background-color: $bg-secondary-dark;
+    border: 1px solid $white;
+  }
+
+  div.card-body {
+    color: $white;
+  }
+}

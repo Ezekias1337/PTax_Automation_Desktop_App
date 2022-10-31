@@ -1,0 +1,23 @@
+/* 
+  General Styling
+*/
+#timeElapsed,
+#estimatedTimeRemaining {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+/* 
+  Theme Specific Styling
+*/
+[data-theme="Gradient"] #timeElapsed,
+[data-theme="Gradient"] #estimatedTimeRemaining {
+  color: #333333; }
+
+[data-theme="Light"] #timeElapsed,
+[data-theme="Light"] #estimatedTimeRemaining {
+  color: #0b0b0b; }
+
+[data-theme="Dark"] #timeElapsed,
+[data-theme="Dark"] #estimatedTimeRemaining {
+  color: #e1dfdf; }
