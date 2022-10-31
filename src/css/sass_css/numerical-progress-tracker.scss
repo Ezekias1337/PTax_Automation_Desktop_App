@@ -2,11 +2,19 @@
 @import "variables/dark-mode-variables";
 @import "variables/common-variables";
 
+/* 
+  General Styling
+*/
+
 #numericalProgressTracker {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+/* 
+  Theme Specific Styling
+*/
 
 [data-theme="Gradient"] {
   #numericalProgressTracker {

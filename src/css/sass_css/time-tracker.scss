@@ -2,12 +2,20 @@
 @import "variables/dark-mode-variables";
 @import "variables/common-variables";
 
+/* 
+  General Styling
+*/
+
 #timeElapsed,
 #estimatedTimeRemaining {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+/* 
+  Theme Specific Styling
+*/
 
 [data-theme="Gradient"] {
   #timeElapsed,

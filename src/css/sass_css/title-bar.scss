@@ -2,6 +2,61 @@
 @import "variables/dark-mode-variables";
 @import "variables/common-variables";
 
+/* 
+  General Styling
+*/
+
+#titleBar {
+  height: 32px;
+  width: 100%;
+}
+
+#titleBarRow {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+#titleBarRow,
+#titleBarRow div.col {
+  max-height: 32px;
+}
+
+#titleBarButtonContainer {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding-right: 0px;
+}
+
+.title-bar-button,
+.title-bar-button-close {
+  max-height: 100%;
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+#titleBarLogoContainer {
+  display: flex;
+  align-items: center;
+  -webkit-app-region: drag;
+}
+
+#titleBarLogoContainer {
+  h5 {
+    margin-bottom: 0px;
+    margin-left: 5px;
+  }
+}
+
+.title-logo {
+  max-height: 28px;
+}
+
+/* 
+  Theme Specific Styling
+*/
+
 [data-theme="Light"] {
   #titleBar {
     background-color: rgba($bg-secondary-light, 0.5);
@@ -87,51 +142,4 @@
       color: $color-text-dark;
     }
   }
-}
-
-#titleBar {
-  height: 32px;
-  width: 100%;
-}
-
-#titleBarRow {
-  margin-left: 0px;
-  margin-right: 0px;
-}
-
-#titleBarRow,
-#titleBarRow div.col {
-  max-height: 32px;
-}
-
-#titleBarButtonContainer {
-  display: flex;
-  justify-content: right;
-  align-items: center;
-  padding-right: 0px;
-}
-
-.title-bar-button,
-.title-bar-button-close {
-  max-height: 100%;
-  &:focus {
-    box-shadow: none;
-  }
-}
-
-#titleBarLogoContainer {
-  display: flex;
-  align-items: center;
-  -webkit-app-region: drag;
-}
-
-#titleBarLogoContainer {
-  h5 {
-    margin-bottom: 0px;
-    margin-left: 5px;
-  }
-}
-
-.title-logo {
-  max-height: 28px;
 }

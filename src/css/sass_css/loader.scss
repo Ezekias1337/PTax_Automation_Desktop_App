@@ -2,26 +2,9 @@
 @import "variables/dark-mode-variables";
 @import "variables/common-variables";
 
-[data-theme="Gradient"] {
-  #loaderElement div {
-    border: 5px solid $bg-dark;
-    border-color: $bg-dark transparent transparent transparent;
-  }
-}
-
-[data-theme="Light"] {
-  #loaderElement div {
-    border: 5px solid $white;
-    border-color: $white transparent transparent transparent;
-  }
-}
-
-[data-theme="Dark"] {
-  #loaderElement div {
-    border: 5px solid $bg-dark;
-    border-color: $bg-dark transparent transparent transparent;
-  }
-}
+/* 
+  General Styling
+*/
 
 #loaderElement {
   display: flex;
@@ -82,5 +65,30 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+/* 
+  Theme Specific Styling
+*/
+
+[data-theme="Gradient"] {
+  #loaderElement div {
+    border: 5px solid $bg-dark;
+    border-color: $bg-dark transparent transparent transparent;
+  }
+}
+
+[data-theme="Light"] {
+  #loaderElement div {
+    border: 5px solid $white;
+    border-color: $white transparent transparent transparent;
+  }
+}
+
+[data-theme="Dark"] {
+  #loaderElement div {
+    border: 5px solid $bg-dark;
+    border-color: $bg-dark transparent transparent transparent;
   }
 }

@@ -1,9 +1,17 @@
 @import "variables/light-mode-variables";
 @import "variables/dark-mode-variables";
 
+/* 
+  General Styling
+*/
+
 div.event-log {
   border-radius: 5px;
 }
+
+/* 
+  Theme Specific Styling
+*/
 
 [data-theme="Gradient"] {
   div.event-log {

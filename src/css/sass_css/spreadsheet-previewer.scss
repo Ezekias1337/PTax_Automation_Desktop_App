@@ -2,17 +2,57 @@
 @import "variables/dark-mode-variables";
 @import "variables/common-variables";
 
+/* 
+  General Styling
+*/
+
+#spreadsheetPreviewer {
+  border-collapse: collapse;
+  border: 2px solid transparent;
+}
+
+#spreadsheetPreviewer thead {
+  border: 2px solid transparent;
+}
+
 #spreadsheetPreviewer th,
 #spreadsheetPreviewer td {
   text-align: center;
 }
+
+#spreadsheetPreviewer td.row-numbers {
+  font-weight: bold;
+}
+
+/* 
+  Make the table round
+*/
+
+#spreadsheetPreviewer thead:first-of-type th:first-of-type {
+  border-top-left-radius: 10px;
+}
+
+#spreadsheetPreviewer thead:first-of-type th:last-of-type {
+  border-top-right-radius: 10px;
+}
+
+#spreadsheetPreviewer tbody tr:last-of-type td:first-of-type {
+  border-bottom-left-radius: 10px;
+}
+
+#spreadsheetPreviewer tbody tr:last-of-type td:last-of-type {
+  border-bottom-right-radius: 10px;
+}
+
+/* 
+  Theme Specific Styling
+*/
 
 [data-theme="Light"] {
   #spreadsheetPreviewer th,
   #spreadsheetPreviewer td {
     background-color: $bg-secondary-light;
     color: $black;
-    border: 1px solid $black;
   }
 }
 
@@ -22,6 +62,5 @@
   #spreadsheetPreviewer td {
     background-color: $bg-secondary-dark;
     color: $white;
-    border: 1px solid $white;
   }
 }

@@ -2,6 +2,39 @@
 @import "variables/dark-mode-variables";
 @import "variables/common-variables";
 
+/* 
+  General Styling
+*/
+
+.brown-input:hover::-webkit-input-placeholder {
+  color: $brown;
+  opacity: 1;
+}
+
+.brown-input:hover::-moz-placeholder {
+  color: $brown;
+  opacity: 1;
+}
+
+.brown-input:hover:-ms-input-placeholder {
+  color: $brown;
+  opacity: 1;
+}
+
+.brown-input:hover::-ms-input-placeholder {
+  color: $brown;
+  opacity: 1;
+}
+
+.brown-input:hover::placeholder {
+  color: $brown;
+  opacity: 1;
+}
+
+/* 
+  Theme Specific Styling
+*/
+
 [data-theme="Gradient"] {
   .brown-input {
     background-color: $brown;
@@ -205,29 +238,4 @@
     border: 1.5px solid $brown;
     background-color: $bg-dark;
   }
-}
-
-.brown-input:hover::-webkit-input-placeholder {
-  color: $brown;
-  opacity: 1;
-}
-
-.brown-input:hover::-moz-placeholder {
-  color: $brown;
-  opacity: 1;
-}
-
-.brown-input:hover:-ms-input-placeholder {
-  color: $brown;
-  opacity: 1;
-}
-
-.brown-input:hover::-ms-input-placeholder {
-  color: $brown;
-  opacity: 1;
-}
-
-.brown-input:hover::placeholder {
-  color: $brown;
-  opacity: 1;
 }

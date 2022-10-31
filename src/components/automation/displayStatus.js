@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import "../css/sass_css/styles.scss";
+import "../../css/sass_css/styles.scss";
 
 export const DisplayStatus = (props) => {
   const state = useSelector((state) => state);

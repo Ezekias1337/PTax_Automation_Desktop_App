@@ -3,6 +3,7 @@ import { Header } from "../general-page-layout/header";
 import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { EventLog } from "../automation/eventLog";
 import { ProgressBar } from "../automation/progressBar";
 import { NumericalProgressTracker } from "../automation/numericalProgressTracker";
@@ -10,10 +11,10 @@ import { TimeTracker } from "../automation/timeTracker";
 import { Loader } from "../general-page-layout/loader";
 import { CascadingInputs } from "../input-fields/cascadingInputs";
 import { StartAutomationButton } from "../buttons/startAutomationButton";
+import { SpreadsheetPreviewer } from "../automation/spreadsheetPreviewer";
 import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 import { listOfAutomations } from "../../constants/listOfAutomations";
 import "../../css/sass_css/styles.scss";
-import "../../css/sass_css/automation.scss";
 const { ipcRenderer } = window.require("electron");
 
 export const Automation = ({ automationName, preOperationQuestions }) => {
@@ -25,6 +26,9 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const [parentChoices, setParentChoices] = useState([]);
   const [childrenChoices, setChildrenChoices] = useState([]);
   const [nonDropdownChoices, setNonDropdownChoices] = useState([]);
+  const [spreadsheetData, setSpreadsheetData] = useState([]);
+  const [automationStatus, setAutomationStatus] = useState("Idle");
+  const [animationParent] = useAutoAnimate();
 
   /* 
     Handle theme preferences
@@ -119,7 +123,11 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
     <div
       className="automation"
       id="element-to-animate"
-      data-theme={state.settings.colorTheme}
+      data-theme={
+        state.settings.colorTheme !== undefined
+          ? state.settings.colorTheme
+          : "Gradient"
+      }
     >
       <TitleBar />
       <Header pageTitle={automationName} />
@@ -145,8 +153,52 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
             </div>
             <StartAutomationButton automationConfigObject={selectedChoices} />
           </div>
-          <div className="col col-6 mt-2">
-            <EventLog></EventLog>
+          <div className="col col-6 mt-2" ref={animationParent}>
+            {spreadsheetData === undefined && automationStatus === "Idle" ? (
+              <></>
+            ) : (
+              <></>
+            )}
+
+            {spreadsheetData !== undefined && automationStatus === "Idle" ? (
+              <SpreadsheetPreviewer
+                spreadSheetData={[
+                  {
+                    parcelNumber: "1-234-5671",
+                    locationName: "101 Montgomery",
+                  },
+                  {
+                    parcelNumber: "1-234-5672",
+                    locationName: "102 Montgomery",
+                  },
+                  {
+                    parcelNumber: "1-234-5673",
+                    locationName: "103 Montgomery",
+                  },
+                  {
+                    parcelNumber: "1-234-5674",
+                    locationName: "104 Montgomery",
+                  },
+                  {
+                    parcelNumber: "1-234-5675",
+                    locationName: "105 Montgomery",
+                  },
+                  {
+                    parcelNumber: "1-234-5676",
+                    locationName: "106 Montgomery",
+                  },
+                ]}
+              />
+            ) : (
+              <></>
+            )}
+
+            {spreadsheetData !== undefined &&
+            automationStatus === "In Progress" ? (
+              <EventLog></EventLog>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>

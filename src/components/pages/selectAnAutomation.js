@@ -33,7 +33,14 @@ export const SelectAnAutomation = () => {
   }
 
   return (
-    <div data-theme={state.settings.colorTheme} id="element-to-animate">
+    <div
+      data-theme={
+        state.settings.colorTheme !== undefined
+          ? state.settings.colorTheme
+          : "Gradient"
+      }
+      id="element-to-animate"
+    >
       <TitleBar />
 
       <div className="container-for-scroll">
