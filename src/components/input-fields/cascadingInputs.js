@@ -1,8 +1,10 @@
+// Library Imports
+import { useEffect } from "react";
+// Components
+import { FileOrDirectoryPicker } from "./fileOrDirectoryPicker";
 import { CascadingDropdown } from "./cascadingDropdown";
 import { Switch } from "./switch";
 import { TextInput } from "./textInput";
-import { FileOrDirectoryPicker } from "./fileOrDirectoryPicker";
-import { useEffect } from "react";
 
 export const CascadingInputs = ({
   arrayOfQuestions,

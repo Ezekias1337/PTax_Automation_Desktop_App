@@ -1,11 +1,14 @@
+// Library Imports
 import { useEffect, useState } from "react";
-import { DropDown } from "./dropdown";
-import { getNestedProperty } from "../../utils/objects/getNestedProperty";
-import { camelCasifyString } from "../../utils/strings/camelCasifyString";
+import { findObjectPaths } from "find-object-paths";
+// Functions, Helpers, Utils, and Hooks
 import { renderSelectOptions } from "../../functions/forms/renderSelectOptions";
 import { getPathCascadingDropdown } from "../../helpers/getPathCascadingDropdown";
+import { camelCasifyString } from "../../utils/strings/camelCasifyString";
+import { getNestedProperty } from "../../utils/objects/getNestedProperty";
 import { getObjByStringPath } from "../../utils/objects/getObjByStringPath";
-import { findObjectPaths } from "find-object-paths";
+// Components
+import { DropDown } from "./dropdown";
 
 export const CascadingDropdown = ({
   arrayOfQuestions,
@@ -18,8 +21,8 @@ export const CascadingDropdown = ({
   const [arrayOfDropdowns, setArrayOfDropdowns] = useState([]);
 
   /* 
-    Handle getting the select elements rendered, assume the
-    parent questions will have the first option selected by default
+    Handle getting the select elements rendered, the parent
+    questions will have the first option selected by default
   */
 
   useEffect(() => {

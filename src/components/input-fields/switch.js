@@ -1,8 +1,10 @@
+// Library Imports
 import { useEffect, useState } from "react";
-import { camelCasifyString } from "../../utils/strings/camelCasifyString";
+// Functions, Helpers, Utils, and Hooks
 import { inputFieldFillDefault } from "../../functions/forms/inputFieldFillDefault";
-import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
 import { handleFormChange } from "../../functions/forms/handleFormChange";
+import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
+import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 
 export const Switch = ({ data, state, setStateHook = null }) => {
   const [isChecked, setIsChecked] = useState(false);

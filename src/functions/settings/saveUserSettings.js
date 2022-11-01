@@ -1,8 +1,10 @@
+// Functions, Helpers, Utils
 import { getWindowPosition } from "../../utils/window/getWindowPosition";
+// window.require Imports
 const Store = window.require("electron-store");
-const store = new Store();
 
 export const saveUserSettings = (userSettings) => {
+  const store = new Store();
   const settingsObject = { ...userSettings };
   const currentScreenPosition = getWindowPosition();
 

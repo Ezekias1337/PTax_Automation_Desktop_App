@@ -1,9 +1,13 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
+// Library Imports
 import { useState, useEffect } from "react";
 import { Button } from "reactstrap";
-import { Loader } from "../general-page-layout/loader";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
+// Functions, Helpers, Utils, and Hooks
 import { startAutomation } from "../../functions/automation/startAutomation";
+// Components
+import { Loader } from "../general-page-layout/loader";
+// window.require Imports
 const { ipcRenderer } = window.require("electron");
 
 export const StartAutomationButton = ({

@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+// Library Imports
 import { Button } from "reactstrap";
-import { pascalCasifyString } from "../../utils/strings/pascalCasifyString";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faRobot,
@@ -10,6 +10,9 @@ import {
   faFlag,
   faWrench,
 } from "@fortawesome/free-solid-svg-icons";
+// Functions, Helpers, Utils, and Hooks
+import { pascalCasifyString } from "../../utils/strings/pascalCasifyString";
+// CSS
 import "../../css/sass_css/card.scss";
 
 export const Card = ({

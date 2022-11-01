@@ -1,5 +1,8 @@
+// Functions, Helpers, Utils, and Hooks
 import { pascalCasifyString } from "../../utils/strings/pascalCasifyString";
+// Constants
 import { alphabet } from "../../constants/alphabet";
+// CSS
 import "../../css/sass_css/spreadsheet-previewer.scss";
 
 /* 

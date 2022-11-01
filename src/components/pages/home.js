@@ -1,17 +1,22 @@
-import { TitleBar } from "../general-page-layout/titlebar";
-import { Button } from "reactstrap";
-import { Link } from "react-router-dom";
+// Library Imports
 import { useLayoutEffect } from "react";
-import { animateGradientBackground } from "../../helpers/animateGradientBackground";
-import { SettingsButton } from "../buttons/settingsButton";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { Button } from "reactstrap";
+// Functions, Helpers, Utils and Hooks
+import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { useIsFirstTimeRunning } from "../../hooks/useIsFirstTimeRunning";
+// Components
+import { TitleBar } from "../general-page-layout/titlebar";
+import { SettingsButton } from "../buttons/settingsButton";
 import { GeneralAlert } from "../alert/generalAlert";
-import logo from "../../../src/images/PTax_Logo.png";
+// CSS
 import "../../App.css";
 import "../../css/sass_css/styles.scss";
 import "../../css/sass_css/home.scss";
+// Assets and Images
+import logo from "../../../src/images/PTax_Logo.png";
 
 export const Home = () => {
   const isFirstTimeRunning = useIsFirstTimeRunning();

@@ -1,10 +1,9 @@
+// Library Imports
+import { Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "reactstrap";
-
-const goBackOnePage = () => {
-  window.history.back();
-};
+// Functions, Helpers, Utils, and Hooks
+import { goBackOnePage } from "../../utils/window/goBackOnePage";
 
 export const BackButton = () => {
   return (

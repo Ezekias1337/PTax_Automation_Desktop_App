@@ -1,15 +1,20 @@
+// Library Imports
+import { Link } from "react-router-dom";
 import {
   faWindowMinimize,
   faWindowMaximize,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-import { TitleBarButton } from "../buttons/titleBarButton";
+// Functions, Helpers, Utils, and Hooks
 import { closeWindow } from "../../functions/window/closeWindow";
 import { maximizeWindow } from "../../functions/window/maximizeWindow";
 import { minimizeWindow } from "../../functions/window/minimizeWindow";
-import logo from "../../../src/images/PTax_Logo.png";
+// Components
+import { TitleBarButton } from "../buttons/titleBarButton";
+// CSS
 import "../../css/sass_css/title-bar.scss";
+// Assets and Images
+import logo from "../../../src/images/PTax_Logo.png";
 
 export const TitleBar = () => {
   return (

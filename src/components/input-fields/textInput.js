@@ -1,8 +1,10 @@
+// Library Imports
 import { useEffect, useState } from "react";
+// Functions, Helpers, Utils, and Hooks
 import { inputFieldFillDefault } from "../../functions/forms/inputFieldFillDefault";
-import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 import { handleFormChange } from "../../functions/forms/handleFormChange";
 import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
+import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 
 export const TextInput = ({ data, state, setStateHook }) => {
   const [defaultValueProp, setDefaultValueProp] = useState(null);

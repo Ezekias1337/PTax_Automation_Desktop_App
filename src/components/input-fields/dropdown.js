@@ -1,8 +1,10 @@
+// Library Imports
 import { useEffect } from "react";
-import { renderDropdownOptionsSettings } from "../../functions/forms/renderDropdownOptionsSettings";
-import { camelCasifyString } from "../../utils/strings/camelCasifyString";
+// Functions, Helpers, Utils, and Hooks
 import { handleFormChange } from "../../functions/forms/handleFormChange";
+import { renderDropdownOptionsSettings } from "../../functions/forms/renderDropdownOptionsSettings";
 import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
+import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 
 export const DropDown = ({
   isSettingsDropdown,
@@ -23,7 +25,7 @@ export const DropDown = ({
     );
     dropdownID = camelCasifyString(data.name);
     dropdownLabel = data.name;
-  } else if(availableChoices !== null) {
+  } else if (availableChoices !== null) {
     arrayOfOptionElements = availableChoices;
     dropdownID = camelCasifyString(data.name);
     dropdownLabel = data.name;

@@ -1,7 +1,8 @@
+// window.require Imports
 const Store = window.require("electron-store");
-const store = new Store();
 
 export const useIsFirstTimeRunning = () => {
+  const store = new Store();
   const isFirstTimeRunning = store.get("userSettings.firstTimeRunning");
 
   if (isFirstTimeRunning === undefined) {

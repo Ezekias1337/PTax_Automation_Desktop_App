@@ -1,4 +1,6 @@
+// Functions, Helpers, Utils
 const { testConnectivity } = require("../listeners/testConnectivity");
+// window.require Imports
 const { IpcBusClient } = window.require("electron-common-ipc");
 
 export const createIpcBusClientRenderer = async (

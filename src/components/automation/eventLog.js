@@ -1,6 +1,9 @@
+// Library Imports
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+// Components
 import { ClipboardButton } from "../buttons/clipboardButton";
 import { SpreadsheetButton } from "../buttons/spreadsheetButton";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
+// CSS
 import "../../css/sass_css/styles.scss";
 import "../../css/sass_css/event-log.scss";
 

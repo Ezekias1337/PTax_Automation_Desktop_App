@@ -1,3 +1,4 @@
+// CSS
 import "../../css/sass_css/time-tracker.scss";
 
 export const TimeTracker = ({

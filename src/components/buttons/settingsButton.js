@@ -1,7 +1,8 @@
+// Library Imports
+import { Button } from "reactstrap";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-import { Button } from "reactstrap";
 
 export const SettingsButton = ({ isAnimated }) => {
   return (

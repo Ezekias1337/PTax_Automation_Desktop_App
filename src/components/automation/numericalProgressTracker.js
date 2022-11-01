@@ -1,3 +1,4 @@
+// CSS
 import "../../css/sass_css/numerical-progress-tracker.scss";
 
 export const NumericalProgressTracker = ({

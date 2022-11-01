@@ -1,11 +1,13 @@
+// Library Imports
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
+// Redux
 import { actionCreators } from "../redux/allActions";
-
+// window.require Imports
 const Store = window.require("electron-store");
-const store = new Store();
 
 export const usePersistentSettings = () => {
+  const store = new Store();
   const dispatch = useDispatch();
   const { saveSettings } = bindActionCreators(actionCreators, dispatch);
 

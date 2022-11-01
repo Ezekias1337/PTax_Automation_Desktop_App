@@ -1,3 +1,4 @@
+// Components
 import { BackButton } from "../buttons/backButton";
 import { HomeButton } from "../buttons/homeButton";
 

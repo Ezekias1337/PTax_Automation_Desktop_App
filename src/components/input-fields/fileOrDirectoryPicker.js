@@ -1,9 +1,12 @@
+// Library Imports
 import { useEffect, useState } from "react";
+// Functions, Helpers, Utils, and Hooks
 import { inputFieldFillDefault } from "../../functions/forms/inputFieldFillDefault";
-import { camelCasifyString } from "../../utils/strings/camelCasifyString";
+import { handleFormChange } from "../../functions/forms/handleFormChange";
 import { handlePathRetrieved } from "../../functions/forms/handlePathRetrieved";
 import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
-import { handleFormChange } from "../../functions/forms/handleFormChange";
+import { camelCasifyString } from "../../utils/strings/camelCasifyString";
+// window.require Imports
 const { ipcRenderer } = window.require("electron");
 
 export const FileOrDirectoryPicker = ({

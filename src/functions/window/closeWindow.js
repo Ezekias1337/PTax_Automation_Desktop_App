@@ -1,3 +1,4 @@
+// window.require Imports
 const { ipcRenderer } = window.require("electron");
 
 const closeWindow = () => {

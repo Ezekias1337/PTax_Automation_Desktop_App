@@ -1,3 +1,4 @@
+// Functions, Helpers, Utils
 import { camelCasifyString } from "../utils/strings/camelCasifyString";
 
 export const generateEventTargetStructure = (inputName, inputValue) => {

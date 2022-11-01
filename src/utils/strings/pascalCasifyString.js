@@ -1,3 +1,4 @@
+// Functions, Helpers, Utils
 import { camelCasifyString } from "./camelCasifyString";
 
 export const pascalCasifyString = (string) => {

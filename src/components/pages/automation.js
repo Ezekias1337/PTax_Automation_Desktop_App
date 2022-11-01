@@ -1,22 +1,32 @@
-import { TitleBar } from "../general-page-layout/titlebar";
-import { Header } from "../general-page-layout/header";
-import { animateGradientBackground } from "../../helpers/animateGradientBackground";
+// Library Imports
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Card } from "../card/card";
+// Functions, Helpers, Utils and Hooks
+import { animateGradientBackground } from "../../helpers/animateGradientBackground";
+import { camelCasifyString } from "../../utils/strings/camelCasifyString";
+// Constants
+import { listOfAutomations } from "../../constants/listOfAutomations";
+// Components
+import { TitleBar } from "../general-page-layout/titlebar";
+import { Header } from "../general-page-layout/header";
 import { EventLog } from "../automation/eventLog";
 import { ProgressBar } from "../automation/progressBar";
-import { NumericalProgressTracker } from "../automation/numericalProgressTracker";
 import { TimeTracker } from "../automation/timeTracker";
+import { SpreadsheetPreviewer } from "../automation/spreadsheetPreviewer";
+import { NumericalProgressTracker } from "../automation/numericalProgressTracker";
 import { Loader } from "../general-page-layout/loader";
 import { CascadingInputs } from "../input-fields/cascadingInputs";
 import { StartAutomationButton } from "../buttons/startAutomationButton";
-import { SpreadsheetPreviewer } from "../automation/spreadsheetPreviewer";
-import { camelCasifyString } from "../../utils/strings/camelCasifyString";
-import { listOfAutomations } from "../../constants/listOfAutomations";
+import { Card } from "../card/card";
+// CSS
 import "../../css/sass_css/styles.scss";
+// window.require Imports
 const { ipcRenderer } = window.require("electron");
+
+
+
+
 
 export const Automation = ({ automationName, preOperationQuestions }) => {
   const state = useSelector((state) => state);
@@ -30,7 +40,9 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const [configCardContents, setConfigCardContents] = useState([]);
   const [spreadsheetData, setSpreadsheetData] = useState([]);
   const [automationStatus, setAutomationStatus] = useState("Idle");
-  const [animationParent] = useAutoAnimate();
+  const [animationParentLeft] = useAutoAnimate();
+  const [animationParentRight] = useAutoAnimate();
+  const [animationParentTop] = useAutoAnimate();
 
   /* 
     Handle theme preferences
@@ -145,7 +157,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
       <TitleBar />
       <Header pageTitle={automationName} />
 
-      <div className="container-for-scroll">
+      <div className="container-for-scroll" ref={animationParentTop}>
         {spreadsheetData !== undefined && automationStatus === "In Progress" ? (
           <>
             <NumericalProgressTracker />
@@ -157,7 +169,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
         )}
 
         <div className="row mx-1">
-          <div className="col col-6 mt-2">
+          <div className="col col-6 mt-2" ref={animationParentLeft}>
             <div className="row">
               {automationStatus === "Idle" ? (
                 <CascadingInputs
@@ -185,7 +197,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
               setAutomationStatus={setAutomationStatus}
             />
           </div>
-          <div className="col col-6 mt-2" ref={animationParent}>
+          <div className="col col-6 mt-2" ref={animationParentRight}>
             {spreadsheetData === undefined && automationStatus === "Idle" ? (
               <></>
             ) : (

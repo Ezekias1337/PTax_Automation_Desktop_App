@@ -1,6 +1,7 @@
+// Functions, Helpers, Utils
+import { handleFormChange } from "./handleFormChange";
 import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
 import { replaceBackslashWithForwardSlash } from "../../utils/strings/replaceBackslashWithForwardSlash";
-import { handleFormChange } from "./handleFormChange";
 
 export const handlePathRetrieved = (message, setStateHook) => {
   const id = message[1];
