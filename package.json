@@ -22,6 +22,7 @@
     "electron-store": "^8.0.1",
     "find-object-paths": "^1.0.2",
     "html-pdf-chrome": "^0.8.1",
+    "nanoid": "^4.0.0",
     "path": "^0.12.7",
     "prompt-sync": "^4.2.0",
     "react": "^17.0.2",

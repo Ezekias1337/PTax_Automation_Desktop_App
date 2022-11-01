@@ -1,3 +1,5 @@
+// Library Imports
+import { nanoid } from "nanoid";
 // Functions, Helpers, Utils, and Hooks
 import { pascalCasifyString } from "../../utils/strings/pascalCasifyString";
 // Constants
@@ -17,29 +19,33 @@ export const SpreadsheetPreviewer = ({ spreadSheetData }) => {
       <div className="row">
         <table
           id="spreadsheetPreviewer"
-          className="table table-striped table-hover"
+          className="table table-hover"
         >
           <thead className="column-provider">
-            <th></th>
-            {Object.keys(spreadSheetData[0]).map((rowData, index) => {
-              return <th>{alphabet[index]}</th>;
-            })}
+            <tr>
+              <th></th>
+              {Object.keys(spreadSheetData[0]).map((rowData, index) => {
+                return <th key={nanoid()}>{alphabet[index]}</th>;
+              })}
+            </tr>
           </thead>
           <thead className="column-names">
-            <th></th>
-            {Object.keys(spreadSheetData[0]).map((rowData, index) => {
-              return <th>{pascalCasifyString(rowData)}</th>;
-            })}
+            <tr>
+              <th></th>
+              {Object.keys(spreadSheetData[0]).map((rowData, index) => {
+                return <th key={nanoid()}>{pascalCasifyString(rowData)}</th>;
+              })}
+            </tr>
           </thead>
           <tbody>
             {spreadSheetData.map((rowData, index) => {
               return (
-                <tr>
+                <tr key={nanoid()}>
                   <td className="row-numbers">{index + 1}</td>
 
                   {Object.values(spreadSheetData[index]).map(
                     (rowData, tdIndex) => {
-                      return <td>{rowData}</td>;
+                      return <td key={nanoid()}>{rowData}</td>;
                     }
                   )}
                 </tr>

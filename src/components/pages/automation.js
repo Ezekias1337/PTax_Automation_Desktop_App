@@ -13,7 +13,7 @@ import { Header } from "../general-page-layout/header";
 import { EventLog } from "../automation/eventLog";
 import { ProgressBar } from "../automation/progressBar";
 import { TimeTracker } from "../automation/timeTracker";
-import { SpreadsheetPreviewer } from "../automation/spreadsheetPreviewer";
+import { SpreadsheetPreviewer } from "../spreadsheet-previewer/spreadsheetPreviewer";
 import { NumericalProgressTracker } from "../automation/numericalProgressTracker";
 import { Loader } from "../general-page-layout/loader";
 import { CascadingInputs } from "../input-fields/cascadingInputs";
@@ -23,10 +23,6 @@ import { Card } from "../card/card";
 import "../../css/sass_css/styles.scss";
 // window.require Imports
 const { ipcRenderer } = window.require("electron");
-
-
-
-
 
 export const Automation = ({ automationName, preOperationQuestions }) => {
   const state = useSelector((state) => state);

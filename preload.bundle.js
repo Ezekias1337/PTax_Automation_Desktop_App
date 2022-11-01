@@ -1964,7 +1964,7 @@ function numberIsNaN (obj) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"base64-js":2,"buffer":4,"ieee754":47}],5:[function(require,module,exports){
+},{"base64-js":2,"buffer":4,"ieee754":48}],5:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
@@ -2307,7 +2307,7 @@ exports.isAnyArrayBuffer = isAnyArrayBuffer;
   });
 });
 
-},{"is-arguments":49,"is-generator-function":52,"is-typed-array":53,"which-typed-array":84}],7:[function(require,module,exports){
+},{"is-arguments":50,"is-generator-function":53,"is-typed-array":54,"which-typed-array":84}],7:[function(require,module,exports){
 (function (process){(function (){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -3026,7 +3026,7 @@ function callbackify(original) {
 exports.callbackify = callbackify;
 
 }).call(this)}).call(this,require('_process'))
-},{"./support/isBuffer":5,"./support/types":6,"_process":64,"inherits":48}],8:[function(require,module,exports){
+},{"./support/isBuffer":5,"./support/types":6,"_process":64,"inherits":49}],8:[function(require,module,exports){
 'use strict';
 
 var GetIntrinsic = require('get-intrinsic');
@@ -3043,7 +3043,7 @@ module.exports = function callBoundIntrinsic(name, allowMissing) {
 	return intrinsic;
 };
 
-},{"./":9,"get-intrinsic":42}],9:[function(require,module,exports){
+},{"./":9,"get-intrinsic":43}],9:[function(require,module,exports){
 'use strict';
 
 var bind = require('function-bind');
@@ -3092,7 +3092,7 @@ if ($defineProperty) {
 	module.exports.apply = applyBind;
 }
 
-},{"function-bind":41,"get-intrinsic":42}],10:[function(require,module,exports){
+},{"function-bind":42,"get-intrinsic":43}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChannelsRefCount = exports.ChannelConnectionMap = exports.ChannelConnectionDataRef = void 0;
@@ -3443,7 +3443,7 @@ class IpcBusClientImpl extends events_1.EventEmitter {
 }
 exports.IpcBusClientImpl = IpcBusClientImpl;
 
-},{"./IpcBusUtils":18,"events":38}],12:[function(require,module,exports){
+},{"./IpcBusUtils":18,"events":39}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SmartMessageBag = exports.SerializeMessage = exports.CreateMessageTarget = exports.CreateTargetChannel = exports.CreateKeyForEndpoint = exports.GetTargetRenderer = exports.GetTargetProcess = exports.GetTargetMain = void 0;
@@ -3662,7 +3662,7 @@ class SmartMessageBag {
 }
 exports.SmartMessageBag = SmartMessageBag;
 
-},{"./IpcBusUtils":18,"json-helpers":61,"socket-serializer":82}],13:[function(require,module,exports){
+},{"./IpcBusUtils":18,"json-helpers":62,"socket-serializer":82}],13:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IpcBusCommand = void 0;
@@ -4132,7 +4132,7 @@ class IpcBusTransportImpl {
 }
 exports.IpcBusTransportImpl = IpcBusTransportImpl;
 
-},{"./IpcBusCommand":13,"./IpcBusCommand-helpers":12,"./IpcBusTransport-helpers":15,"./IpcBusUtils":18,"json-helpers":61,"socket-serializer":82}],17:[function(require,module,exports){
+},{"./IpcBusCommand":13,"./IpcBusCommand-helpers":12,"./IpcBusTransport-helpers":15,"./IpcBusUtils":18,"json-helpers":62,"socket-serializer":82}],17:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IpcBusTransportMultiImpl = void 0;
@@ -4472,7 +4472,7 @@ class ConnectCloseState {
 exports.ConnectCloseState = ConnectCloseState;
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":64,"nanoid/non-secure":63}],19:[function(require,module,exports){
+},{"_process":64,"nanoid/non-secure":34}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateIpcBusLog = void 0;
@@ -4508,7 +4508,7 @@ const CreateIpcBusLog = () => {
 };
 exports.CreateIpcBusLog = CreateIpcBusLog;
 
-},{"../IpcBusUtils":18,"./IpcBusLog-new-main":20,"./IpcBusLog-new-node":21,"./IpcBusLog-new-renderer":22,"electron-process-type/lib/v2":35}],20:[function(require,module,exports){
+},{"../IpcBusUtils":18,"./IpcBusLog-new-main":20,"./IpcBusLog-new-node":21,"./IpcBusLog-new-renderer":22,"electron-process-type/lib/v2":36}],20:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NewIpcBusLog = void 0;
@@ -4833,7 +4833,7 @@ IpcBusLog_1.IpcBusLog.SetLogLevel = (level, cb, argContentLen) => {
     logger.argMaxContentLen = argContentLen;
 };
 
-},{"../IpcBusCommand":13,"./IpcBusLog":23,"./IpcBusLog-factory":19,"./IpcBusLogConfig":24,"./IpcBusLogConfigImpl":25,"./IpcBusLogUtils":27,"json-helpers":61,"socket-serializer":82}],27:[function(require,module,exports){
+},{"../IpcBusCommand":13,"./IpcBusLog":23,"./IpcBusLog-factory":19,"./IpcBusLogConfig":24,"./IpcBusLogConfigImpl":25,"./IpcBusLogUtils":27,"json-helpers":62,"socket-serializer":82}],27:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -4939,7 +4939,7 @@ function CutData(data, maxLen) {
 exports.CutData = CutData;
 
 }).call(this)}).call(this,{"isBuffer":require("../../../../is-buffer/index.js")})
-},{"../../../../is-buffer/index.js":50,"util":7}],28:[function(require,module,exports){
+},{"../../../../is-buffer/index.js":51,"util":7}],28:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Create = void 0;
@@ -5296,6 +5296,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./IpcBus/renderer/IpcBusRendererPreload"), exports);
 
 },{"./IpcBus/renderer/IpcBusRendererPreload":31}],34:[function(require,module,exports){
+let urlAlphabet =
+  'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict'
+let customAlphabet = (alphabet, defaultSize = 21) => {
+  return (size = defaultSize) => {
+    let id = ''
+    let i = size
+    while (i--) {
+      id += alphabet[(Math.random() * alphabet.length) | 0]
+    }
+    return id
+  }
+}
+let nanoid = (size = 21) => {
+  let id = ''
+  let i = size
+  while (i--) {
+    id += urlAlphabet[(Math.random() * 64) | 0]
+  }
+  return id
+}
+module.exports = { nanoid, customAlphabet }
+
+},{}],35:[function(require,module,exports){
 (function (process){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -5379,7 +5402,7 @@ function GetElectronProcessType() {
 exports.GetElectronProcessType = GetElectronProcessType;
 
 }).call(this)}).call(this,require('_process'))
-},{"_process":64,"electron":"electron"}],35:[function(require,module,exports){
+},{"_process":64,"electron":"electron"}],36:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -5394,7 +5417,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./v2/electron-process-type"), exports);
 
-},{"./v2/electron-process-type":36}],36:[function(require,module,exports){
+},{"./v2/electron-process-type":37}],37:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetElectronProcessType = void 0;
@@ -5419,7 +5442,7 @@ function GetElectronProcessType() {
 }
 exports.GetElectronProcessType = GetElectronProcessType;
 
-},{"../electron-process-type-util":34}],37:[function(require,module,exports){
+},{"../electron-process-type-util":35}],38:[function(require,module,exports){
 'use strict';
 
 var GetIntrinsic = require('get-intrinsic');
@@ -5436,7 +5459,7 @@ if ($gOPD) {
 
 module.exports = $gOPD;
 
-},{"get-intrinsic":42}],38:[function(require,module,exports){
+},{"get-intrinsic":43}],39:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5935,7 +5958,7 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
   }
 }
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 'use strict';
 
 var isCallable = require('is-callable');
@@ -5999,7 +6022,7 @@ var forEach = function forEach(list, iterator, thisArg) {
 
 module.exports = forEach;
 
-},{"is-callable":51}],40:[function(require,module,exports){
+},{"is-callable":52}],41:[function(require,module,exports){
 'use strict';
 
 /* eslint no-invalid-this: 1 */
@@ -6053,14 +6076,14 @@ module.exports = function bind(that) {
     return bound;
 };
 
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 'use strict';
 
 var implementation = require('./implementation');
 
 module.exports = Function.prototype.bind || implementation;
 
-},{"./implementation":40}],42:[function(require,module,exports){
+},{"./implementation":41}],43:[function(require,module,exports){
 'use strict';
 
 var undefined;
@@ -6396,7 +6419,7 @@ module.exports = function GetIntrinsic(name, allowMissing) {
 	return value;
 };
 
-},{"function-bind":41,"has":46,"has-symbols":43}],43:[function(require,module,exports){
+},{"function-bind":42,"has":47,"has-symbols":44}],44:[function(require,module,exports){
 'use strict';
 
 var origSymbol = typeof Symbol !== 'undefined' && Symbol;
@@ -6411,7 +6434,7 @@ module.exports = function hasNativeSymbols() {
 	return hasSymbolSham();
 };
 
-},{"./shams":44}],44:[function(require,module,exports){
+},{"./shams":45}],45:[function(require,module,exports){
 'use strict';
 
 /* eslint complexity: [2, 18], max-statements: [2, 33] */
@@ -6455,7 +6478,7 @@ module.exports = function hasSymbols() {
 	return true;
 };
 
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 'use strict';
 
 var hasSymbols = require('has-symbols/shams');
@@ -6464,14 +6487,14 @@ module.exports = function hasToStringTagShams() {
 	return hasSymbols() && !!Symbol.toStringTag;
 };
 
-},{"has-symbols/shams":44}],46:[function(require,module,exports){
+},{"has-symbols/shams":45}],47:[function(require,module,exports){
 'use strict';
 
 var bind = require('function-bind');
 
 module.exports = bind.call(Function.call, Object.prototype.hasOwnProperty);
 
-},{"function-bind":41}],47:[function(require,module,exports){
+},{"function-bind":42}],48:[function(require,module,exports){
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
@@ -6558,7 +6581,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -6587,7 +6610,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 'use strict';
 
 var hasToStringTag = require('has-tostringtag/shams')();
@@ -6622,7 +6645,7 @@ isStandardArguments.isLegacyArguments = isLegacyArguments; // for tests
 
 module.exports = supportsStandardArguments ? isStandardArguments : isLegacyArguments;
 
-},{"call-bind/callBound":8,"has-tostringtag/shams":45}],50:[function(require,module,exports){
+},{"call-bind/callBound":8,"has-tostringtag/shams":46}],51:[function(require,module,exports){
 /*!
  * Determine if an object is a Buffer
  *
@@ -6645,7 +6668,7 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 'use strict';
 
 var fnToStr = Function.prototype.toString;
@@ -6748,7 +6771,7 @@ module.exports = reflectApply
 		return tryFunctionObject(value);
 	};
 
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 'use strict';
 
 var toStr = Object.prototype.toString;
@@ -6788,7 +6811,7 @@ module.exports = function isGeneratorFunction(fn) {
 	return getProto(fn) === GeneratorFunction;
 };
 
-},{"has-tostringtag/shams":45}],53:[function(require,module,exports){
+},{"has-tostringtag/shams":46}],54:[function(require,module,exports){
 (function (global){(function (){
 'use strict';
 
@@ -6852,7 +6875,7 @@ module.exports = function isTypedArray(value) {
 };
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"available-typed-arrays":1,"call-bind/callBound":8,"es-abstract/helpers/getOwnPropertyDescriptor":37,"for-each":39,"has-tostringtag/shams":45}],54:[function(require,module,exports){
+},{"available-typed-arrays":1,"call-bind/callBound":8,"es-abstract/helpers/getOwnPropertyDescriptor":38,"for-each":40,"has-tostringtag/shams":46}],55:[function(require,module,exports){
 (function (Buffer){(function (){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -6898,7 +6921,7 @@ exports.Uint8ArrayJSONFormatter = {
 };
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":4}],55:[function(require,module,exports){
+},{"buffer":4}],56:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JSONParserImpl = void 0;
@@ -6934,7 +6957,7 @@ class JSONParserImpl {
 }
 exports.JSONParserImpl = JSONParserImpl;
 
-},{"./json-replacer-tojson-impl":59,"./json-reviver-impl":60}],56:[function(require,module,exports){
+},{"./json-replacer-tojson-impl":60,"./json-reviver-impl":61}],57:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JSONParser = exports.JSONParserV1 = void 0;
@@ -6953,7 +6976,7 @@ class JSONParserV1Impl extends json_parser_impl_1.JSONParserImpl {
 exports.JSONParserV1 = new JSONParserV1Impl();
 exports.JSONParser = exports.JSONParserV1;
 
-},{"./json-formatter-default":54,"./json-parser-impl":55}],57:[function(require,module,exports){
+},{"./json-formatter-default":55,"./json-parser-impl":56}],58:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JSONParserV2 = void 0;
@@ -6971,7 +6994,7 @@ class JSONParserV2Impl extends json_parser_impl_1.JSONParserImpl {
 }
 exports.JSONParserV2 = new JSONParserV2Impl();
 
-},{"./json-formatter-default":54,"./json-parser-impl":55}],58:[function(require,module,exports){
+},{"./json-formatter-default":55,"./json-parser-impl":56}],59:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IsJSONLike = exports.ToJSONConstants = void 0;
@@ -6984,7 +7007,7 @@ function IsJSONLike(obj) {
 }
 exports.IsJSONLike = IsJSONLike;
 
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JSONReplacerToJSONImpl = void 0;
@@ -7114,7 +7137,7 @@ class JSONReplacerToJSONImpl {
 }
 exports.JSONReplacerToJSONImpl = JSONReplacerToJSONImpl;
 
-},{"./json-parser":58}],60:[function(require,module,exports){
+},{"./json-parser":59}],61:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.JSONReviverImpl = void 0;
@@ -7167,7 +7190,7 @@ class JSONReviverImpl {
 }
 exports.JSONReviverImpl = JSONReviverImpl;
 
-},{"./json-parser":58}],61:[function(require,module,exports){
+},{"./json-parser":59}],62:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -7182,7 +7205,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./json-helpers-common"), exports);
 
-},{"./json-helpers-common":62}],62:[function(require,module,exports){
+},{"./json-helpers-common":63}],63:[function(require,module,exports){
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -7199,30 +7222,7 @@ __exportStar(require("./code/json-parser"), exports);
 __exportStar(require("./code/json-parser-v1"), exports);
 __exportStar(require("./code/json-parser-v2"), exports);
 
-},{"./code/json-parser":58,"./code/json-parser-v1":56,"./code/json-parser-v2":57}],63:[function(require,module,exports){
-let urlAlphabet =
-  'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict'
-let customAlphabet = (alphabet, defaultSize = 21) => {
-  return (size = defaultSize) => {
-    let id = ''
-    let i = size
-    while (i--) {
-      id += alphabet[(Math.random() * alphabet.length) | 0]
-    }
-    return id
-  }
-}
-let nanoid = (size = 21) => {
-  let id = ''
-  let i = size
-  while (i--) {
-    id += urlAlphabet[(Math.random() * 64) | 0]
-  }
-  return id
-}
-module.exports = { nanoid, customAlphabet }
-
-},{}],64:[function(require,module,exports){
+},{"./code/json-parser":59,"./code/json-parser-v1":57,"./code/json-parser-v2":58}],64:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -8633,7 +8633,7 @@ class IpcPacketJSON {
 }
 exports.IpcPacketJSON = IpcPacketJSON;
 
-},{"json-helpers":61}],79:[function(require,module,exports){
+},{"json-helpers":62}],79:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.IpcPacketReader = void 0;
@@ -9239,7 +9239,7 @@ module.exports = function whichTypedArray(value) {
 };
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"available-typed-arrays":1,"call-bind/callBound":8,"es-abstract/helpers/getOwnPropertyDescriptor":37,"for-each":39,"has-tostringtag/shams":45,"is-typed-array":53}],85:[function(require,module,exports){
+},{"available-typed-arrays":1,"call-bind/callBound":8,"es-abstract/helpers/getOwnPropertyDescriptor":38,"for-each":40,"has-tostringtag/shams":46,"is-typed-array":54}],85:[function(require,module,exports){
 const electronCommonIPC = require("electron-common-ipc/lib/electron-common-ipc-preload");
 electronCommonIPC.PreloadElectronCommonIpc();
 

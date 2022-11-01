@@ -7,12 +7,13 @@
 */
 
 #spreadsheetPreviewer {
-  border-collapse: collapse;
-  border: 2px solid transparent;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid transparent;
 }
 
 #spreadsheetPreviewer thead {
-  border: 2px solid transparent;
+  border: 1px solid transparent;
 }
 
 #spreadsheetPreviewer th,
@@ -50,17 +51,99 @@
 
 [data-theme="Light"] {
   #spreadsheetPreviewer th,
-  #spreadsheetPreviewer td {
+  #spreadsheetPreviewer td,
+  #spreadsheetPreviewer thead.column-names th:first-of-type,
+  #spreadsheetPreviewer tbody tr:nth-of-type(n) td:first-of-type {
     background-color: $bg-secondary-light;
     color: $black;
+  }
+
+  #spreadsheetPreviewer thead.column-names th {
+    background-color: $brown;
+    color: $white;
+  }
+
+  #spreadsheetPreviewer tbody tr:nth-of-type(odd) td {
+    background-color: $bg-light;
+  }
+
+  #spreadsheetPreviewer tbody tr:nth-of-type(even) td {
+    background-color: lighten($brown, 15);
+    color: $black;
+  }
+
+  /* 
+    Apply a 1px border to the component
+  */
+
+  #spreadsheetPreviewer thead:first-of-type th,
+  #spreadsheetPreviewer thead:first-of-type th:first-of-type {
+    border-top: 1px solid $black;
+  }
+
+  #spreadsheetPreviewer thead th:first-of-type,
+  #spreadsheetPreviewer tbody tr td:first-of-type,
+  #spreadsheetPreviewer tbody tr:last-of-type td:first-of-type {
+    border-left: 1px solid $black;
+  }
+
+  #spreadsheetPreviewer thead th:last-of-type,
+  #spreadsheetPreviewer tbody tr td:last-of-type,
+  #spreadsheetPreviewer tbody tr:last-of-type td:last-of-type {
+    border-right: 1px solid $black;
+  }
+
+  #spreadsheetPreviewer tbody tr:last-of-type td {
+    border-bottom: 1px solid $black;
   }
 }
 
 [data-theme="Gradient"],
 [data-theme="Dark"] {
   #spreadsheetPreviewer th,
-  #spreadsheetPreviewer td {
-    background-color: $bg-secondary-dark;
+  #spreadsheetPreviewer td,
+  #spreadsheetPreviewer thead.column-names th:first-of-type,
+  #spreadsheetPreviewer tbody tr:nth-of-type(n) td:first-of-type {
+    background-color: $bg-dark;
     color: $white;
+  }
+
+  #spreadsheetPreviewer thead.column-names th {
+    background-color: $brown;
+    color: $black;
+  }
+
+  #spreadsheetPreviewer tbody tr:nth-of-type(odd) td {
+    background-color: $bg-secondary-dark;
+  }
+
+  #spreadsheetPreviewer tbody tr:nth-of-type(even) td {
+    background-color: lighten($brown, 10);
+    color: $black;
+  }
+
+  /* 
+    Apply a 1px border to the component
+  */
+
+  #spreadsheetPreviewer thead:first-of-type th,
+  #spreadsheetPreviewer thead:first-of-type th:first-of-type {
+    border-top: 1px solid $white;
+  }
+
+  #spreadsheetPreviewer thead th:first-of-type,
+  #spreadsheetPreviewer tbody tr td:first-of-type,
+  #spreadsheetPreviewer tbody tr:last-of-type td:first-of-type {
+    border-left: 1px solid $white;
+  }
+
+  #spreadsheetPreviewer thead th:last-of-type,
+  #spreadsheetPreviewer tbody tr td:last-of-type,
+  #spreadsheetPreviewer tbody tr:last-of-type td:last-of-type {
+    border-right: 1px solid $white;
+  }
+
+  #spreadsheetPreviewer tbody tr:last-of-type td {
+    border-bottom: 1px solid $white;
   }
 }

@@ -2,11 +2,12 @@
   General Styling
 */
 #spreadsheetPreviewer {
-  border-collapse: collapse;
-  border: 2px solid transparent; }
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid transparent; }
 
 #spreadsheetPreviewer thead {
-  border: 2px solid transparent; }
+  border: 1px solid transparent; }
 
 #spreadsheetPreviewer th,
 #spreadsheetPreviewer td {
@@ -38,9 +39,57 @@
   background-color: #bebebe;
   color: #0b0b0b; }
 
-[data-theme="Gradient"] #spreadsheetPreviewer th,
-[data-theme="Gradient"] #spreadsheetPreviewer td,
-[data-theme="Dark"] #spreadsheetPreviewer th,
-[data-theme="Dark"] #spreadsheetPreviewer td {
-  background-color: #6b6b6b;
-  color: #e1dfdf; }
+[data-theme="Gradient"],
+[data-theme="Dark"] {
+  /* 
+    Apply a 1px border to the component
+  */ }
+  [data-theme="Gradient"] #spreadsheetPreviewer th,
+  [data-theme="Gradient"] #spreadsheetPreviewer td,
+  [data-theme="Gradient"] #spreadsheetPreviewer thead.column-names th:first-of-type,
+  [data-theme="Dark"] #spreadsheetPreviewer th,
+  [data-theme="Dark"] #spreadsheetPreviewer td,
+  [data-theme="Dark"] #spreadsheetPreviewer thead.column-names th:first-of-type {
+    background-color: #6b6b6b;
+    color: #e1dfdf; }
+  [data-theme="Gradient"] #spreadsheetPreviewer thead.column-names th,
+  [data-theme="Dark"] #spreadsheetPreviewer thead.column-names th {
+    background-color: #d4967d;
+    color: #0b0b0b; }
+  [data-theme="Gradient"] #spreadsheetPreviewer tbody tr:nth-of-type(odd) td,
+  [data-theme="Dark"] #spreadsheetPreviewer tbody tr:nth-of-type(odd) td {
+    background-color: #333333; }
+  [data-theme="Gradient"] #spreadsheetPreviewer tbody tr:nth-of-type(even) td,
+  [data-theme="Dark"] #spreadsheetPreviewer tbody tr:nth-of-type(even) td {
+    background-color: #e7c4b6;
+    color: #0b0b0b; }
+  [data-theme="Gradient"] #spreadsheetPreviewer tbody tr:nth-of-type(n) td:first-of-type,
+  [data-theme="Dark"] #spreadsheetPreviewer tbody tr:nth-of-type(n) td:first-of-type {
+    background-color: #6b6b6b;
+    color: #e1dfdf; }
+  [data-theme="Gradient"] #spreadsheetPreviewer thead:first-of-type th,
+  [data-theme="Gradient"] #spreadsheetPreviewer thead:first-of-type th:first-of-type,
+  [data-theme="Dark"] #spreadsheetPreviewer thead:first-of-type th,
+  [data-theme="Dark"] #spreadsheetPreviewer thead:first-of-type th:first-of-type {
+    border-top: 1px solid #e1dfdf; }
+  [data-theme="Gradient"] #spreadsheetPreviewer thead th:first-of-type,
+  [data-theme="Dark"] #spreadsheetPreviewer thead th:first-of-type {
+    border-left: 1px solid #e1dfdf; }
+  [data-theme="Gradient"] #spreadsheetPreviewer thead th:last-of-type,
+  [data-theme="Dark"] #spreadsheetPreviewer thead th:last-of-type {
+    border-right: 1px solid #e1dfdf; }
+  [data-theme="Gradient"] #spreadsheetPreviewer tbody tr td:first-of-type,
+  [data-theme="Dark"] #spreadsheetPreviewer tbody tr td:first-of-type {
+    border-left: 1px solid #e1dfdf; }
+  [data-theme="Gradient"] #spreadsheetPreviewer tbody tr td:last-of-type,
+  [data-theme="Dark"] #spreadsheetPreviewer tbody tr td:last-of-type {
+    border-right: 1px solid #e1dfdf; }
+  [data-theme="Gradient"] #spreadsheetPreviewer tbody tr:last-of-type td,
+  [data-theme="Dark"] #spreadsheetPreviewer tbody tr:last-of-type td {
+    border-bottom: 1px solid #e1dfdf; }
+  [data-theme="Gradient"] #spreadsheetPreviewer tbody tr:last-of-type td:first-of-type,
+  [data-theme="Dark"] #spreadsheetPreviewer tbody tr:last-of-type td:first-of-type {
+    border-left: 1px solid #e1dfdf; }
+  [data-theme="Gradient"] #spreadsheetPreviewer tbody tr:last-of-type td:last-of-type,
+  [data-theme="Dark"] #spreadsheetPreviewer tbody tr:last-of-type td:last-of-type {
+    border-right: 1px solid #e1dfdf; }
