@@ -13,6 +13,7 @@ import { Header } from "../general-page-layout/header";
 import { EventLog } from "../automation/eventLog";
 import { ProgressBar } from "../automation/progressBar";
 import { TimeTracker } from "../automation/timeTracker";
+import { SpreadSheetExampleAndValidator } from "../automation/spreadSheetExampleAndValidator";
 import { SpreadsheetPreviewer } from "../spreadsheet-previewer/spreadsheetPreviewer";
 import { NumericalProgressTracker } from "../automation/numericalProgressTracker";
 import { Loader } from "../general-page-layout/loader";
@@ -154,7 +155,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
       <Header pageTitle={automationName} />
 
       <div className="container-for-scroll" ref={animationParentTop}>
-        {spreadsheetData !== undefined && automationStatus === "In Progress" ? (
+        {spreadsheetData?.length !== 0 && automationStatus === "In Progress" ? (
           <>
             <NumericalProgressTracker />
             <ProgressBar />
@@ -184,6 +185,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                 <Card
                   cardTitle="Automation Configuration"
                   cardBody={configCardContents}
+                  isConfigurationCard={true}
                 />
               )}
             </div>
@@ -194,41 +196,17 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
             />
           </div>
           <div className="col col-6 mt-2" ref={animationParentRight}>
-            {spreadsheetData === undefined && automationStatus === "Idle" ? (
-              <></>
+            {spreadsheetData?.length === 0 && automationStatus === "Idle" ? (
+              <SpreadSheetExampleAndValidator
+                setSpreadsheetData={setSpreadsheetData}
+                automationConfig={selectedChoices}
+              />
             ) : (
               <></>
             )}
 
-            {spreadsheetData !== undefined && automationStatus === "Idle" ? (
-              <SpreadsheetPreviewer
-                spreadSheetData={[
-                  {
-                    parcelNumber: "1-234-5671",
-                    locationName: "101 Montgomery",
-                  },
-                  {
-                    parcelNumber: "1-234-5672",
-                    locationName: "102 Montgomery",
-                  },
-                  {
-                    parcelNumber: "1-234-5673",
-                    locationName: "103 Montgomery",
-                  },
-                  {
-                    parcelNumber: "1-234-5674",
-                    locationName: "104 Montgomery",
-                  },
-                  {
-                    parcelNumber: "1-234-5675",
-                    locationName: "105 Montgomery",
-                  },
-                  {
-                    parcelNumber: "1-234-5676",
-                    locationName: "106 Montgomery",
-                  },
-                ]}
-              />
+            {spreadsheetData?.length !== 0 && automationStatus === "Idle" ? (
+              <SpreadsheetPreviewer spreadSheetData={spreadsheetData} />
             ) : (
               <></>
             )}

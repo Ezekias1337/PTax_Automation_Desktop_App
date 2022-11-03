@@ -1,0 +1,4 @@
+In order to protect the github token, run the following bash command
+with your github token when you want to send out an update:
+
+export GH_TOKEN=<YOUR_TOKEN_HERE> && npm run build

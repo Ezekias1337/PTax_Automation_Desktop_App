@@ -276,6 +276,11 @@ div.form-switch {
   justify-content: center;
   align-items: center; }
 
+.space-around-flex {
+  display: flex;
+  justify-content: space-around;
+  align-items: center; }
+
 button.animated-button {
   -webkit-animation-name: animate-button;
   animation-name: animate-button;
@@ -324,31 +329,31 @@ button.animated-button {
   [data-theme="Gradient"] h1 {
     color: #333333; }
   [data-theme="Gradient"] ::-webkit-input-placeholder {
-    color: #6b6b6b;
+    color: #515151;
     opacity: 1;
     /* Firefox */ }
   [data-theme="Gradient"] ::-moz-placeholder {
-    color: #6b6b6b;
+    color: #515151;
     opacity: 1;
     /* Firefox */ }
   [data-theme="Gradient"] :-ms-input-placeholder {
-    color: #6b6b6b;
+    color: #515151;
     opacity: 1;
     /* Firefox */ }
   [data-theme="Gradient"] ::-ms-input-placeholder {
-    color: #6b6b6b;
+    color: #515151;
     opacity: 1;
     /* Firefox */ }
   [data-theme="Gradient"] ::placeholder {
-    color: #6b6b6b;
+    color: #515151;
     opacity: 1;
     /* Firefox */ }
   [data-theme="Gradient"] :-ms-input-placeholder {
     /* Internet Explorer 10-11 */
-    color: #6b6b6b; }
+    color: #515151; }
   [data-theme="Gradient"] ::-ms-input-placeholder {
     /* Microsoft Edge */
-    color: #6b6b6b; }
+    color: #515151; }
   [data-theme="Gradient"] ::-webkit-scrollbar-track {
     border-radius: 5px; }
   [data-theme="Gradient"] ::-webkit-scrollbar-thumb {
@@ -431,7 +436,7 @@ button.animated-button {
     background: #e9e9e9;
     border-radius: 5px; }
   [data-theme="Light"] ::-webkit-scrollbar-thumb:hover {
-    background: #6b6b6b; }
+    background: #515151; }
   [data-theme="Light"] .animated-alert {
     -webkit-animation-name: animated-alert-light;
     animation-name: animated-alert-light;
@@ -465,7 +470,7 @@ button.animated-button {
   [data-theme="Dark"] button.styled-button {
     background-color: #d4967d;
     color: #333333;
-    border: 1.5px solid #6b6b6b; }
+    border: 1.5px solid #515151; }
   [data-theme="Dark"] button.styled-button:hover,
   [data-theme="Dark"] button.styled-button:focus,
   [data-theme="Dark"] button.styled-button:active {
@@ -477,11 +482,11 @@ button.animated-button {
     color: #e1dfdf; }
   [data-theme="Dark"] .form-switch .form-check-input {
     background-color: #d4967d;
-    border: 1.25px solid #6b6b6b;
+    border: 1.25px solid #515151;
     background-image: url("../../images/White_Switch_BG.png") !important; }
   [data-theme="Dark"] .form-switch .form-check-input:checked {
     background-image: url("../../images/Black_Switch_BG.png") !important;
-    border: 1.5px solid #6b6b6b; }
+    border: 1.5px solid #515151; }
   [data-theme="Dark"] .form-switch .form-check-input:active,
   [data-theme="Dark"] .form-switch .form-check-input:hover,
   [data-theme="Dark"] .form-switch .form-check-input:focus {
@@ -497,31 +502,31 @@ button.animated-button {
     border: 1.5px solid #d4967d;
     background-color: #333333; }
   [data-theme="Dark"] ::-webkit-input-placeholder {
-    color: #6b6b6b;
+    color: #515151;
     opacity: 1;
     /* Firefox */ }
   [data-theme="Dark"] ::-moz-placeholder {
-    color: #6b6b6b;
+    color: #515151;
     opacity: 1;
     /* Firefox */ }
   [data-theme="Dark"] :-ms-input-placeholder {
-    color: #6b6b6b;
+    color: #515151;
     opacity: 1;
     /* Firefox */ }
   [data-theme="Dark"] ::-ms-input-placeholder {
-    color: #6b6b6b;
+    color: #515151;
     opacity: 1;
     /* Firefox */ }
   [data-theme="Dark"] ::placeholder {
-    color: #6b6b6b;
+    color: #515151;
     opacity: 1;
     /* Firefox */ }
   [data-theme="Dark"] :-ms-input-placeholder {
     /* Internet Explorer 10-11 */
-    color: #6b6b6b; }
+    color: #515151; }
   [data-theme="Dark"] ::-ms-input-placeholder {
     /* Microsoft Edge */
-    color: #6b6b6b; }
+    color: #515151; }
   [data-theme="Dark"] ::-webkit-scrollbar-track {
     border-radius: 5px; }
   [data-theme="Dark"] ::-webkit-scrollbar-thumb {

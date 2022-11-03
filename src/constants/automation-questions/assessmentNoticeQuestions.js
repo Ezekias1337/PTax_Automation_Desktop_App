@@ -19,14 +19,14 @@ export const assessmentNoticeQuestions = [
   },
   {
     key: 3,
-    name: "Upload Directory",
-    parentQuestions: null,
-    inputType: "File",
-  },
-  {
-    key: 4,
     name: "Download Directory",
     parentQuestions: null,
     inputType: "Directory",
+  },
+  {
+    key: 4,
+    name: "Spreadsheet File",
+    parentQuestions: null,
+    inputType: "File",
   },
 ];

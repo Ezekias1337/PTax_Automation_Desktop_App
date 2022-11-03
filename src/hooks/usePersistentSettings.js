@@ -9,7 +9,10 @@ const Store = window.require("electron-store");
 export const usePersistentSettings = () => {
   const store = new Store();
   const dispatch = useDispatch();
-  const { saveSettings } = bindActionCreators(actionCreators, dispatch);
+  const { saveSettings } = bindActionCreators(
+    actionCreators.settingsCreators,
+    dispatch
+  );
 
   const persistentSettings = store.get("userSettings");
   if (persistentSettings !== undefined) {

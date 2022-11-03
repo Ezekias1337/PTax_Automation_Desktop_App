@@ -73,7 +73,7 @@
 
 [data-theme="Gradient"] #titleBar,
 [data-theme="Dark"] #titleBar {
-  background-color: rgba(107, 107, 107, 0.5); }
+  background-color: rgba(81, 81, 81, 0.5); }
 
 [data-theme="Gradient"] #titleBarButtonContainer svg,
 [data-theme="Dark"] #titleBarButtonContainer svg {

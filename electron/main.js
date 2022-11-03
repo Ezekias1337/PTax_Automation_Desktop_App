@@ -1,16 +1,16 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require("electron");
-const {
-  default: installExtension,
-  REDUX_DEVTOOLS,
-} = require("electron-devtools-installer");
+// Library Imports
+const { isDev } = require("electron-is-dev");
 const Store = require("electron-store");
+//Functions
 const {
   createIpcBusBridge,
-} = require("./electron/functions/ipc/createIpcBusBridge");
-const { createWindow } = require("./electron/functions/window/createWindow");
-const { createTray } = require("./electron/functions/tray/createTray");
-require("./electron/ipc-main-listeners/allListeners");
+} = require("./functions/ipc/createIpcBusBridge");
+const { createWindow } = require("./functions/window/createWindow");
+const { createTray } = require("./functions/tray/createTray");
+// Listeners
+require("./ipc-main-listeners/allListeners");
 
 /* 
 ---------------------------START OF BASE TEMPLATE---------------------------
@@ -27,9 +27,16 @@ let tray;
 const reactDevToolsId = "fmkadmapgofadopljbjfkapdkoienihi";
 
 app.whenReady().then(() => {
-  installExtension([REDUX_DEVTOOLS, reactDevToolsId])
-    .then((name) => console.log(`Added Extension:  ${name}`))
-    .catch((err) => console.log("An error occurred: ", err));
+  if (isDev === true) {
+    const {
+      default: installExtension,
+      REDUX_DEVTOOLS,
+    } = require("electron-devtools-installer");
+    installExtension([REDUX_DEVTOOLS, reactDevToolsId])
+      .then((name) => console.log(`Added Extension:  ${name}`))
+      .catch((err) => console.log("An error occurred: ", err));
+  }
+
   const window = createWindow(__dirname, process, store);
   if (tray !== undefined) {
     tray.destroy();

@@ -26,7 +26,7 @@ import "../../css/sass_css/inputs.scss";
 export const Settings = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { saveSettings } = bindActionCreators(actionCreators, dispatch);
+  const { saveSettings } = bindActionCreators(actionCreators.settingsCreators, dispatch);
   const [arrayOfSettings, setArrayOfSettings] = useState([]);
   const [userSettings, setUserSettings] = useState({
     colorTheme: "Gradient",

@@ -27,3 +27,5 @@ This app utilizes multiple technologies which are not typically used together. S
 **React** is the Javascript framework used for the front end because of it's robust component reusability and state management. The overwhelming majority of the front end is located in the **src folder**.
 
 **Selenium** is the web automation framework being used to open the browser window and interact with the page via automation. Selenium is the **"backend"** for this application. It is located in the **selenium folder**.
+
+There are some things shared between Electron and Selenium in the shared folder. However, because of the way React works, the front end cannot access anything outside of the src folder. Therefore, some pieces of code are duplicated due to this resitriction.

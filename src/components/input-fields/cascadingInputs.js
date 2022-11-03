@@ -1,10 +1,6 @@
-// Library Imports
-import { useEffect } from "react";
 // Components
 import { FileOrDirectoryPicker } from "./fileOrDirectoryPicker";
 import { CascadingDropdown } from "./cascadingDropdown";
-import { Switch } from "./switch";
-import { TextInput } from "./textInput";
 
 export const CascadingInputs = ({
   arrayOfQuestions,
@@ -30,9 +26,11 @@ export const CascadingInputs = ({
         let inputValueState;
         if (ele.name === "Download Directory") {
           inputValueState = parentState?.downloadDirectory;
-        } else if (ele.name === "Upload Directory") {
-          inputValueState = parentState?.uploadDirectory;
+        } else if (ele.name === "Spreadsheet File") {
+          inputValueState = parentState?.spreadsheetFile;
         }
+
+        let inputToReturn;
 
         switch (ele.inputType) {
           case "Switch":
@@ -45,7 +43,8 @@ export const CascadingInputs = ({
               customInputType: "text",
               placeholder: "C:/Users/Name/Downloads/",
             };
-            return (
+
+            inputToReturn = (
               <FileOrDirectoryPicker
                 key={index}
                 data={tempDataObjFile}
@@ -53,15 +52,19 @@ export const CascadingInputs = ({
                 promptType="file"
                 setStateHook={setStateHook}
                 inputValueState={inputValueState}
+                reduxStateName="uploadDirectory"
               />
             );
+            break;
+
           case "Directory":
             const tempDataObjDirectory = {
               name: ele.name,
               customInputType: "text",
               placeholder: "C:/Users/Name/Downloads/",
             };
-            return (
+
+            inputToReturn = (
               <FileOrDirectoryPicker
                 key={index}
                 data={tempDataObjDirectory}
@@ -69,11 +72,16 @@ export const CascadingInputs = ({
                 promptType="directory"
                 setStateHook={setStateHook}
                 inputValueState={inputValueState}
+                reduxStateName="downloadDirectory"
               />
             );
+            break;
+
           default:
             break;
         }
+
+        return inputToReturn;
       })}
     </>
   );

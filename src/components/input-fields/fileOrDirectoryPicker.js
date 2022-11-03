@@ -15,6 +15,7 @@ export const FileOrDirectoryPicker = ({
   promptType,
   setStateHook,
   inputValueState = null,
+  reduxStateName = null,
 }) => {
   const [inputPromptType, setInputPromptType] = useState(null);
   const [ipcEventListener, setIpcEventListener] = useState(null);
@@ -35,13 +36,30 @@ export const FileOrDirectoryPicker = ({
       settingToCheckFor = "uploadDirectory";
     }
 
-    const defaultInputValue = inputFieldFillDefault(
-      inputNameCamelCasified,
-      state,
-      false,
-      false,
-      settingToCheckFor
-    );
+    /* 
+      In some contexts the filepicker needs to autofill when it's
+      input name doesn't match the name of the attribute in the
+      redux state, this handles that.
+    */
+
+    let defaultInputValue;
+    if (reduxStateName !== null) {
+      defaultInputValue = inputFieldFillDefault(
+        reduxStateName,
+        state,
+        false,
+        false,
+        settingToCheckFor
+      );
+    } else {
+      defaultInputValue = inputFieldFillDefault(
+        inputNameCamelCasified,
+        state,
+        false,
+        false,
+        settingToCheckFor
+      );
+    }
 
     if (defaultInputValue !== null) {
       const e = generateEventTargetStructure(
@@ -51,7 +69,7 @@ export const FileOrDirectoryPicker = ({
 
       handleFormChange(e, setStateHook);
     }
-  }, [data.name, setStateHook, promptType, state]);
+  }, [data.name, setStateHook, promptType, reduxStateName, state]);
 
   useEffect(() => {
     if (promptType === "file") {
@@ -87,7 +105,10 @@ export const FileOrDirectoryPicker = ({
         id={camelCasifyString(data.name)}
         placeholder={data?.placeholder}
         onClick={() =>
-          ipcRenderer.send(ipcEventEmitter, data.name.split(" ").join(""))
+          ipcRenderer.send(ipcEventEmitter, [
+            data.name.split(" ").join(""),
+            inputValueState,
+          ])
         }
         value={inputValueState !== null ? inputValueState : ""}
         onChange={() => {

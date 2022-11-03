@@ -11,7 +11,7 @@ export const SpreadsheetButton = ({ idForButton, onClickHandler }) => {
       alt="clipboard-button"
       id={idForButton ? idForButton : null}
     >
-      <FontAwesomeIcon icon={faFileExcel} />
+      <FontAwesomeIcon icon={faFileExcel} size="xl" />
     </Button>
   );
 };

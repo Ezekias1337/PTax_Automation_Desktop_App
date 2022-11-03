@@ -4,7 +4,7 @@ import { Home } from "./components/pages/home";
 import { SelectAnAutomation } from "./components/pages/selectAnAutomation";
 import { Settings } from "./components/pages/settings";
 import { Automation } from "./components/pages/automation";
-import { assessmentNoticeQuestions } from "./constants/automationQuestions/assessmentNoticeQuestions"
+import { assessmentNoticeQuestions } from "./constants/automation-questions/assessmentNoticeQuestions";
 import "./App.css";
 
 const App = () => {

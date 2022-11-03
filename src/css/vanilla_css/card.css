@@ -1,6 +1,12 @@
 /* 
   General Styling
 */
+.card-title {
+  font-weight: bold; }
+
+div.card-body-row svg {
+  color: #d4967d; }
+
 /* 
   Theme Specific Styling
 */
@@ -13,7 +19,7 @@
 
 [data-theme="Gradient"] div.card,
 [data-theme="Dark"] div.card {
-  background-color: #6b6b6b;
+  background-color: #515151;
   border: 1px solid #e1dfdf; }
 
 [data-theme="Gradient"] div.card-body,

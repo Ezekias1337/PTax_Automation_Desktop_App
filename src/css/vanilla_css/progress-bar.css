@@ -36,7 +36,7 @@
   align-items: center; }
 
 [data-theme="Gradient"] #progressBarWrapper {
-  background-color: #6b6b6b;
+  background-color: #515151;
   border: 1px solid #bebebe; }
 
 [data-theme="Light"] #progressBarWrapper {
@@ -44,8 +44,8 @@
   border: 1px solid #bebebe; }
 
 [data-theme="Dark"] #progressBarWrapper {
-  background-color: #6b6b6b;
-  border: 1px solid #6b6b6b; }
+  background-color: #515151;
+  border: 1px solid #515151; }
 
 @-webkit-keyframes frostEffectAnimation {
   from {

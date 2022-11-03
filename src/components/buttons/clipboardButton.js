@@ -13,7 +13,7 @@ export const ClipboardButton = ({ idForButton, textForClipboard }) => {
       alt="clipboard-button"
       id={idForButton ? idForButton : null}
     >
-      <FontAwesomeIcon icon={faClipboard} />
+      <FontAwesomeIcon icon={faClipboard} size="xl" />
     </Button>
   );
 };

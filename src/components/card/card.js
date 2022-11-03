@@ -1,17 +1,8 @@
 // Library Imports
 import { Button } from "reactstrap";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faRobot,
-  faFileExcel,
-  faDownload,
-  faFlagUsa,
-  faFlag,
-  faWrench,
-} from "@fortawesome/free-solid-svg-icons";
+import { nanoid } from "nanoid";
 // Functions, Helpers, Utils, and Hooks
-import { pascalCasifyString } from "../../utils/strings/pascalCasifyString";
+import { renderAutomationConfigCardBody } from "../../functions/automation/renderAutomationConfigCardBody";
 // CSS
 import "../../css/sass_css/card.scss";
 
@@ -21,6 +12,7 @@ export const Card = ({
   cardText = null,
   cardBody = null,
   buttonContent = null,
+  isConfigurationCard = false,
 }) => {
   return (
     <div className="card">
@@ -31,70 +23,49 @@ export const Card = ({
           <></>
         )}
         {cardTitle !== null ? (
-          <h5 className="card-title">{cardTitle}</h5>
+          <h3 className="card-title">{cardTitle}</h3>
         ) : (
           <></>
         )}
 
         {cardText !== null ? <p className="card-text">{cardText}</p> : <></>}
         <div className="card-body-wrapper">
-          {cardBody !== null ? (
-            cardBody.map((body) => {
-              /* 
-                cardBody prop takes an array which was returned
-                from Object.entries():
-              
-                    firstEle: Key
-                    secondEle: Value
-              */
-
-              const [firstEle, secondEle] = body;
-              const firstElePascalCasified = pascalCasifyString(firstEle);
-              let iconForList = <FontAwesomeIcon icon={faRobot} />;
-
-              switch (firstElePascalCasified) {
-                case "Automation":
-                  iconForList = <FontAwesomeIcon icon={faRobot} />;
-                  break;
-                case "Spreadsheet":
-                  iconForList = <FontAwesomeIcon icon={faFileExcel} />;
-                  break;
-                case "Download Directory":
-                  iconForList = <FontAwesomeIcon icon={faDownload} />;
-                  break;
-                case "State":
-                  iconForList = <FontAwesomeIcon icon={faFlagUsa} />;
-                  break;
-                case "County":
-                  iconForList = <FontAwesomeIcon icon={faFlag} />;
-                  break;
-                case "Operation":
-                  iconForList = <FontAwesomeIcon icon={faWrench} />;
-                  break;
-                default:
-                  iconForList = <></>;
-                  break;
-              }
-
-              return (
-                <div className="card-body-row">
-                  {iconForList}
-                  <b>{`     ${firstElePascalCasified}: `}</b>
-                  {secondEle}
-                </div>
-              );
-            })
+          {/* Path taken for the config card */}
+          {cardBody !== null && isConfigurationCard === true ? (
+            renderAutomationConfigCardBody(cardBody)
+          ) : (
+            <></>
+          )}
+          {/* Path taken for array of JSX Elements */}
+          {cardBody !== null && isConfigurationCard === false ? (
+            cardBody
           ) : (
             <></>
           )}
         </div>
 
         {buttonContent !== null ? (
-          <Link to={`${buttonContent.link}`}>
-            <Button className="styled-button" alt="Card Button">
-              {buttonContent.innerContents}
-            </Button>
-          </Link>
+          <div className="row">
+            <div className="col col-12 space-around-flex">
+              {buttonContent.map((button, buttonIndex) => {
+                return (
+                  <Button
+                    key={nanoid()}
+                    className={`styled-button ${button.additionalClassNames}`}
+                    alt="Card Button"
+                    onClick={() =>
+                      button.onClickHandler(
+                        button.buttonArguments[0],
+                        button.buttonArguments[1]
+                      )
+                    }
+                  >
+                    {button.text}
+                  </Button>
+                );
+              })}
+            </div>
+          </div>
         ) : (
           <></>
         )}

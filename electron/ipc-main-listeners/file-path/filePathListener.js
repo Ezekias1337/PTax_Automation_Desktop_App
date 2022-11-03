@@ -1,15 +1,43 @@
 const { ipcMain, dialog } = require("electron");
+const {
+  replaceForwardslashWithBackwardSlash,
+} = require("../../../shared/utils/replaceForwardslashWithBackwardSlash");
 
-const promptForFile = async () => {
-  const filePath = await dialog.showOpenDialog({ properties: ["openFile"] });
+const promptForFile = async (defaultPath = null) => {
+  let filePath;
+  if (defaultPath === null) {
+    filePath = await dialog.showOpenDialog({
+      properties: ["openFile"],
+      filters: [{ name: "Spreadsheet Files", extensions: ["xlsx"] }],
+    });
+  } else {
+    let defaultPathStringified = replaceForwardslashWithBackwardSlash(
+      defaultPath.toString()
+    );
+
+    filePath = await dialog.showOpenDialog({
+      properties: ["openFile"],
+      filters: [{ name: "Spreadsheet Files", extensions: ["xlsx"] }],
+      defaultPath: defaultPathStringified,
+    });
+  }
+
   return filePath;
 };
 
 module.exports = {
   filePathListener: ipcMain.on("filePrompted", (event, message) => {
-    promptForFile()
+    let promptForFileParams;
+
+    if (message.length > 1) {
+      promptForFileParams = message[1];
+    } else {
+      promptForFileParams = null;
+    }
+
+    promptForFile(promptForFileParams)
       .then((result) => {
-        event.sender.send("filePathRetrieved", [result, message]);
+        event.sender.send("filePathRetrieved", [result, message[0]]);
       })
       .catch((error) => {
         console.log(error);
