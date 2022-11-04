@@ -1,7 +1,7 @@
 {
   "name": "ptax-automation-desktop-app",
   "author": "Frank Edwards",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "In the property tax industry there is alot of monotonous work that involves visiting County's websites to retrieve Tax Bills, Assessment Notices, and other documents and subsequently upload this information to their system. However, with such monotony data entry errors are bound to be made. Also, a person's labor could be much better used towards something that requires more complex decision making while the automation runs in the background. Simply install the app, select an automation you want to run,  upload a spreadsheet with the list of data points needed and relax.",
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.3",
@@ -43,11 +43,11 @@
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },
-  "main": "./public/electron/electron.js",
+  "main": "./public/electron.js",
   "homepage": "./",
   "scripts": {
     "app": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
-    "prestart": "browserify -o ./preload.bundle.js -x electron ./preload.js",
+    "prestart": "browserify -o ./public/preload.bundle.js -x electron ./preload.js",
     "start": "cross-env GENERATE_SOURCEMAP=false",
     "poststart": "react-scripts start",
     "build": "react-scripts build && electron-builder -p always",
@@ -62,9 +62,7 @@
     "productName": "ptax-automation-desktop-app",
     "files": [
       "build/**/*",
-      "node_modules/**/*",
-      "electron/*",
-      "selenium/*"
+      "node_modules/**/*"
     ],
     "directories": {
       "buildResources": "public"

@@ -3,9 +3,7 @@ const path = require("path");
 const { toggleWindow } = require("../window/toggleWindow");
 
 const createTray = (window, directoryName, process) => {
-  const iconPath = path.join(directoryName, "../../public/icon.ico");
-  console.log("directoryName: ", directoryName)
-  console.log("iconPath: ", iconPath)
+  const iconPath = path.join(directoryName, "icon.ico");
   const icon = nativeImage.createFromPath(iconPath);
 
   const tray = new Tray(icon);

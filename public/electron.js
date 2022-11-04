@@ -4,11 +4,13 @@ const { app, BrowserWindow } = require("electron");
 const { isDev } = require("electron-is-dev");
 const Store = require("electron-store");
 //Functions
-const { createIpcBusBridge } = require("./functions/ipc/createIpcBusBridge");
-const { createWindow } = require("./functions/window/createWindow");
-const { createTray } = require("./functions/tray/createTray");
+const {
+  createIpcBusBridge,
+} = require("./electron/functions/ipc/createIpcBusBridge");
+const { createWindow } = require("./electron/functions/window/createWindow");
+const { createTray } = require("./electron/functions/tray/createTray");
 // Listeners
-require("./ipc-main-listeners/allListeners");
+require("./electron/ipc-main-listeners/allListeners");
 
 /* 
 ---------------------------START OF BASE TEMPLATE---------------------------
@@ -25,7 +27,7 @@ let tray;
 const reactDevToolsId = "fmkadmapgofadopljbjfkapdkoienihi";
 
 app.whenReady().then(() => {
-  console.log("isDev: ", isDev)
+  console.log("isDev: ", isDev);
   if (isDev === undefined) {
     const {
       default: installExtension,

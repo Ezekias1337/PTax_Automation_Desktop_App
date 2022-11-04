@@ -19,6 +19,11 @@ const createWindow = (directoryName, process, store) => {
   const [screenXCoordinate, screenYCoordinate, isScreenPositionCustom] =
     handlePositionPref(store);
 
+  console.log(
+    "preload directory",
+    path.join(directoryName, "preload.bundle.js")
+  );
+
   let window = null;
 
   // Create the browser window.
@@ -33,13 +38,13 @@ const createWindow = (directoryName, process, store) => {
       x: screenXCoordinate,
       y: screenYCoordinate,
       webPreferences: {
-        preload: path.join(directoryName, "../../preload.bundle.js"),
+        preload: path.join(directoryName, "preload.bundle.js"),
         contextIsolation: false,
         nodeIntegration: true,
         sandbox: false,
         webSecurity: false,
       },
-      icon: path.join(directoryName, "../../public/icon.ico"),
+      icon: path.join(directoryName, "icon.ico"),
     });
   } else {
     window = new BrowserWindow({
@@ -50,13 +55,13 @@ const createWindow = (directoryName, process, store) => {
       resizable: true,
       transparent: false,
       webPreferences: {
-        preload: path.join(directoryName, "../../preload.bundle.js"),
+        preload: path.join(directoryName, "preload.bundle.js"),
         contextIsolation: false,
         nodeIntegration: true,
         sandbox: false,
         webSecurity: false,
       },
-      icon: path.join(directoryName, "../../public/icon.ico"),
+      icon: path.join(directoryName, "icon.ico"),
     });
   }
 
@@ -73,16 +78,6 @@ const createWindow = (directoryName, process, store) => {
       })
     );
   }
-
-  /*  window.loadURL(
-    isDev
-      ? "http://localhost:3000"
-      : url.format({
-          pathname: path.join(__dirname, "../index.html"),
-          protocol: "file:",
-          slashes: true,
-        })
-  ); */
 
   // Handle window toggling for custom titlebar
   ipcMain.on("windowMinimize", () => minimizeWindow(window));
