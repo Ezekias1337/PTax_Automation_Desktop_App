@@ -4,9 +4,7 @@ const { app, BrowserWindow } = require("electron");
 const { isDev } = require("electron-is-dev");
 const Store = require("electron-store");
 //Functions
-const {
-  createIpcBusBridge,
-} = require("./functions/ipc/createIpcBusBridge");
+const { createIpcBusBridge } = require("./functions/ipc/createIpcBusBridge");
 const { createWindow } = require("./functions/window/createWindow");
 const { createTray } = require("./functions/tray/createTray");
 // Listeners
@@ -20,14 +18,15 @@ let store = new Store();
 let tray;
 
 /* 
-  This method will be called when Electron has finished
+  The whenReady method will be called when Electron has finished
   initialization and is ready to create browser windows.
   Some APIs can only be used after this event occurs. 
 */
 const reactDevToolsId = "fmkadmapgofadopljbjfkapdkoienihi";
 
 app.whenReady().then(() => {
-  if (isDev === true) {
+  console.log("isDev: ", isDev)
+  if (isDev === undefined) {
     const {
       default: installExtension,
       REDUX_DEVTOOLS,

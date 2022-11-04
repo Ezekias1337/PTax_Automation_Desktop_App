@@ -43,41 +43,41 @@
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5"
   },
-  "main": "electron/main.js",
+  "main": "./public/electron/electron.js",
   "homepage": "./",
   "scripts": {
     "app": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "prestart": "browserify -o ./preload.bundle.js -x electron ./preload.js",
     "start": "cross-env GENERATE_SOURCEMAP=false",
     "poststart": "react-scripts start",
-    "build": "set GH_Token=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 && react-scripts build && electron-builder -p always",
+    "build": "react-scripts build && electron-builder -p always",
+    "electron:package:win": "npm run build && electron-builder -w -c.extraMetadata.main=build/electron.js",
     "test": "react-scripts test",
     "build-css": "node-sass ./src/css/sass_css/ -o ./src/css/vanilla_css/",
     "watch-css": "nodemon -e scss -x \"npm run build-css\"",
     "eject": "react-scripts eject"
   },
   "build": {
-    "extends": null,
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "Ezekias1337",
-        "repo": "PTax_Automation_Desktop_App",
-        "private": false
-      }
-    ],
-    "win": {
-      "target": "nsis",
-      "icon": "./build/images/logo.png"
-    },
-    "nsis": {
-      "deleteAppDataOnUninstall": true,
-      "oneClick": false
-    },
+    "appId": "257781",
+    "productName": "ptax-automation-desktop-app",
     "files": [
       "build/**/*",
-      "electron/*"
-    ]
+      "node_modules/**/*",
+      "electron/*",
+      "selenium/*"
+    ],
+    "directories": {
+      "buildResources": "public"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "deb"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -87,11 +87,13 @@
   },
   "browserslist": {
     "production": [
+      "last 1 electron version",
       ">0.2%",
       "not dead",
       "not op_mini all"
     ],
     "development": [
+      "last 1 electron version",
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"

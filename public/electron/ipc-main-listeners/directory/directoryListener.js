@@ -3,7 +3,7 @@ const { ipcMain, dialog } = require("electron");
 // Functions, Helpers, and Utils
 const {
   replaceForwardslashWithBackwardSlash,
-} = require("../../../shared/utils/replaceForwardslashWithBackwardSlash");
+} = require("../../../../shared/utils/replaceForwardslashWithBackwardSlash");
 
 const promptForDirectory = async (defaultPath = null) => {
   let filePath;

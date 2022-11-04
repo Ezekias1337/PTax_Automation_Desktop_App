@@ -1,9 +1,9 @@
 // Library Imports
 const { BrowserWindow, ipcMain } = require("electron");
-const path = require("path");
-const url = require("url");
 const { autoUpdater } = require("electron-updater");
 const isDev = require("electron-is-dev");
+const path = require("path");
+const url = require("url");
 // Functions
 const { handleResolutionPref } = require("./handleResolutionPref");
 const { handlePositionPref } = require("./handlePositionPref");
@@ -33,13 +33,13 @@ const createWindow = (directoryName, process, store) => {
       x: screenXCoordinate,
       y: screenYCoordinate,
       webPreferences: {
-        preload: path.join(directoryName, "preload.bundle.js"),
+        preload: path.join(directoryName, "../../preload.bundle.js"),
         contextIsolation: false,
         nodeIntegration: true,
         sandbox: false,
         webSecurity: false,
       },
-      icon: path.join(directoryName, "public/images/icon.ico"),
+      icon: path.join(directoryName, "../../public/icon.ico"),
     });
   } else {
     window = new BrowserWindow({
@@ -50,21 +50,31 @@ const createWindow = (directoryName, process, store) => {
       resizable: true,
       transparent: false,
       webPreferences: {
-        preload: path.join(directoryName, "preload.bundle.js"),
+        preload: path.join(directoryName, "../../preload.bundle.js"),
         contextIsolation: false,
         nodeIntegration: true,
         sandbox: false,
         webSecurity: false,
       },
-      icon: path.join(directoryName, "public/images/icon.ico"),
+      icon: path.join(directoryName, "../../public/icon.ico"),
     });
   }
 
   window.on("closed", () => (window = null));
 
-  console.log(`file://${__dirname}/../build/index.html`);
+  if (isDev === true) {
+    window.loadURL("http://localhost:3000");
+  } else {
+    window.loadURL(
+      url.format({
+        pathname: path.join(__dirname, "index.html"),
+        protocol: "file:",
+        slashes: true,
+      })
+    );
+  }
 
-  window.loadURL(
+  /*  window.loadURL(
     isDev
       ? "http://localhost:3000"
       : url.format({
@@ -72,7 +82,7 @@ const createWindow = (directoryName, process, store) => {
           protocol: "file:",
           slashes: true,
         })
-  );
+  ); */
 
   // Handle window toggling for custom titlebar
   ipcMain.on("windowMinimize", () => minimizeWindow(window));
