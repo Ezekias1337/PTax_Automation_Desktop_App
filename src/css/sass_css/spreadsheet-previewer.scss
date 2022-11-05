@@ -6,6 +6,11 @@
   General Styling
 */
 
+#spreadsheetPreviewerWrapper {
+  max-height: 90vh;
+  overflow-y: scroll;
+}
+
 #spreadsheetPreviewer {
   border-collapse: separate;
   border-spacing: 0;

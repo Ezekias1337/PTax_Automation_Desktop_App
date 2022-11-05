@@ -3,6 +3,7 @@ import { useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 // Functions, Helpers, Utils, and Hooks
 import { animateGradientBackground } from "../../helpers/animateGradientBackground";
+import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
@@ -11,6 +12,7 @@ import "../../css/sass_css/styles.scss";
 
 export const PostAutomationSummary = () => {
   const state = useSelector((state) => state);
+  usePersistentSettings();
 
   useLayoutEffect(() => {
     const backgroundInterval = animateGradientBackground();

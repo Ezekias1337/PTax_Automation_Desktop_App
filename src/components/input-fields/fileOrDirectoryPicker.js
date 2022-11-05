@@ -16,6 +16,7 @@ export const FileOrDirectoryPicker = ({
   setStateHook,
   inputValueState = null,
   reduxStateName = null,
+  isFullWidth = false,
 }) => {
   const [inputPromptType, setInputPromptType] = useState(null);
   const [ipcEventListener, setIpcEventListener] = useState(null);
@@ -89,12 +90,19 @@ export const FileOrDirectoryPicker = ({
     }
   }, [promptType, inputPromptType]);
 
-  ipcRenderer.on(ipcEventListener, (event, message) => {
-    handlePathRetrieved(message, setStateHook);
-  });
+  useEffect(() => {
+    const handleCreateListener = (event, message) => {
+      handlePathRetrieved(message, setStateHook);
+    };
+    ipcRenderer.on(ipcEventListener, handleCreateListener);
+
+    return () => {
+      ipcRenderer.removeListener(ipcEventListener, handleCreateListener);
+    };
+  }, [ipcEventListener, setStateHook]);
 
   return (
-    <div className="col col-6 mt-2">
+    <div className={`col ${isFullWidth === true ? "col-12" : "col-6"} mt-2`}>
       <label htmlFor={camelCasifyString(data.name)} className="col-form-label">
         {data.name}
       </label>

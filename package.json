@@ -1,7 +1,7 @@
 {
   "name": "ptax-automation-desktop-app",
   "author": "Frank Edwards",
-  "version": "0.1.6",
+  "version": "0.2.2",
   "description": "In the property tax industry there is alot of monotonous work that involves visiting County's websites to retrieve Tax Bills, Assessment Notices, and other documents and subsequently upload this information to their system. However, with such monotony data entry errors are bound to be made. Also, a person's labor could be much better used towards something that requires more complex decision making while the automation runs in the background. Simply install the app, select an automation you want to run,  upload a spreadsheet with the list of data points needed and relax.",
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.3",
@@ -32,6 +32,7 @@
     "react-redux": "^7.2.6",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
+    "react-toastify": "^9.1.1",
     "reactstrap": "^9.0.1",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",

@@ -2,10 +2,12 @@
 import { useLayoutEffect, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // Redux
 import { actionCreators } from "../../redux/allActions";
 // Functions, Helpers, Utils, and Hooks
-import { popUpAlert } from "../../functions/alert/popUpAlert";
+import { showToast } from "../../functions/toast/showToast";
 import { saveUserSettings } from "../../functions/settings/saveUserSettings";
 import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 // Constants
@@ -14,7 +16,6 @@ import { listOfSettings } from "../../constants/listOfSettings";
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
 import { SaveButton } from "../buttons/saveButton";
-import { GeneralAlert } from "../alert/generalAlert";
 import { DropDown } from "../input-fields/dropdown";
 import { FileOrDirectoryPicker } from "../input-fields/fileOrDirectoryPicker";
 import { TextInput } from "../input-fields/textInput";
@@ -26,7 +27,10 @@ import "../../css/sass_css/inputs.scss";
 export const Settings = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { saveSettings } = bindActionCreators(actionCreators.settingsCreators, dispatch);
+  const { saveSettings } = bindActionCreators(
+    actionCreators.settingsCreators,
+    dispatch
+  );
   const [arrayOfSettings, setArrayOfSettings] = useState([]);
   const [userSettings, setUserSettings] = useState({
     colorTheme: "Gradient",
@@ -117,6 +121,18 @@ export const Settings = () => {
       <TitleBar />
       <Header pageTitle="Settings" includeArrow={false} />
       <div className="container-for-scroll">
+        <ToastContainer
+          position="bottom-center"
+          autoClose={2500}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
         <div className="row mx-1">{arrayOfSettings}</div>
         <div className="row mt-3">
           <div className="col col-5"></div>
@@ -126,20 +142,22 @@ export const Settings = () => {
               onClickHandler={() => {
                 const settingsToPass = saveUserSettings(userSettings);
                 saveSettings(settingsToPass);
-                popUpAlert("alert-to-animate");
+                showToast("Settings Saved!", {
+                  position: "bottom-center",
+                  autoClose: 2500,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "light",
+                });
               }}
             />
           </div>
           <div className="col col-5"></div>
         </div>
       </div>
-
-      <GeneralAlert
-        id="alert-to-animate"
-        isVisible={false}
-        string="&nbsp;Settings saved successfully!"
-        colorClassName="alert-success"
-      ></GeneralAlert>
     </div>
   );
 };

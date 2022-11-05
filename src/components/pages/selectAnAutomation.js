@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
 // Functions, Helpers, Utils, and Hooks
 import { animateGradientBackground } from "../../helpers/animateGradientBackground";
+import { usePersistentSettings } from "../../hooks/usePersistentSettings"
 // Constants
 import { listOfAutomationsArrayExport } from "../../constants/listOfAutomations";
 // Components
@@ -15,6 +16,7 @@ import "../../css/sass_css/styles.scss";
 
 export const SelectAnAutomation = () => {
   const state = useSelector((state) => state);
+  usePersistentSettings();
 
   useLayoutEffect(() => {
     const backgroundInterval = animateGradientBackground();

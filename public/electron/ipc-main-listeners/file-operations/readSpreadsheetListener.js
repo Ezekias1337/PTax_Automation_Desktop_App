@@ -29,18 +29,26 @@ const readSpreadsheetFile = async (pathToSpreadsheet) => {
 };
 
 module.exports = {
-  readSpreadsheetListener: ipcMain.on(
-    "readSpreadsheet",
-    async (event, message) => {
+  readSpreadsheetListener: ipcMain.on("readSpreadsheet", (event, message) => {
+    if (message === "" || message === null) {
+      event.sender.send(
+        "spreadsheet parse failed",
+        "No spreadsheet file selected. Please select a file before proceeding."
+      );
+    } else {
       const pathToSpreadsheet = replaceBackslashWithForwardSlash(message);
 
       try {
-        console.log("attempting to read file...: ", pathToSpreadsheet);
-        const result = await readSpreadsheetFile(pathToSpreadsheet);
-        event.sender.send("spreadsheetParsed", result);
+        console.log("Attempting to read file...: ", pathToSpreadsheet);
+        readSpreadsheetFile(pathToSpreadsheet).then((innerResult) => {
+          event.sender.send("spreadsheet parsed", innerResult);
+        });
       } catch (error) {
-        console.log(error);
+        event.sender.send(
+          "spreadsheet parse failed",
+          "Failed to parse spreadsheet. Please ensure you are uploading a .xlsx file and that it is not corrupted."
+        );
       }
     }
-  ),
+  }),
 };

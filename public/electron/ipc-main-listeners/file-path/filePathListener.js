@@ -22,6 +22,10 @@ const promptForFile = async (defaultPath = null) => {
     });
   }
 
+  if (filePath === undefined) {
+    return null;
+  }
+
   return filePath;
 };
 

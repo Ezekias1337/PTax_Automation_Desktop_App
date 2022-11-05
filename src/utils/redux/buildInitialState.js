@@ -1,6 +1,6 @@
 export const buildInitialState = (constants) => ({
   messages: constants.reduce((retObj, constant) => {
-    retObj[constant] = "";
+    retObj[constant] = [];
     return retObj;
   }, {}),
   errors: constants.reduce((retObj, constant) => {
@@ -9,6 +9,10 @@ export const buildInitialState = (constants) => ({
   }, {}),
   loading: constants.reduce((retObj, constant) => {
     retObj[constant] = false;
+    return retObj;
+  }, {}),
+  contents: constants.reduce((retObj, constant) => {
+    retObj[constant] = [];
     return retObj;
   }, {}),
 });

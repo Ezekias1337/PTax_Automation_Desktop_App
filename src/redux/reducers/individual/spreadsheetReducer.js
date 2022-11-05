@@ -5,6 +5,7 @@ import {
   READ_SPREADSHEET,
   READ_SPREADSHEET_LOADING_TOGGLE,
   READ_SPREADSHEET_ERROR,
+  READ_SPREADSHEET_RESET,
 } from "../../actionCreators/spreadsheetCreators";
 
 const INITIAL_STATE = {
@@ -21,13 +22,12 @@ const reducer = (state = INITIAL_STATE, action) => {
       };
 
       if (action.payload === null) {
-        newStateObject.errors.push(
+        newStateObject.errors[READ_SPREADSHEET].push(
           "The path provided to the file does not exist, please double check and try again."
         );
       } else {
-        newStateObject.contents = action.payload;
+        newStateObject.contents[READ_SPREADSHEET] = action.payload;
       }
-
       return newStateObject;
 
     case READ_SPREADSHEET_LOADING_TOGGLE:
@@ -35,8 +35,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
       };
 
-      newStateObject.loading = action.payload;
-
+      newStateObject.loading[READ_SPREADSHEET] = action.payload;
       return newStateObject;
 
     case READ_SPREADSHEET_ERROR:
@@ -45,8 +44,13 @@ const reducer = (state = INITIAL_STATE, action) => {
       };
 
       newStateObject.errors[READ_SPREADSHEET].push(action.payload);
+      return newStateObject;
+
+    case READ_SPREADSHEET_RESET:
+      newStateObject = buildInitialState([READ_SPREADSHEET]);
 
       return newStateObject;
+
     default:
       return state;
   }

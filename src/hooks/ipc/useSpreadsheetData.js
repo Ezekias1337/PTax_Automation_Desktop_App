@@ -13,20 +13,21 @@ const { ipcRenderer } = window.require("electron");
 
 export const useSpreadsheetData = () => {
   const dispatch = useDispatch();
-  const { readSpreadsheet } = bindActionCreators(
+  const { readSpreadsheet, readSpreadsheetError } = bindActionCreators(
     actionCreators.spreadsheetCreators,
     dispatch
   );
 
   useEffect(() => {
-    const handleIpcTest = (event, message) => {
-      readSpreadsheet(message);
-    };
-
-    ipcRenderer.on("spreadsheetParsed", handleIpcTest);
+    ipcRenderer.on("spreadsheet parsed", readSpreadsheet);
+    ipcRenderer.on("spreadsheet parse failed", readSpreadsheetError);
 
     return () => {
-      ipcRenderer.removeListener("spreadsheetParsed", handleIpcTest);
+      ipcRenderer.removeListener("spreadsheet parsed", readSpreadsheet);
+      ipcRenderer.removeListener(
+        "spreadsheet parse failed",
+        readSpreadsheetError
+      );
     };
-  }, [readSpreadsheet]);
+  }, [readSpreadsheet, readSpreadsheetError]);
 };

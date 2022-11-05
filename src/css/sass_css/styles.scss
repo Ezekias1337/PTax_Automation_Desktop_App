@@ -2,6 +2,7 @@
 @import "variables/dark-mode-variables";
 @import "variables/common-variables";
 @import "partials/background-animations";
+@import "partials/toast";
 
 /* 
   General Styling
@@ -425,7 +426,7 @@ button.animated-button {
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: $bg-dark;
+    background: $bg-secondary-dark;
     border-radius: 5px;
   }
 

@@ -1,0 +1,42 @@
+@import "../variables/light-mode-variables";
+@import "../variables/dark-mode-variables";
+@import "../variables/common-variables";
+
+/* 
+  General Styling
+*/
+
+.Toastify__progress-bar-theme--light {
+  background: url(../../../images/Gradient-Outline.jpg) !important;
+  background-position-x: 70% !important;
+  background-position-y: 60% !important;
+}
+
+/* 
+  Theme Specific Styling
+*/
+
+[data-theme="Light"] {
+  div.Toastify__toast {
+    background-color: $bg-secondary-light;
+    color: $black;
+    border: 1px solid $black;
+  }
+
+  .Toastify__close-button > svg {
+    fill: $brown;
+  }
+}
+
+[data-theme="Gradient"],
+[data-theme="Dark"] {
+  div.Toastify__toast {
+    background-color: $bg-secondary-dark;
+    color: $white;
+    border: 1px solid $white;
+  }
+
+  .Toastify__close-button > svg {
+    fill: $brown;
+  }
+}

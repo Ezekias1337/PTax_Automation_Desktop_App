@@ -1,12 +1,18 @@
 // Library Imports
 import { useEffect, useLayoutEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+// Redux
+import { actionCreators } from "../../redux/allActions";
 // Functions, Helpers, Utils and Hooks
 import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 import { camelCasifyString } from "../../utils/strings/camelCasifyString";
+import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 // Constants
 import { listOfAutomations } from "../../constants/listOfAutomations";
+// Action Types
+import { READ_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
@@ -26,7 +32,20 @@ import "../../css/sass_css/styles.scss";
 const { ipcRenderer } = window.require("electron");
 
 export const Automation = ({ automationName, preOperationQuestions }) => {
+  const dispatch = useDispatch();
+  const { readSpreadsheetReset } = bindActionCreators(
+    actionCreators.spreadsheetCreators,
+    dispatch
+  );
+  usePersistentSettings();
+
   const state = useSelector((state) => state);
+  const spreadsheetState = useSelector((state) => state.spreadsheet);
+  const spreadsheetMessages = spreadsheetState.messages[READ_SPREADSHEET];
+  const spreadsheetContents = spreadsheetState.contents[READ_SPREADSHEET];
+  const spreadsheetLoading = spreadsheetState.loading[READ_SPREADSHEET];
+  const spreadsheetErrors = spreadsheetState.errors[READ_SPREADSHEET];
+
   const [arrayOfDropdownQuestions, setArrayOfDropdownQuestions] = useState([]);
   const [selectedChoices, setSelectedChoices] = useState({
     automation: automationName,
@@ -35,7 +54,6 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const [childrenChoices, setChildrenChoices] = useState([]);
   const [nonDropdownChoices, setNonDropdownChoices] = useState([]);
   const [configCardContents, setConfigCardContents] = useState([]);
-  const [spreadsheetData, setSpreadsheetData] = useState([]);
   const [automationStatus, setAutomationStatus] = useState("Idle");
   const [animationParentLeft] = useAutoAnimate();
   const [animationParentRight] = useAutoAnimate();
@@ -141,6 +159,17 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
     ipcRenderer.send("startIpcBusBroker", null);
   }, []);
 
+  /* 
+    Revert the spreadsheet state in redux, so revisiting the page doesn't cause
+    the toast to display unnecessarily
+  */
+
+  useEffect(() => {
+    return () => {
+      readSpreadsheetReset();
+    };
+  }, []);
+
   return (
     <div
       className="automation"
@@ -155,7 +184,8 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
       <Header pageTitle={automationName} />
 
       <div className="container-for-scroll" ref={animationParentTop}>
-        {spreadsheetData?.length !== 0 && automationStatus === "In Progress" ? (
+        {spreadsheetContents?.length !== 0 &&
+        automationStatus === "In Progress" ? (
           <>
             <NumericalProgressTracker />
             <ProgressBar />
@@ -189,29 +219,34 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                 />
               )}
             </div>
-            <StartAutomationButton
-              automationConfigObject={selectedChoices}
-              automationStatus={automationStatus}
-              setAutomationStatus={setAutomationStatus}
-            />
+            {spreadsheetContents?.length > 0 ? (
+              <StartAutomationButton
+                automationConfigObject={selectedChoices}
+                automationStatus={automationStatus}
+                setAutomationStatus={setAutomationStatus}
+              />
+            ) : (
+              <></>
+            )}
           </div>
           <div className="col col-6 mt-2" ref={animationParentRight}>
-            {spreadsheetData?.length === 0 && automationStatus === "Idle" ? (
+            {spreadsheetContents?.length === 0 &&
+            automationStatus === "Idle" ? (
               <SpreadSheetExampleAndValidator
-                setSpreadsheetData={setSpreadsheetData}
                 automationConfig={selectedChoices}
               />
             ) : (
               <></>
             )}
 
-            {spreadsheetData?.length !== 0 && automationStatus === "Idle" ? (
-              <SpreadsheetPreviewer spreadSheetData={spreadsheetData} />
+            {spreadsheetContents?.length !== 0 &&
+            automationStatus === "Idle" ? (
+              <SpreadsheetPreviewer spreadSheetData={spreadsheetContents} />
             ) : (
               <></>
             )}
 
-            {spreadsheetData !== undefined &&
+            {spreadsheetContents !== undefined &&
             automationStatus === "In Progress" ? (
               <EventLog></EventLog>
             ) : (
