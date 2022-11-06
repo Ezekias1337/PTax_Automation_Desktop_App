@@ -1,7 +1,7 @@
 {
   "name": "ptax-automation-desktop-app",
   "author": "Frank Edwards",
-  "version": "0.2.2",
+  "version": "0.2.9",
   "description": "In the property tax industry there is alot of monotonous work that involves visiting County's websites to retrieve Tax Bills, Assessment Notices, and other documents and subsequently upload this information to their system. However, with such monotony data entry errors are bound to be made. Also, a person's labor could be much better used towards something that requires more complex decision making while the automation runs in the background. Simply install the app, select an automation you want to run,  upload a spreadsheet with the list of data points needed and relax.",
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.3",
@@ -19,7 +19,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "electron-common-ipc": "^15.1.0",
-    "electron-is-dev": "^2.0.0",
+    "electron-log": "^4.4.8",
     "electron-store": "^8.0.1",
     "electron-updater": "^5.3.0",
     "find-object-paths": "^1.0.2",
@@ -52,9 +52,9 @@
     "start": "cross-env GENERATE_SOURCEMAP=false",
     "poststart": "react-scripts start",
     "build": "react-scripts build && electron-builder -p always",
-    "electron:package:win": "npm run build && electron-builder -w -c.extraMetadata.main=build/electron.js",
+    "electron:package:win": "npm run build && electron-builder -p -always",
     "test": "react-scripts test",
-    "build-css": "node-sass ./src/css/sass_css/ -o ./src/css/vanilla_css/",
+    "build-css": "node-sass ./src/sass_css/ -o ./src/css/vanilla_css/",
     "watch-css": "nodemon -e scss -x \"npm run build-css\"",
     "eject": "react-scripts eject"
   },

@@ -102,7 +102,7 @@ export const FileOrDirectoryPicker = ({
   }, [ipcEventListener, setStateHook]);
 
   return (
-    <div className={`col ${isFullWidth === true ? "col-12" : "col-6"} mt-2`}>
+    <div className="col col-6 mt-2">
       <label htmlFor={camelCasifyString(data.name)} className="col-form-label">
         {data.name}
       </label>

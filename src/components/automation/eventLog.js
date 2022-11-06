@@ -4,14 +4,14 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { ClipboardButton } from "../buttons/clipboardButton";
 import { SpreadsheetButton } from "../buttons/spreadsheetButton";
 // CSS
-import "../../css/sass_css/styles.scss";
-import "../../css/sass_css/event-log.scss";
+import "../../css/styles.scss";
+import "../../css/event-log.scss";
 
 export const EventLog = ({}) => {
   const [animationParent] = useAutoAnimate();
 
   return (
-    <>
+    <div id="event-log-wrapper">
       <div className="container-fluid event-log">
         <div className="row" ref={animationParent}>
           {/* {props.eventLogEntries.forEach(() => {
@@ -137,6 +137,6 @@ export const EventLog = ({}) => {
           <SpreadsheetButton />
         </div>
       </div>
-    </>
+    </div>
   );
 };

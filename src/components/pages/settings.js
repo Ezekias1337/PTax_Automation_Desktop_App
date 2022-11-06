@@ -21,8 +21,8 @@ import { FileOrDirectoryPicker } from "../input-fields/fileOrDirectoryPicker";
 import { TextInput } from "../input-fields/textInput";
 import { Switch } from "../input-fields/switch";
 // CSS
-import "../../css/sass_css/styles.scss";
-import "../../css/sass_css/inputs.scss";
+import "../../css/styles.scss";
+import "../../css/inputs.scss";
 
 export const Settings = () => {
   const state = useSelector((state) => state);

@@ -8,7 +8,7 @@ import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
 // CSS
-import "../../css/sass_css/styles.scss";
+import "../../css/styles.scss";
 
 export const PostAutomationSummary = () => {
   const state = useSelector((state) => state);

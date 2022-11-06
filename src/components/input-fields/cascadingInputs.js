@@ -1,4 +1,5 @@
 // Components
+import { TextInput } from "./textInput";
 import { FileOrDirectoryPicker } from "./fileOrDirectoryPicker";
 import { CascadingDropdown } from "./cascadingDropdown";
 
@@ -35,7 +36,37 @@ export const CascadingInputs = ({
         switch (ele.inputType) {
           case "Switch":
             break;
-          case "Text Input":
+          case "Text":
+            const tempDataTextInput = {
+              name: ele.name,
+              customInputType: "text",
+            };
+
+            inputToReturn = (
+              <TextInput
+                key={index}
+                data={tempDataTextInput}
+                state={reduxState}
+                setStateHook={setStateHook}
+                reduxStateName={ele.name}
+              />
+            );
+            break;
+          case "Password":
+            const tempDataPasswordInput = {
+              name: ele.name,
+              customInputType: "password",
+            };
+
+            inputToReturn = (
+              <TextInput
+                key={index}
+                data={tempDataPasswordInput}
+                state={reduxState}
+                setStateHook={setStateHook}
+                reduxStateName={ele.name}
+              />
+            );
             break;
           case "File":
             const tempDataObjFile = {

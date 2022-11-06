@@ -1,5 +1,5 @@
 // CSS
-import "../../css/sass_css/time-tracker.scss";
+import "../../css/time-tracker.scss";
 
 export const TimeTracker = ({
   timeElapsed = "0:50",

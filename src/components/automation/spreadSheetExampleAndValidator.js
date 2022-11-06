@@ -20,16 +20,19 @@ import { Card } from "../card/card";
 import { Loader } from "../general-page-layout/loader";
 // CSS
 
-export const SpreadSheetExampleAndValidator = ({ automationConfig }) => {
+export const SpreadSheetExampleAndValidator = ({
+  automationConfig,
+  formReady,
+  setStateHook = null,
+  automationReady = null,
+  automationStatus = null,
+}) => {
+  useSpreadsheetData();
   const spreadsheetState = useSelector((state) => state.spreadsheet);
-  const spreadsheetMessages =
-    spreadsheetState.messages[READ_SPREADSHEET];
-  const spreadsheetContents =
-    spreadsheetState.contents[READ_SPREADSHEET];
-  const spreadsheetLoading =
-    spreadsheetState.loading[READ_SPREADSHEET];
-  const spreadsheetErrors =
-    spreadsheetState.errors[READ_SPREADSHEET];
+  const spreadsheetMessages = spreadsheetState.messages[READ_SPREADSHEET];
+  const spreadsheetContents = spreadsheetState.contents[READ_SPREADSHEET];
+  const spreadsheetLoading = spreadsheetState.loading[READ_SPREADSHEET];
+  const spreadsheetErrors = spreadsheetState.errors[READ_SPREADSHEET];
 
   useEffect(() => {
     const tempErrorArrayIndex = spreadsheetErrors?.length - 1;
@@ -39,37 +42,41 @@ export const SpreadSheetExampleAndValidator = ({ automationConfig }) => {
     }
   }, [spreadsheetState, spreadsheetErrors]);
 
-  /* console.table({
-    spreadsheetMessages,
-    spreadsheetContents,
-    spreadsheetLoading,
-    spreadsheetErrors,
-  }); */
-
-  useSpreadsheetData();
   if (spreadsheetLoading === true) {
     return <Loader />;
-  } /* else if (validationError === true) {
+  } else if (formReady === false) {
     return (
-      <Card
-        buttonContent={[
-          { text: "Preview", onClickHandler: null },
-          { text: "Download", onClickHandler: null },
-          { text: "Validate", onClickHandler: null },
-        ]}
-        cardText="One or more data validation errors occurred. Please verify that the spreadsheet has the correct column names by previewing or downloading the template examples below before trying again."
-      />
+      <div className="mt-2">
+        <Card cardText="Make sure to fill out the form entirely and ensure a spreadsheet file is selected." />
+      </div>
     );
-  } else if (spreadsheetUploaded === true) {
+  } else if (automationStatus === "In Progress") {
+    return <></>;
+  } else if (automationReady === true) {
     return (
-      <Card
-        buttonContent={[{ text: "Preview", onClickHandler: null }]}
-        cardText="Your spreadsheet file has been successfully uploaded and validated. You may preview it now if you'd like:"
-      />
+      <div className="mt-2">
+        <Card cardText="Below is a summary of the options you have selected for this automation. Press the button below it when you are ready to start the automation." />
+      </div>
     );
-  } */ else {
+  } else if (spreadsheetContents?.length > 0) {
     return (
-      <>
+      <div className="mt-2">
+        <Card
+          buttonContent={[
+            {
+              text: "Proceed",
+              onClickHandler: setStateHook,
+              buttonArguments: [true],
+              additionalClassNames: "animated-button",
+            },
+          ]}
+          cardText="Below are the contents of the spreadsheet you uploaded. Verify this is the correct spreadsheet before proceeding."
+        />
+      </div>
+    );
+  } else {
+    return (
+      <div className="mt-2">
         <ToastContainer
           position="top-center"
           autoClose={5000}
@@ -84,10 +91,8 @@ export const SpreadSheetExampleAndValidator = ({ automationConfig }) => {
         />
         <Card
           buttonContent={[
-            { text: "Preview", onClickHandler: null },
-            { text: "Download", onClickHandler: null },
             {
-              text: "Validate",
+              text: "Upload",
               onClickHandler: sendToIpc,
               buttonArguments: [
                 "readSpreadsheet",
@@ -96,9 +101,9 @@ export const SpreadSheetExampleAndValidator = ({ automationConfig }) => {
               additionalClassNames: "animated-button",
             },
           ]}
-          cardText="Below you may preview or download the spreadsheet template for the selected operation/location. After selecting your Spreadsheet File, press the Validate button."
+          cardText="Now that you have selected your options, press the upload button to upload the spreadsheet."
         />
-      </>
+      </div>
     );
   }
 };

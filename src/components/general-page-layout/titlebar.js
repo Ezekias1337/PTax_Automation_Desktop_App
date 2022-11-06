@@ -12,7 +12,7 @@ import { minimizeWindow } from "../../functions/window/minimizeWindow";
 // Components
 import { TitleBarButton } from "../buttons/titleBarButton";
 // CSS
-import "../../css/sass_css/title-bar.scss";
+import "../../css/title-bar.scss";
 // Assets and Images
 import logo from "../../../src/images/PTax_Logo.png";
 

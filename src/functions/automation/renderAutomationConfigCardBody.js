@@ -8,6 +8,8 @@ import {
   faFlagUsa,
   faFlag,
   faWrench,
+  faUser,
+  faKey,
 } from "@fortawesome/free-solid-svg-icons";
 // Functions, Helpers, Utils, and Hooks
 import { pascalCasifyString } from "../../utils/strings/pascalCasifyString";
@@ -23,8 +25,9 @@ export const renderAutomationConfigCardBody = (cardBodyArray) => {
     */
 
     const [firstEle, secondEle] = body;
-    const firstElePascalCasified = pascalCasifyString(firstEle);
+    let firstElePascalCasified = pascalCasifyString(firstEle);
     let iconForList = <FontAwesomeIcon icon={faRobot} />;
+    let needsToBeObscured = false;
 
     switch (firstElePascalCasified) {
       case "Automation":
@@ -45,16 +48,39 @@ export const renderAutomationConfigCardBody = (cardBodyArray) => {
       case "Operation":
         iconForList = <FontAwesomeIcon icon={faWrench} />;
         break;
+      case "Ptax Username":
+        iconForList = <FontAwesomeIcon icon={faUser} />;
+        break;
+      case "Ptax Password":
+        iconForList = <FontAwesomeIcon icon={faKey} />;
+        needsToBeObscured = true;
+        break;
+      case "Parcel Quest Username":
+        iconForList = <FontAwesomeIcon icon={faUser} />;
+        break;
+      case "Parcel Quest Password":
+        iconForList = <FontAwesomeIcon icon={faKey} />;
+        needsToBeObscured = true;
+        break;
       default:
         iconForList = <></>;
         break;
     }
 
+    let elementNameObscured = "";
+    if (needsToBeObscured === true) {
+      for (const char of secondEle) {
+        elementNameObscured += "*";
+      }
+    }
+
     return (
       <div key={nanoid()} className="card-body-row">
         {iconForList}
-        <b>{`     ${firstElePascalCasified}: `}</b>
-        {secondEle}
+        <b>{`${firstElePascalCasified}: `}</b>
+        {needsToBeObscured === false
+          ? secondEle
+          : elementNameObscured}
       </div>
     );
   });

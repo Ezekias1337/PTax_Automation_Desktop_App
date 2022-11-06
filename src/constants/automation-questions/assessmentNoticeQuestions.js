@@ -29,4 +29,28 @@ export const assessmentNoticeQuestions = [
     parentQuestions: null,
     inputType: "File",
   },
+  {
+    key: 5,
+    name: "Ptax Username",
+    parentQuestions: null,
+    inputType: "Text",
+  },
+  {
+    key: 6,
+    name: "Ptax Password",
+    parentQuestions: null,
+    inputType: "Password",
+  },
+  {
+    key: 7,
+    name: "Parcel Quest Username",
+    parentQuestions: null,
+    inputType: "Text",
+  },
+  {
+    key: 8,
+    name: "Parcel Quest Password",
+    parentQuestions: null,
+    inputType: "Password",
+  },
 ];

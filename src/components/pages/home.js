@@ -13,8 +13,8 @@ import { SettingsButton } from "../buttons/settingsButton";
 import { GeneralAlert } from "../alert/generalAlert";
 // CSS
 import "../../App.css";
-import "../../css/sass_css/styles.scss";
-import "../../css/sass_css/home.scss";
+import "../../css/styles.scss";
+import "../../css/home.scss";
 // Assets and Images
 import logo from "../../../src/images/PTax_Logo.png";
 
@@ -49,7 +49,7 @@ export const Home = () => {
             <div className="col col-6 col-lg-3">
               <Link to={"/select-an-automation"}>
                 <Button className="full-width-button styled-button">
-                  Select an Automation
+                  Select Automation
                 </Button>
               </Link>
             </div>

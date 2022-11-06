@@ -10,8 +10,14 @@
   font-weight: bold;
 }
 
-div.card-body-row svg {
+.card-body-row {
+  display: block;
+}
+
+.card-body-row svg {
   color: $brown;
+  width: 16px;
+  margin-right: 10px;
 }
 
 /* 

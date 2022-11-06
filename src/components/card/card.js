@@ -3,8 +3,9 @@ import { Button } from "reactstrap";
 import { nanoid } from "nanoid";
 // Functions, Helpers, Utils, and Hooks
 import { renderAutomationConfigCardBody } from "../../functions/automation/renderAutomationConfigCardBody";
+import { renderAutomationStatusCardBody } from "../../functions/automation/renderAutomationStatusCardBody";
 // CSS
-import "../../css/sass_css/card.scss";
+import "../../css/card.scss";
 
 export const Card = ({
   imgSrc = null,
@@ -13,6 +14,9 @@ export const Card = ({
   cardBody = null,
   buttonContent = null,
   isConfigurationCard = false,
+  isStatusCard = false,
+  currentIterator = null,
+  iteratorTypeName = null,
 }) => {
   return (
     <div className="card">
@@ -33,6 +37,12 @@ export const Card = ({
           {/* Path taken for the config card */}
           {cardBody !== null && isConfigurationCard === true ? (
             renderAutomationConfigCardBody(cardBody)
+          ) : (
+            <></>
+          )}
+          {/* Path taken for automation status card */}
+          {isStatusCard === true ? (
+            renderAutomationStatusCardBody(currentIterator, iteratorTypeName)
           ) : (
             <></>
           )}

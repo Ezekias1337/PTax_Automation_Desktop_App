@@ -64,9 +64,9 @@ export const listOfSettings = {
     promptFileDirectory: false,
     inputCategory: "dropdown",
   },
-  username: {
+  ptaxUsername: {
     key: 3,
-    name: "Username",
+    name: "Ptax Username",
     options: null,
     acceptsCustomInput: true,
     customInputType: "text",
@@ -74,9 +74,29 @@ export const listOfSettings = {
     promptFileDirectory: false,
     inputCategory: "text",
   },
-  password: {
+  ptaxPassword: {
     key: 4,
-    name: "Password",
+    name: "Ptax Password",
+    options: null,
+    acceptsCustomInput: true,
+    customInputType: "password",
+    placeholder: "******",
+    promptFileDirectory: false,
+    inputCategory: "text",
+  },
+  parcelQuestUsername: {
+    key: 5,
+    name: "Parcel Quest Username",
+    options: null,
+    acceptsCustomInput: true,
+    customInputType: "text",
+    placeholder: "Username",
+    promptFileDirectory: false,
+    inputCategory: "text",
+  },
+  parcelQuestPassword: {
+    key: 6,
+    name: "Parcel Quest Password",
     options: null,
     acceptsCustomInput: true,
     customInputType: "password",
@@ -85,7 +105,7 @@ export const listOfSettings = {
     inputCategory: "text",
   },
   defaultDownloadDirectory: {
-    key: 5,
+    key: 7,
     name: "Download Directory",
     options: null,
     acceptsCustomInput: true,
@@ -98,7 +118,7 @@ export const listOfSettings = {
     inputCategory: "fileOrDirectory",
   },
   defaultUploadAndScanDirectory: {
-    key: 6,
+    key: 8,
     name: "Upload Directory",
     options: null,
     acceptsCustomInput: true,

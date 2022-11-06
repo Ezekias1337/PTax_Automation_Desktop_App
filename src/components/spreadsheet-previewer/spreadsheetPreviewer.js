@@ -5,7 +5,7 @@ import { pascalCasifyString } from "../../utils/strings/pascalCasifyString";
 // Constants
 import { alphabet } from "../../constants/alphabet";
 // CSS
-import "../../css/sass_css/spreadsheet-previewer.scss";
+import "../../css/spreadsheet-previewer.scss";
 
 /* 
   This previewer is limited to 26 columns. There are no current automations

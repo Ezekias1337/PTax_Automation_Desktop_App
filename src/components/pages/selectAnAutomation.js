@@ -12,7 +12,7 @@ import { listOfAutomationsArrayExport } from "../../constants/listOfAutomations"
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
 // CSS
-import "../../css/sass_css/styles.scss";
+import "../../css/styles.scss";
 
 export const SelectAnAutomation = () => {
   const state = useSelector((state) => state);

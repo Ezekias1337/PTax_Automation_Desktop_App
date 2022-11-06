@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 // Functions, Helpers, Utils, and Hooks
 import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 // CSS
-import "../../css/sass_css/styles.scss";
+import "../../css/styles.scss";
 
 export const Updater = () => {
   const state = useSelector((state) => state);

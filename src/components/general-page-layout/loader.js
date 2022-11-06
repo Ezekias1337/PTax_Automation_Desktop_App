@@ -1,5 +1,5 @@
 // CSS
-import "../../css/sass_css/loader.scss";
+import "../../css/loader.scss";
 
 export const Loader = ({ showLoader = false }) => {
   if (showLoader === false) {

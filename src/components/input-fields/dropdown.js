@@ -44,7 +44,7 @@ export const DropDown = ({
   }, [data.name, setStateHook, selectedOption]);
 
   return (
-    <div className={`col ${isSettingsDropdown === true ? "col-6" : "col-12"} mt-2`}>
+    <div className="col col-6 mt-2">
       <label htmlFor={camelCasifyString(data.name)} className="col-form-label">
         {dropdownLabel}
       </label>

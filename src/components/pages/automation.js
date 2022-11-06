@@ -2,10 +2,12 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
+import { ToastContainer } from "react-toastify";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Redux
 import { actionCreators } from "../../redux/allActions";
 // Functions, Helpers, Utils and Hooks
+import { showToast } from "../../functions/toast/showToast";
 import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
@@ -27,7 +29,7 @@ import { CascadingInputs } from "../input-fields/cascadingInputs";
 import { StartAutomationButton } from "../buttons/startAutomationButton";
 import { Card } from "../card/card";
 // CSS
-import "../../css/sass_css/styles.scss";
+import "../../css/styles.scss";
 // window.require Imports
 const { ipcRenderer } = window.require("electron");
 
@@ -50,14 +52,23 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const [selectedChoices, setSelectedChoices] = useState({
     automation: automationName,
   });
+  const [formReady, setFormReady] = useState(false);
+  const [automationReady, setAutomationReady] = useState(false);
   const [parentChoices, setParentChoices] = useState([]);
   const [childrenChoices, setChildrenChoices] = useState([]);
   const [nonDropdownChoices, setNonDropdownChoices] = useState([]);
   const [configCardContents, setConfigCardContents] = useState([]);
   const [automationStatus, setAutomationStatus] = useState("Idle");
+
+  // !NEED TO FIX ANIMATION PARENT HOOK TO REFLECT NEW DOM LAYOUT
+
   const [animationParentLeft] = useAutoAnimate();
   const [animationParentRight] = useAutoAnimate();
   const [animationParentTop] = useAutoAnimate();
+
+  useEffect(() => {
+    console.log("spreadsheetContents: ", spreadsheetContents);
+  }, [spreadsheetContents]);
 
   /* 
     Handle theme preferences
@@ -152,6 +163,39 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   }, [selectedChoices]);
 
   /* 
+    When the form has been filled out and the spreadsheet filepath
+    ends in .xlsx, setFormReady to true
+  */
+
+  useEffect(() => {
+    const tempSelectedChoices = { ...selectedChoices };
+    let doesEmptyValueExist = false;
+    let isSpreadsheetSelected = false;
+
+    for (const [key, value] of Object.entries(tempSelectedChoices)) {
+      if (value === "" || value === undefined) {
+        doesEmptyValueExist = true;
+      }
+
+      if (key === "spreadsheetFile") {
+        let checkFileExtension = value.slice(-5);
+        if (checkFileExtension.toLowerCase() === ".xlsx") {
+          isSpreadsheetSelected = true;
+        }
+      }
+    }
+
+    if (doesEmptyValueExist === false && isSpreadsheetSelected === true) {
+      setFormReady(true);
+    }
+  }, [selectedChoices]);
+
+  /* 
+    After the user verifies that all of their options are good, and
+    that the correct spreadsheet has been selected, update the
+  */
+
+  /* 
     Start the IPC bridge
   */
 
@@ -184,6 +228,19 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
       <Header pageTitle={automationName} />
 
       <div className="container-for-scroll" ref={animationParentTop}>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
+
         {spreadsheetContents?.length !== 0 &&
         automationStatus === "In Progress" ? (
           <>
@@ -196,62 +253,110 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
         )}
 
         <div className="row mx-1">
-          <div className="col col-6 mt-2" ref={animationParentLeft}>
+          <div className="col col-12 mt-2">
             <div className="row">
-              {automationStatus === "Idle" ? (
-                <CascadingInputs
-                  arrayOfQuestions={arrayOfDropdownQuestions}
-                  reduxState={state}
-                  parentState={selectedChoices}
-                  setStateHook={setSelectedChoices}
-                  parentChoices={parentChoices}
-                  childrenChoices={childrenChoices}
-                  nonDropdownChoices={nonDropdownChoices}
-                  optionObj={
-                    listOfAutomations[camelCasifyString(automationName)]
-                  }
-                />
+              {automationStatus === "Idle" &&
+              spreadsheetContents?.length === 0 ? (
+                <>
+                  <CascadingInputs
+                    arrayOfQuestions={arrayOfDropdownQuestions}
+                    reduxState={state}
+                    parentState={selectedChoices}
+                    setStateHook={setSelectedChoices}
+                    parentChoices={parentChoices}
+                    childrenChoices={childrenChoices}
+                    nonDropdownChoices={nonDropdownChoices}
+                    optionObj={
+                      listOfAutomations[camelCasifyString(automationName)]
+                    }
+                  />
+                  <SpreadSheetExampleAndValidator
+                    automationConfig={selectedChoices}
+                    formReady={formReady}
+                  />
+                  {/* <StartAutomationButton
+                    automationConfigObject={selectedChoices}
+                    automationStatus={automationStatus}
+                    setAutomationStatus={setAutomationStatus}
+                    isEnabled={formReady}
+                  /> */}
+                </>
               ) : (
+                <></>
+              )}
+              {spreadsheetContents?.length !== 0 &&
+              automationStatus === "Idle" &&
+              automationReady === false ? (
+                <>
+                  <SpreadSheetExampleAndValidator
+                    automationConfig={selectedChoices}
+                    formReady={formReady}
+                    setStateHook={setAutomationReady}
+                    automationReady={automationReady}
+                  />
+                  <SpreadsheetPreviewer spreadSheetData={spreadsheetContents} />
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
+          <div className="col col-6 mt-2" ref={animationParentLeft}>
+            {/* Returns when on final step before starting automation */}
+            {automationReady === true &&
+            formReady === true &&
+            automationStatus === "Idle" ? (
+              <>
+                <SpreadSheetExampleAndValidator
+                  automationConfig={selectedChoices}
+                  formReady={formReady}
+                  automationReady={automationReady}
+                  automationStatus={automationStatus}
+                />
+                <div className="mt-2"></div>
                 <Card
-                  cardTitle="Automation Configuration"
                   cardBody={configCardContents}
                   isConfigurationCard={true}
                 />
-              )}
-            </div>
-            {spreadsheetContents?.length > 0 ? (
-              <StartAutomationButton
-                automationConfigObject={selectedChoices}
-                automationStatus={automationStatus}
-                setAutomationStatus={setAutomationStatus}
-              />
+                <StartAutomationButton
+                  automationConfigObject={selectedChoices}
+                  automationStatus={automationStatus}
+                  setAutomationStatus={setAutomationStatus}
+                  isEnabled={formReady}
+                />
+              </>
+            ) : (
+              <></>
+            )}
+
+            {/* Returns once automation is in progress */}
+            {automationReady === true &&
+            formReady === true &&
+            automationStatus === "In Progress" ? (
+              <>
+                <Card
+                  isStatusCard={true}
+                  currentIterator="1-234-1234"
+                  iteratorTypeName="parcelNumber"
+                />
+                <div className="my-1"></div>
+                <Card
+                  cardBody={configCardContents}
+                  isConfigurationCard={true}
+                />
+                <StartAutomationButton
+                  automationConfigObject={selectedChoices}
+                  automationStatus={automationStatus}
+                  setAutomationStatus={setAutomationStatus}
+                  isEnabled={formReady}
+                />
+              </>
             ) : (
               <></>
             )}
           </div>
           <div className="col col-6 mt-2" ref={animationParentRight}>
-            {spreadsheetContents?.length === 0 &&
-            automationStatus === "Idle" ? (
-              <SpreadSheetExampleAndValidator
-                automationConfig={selectedChoices}
-              />
-            ) : (
-              <></>
-            )}
-
-            {spreadsheetContents?.length !== 0 &&
-            automationStatus === "Idle" ? (
-              <SpreadsheetPreviewer spreadSheetData={spreadsheetContents} />
-            ) : (
-              <></>
-            )}
-
-            {spreadsheetContents !== undefined &&
-            automationStatus === "In Progress" ? (
-              <EventLog></EventLog>
-            ) : (
-              <></>
-            )}
+            {automationReady === true ? <EventLog></EventLog> : <></>}
           </div>
         </div>
       </div>
