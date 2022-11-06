@@ -1,4 +1,6 @@
 In order to protect the github token, run the following bash command
 with your github token when you want to build and send out an update:
 
+MAKE SURE TO UPDATE version in package.json to a higher number first.
+
 export GH_TOKEN=<YOUR_TOKEN_HERE> && npm run electron:package:win

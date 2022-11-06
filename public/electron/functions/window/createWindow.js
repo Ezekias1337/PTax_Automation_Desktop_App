@@ -1,6 +1,5 @@
 // Library Imports
 const { BrowserWindow, ipcMain } = require("electron");
-const { autoUpdater } = require("electron-updater");
 const path = require("path");
 const url = require("url");
 const log = require("electron-log");
@@ -97,10 +96,6 @@ const createWindow = (directoryName, process, store, isDev) => {
 
     // Open the DevTools.
     // window.webContents.openDevTools()
-
-    if (isDev === false) {
-      autoUpdater.checkForUpdates();
-    }
 
     return window;
   } catch (error) {
