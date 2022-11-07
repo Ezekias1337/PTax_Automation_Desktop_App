@@ -1,8 +1,8 @@
 const { IpcBusBroker, IpcBusClient } = require("electron-common-ipc");
-require("dotenv").config();
+const portfinder = require("portfinder");
 
 const startIpcBusBroker = async () => {
-  const freePort = process.env.FREE_PORT;
+  const freePort = await portfinder.getPortPromise();
 
   const ipcBusBroker = IpcBusBroker.Create();
   await ipcBusBroker.connect(freePort);
