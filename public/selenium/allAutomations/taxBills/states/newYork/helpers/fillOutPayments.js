@@ -2,7 +2,7 @@ const waitForLoading = require("../../../../../functions/pTaxSpecific/waitForLoa
 const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn");
 const sendKeysPTaxInputFields = require("../../../../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
 const deleteInputFieldContents = require("../../../../../functions/general/deleteInputFieldContents");
-const removeSpecialCharsFromString = require("../../../../../utils/removeSpecialCharsFromString");
+const removeSpecialCharsFromString = require("../../../../../utils/strings/removeSpecialCharsFromString");
 const scrollElementIntoView = require("../../../../../functions/general/scrollElementIntoView");
 
 const fillOutPayments = async (

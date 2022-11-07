@@ -221,10 +221,10 @@ export const listOfAutomations = {
   },
   propertyPointOfContact: {
     key: 5,
-    name: "Property Point of Contact",
+    name: "Property Point Of Contact",
     WIP: true,
   },
-  taxBills: {
+  propertyTaxBills: {
     key: 6,
     name: "Property Tax Bills",
     state: [
@@ -315,9 +315,9 @@ export const listOfAutomations = {
     name: "Update Parcel Names",
     /* function: updateParcelNames, */
   },
-  checkWebsiteURLs: {
+  checkAssessorAndCollectorURLs: {
     key: 9,
-    name: "Check all the links for Assessors/Collectors",
+    name: "Check Assessor And Collector URLs",
     /* function: checkWebsiteURLs, */
   },
   pullParcelInformationFromRealquest: {

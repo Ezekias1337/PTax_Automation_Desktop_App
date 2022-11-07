@@ -6,7 +6,9 @@ const urls = {
     losAngelesAssessmentSite: "https://portal.assessor.lacounty.gov/",
     sanBernardinoSite: "https://arcpropertyinfo.sbcounty.gov/",
     sanDiegoAssessmentSite: "https://arcc.sdcounty.ca.gov/Pages/Assessors-Roll-Tax.aspx",
-    riversideAssessmentSite: "https://ca-riverside-acr.publicaccessnow.com/Search.aspx"
+    riversideAssessmentSite: "https://ca-riverside-acr.publicaccessnow.com/Search.aspx",
+    parcelQuestLoginPage: "https://pqweb.parcelquest.com/#login",
+    parcelQuestHomePage: "https://pqweb.parcelquest.com/#home"
 };
 
 module.exports = urls;

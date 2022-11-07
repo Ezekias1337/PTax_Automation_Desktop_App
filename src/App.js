@@ -5,6 +5,7 @@ import { SelectAnAutomation } from "./components/pages/selectAnAutomation";
 import { Settings } from "./components/pages/settings";
 import { Automation } from "./components/pages/automation";
 import { assessmentNoticeQuestions } from "./constants/automation-questions/assessmentNoticeQuestions";
+import { taxBillQuestions } from "./constants/automation-questions/taxBillQuestions"
 import "./App.css";
 
 const App = () => {
@@ -68,7 +69,7 @@ const App = () => {
           element={
             <Automation
               automationName="Property Tax Bills"
-              preOperationQuestions={[]}
+              preOperationQuestions={taxBillQuestions}
             />
           }
         ></Route>

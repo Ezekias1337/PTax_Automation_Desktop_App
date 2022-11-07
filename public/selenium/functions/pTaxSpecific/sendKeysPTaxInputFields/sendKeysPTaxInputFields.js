@@ -10,7 +10,7 @@ const sendKeysPTaxInputFields = async (
     await chosenInputField.sendKeys(Key.DELETE);
     await chosenInputField.sendKeys(stringToSend);
 
-    if (hitEnter && hitEnter === true) {
+    if (hitEnter === true) {
       await chosenInputField.sendKeys(Key.ENTER);
     }
   } catch (error) {

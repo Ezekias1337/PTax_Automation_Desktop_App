@@ -1,16 +1,13 @@
 const newYorkAssessmentNotices = require("./states/newYork/newYorkAssessmentNotices");
 const californiaAssessmentNotices = require("./states/california/californiaAssessmentNotices");
-const testMessage = require("../../ipc-main-messages/testMessage");
 
-const assessmentNotices = async (automationConfigObject) => {
-  await testMessage();
-
+const assessmentNotices = async (automationConfigObject, ipcBusClientNodeMain) => {
   switch (automationConfigObject.state) {
     case "California":
-      await californiaAssessmentNotices(automationConfigObject);
+      await californiaAssessmentNotices(automationConfigObject, ipcBusClientNodeMain);
       break;
     case "New York":
-      await newYorkAssessmentNotices(automationConfigObject);
+      await newYorkAssessmentNotices(automationConfigObject, ipcBusClientNodeMain);
       break;
     default:
       break;

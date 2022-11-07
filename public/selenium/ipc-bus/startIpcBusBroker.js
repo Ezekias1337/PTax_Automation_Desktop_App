@@ -12,14 +12,6 @@ const startIpcBusBroker = async () => {
 
   console.log("ipcBusBroker instantiated in Node.js", new Date());
   return ipcBusClientNodeMain;
-
-  /* ipcBusBroker.connect(freePort).then(() => {
-    const ipcBusClientNodeMain = IpcBusClient.Create();
-
-    ipcBusClientNodeMain.connect(freePort).then(() => {
-      console.log("ipcBusBroker instantiated in Node.js", new Date());
-    });
-  }); */
 };
 
 module.exports = { startIpcBusBroker };

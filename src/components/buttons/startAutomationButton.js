@@ -15,6 +15,7 @@ export const StartAutomationButton = ({
   automationStatus,
   setAutomationStatus,
   isEnabled,
+  spreadsheetContents
 }) => {
   const [busClientRenderer, setBusClientRenderer] = useState(null);
 
@@ -34,6 +35,7 @@ export const StartAutomationButton = ({
             setAutomationStatus("In Progress");
             startAutomation(
               automationConfigObject,
+              spreadsheetContents,
               ipcRenderer,
               setBusClientRenderer
             );

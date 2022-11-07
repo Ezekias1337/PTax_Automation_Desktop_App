@@ -8,6 +8,7 @@ const assessmentNoticesSelectors = {
   improvementsAssessedValueInput: "tbAssessedValueImprovements",
   btnSaveAssessment: "btnSaveAssessment",
   taxYearNewAssessmentDropdown: "ddTaxYear",
+  dataSourceAssessment: "ddDataSourceAssessment"
 };
 
 module.exports = assessmentNoticesSelectors;

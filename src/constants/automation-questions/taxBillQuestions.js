@@ -1,4 +1,4 @@
-export const assessmentNoticeQuestions = [
+export const taxBillQuestions = [
   {
     key: 0,
     name: "State",
@@ -58,5 +58,11 @@ export const assessmentNoticeQuestions = [
     name: "Parcel Quest Password",
     parentQuestions: null,
     inputType: "Password",
+  },
+  {
+    key: 9,
+    name: "Installment Number",
+    parentQuestions: null,
+    inputType: "Text",
   },
 ];

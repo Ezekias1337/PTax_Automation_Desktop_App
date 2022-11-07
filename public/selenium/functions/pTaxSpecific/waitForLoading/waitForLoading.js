@@ -1,5 +1,4 @@
-const colors = require("colors");
-const { until, By } = require("selenium-webdriver");
+const { until } = require("selenium-webdriver");
 const awaitElementLocatedAndReturn = require("../../../functions/general/awaitElementLocatedAndReturn");
 
 const waitForLoading = async (driver) => {

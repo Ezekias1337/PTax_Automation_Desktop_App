@@ -1,5 +1,5 @@
 const uploadDocument = {
-  filePicker: "Image1",
+  filePicker: "FileUploadControlfile0",
   taxYear: "tbTaxYear",
   assessment: "selAssessment",
   docType: "selDocType",

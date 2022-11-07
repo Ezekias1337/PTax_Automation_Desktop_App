@@ -1,5 +1,3 @@
-const colors = require("colors");
-
 //Kern Imports
 const performDataEntryKern = require("./cities/kern/performOperations/performDataEntryKern");
 const performDownloadKern = require("./cities/kern/performOperations/performDownloadKern");
@@ -29,26 +27,11 @@ const performDataEntryAndDownloadSanDiego = require("./cities/sanDiego/performOp
   const californiaAssessmentNotices = async (sublocation, operation) => {
 */
 
-const californiaAssessmentNotices = async ({
-  automation,
-  uploadDirectory,
-  downloadDirectory,
-  state,
-  county,
-  operation,
-}) => {
-  console.log(
-    colors.bold.red(
-      "Warning: ensure the data in the Parcel Number column all follow the convention: "
-    ),
-    "\n",
-    "Burough-Block-Lot",
-    "\n",
-    "Example: 1-482-1302"
-  );
+const californiaAssessmentNotices = async (automationConfigObject, ipcBusClientNodeMain) => {
+  const { county, operation } = automationConfigObject;
 
   switch (operation) {
-    case "Data Entry":
+    /* case "Data Entry":
       switch (county) {
         case "Kern":
           await performDataEntryKern(uploadDirectory, downloadDirectory);
@@ -95,22 +78,19 @@ const californiaAssessmentNotices = async ({
         default:
           break;
       }
-      break;
+      break; */
     case "Data Entry, Download, & Upload Document":
       switch (county) {
-        case "Kern":
+        /* case "Kern":
           await performDataEntryAndDownloadKern(
             uploadDirectory,
             downloadDirectory
           );
-          break;
+          break; */
         case "Los Angeles":
-          await performDataEntryAndDownloadLosAngeles(
-            uploadDirectory,
-            downloadDirectory
-          );
+          await performDataEntryAndDownloadLosAngeles(automationConfigObject, ipcBusClientNodeMain);
           break;
-        case "Riverside":
+        /* case "Riverside":
           await performDataEntryAndDownloadRiverside(
             uploadDirectory,
             downloadDirectory
@@ -127,7 +107,7 @@ const californiaAssessmentNotices = async ({
             uploadDirectory,
             downloadDirectory
           );
-          break;
+          break; */
         default:
           break;
       }

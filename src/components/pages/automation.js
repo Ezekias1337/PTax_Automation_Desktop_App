@@ -51,6 +51,17 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const [arrayOfDropdownQuestions, setArrayOfDropdownQuestions] = useState([]);
   const [selectedChoices, setSelectedChoices] = useState({
     automation: automationName,
+    state: "",
+    county: "",
+    operation: "",
+    downloadDirectory: "",
+    spreadsheetFile: "",
+    assessmentYear: "",
+    ptaxUsername: "",
+    ptaxPassword: "",
+    parcelQuestUsername: "",
+    parcelQuestPassword: "",
+    installmentNumber: "",
   });
   const [formReady, setFormReady] = useState(false);
   const [automationReady, setAutomationReady] = useState(false);
@@ -61,14 +72,9 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const [automationStatus, setAutomationStatus] = useState("Idle");
 
   // !NEED TO FIX ANIMATION PARENT HOOK TO REFLECT NEW DOM LAYOUT
-
   const [animationParentLeft] = useAutoAnimate();
   const [animationParentRight] = useAutoAnimate();
   const [animationParentTop] = useAutoAnimate();
-
-  useEffect(() => {
-    console.log("spreadsheetContents: ", spreadsheetContents);
-  }, [spreadsheetContents]);
 
   /* 
     Handle theme preferences
@@ -191,11 +197,6 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   }, [selectedChoices]);
 
   /* 
-    After the user verifies that all of their options are good, and
-    that the correct spreadsheet has been selected, update the
-  */
-
-  /* 
     Start the IPC bridge
   */
 
@@ -241,7 +242,9 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
           theme="colored"
         />
 
-        {spreadsheetContents?.length !== 0 &&
+        {/* Will add this back after redux and the logic
+        for handling this has been implemented */}
+        {/* {spreadsheetContents?.length !== 0 &&
         automationStatus === "In Progress" ? (
           <>
             <NumericalProgressTracker />
@@ -250,7 +253,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
           </>
         ) : (
           <></>
-        )}
+        )} */}
 
         <div className="row mx-1">
           <div className="col col-12 mt-2">
@@ -274,12 +277,6 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                     automationConfig={selectedChoices}
                     formReady={formReady}
                   />
-                  {/* <StartAutomationButton
-                    automationConfigObject={selectedChoices}
-                    automationStatus={automationStatus}
-                    setAutomationStatus={setAutomationStatus}
-                    isEnabled={formReady}
-                  /> */}
                 </>
               ) : (
                 <></>
@@ -323,6 +320,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                   automationStatus={automationStatus}
                   setAutomationStatus={setAutomationStatus}
                   isEnabled={formReady}
+                  spreadsheetContents={spreadsheetContents}
                 />
               </>
             ) : (
@@ -349,6 +347,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                   automationStatus={automationStatus}
                   setAutomationStatus={setAutomationStatus}
                   isEnabled={formReady}
+                  spreadsheetContents={spreadsheetContents}
                 />
               </>
             ) : (

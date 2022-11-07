@@ -1,19 +1,20 @@
+const californiaTaxBills = require("./states/california/californiaTaxBills");
 const newYorkTaxBills = require("./states/newYork/newYorkTaxBills");
 
-const taxBills = async (state, city, operation) => {
+const taxBills = async (automationConfigObject, ipcBusClientNodeMain) => {
   /* 
         Need to pick automation by using sublocation
     */
 
-  switch (state) {
+  switch (automationConfigObject.state) {
     case "California":
-      // code block
+      await californiaTaxBills(automationConfigObject, ipcBusClientNodeMain);
       break;
     case "New York":
-      await newYorkTaxBills(state, city, operation);
+      await newYorkTaxBills(automationConfigObject, ipcBusClientNodeMain);
       break;
     default:
-    // code block
+      break;
   }
 };
 

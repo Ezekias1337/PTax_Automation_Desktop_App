@@ -21,7 +21,8 @@ const promptOutputDirectory = require("../../../../../../../functions/userPrompt
 const generateDelayNumber = require("../../../../../../../functions/general/generateDelayNumber");
 const sendKeysPTaxInputFields = require("../../../../../../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
 const {
-  losAngelesAssessmentSite,
+  parcelQuestLoginPage,
+  parcelQuestHomePage,
 } = require("../../../../../../../constants/urls");
 const {
   downloadAndDataEntryAssessmentNoticesColumns,
@@ -38,8 +39,19 @@ const uploadAssessment = require("../../../../../cross-state-helpers/uploadAsses
 const downloadAssessment = require("../helpers/downloadAssessment.js");
 const switchToAndDismissAlert = require("../../../../../../../functions/tabSwapsAndHandling/switchToAndDismissAlert");
 
+/* 
+  Started refactoring this before I realized the tax bills were the top priority,
+  will finish later
+*/
+
 const assessmentWebsiteSelectors = {
-  searchBar: "/html/body/div[1]/div[2]/div/form[1]/div/input",
+  countyInputField: "#QuickSearch_CountyId",
+  parcelInputField: "#QuickSearch_ApnId",
+  parcelQuestSearchButton: "#Quick > button.btnQuickSearch",
+  parcelQuestViewResultsButton: "#resultsView > button",
+  noResultsWarning:
+    "//span[contains(text(), 'Total found was 0. Please revise your search criteria.')]",
+
   landMarketValue:
     "body > div.body-content.ng-scope > div > section.panel.panel-secondary.ng-scope.summary > div.panel-body.ng-scope > div > div > div.col-lg-7.info > div.table-responsive.info-section.info-section-taxvalue > table > tbody > tr:nth-child(1) > td:nth-child(2) > span",
   improvementMarketValue:
@@ -61,34 +73,29 @@ const arrayOfSuccessfulOperations = [];
 const arrayOfFailedOperations = [];
 
 const performDataEntryAndDownload = async (
-  uploadDirectory,
-  downloadDirectory
+  {
+    automation,
+    assessmentYear,
+    downloadDirectory,
+    spreadsheetFile,
+    state,
+    ptaxUsername,
+    ptaxPassword,
+    parcelQuestUsername,
+    parcelQuestPassword,
+    county,
+    operation,
+    spreadsheetContents,
+  },
+  ipcBusClientNodeMain
 ) => {
+  /* 
+    ! NEED TO ACCOUNT FOR OTHER RE VALUES WHEN PULLING STRINGS, EXAMPLE PARCEL: 5531-001-001, 5531-001-006
+  */
+
   try {
-    console.log(`Running download Tax Bill automation: `);
-
-    const dataFromSpreadsheet = await readSpreadsheetFile(uploadDirectory);
-    const outputDirectory = downloadDirectory;
-
-    const assessmentYear = await promptForYear();
     const assessmentYearEnd = parseInt(assessmentYear) + 1;
-
-    const [areCorrectSheetColumnsPresent, arrayOfMissingColumnNames] =
-      verifySpreadSheetColumnNames(
-        downloadAndDataEntryAssessmentNoticesColumns,
-        dataFromSpreadsheet[0]
-      );
-
-    await handleColumnNameLogging(
-      areCorrectSheetColumnsPresent,
-      arrayOfMissingColumnNames
-    );
-    if (areCorrectSheetColumnsPresent === false) {
-      return;
-    }
-
-    const { username, password } = await promptLogin();
-    const [ptaxWindow, driver] = await loginToPTAX(username, password);
+    const [ptaxWindow, driver] = await loginToPTAX(ptaxUsername, ptaxPassword);
 
     /* These values will be null if the login failed, this will cause the execution
       to stop */
@@ -101,16 +108,16 @@ const performDataEntryAndDownload = async (
     await clickCheckMyPropertiesCheckBox(driver);
 
     await openNewTab(driver);
-    await driver.get(losAngelesAssessmentSite);
+    await driver.get(parcelQuestLoginPage);
     const taxWebsiteWindow = await driver.getWindowHandle();
 
-    for (const item of dataFromSpreadsheet) {
+    for (const item of spreadsheetContents) {
       try {
         console.log(
           colors.magenta.bold(`Working on parcel: ${item.ParcelNumber}`)
         );
         await switchToAndDismissAlert(driver);
-        await driver.get(losAngelesAssessmentSite);
+        await driver.get(parcelQuestHomePage);
         await searchForParcel(driver, item, assessmentWebsiteSelectors);
 
         //Handle error if parcel isn't brough up directly
@@ -122,7 +129,7 @@ const performDataEntryAndDownload = async (
 
         const fileNameForFile = await downloadAssessment(
           item,
-          outputDirectory,
+          downloadDirectory,
           driver,
           assessmentWebsiteSelectors
         );
@@ -199,7 +206,7 @@ const performDataEntryAndDownload = async (
           fileNameForFile,
           assessmentYear,
           assessmentYearEnd,
-          outputDirectory
+          downloadDirectory
         );
         await switchToTaxWebsiteTab(driver, taxWebsiteWindow);
 

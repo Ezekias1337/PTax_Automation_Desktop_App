@@ -9,6 +9,8 @@ const fillOutLiability = async (
   installmentTotalString,
   installmentNumber
 ) => {
+  // ! NEED TO ADD SUPPORT FOR OTHER INSTALLMENT #S OTHER THAN 1
+  
   if (installmentNumber === "1") {
     const totalAmountLiabilityInput = await awaitElementLocatedAndReturn(
       driver,

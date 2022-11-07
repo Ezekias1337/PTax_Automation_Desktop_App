@@ -10,6 +10,8 @@ import {
   faWrench,
   faUser,
   faKey,
+  faCalendar,
+  faHashtag,
 } from "@fortawesome/free-solid-svg-icons";
 // Functions, Helpers, Utils, and Hooks
 import { pascalCasifyString } from "../../utils/strings/pascalCasifyString";
@@ -48,6 +50,9 @@ export const renderAutomationConfigCardBody = (cardBodyArray) => {
       case "Operation":
         iconForList = <FontAwesomeIcon icon={faWrench} />;
         break;
+      case "Assessment Year":
+        iconForList = <FontAwesomeIcon icon={faCalendar} />;
+        break;
       case "Ptax Username":
         iconForList = <FontAwesomeIcon icon={faUser} />;
         break;
@@ -61,6 +66,9 @@ export const renderAutomationConfigCardBody = (cardBodyArray) => {
       case "Parcel Quest Password":
         iconForList = <FontAwesomeIcon icon={faKey} />;
         needsToBeObscured = true;
+        break;
+      case "Installment Number":
+        iconForList = <FontAwesomeIcon icon={faHashtag} />;
         break;
       default:
         iconForList = <></>;
@@ -78,9 +86,7 @@ export const renderAutomationConfigCardBody = (cardBodyArray) => {
       <div key={nanoid()} className="card-body-row">
         {iconForList}
         <b>{`${firstElePascalCasified}: `}</b>
-        {needsToBeObscured === false
-          ? secondEle
-          : elementNameObscured}
+        {needsToBeObscured === false ? secondEle : elementNameObscured}
       </div>
     );
   });

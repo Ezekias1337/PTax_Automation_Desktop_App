@@ -4,7 +4,7 @@ const parseObjectMainMenu = require("./parsing/parseObjectMainMenu");
 const listOfAutomations = require("../../allAutomations/listOfAutomations/listOfAutomations");
 
 const mainMenu = async (automationConfigObject, ipcBusClientNodeMain) => {
-  console.table(automationConfigObject);
+  //console.table(automationConfigObject);
 
   /* 
     First select an automation that you want to perform

@@ -27,6 +27,7 @@ export const CascadingDropdown = ({
 
   useEffect(() => {
     let tempArrayOfQuestions = [];
+
     for (const [index, question] of arrayOfQuestions.entries()) {
       const data = {
         name: question.name,
@@ -39,7 +40,7 @@ export const CascadingDropdown = ({
           inputNameCamelCasified,
           optionObj
         );
-
+        console.log("propertyFromNestedObject: ", propertyFromNestedObject);
         availableDropdownChoices = renderSelectOptions(
           propertyFromNestedObject
         );
