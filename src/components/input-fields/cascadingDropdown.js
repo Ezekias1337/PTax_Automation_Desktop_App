@@ -40,7 +40,7 @@ export const CascadingDropdown = ({
           inputNameCamelCasified,
           optionObj
         );
-        console.log("propertyFromNestedObject: ", propertyFromNestedObject);
+
         availableDropdownChoices = renderSelectOptions(
           propertyFromNestedObject
         );
@@ -104,8 +104,15 @@ export const CascadingDropdown = ({
         let objectPathPostTrim;
 
         if (objectPathPreTrim !== undefined && objectPathPreTrim?.length > 0) {
+          /* 
+            ! Need to investigate why some are returning as object, and others not.
+            !  Installment Number and Tax year currently are the only ones returning as Obj
+          */
+
           if (typeof objectPathPreTrim !== "object") {
             objectPathPostTrim = objectPathPreTrim.split(".");
+          } else {
+            objectPathPostTrim = objectPathPreTrim[0].split(".");
           }
 
           objectPathPostTrim.pop();

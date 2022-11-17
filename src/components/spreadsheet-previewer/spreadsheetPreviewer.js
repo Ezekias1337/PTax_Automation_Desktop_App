@@ -14,13 +14,14 @@ import "../../css/spreadsheet-previewer.scss";
 */
 
 export const SpreadsheetPreviewer = ({ spreadSheetData }) => {
+  if (spreadSheetData?.length === 0) {
+    return <></>;
+  }
+
   return (
     <div className="container mt-1" id="spreadsheetPreviewerWrapper">
       <div className="row">
-        <table
-          id="spreadsheetPreviewer"
-          className="table table-hover"
-        >
+        <table id="spreadsheetPreviewer" className="table table-hover">
           <thead className="column-provider">
             <tr>
               <th></th>

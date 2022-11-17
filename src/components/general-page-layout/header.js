@@ -7,8 +7,8 @@ export const Header = ({ pageTitle, includeArrow = true }) => {
     <>
       <div className="row mx-1">
         <div className="col col-12 mt-2">
-          <BackButton></BackButton>
-          {includeArrow === true ? <HomeButton></HomeButton> : <></>}
+          {includeArrow === true ? <BackButton></BackButton> : <></>}
+          <HomeButton></HomeButton>
         </div>
       </div>
       <div className="row mx-1">

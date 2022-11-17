@@ -6,6 +6,10 @@
   General Styling
 */
 
+div.card {
+  border-radius: 5px;
+}
+
 .card-title {
   font-weight: bold;
 }
@@ -33,6 +37,18 @@
   div.card-body {
     color: $black;
   }
+
+  .card-body-row .completed-icon svg {
+    color: $green-message-light;
+  }
+
+  .card-body-row .cancelled-icon svg {
+    color: $yellow-message-light;
+  }
+
+  .card-body-row .failed-icon svg {
+    color: $red-message-light;
+  }
 }
 
 [data-theme="Gradient"],
@@ -44,5 +60,17 @@
 
   div.card-body {
     color: $white;
+  }
+
+  .card-body-row .completed-icon svg {
+    color: $green-message-dark;
+  }
+
+  .card-body-row .cancelled-icon svg {
+    color: $yellow-message-dark;
+  }
+
+  .card-body-row .failed-icon svg {
+    color: $red-message-dark;
   }
 }

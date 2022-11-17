@@ -4,11 +4,11 @@ import { faBox } from "@fortawesome/free-solid-svg-icons";
 // Functions, Helpers, Utils, and Hooks
 import { pascalCasifyString } from "../../utils/strings/pascalCasifyString";
 
-export const renderAutomationStatusCardBody = ({
-  isInitializing = false,
-  currentIterator = "1-234-5678",
-  iteratorTypeName = "parcelNumber",
-}) => {
+export const renderAutomationStatusCardBody = (
+  isInitializing,
+  currentIterator,
+  iteratorTypeName
+) => {
   /* 
     In most situations iteratorTypeName will be Parcel Number, however
     there are a few automations that use other things for this value

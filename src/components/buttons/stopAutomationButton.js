@@ -1,7 +1,7 @@
 // Library Imports
 import { Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
+import { faCircleStop } from "@fortawesome/free-solid-svg-icons";
 // Functions, Helpers, Utils, and Hooks
 import { startAutomation } from "../../functions/automation/startAutomation";
 // Components
@@ -9,7 +9,7 @@ import { Loader } from "../general-page-layout/loader";
 // window.require Imports
 const { ipcRenderer } = window.require("electron");
 
-export const StartAutomationButton = ({
+export const stopAutomationButton = ({
   automationConfigObject,
   automationStatus,
   setAutomationStatus,
@@ -44,7 +44,7 @@ export const StartAutomationButton = ({
           id="start-automation-button"
         >
           {automationStatus === "Idle" ? (
-            <FontAwesomeIcon icon={faCirclePlay} size="2x" />
+            <FontAwesomeIcon icon={faCircleStop} size="2x" />
           ) : (
             <Loader showLoader={true} />
           )}

@@ -13,7 +13,7 @@ const removeSpecialCharsFromString = require("../../../../../utils/strings/remov
 
 const pullTaxBillStrings = async (
   driver,
-  assessmentYear,
+  taxYear,
   county,
   selectors
 ) => {
@@ -23,7 +23,11 @@ const pullTaxBillStrings = async (
       moon it just returns empty with no warning
     */
 
-    const isTaxDataPresent = fluentWait(driver, selectors.totalTaxesDue, "css");
+    const isTaxDataPresent = await fluentWait(
+      driver,
+      selectors.totalTaxesDue,
+      "css"
+    );
 
     if (isTaxDataPresent === false) {
       return {};
@@ -40,7 +44,7 @@ const pullTaxBillStrings = async (
       "css"
     );
     const taxYearInnerText = await taxYearElement.getAttribute("innerText");
-    if (assessmentYear !== taxYearInnerText) {
+    if (taxYear !== taxYearInnerText) {
       return {};
     }
 

@@ -1,20 +1,20 @@
 // Library Imports
 import { useEffect, useLayoutEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
+import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-// Redux
-import { actionCreators } from "../../redux/allActions";
-// Functions, Helpers, Utils and Hooks
-import { showToast } from "../../functions/toast/showToast";
 import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
+import { useAutomationData } from "../../hooks/ipc/useAutomationData";
 // Constants
 import { listOfAutomations } from "../../constants/listOfAutomations";
 // Action Types
 import { READ_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
+import {
+  RECEIVE_ITERATION,
+  AUTOMATION_FINISHED,
+} from "../../redux/actionCreators/automationCreators";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
@@ -24,44 +24,31 @@ import { TimeTracker } from "../automation/timeTracker";
 import { SpreadSheetExampleAndValidator } from "../automation/spreadSheetExampleAndValidator";
 import { SpreadsheetPreviewer } from "../spreadsheet-previewer/spreadsheetPreviewer";
 import { NumericalProgressTracker } from "../automation/numericalProgressTracker";
-import { Loader } from "../general-page-layout/loader";
 import { CascadingInputs } from "../input-fields/cascadingInputs";
 import { StartAutomationButton } from "../buttons/startAutomationButton";
 import { Card } from "../card/card";
+import { GeneralAlert } from "../alert/generalAlert";
+import { ViewPostAutomationSummaryButton } from "../buttons/viewPostAutomationSummaryButton";
 // CSS
 import "../../css/styles.scss";
 // window.require Imports
 const { ipcRenderer } = window.require("electron");
 
 export const Automation = ({ automationName, preOperationQuestions }) => {
-  const dispatch = useDispatch();
-  const { readSpreadsheetReset } = bindActionCreators(
-    actionCreators.spreadsheetCreators,
-    dispatch
-  );
   usePersistentSettings();
 
   const state = useSelector((state) => state);
-  const spreadsheetState = useSelector((state) => state.spreadsheet);
-  const spreadsheetMessages = spreadsheetState.messages[READ_SPREADSHEET];
+  const spreadsheetState = state.spreadsheet;
+  const automationState = state.automation;
+
   const spreadsheetContents = spreadsheetState.contents[READ_SPREADSHEET];
-  const spreadsheetLoading = spreadsheetState.loading[READ_SPREADSHEET];
-  const spreadsheetErrors = spreadsheetState.errors[READ_SPREADSHEET];
+  const automationFinished =
+    automationState.automationFinished[AUTOMATION_FINISHED];
+  const currentIteration = automationState.currentIteration[RECEIVE_ITERATION];
 
   const [arrayOfDropdownQuestions, setArrayOfDropdownQuestions] = useState([]);
   const [selectedChoices, setSelectedChoices] = useState({
     automation: automationName,
-    state: "",
-    county: "",
-    operation: "",
-    downloadDirectory: "",
-    spreadsheetFile: "",
-    assessmentYear: "",
-    ptaxUsername: "",
-    ptaxPassword: "",
-    parcelQuestUsername: "",
-    parcelQuestPassword: "",
-    installmentNumber: "",
   });
   const [formReady, setFormReady] = useState(false);
   const [automationReady, setAutomationReady] = useState(false);
@@ -70,11 +57,13 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const [nonDropdownChoices, setNonDropdownChoices] = useState([]);
   const [configCardContents, setConfigCardContents] = useState([]);
   const [automationStatus, setAutomationStatus] = useState("Idle");
+  const [busClientRenderer, setBusClientRenderer] = useState(null);
 
-  // !NEED TO FIX ANIMATION PARENT HOOK TO REFLECT NEW DOM LAYOUT
   const [animationParentLeft] = useAutoAnimate();
   const [animationParentRight] = useAutoAnimate();
   const [animationParentTop] = useAutoAnimate();
+
+  useAutomationData(busClientRenderer);
 
   /* 
     Handle theme preferences
@@ -87,6 +76,19 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
       clearInterval(backgroundInterval);
     };
   }, [automationName]);
+
+  /* 
+    Initialize the selectedOptions object
+  */
+
+  useEffect(() => {
+    let tempSelectedOptionsObj = { ...selectedChoices };
+
+    for (const [key, value] of Object.entries(preOperationQuestions)) {
+      tempSelectedOptionsObj[camelCasifyString(value.name)] = "";
+    }
+    setSelectedChoices(tempSelectedOptionsObj);
+  }, [preOperationQuestions]);
 
   /* 
     Get the list of questions that require a dropdown
@@ -204,17 +206,6 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
     ipcRenderer.send("startIpcBusBroker", null);
   }, []);
 
-  /* 
-    Revert the spreadsheet state in redux, so revisiting the page doesn't cause
-    the toast to display unnecessarily
-  */
-
-  useEffect(() => {
-    return () => {
-      readSpreadsheetReset();
-    };
-  }, []);
-
   return (
     <div
       className="automation"
@@ -242,18 +233,27 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
           theme="colored"
         />
 
-        {/* Will add this back after redux and the logic
-        for handling this has been implemented */}
-        {/* {spreadsheetContents?.length !== 0 &&
+        {spreadsheetContents?.length !== 0 &&
         automationStatus === "In Progress" ? (
           <>
-            <NumericalProgressTracker />
-            <ProgressBar />
-            <TimeTracker />
+            <NumericalProgressTracker
+              isInitializing={currentIteration === null ? true : false}
+              maxNumberOfOperations={
+                spreadsheetContents?.length >= 1
+                  ? spreadsheetContents.length
+                  : 0
+              }
+              automationName={automationName}
+            />
+            <ProgressBar
+              automationName={automationName}
+              automationFinished={automationFinished}
+            />
+            {/* <TimeTracker /> */}
           </>
         ) : (
           <></>
-        )} */}
+        )}
 
         <div className="row mx-1">
           <div className="col col-12 mt-2">
@@ -321,6 +321,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                   setAutomationStatus={setAutomationStatus}
                   isEnabled={formReady}
                   spreadsheetContents={spreadsheetContents}
+                  setBusClientRenderer={setBusClientRenderer}
                 />
               </>
             ) : (
@@ -330,11 +331,13 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
             {/* Returns once automation is in progress */}
             {automationReady === true &&
             formReady === true &&
-            automationStatus === "In Progress" ? (
+            automationStatus === "In Progress" &&
+            automationFinished === false ? (
               <>
                 <Card
                   isStatusCard={true}
-                  currentIterator="1-234-1234"
+                  isInitializing={currentIteration === null ? true : false}
+                  currentIterator={currentIteration}
                   iteratorTypeName="parcelNumber"
                 />
                 <div className="my-1"></div>
@@ -353,9 +356,38 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
             ) : (
               <></>
             )}
+
+            {/* Returns once automation is completed */}
+            {automationReady === true &&
+            formReady === true &&
+            automationFinished === true ? (
+              <div className="row">
+                <div className="col col-12">
+                  <GeneralAlert
+                    isVisible={true}
+                    colorClassName="info"
+                    alertText="The automation is now done running. Click the button below to view a summary of the results"
+                  ></GeneralAlert>
+                </div>
+                <div className="col col-4"></div>
+                <div className="col col-4">
+                  <ViewPostAutomationSummaryButton />
+                </div>
+                <div className="col col-4"></div>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
           <div className="col col-6 mt-2" ref={animationParentRight}>
-            {automationReady === true ? <EventLog></EventLog> : <></>}
+            {automationReady === true ? (
+              <EventLog
+                busClientRenderer={busClientRenderer}
+                automationStatus={automationStatus}
+              ></EventLog>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>

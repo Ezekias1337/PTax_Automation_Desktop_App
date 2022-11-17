@@ -4,8 +4,9 @@ import { Home } from "./components/pages/home";
 import { SelectAnAutomation } from "./components/pages/selectAnAutomation";
 import { Settings } from "./components/pages/settings";
 import { Automation } from "./components/pages/automation";
+import { PostAutomationSummary } from "./components/pages/postAutomationSummary";
 import { assessmentNoticeQuestions } from "./constants/automation-questions/assessmentNoticeQuestions";
-import { taxBillQuestions } from "./constants/automation-questions/taxBillQuestions"
+import { taxBillQuestions } from "./constants/automation-questions/taxBillQuestions";
 import "./App.css";
 
 const App = () => {
@@ -27,7 +28,6 @@ const App = () => {
             />
           }
         ></Route>
-
         <Route
           path="/change-mailing-address"
           element={
@@ -108,6 +108,10 @@ const App = () => {
               preOperationQuestions={[]}
             />
           }
+        ></Route>
+        <Route
+          path="/post-automation-summary"
+          element={<PostAutomationSummary />}
         ></Route>
       </Routes>
     </Router>

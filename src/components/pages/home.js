@@ -7,6 +7,7 @@ import { Button } from "reactstrap";
 import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { useIsFirstTimeRunning } from "../../hooks/useIsFirstTimeRunning";
+import { useResetRedux } from "../../hooks/useResetRedux";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { SettingsButton } from "../buttons/settingsButton";
@@ -21,6 +22,8 @@ import logo from "../../../src/images/PTax_Logo.png";
 export const Home = () => {
   const isFirstTimeRunning = useIsFirstTimeRunning();
   usePersistentSettings();
+  useResetRedux();
+
   const state = useSelector((state) => state);
 
   useLayoutEffect(() => {
@@ -60,9 +63,9 @@ export const Home = () => {
           </div>
           <GeneralAlert
             isVisible={isFirstTimeRunning}
-            string="&nbsp;Looks like this is your first time running this application.
+            colorClassName="info"
+            alertText="&nbsp;Looks like this is your first time running this application.
             Click on the flashing settings button above to get started."
-            colorClassName="alert-info"
           ></GeneralAlert>
         </div>
       </header>

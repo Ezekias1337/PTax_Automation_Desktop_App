@@ -1,0 +1,17 @@
+In this folder there are several hooks which all utilize the ipcRenderer
+import from Electron.
+
+Think of these as event listeners from Vanilla Javascript, where the event
+is the name of the channel (string), and the handler is a redux action.
+In addition, many of these redux functions have an un-used first parameter,
+because you can't access the data from electron/selenium without it.
+
+Additionally these hooks return a cleanup function inside the useEffect 
+which removes the "event listener". This is because when react re-renders
+the component, it re-adds the listeners and causes functions to fire more
+than once undesirably. Removing the listener on re-render prevents this
+from transpiring.
+
+Although some of these hooks are not used in more than one place, because
+of the common patterns explained above and their verbose nature, they are
+abstracted to improve code readability.

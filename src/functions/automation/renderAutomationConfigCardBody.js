@@ -53,6 +53,9 @@ export const renderAutomationConfigCardBody = (cardBodyArray) => {
       case "Assessment Year":
         iconForList = <FontAwesomeIcon icon={faCalendar} />;
         break;
+      case "Tax Year":
+        iconForList = <FontAwesomeIcon icon={faCalendar} />;
+        break;
       case "Ptax Username":
         iconForList = <FontAwesomeIcon icon={faUser} />;
         break;

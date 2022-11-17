@@ -41,6 +41,9 @@ div.event-log {
 
 [data-theme="Light"] {
   div.event-log > div.row > div {
+    &.regular-message {
+      color: inherit;
+    }
     &.red-message {
       color: $red-message-light;
     }
@@ -65,6 +68,9 @@ div.event-log {
 [data-theme="Dark"],
 [data-theme="Gradient"] {
   div.event-log > div.row > div {
+    &.regular-message {
+      color: inherit;
+    }
     &.red-message {
       color: $red-message-dark;
     }

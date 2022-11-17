@@ -31,9 +31,9 @@ export const taxBillQuestions = [
   },
   {
     key: 4,
-    name: "Assessment Year",
-    parentQuestions: null,
-    inputType: "Text",
+    name: "Tax Year",
+    parentQuestions: ["state", "county", "operation", "installmentNumber"],
+    inputType: "Dropdown",
   },
   {
     key: 5,
@@ -62,7 +62,7 @@ export const taxBillQuestions = [
   {
     key: 9,
     name: "Installment Number",
-    parentQuestions: null,
-    inputType: "Text",
+    parentQuestions: ["state", "county", "operation"],
+    inputType: "Dropdown",
   },
 ];

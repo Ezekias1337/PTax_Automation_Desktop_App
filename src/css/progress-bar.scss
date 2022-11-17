@@ -23,14 +23,12 @@
 }
 
 #progressBar {
-  width: 50%;
   z-index: 1;
   background-color: $brown;
 }
 
 #progressBarFrostEffect {
   z-index: 2;
-  width: 50%;
   background-color: rgba($white, 0.4);
   -webkit-animation: frostEffectAnimation 5s infinite;
   animation: frostEffectAnimation 5s infinite;
@@ -43,12 +41,17 @@
   display: flex;
   justify-content: right;
   align-items: center;
+  position: relative;
 }
 
 [data-theme="Gradient"] {
   #progressBarWrapper {
     background-color: $bg-secondary-dark;
     border: 1px solid $bg-secondary-light;
+  }
+
+  #progressPercentage {
+    color: $white;
   }
 }
 
@@ -57,12 +60,20 @@
     background-color: $bg-secondary-light;
     border: 1px solid $bg-secondary-light;
   }
+
+  #progressPercentage {
+    color: $black;
+  }
 }
 
 [data-theme="Dark"] {
   #progressBarWrapper {
     background-color: $bg-secondary-dark;
     border: 1px solid $bg-secondary-dark;
+  }
+
+  #progressPercentage {
+    color: $white;
   }
 }
 

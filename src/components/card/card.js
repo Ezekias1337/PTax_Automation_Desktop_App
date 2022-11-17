@@ -1,5 +1,4 @@
 // Library Imports
-
 import { Button } from "reactstrap";
 import { nanoid } from "nanoid";
 // Functions, Helpers, Utils, and Hooks
@@ -16,6 +15,7 @@ export const Card = ({
   buttonContent = null,
   isConfigurationCard = false,
   isStatusCard = false,
+  isInitializing = false,
   currentIterator = null,
   iteratorTypeName = null,
 }) => {
@@ -37,14 +37,18 @@ export const Card = ({
         <div className="card-body-wrapper">
           {/* Path taken for the config card */}
           {cardBody !== null && isConfigurationCard === true ? (
-           
-           renderAutomationConfigCardBody(cardBody)
+            renderAutomationConfigCardBody(cardBody)
           ) : (
             <></>
           )}
           {/* Path taken for automation status card */}
+
           {isStatusCard === true ? (
-            renderAutomationStatusCardBody(currentIterator, iteratorTypeName)
+            renderAutomationStatusCardBody(
+              isInitializing,
+              currentIterator,
+              iteratorTypeName
+            )
           ) : (
             <></>
           )}
