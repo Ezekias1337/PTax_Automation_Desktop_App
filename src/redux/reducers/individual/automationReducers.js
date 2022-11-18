@@ -12,19 +12,25 @@ import {
   AUTOMATION_FINISHED,
 } from "../../actionCreators/automationCreators";
 
-const INITIAL_STATE = {
-  ...buildInitialState([
-    RECEIVE_ITERATION,
-    COMPLETED_ITERATIONS,
-    CANCELLED_ITERATIONS,
-    FAILED_ITERATIONS,
-  ]),
+const buildAutomationState = () => {
+  const INITIAL_STATE = {
+    ...buildInitialState([
+      RECEIVE_ITERATION,
+      COMPLETED_ITERATIONS,
+      CANCELLED_ITERATIONS,
+      FAILED_ITERATIONS,
+    ]),
+  };
+  delete INITIAL_STATE.contents[RECEIVE_ITERATION];
+  INITIAL_STATE.currentIteration = {};
+  INITIAL_STATE.currentIteration[RECEIVE_ITERATION] = null;
+  INITIAL_STATE.automationFinished = {};
+  INITIAL_STATE.automationFinished[AUTOMATION_FINISHED] = false;
+
+  return INITIAL_STATE;
 };
-delete INITIAL_STATE.contents[RECEIVE_ITERATION];
-INITIAL_STATE.currentIteration = {};
-INITIAL_STATE.currentIteration[RECEIVE_ITERATION] = null;
-INITIAL_STATE.automationFinished = {};
-INITIAL_STATE.automationFinished[AUTOMATION_FINISHED] = false;
+
+const INITIAL_STATE = buildAutomationState();
 
 const reducer = (state = INITIAL_STATE, action) => {
   let newStateObject;
@@ -61,19 +67,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return newStateObject;
 
     case RECEIVE_ITERATION_RESET:
-      newStateObject = {
-        ...buildInitialState([
-          RECEIVE_ITERATION,
-          COMPLETED_ITERATIONS,
-          CANCELLED_ITERATIONS,
-          FAILED_ITERATIONS,
-        ]),
-      };
-      delete newStateObject.contents[RECEIVE_ITERATION];
-      newStateObject.currentIteration = {};
-      newStateObject.currentIteration[RECEIVE_ITERATION] = null;
-      newStateObject.automationFinished = {};
-      newStateObject.automationFinished[AUTOMATION_FINISHED] = false;
+      newStateObject = buildAutomationState();
 
       return newStateObject;
 
@@ -94,7 +88,12 @@ const reducer = (state = INITIAL_STATE, action) => {
       newStateObject = {
         ...state,
       };
-      if (action.payload === null) {
+      if (
+        action.payload === null ||
+        (action.payload &&
+          Object.keys(action.payload).length === 0 &&
+          Object.getPrototypeOf(action.payload) === Object.prototype)
+      ) {
         newStateObject.errors[CANCELLED_ITERATIONS].push(
           "The iteration data received is undefined."
         );

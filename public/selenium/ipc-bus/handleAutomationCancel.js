@@ -9,7 +9,7 @@ const closingAutomationSystem = require("../functions/general/closingAutomationS
 const handleAutomationCancel = (ipcBusClientNodeMain, driver) => {
   ipcBusClientNodeMain.addListener(
     "cancel-automation",
-    async (ipcBusEvent, greetingMsg) => {
+    async (ipcBusEvent, msg) => {
       await closingAutomationSystem(driver);
     }
   );

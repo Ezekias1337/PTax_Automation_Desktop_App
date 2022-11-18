@@ -27,6 +27,7 @@ const websiteSelectors = {
     "div.taxPaymentDiv > table > tbody > tr:nth-child(1) > td",
   installmentTwoInfo:
     "div.taxPaymentDiv > table > tbody > tr:nth-child(2) > td",
+  billType: "//span[contains(text(), 'Regular')]",
 
   screenShotSelector: "body",
 

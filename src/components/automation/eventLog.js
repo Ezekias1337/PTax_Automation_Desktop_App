@@ -7,8 +7,8 @@ import { useEventLogData } from "../../hooks/ipc/useEventLogData";
 // Action Types
 import { RECEIVE_EVENT_LOG_DATA } from "../../redux/actionCreators/eventLogCreators";
 // Components
-import { ClipboardButton } from "../buttons/clipboardButton";
-import { SpreadsheetButton } from "../buttons/spreadsheetButton";
+//import { ClipboardButton } from "../buttons/clipboardButton";
+//import { SpreadsheetButton } from "../buttons/spreadsheetButton";
 // CSS
 import "../../css/styles.scss";
 import "../../css/event-log.scss";

@@ -2,8 +2,10 @@
 import { Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
+// window.require Imports
+const { ipcRenderer } = window.require("electron");
 
-export const DownloadButton = ({ isAnimated = false }) => {
+export const DownloadButton = ({ isAnimated = false, data }) => {
   return (
     <Button
       className={

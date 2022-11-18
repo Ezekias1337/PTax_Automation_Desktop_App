@@ -2,6 +2,7 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
 //Redux
+import { READ_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
 import {
   COMPLETED_ITERATIONS,
   CANCELLED_ITERATIONS,
@@ -16,11 +17,9 @@ import { useResetRedux } from "../../hooks/useResetRedux";
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
 import { Card } from "../card/card";
-import { GeneralAlert } from "../alert/generalAlert";
 import { SpreadsheetButton } from "../buttons/spreadsheetButton";
 import { DownloadButton } from "../buttons/downloadButton";
 import { SpreadsheetPreviewer } from "../spreadsheet-previewer/spreadsheetPreviewer";
-
 // CSS
 import "../../css/styles.scss";
 
@@ -30,13 +29,23 @@ export const PostAutomationSummary = () => {
 
   const state = useSelector((state) => state);
   const automationState = state.automation;
+  const spreadsheetState = state.spreadsheet.contents[READ_SPREADSHEET];
+
+  const completedIterations = automationState.contents[COMPLETED_ITERATIONS];
+  const failedIterations = automationState.contents[FAILED_ITERATIONS];
+  const cancelledIterations = automationState.contents[CANCELLED_ITERATIONS];
+
+  console.log("completedIterations: ", completedIterations);
+  console.log("failedIterations: ", failedIterations);
+  console.log("cancelledIterations: ", cancelledIterations);
 
   const [numberOfCompletedIterations, setNumberOfCompletedIterations] =
     useState(false);
   const [numberOfFailedIterations, setNumberOfFailedIterations] =
     useState(false);
-  const [numberOfUncompletedIterations, setNumberOfUncompletedIterations] =
+  const [numberOfCancelledIterations, setNumberOfCancelledIterations] =
     useState(false);
+  const [selectedSpreadsheetData, setSelectedSpreadsheetData] = useState([]);
 
   useLayoutEffect(() => {
     const backgroundInterval = animateGradientBackground();
@@ -50,17 +59,24 @@ export const PostAutomationSummary = () => {
     and set the value in the state
   */
   useEffect(() => {
-    const tempCompletedIterations =
-      automationState.contents[COMPLETED_ITERATIONS]?.length;
-    const tempUncompletedIterations =
-      automationState.contents[CANCELLED_ITERATIONS]?.length;
-    const tempFailedIterations =
-      automationState.contents[FAILED_ITERATIONS]?.length;
+    let tempCompletedIterations = 0;
+    let tempCancelledIterations = 0;
+    let tempFailedIterations = 0;
+
+    if (completedIterations?.length) {
+      tempCompletedIterations = completedIterations.length;
+    }
+    if (failedIterations?.length) {
+      tempFailedIterations = failedIterations.length;
+    }
+    if (cancelledIterations?.length) {
+      tempCancelledIterations = cancelledIterations.length;
+    }
 
     setNumberOfCompletedIterations(tempCompletedIterations);
-    setNumberOfUncompletedIterations(tempUncompletedIterations);
+    setNumberOfCancelledIterations(tempCancelledIterations);
     setNumberOfFailedIterations(tempFailedIterations);
-  }, [automationState.contents]);
+  }, [completedIterations, failedIterations, cancelledIterations]);
 
   return (
     <div
@@ -80,9 +96,10 @@ export const PostAutomationSummary = () => {
           <div className="col col-8">
             <Card
               cardBody={renderPostAutomationSummaryCard(
+                spreadsheetState.length,
                 numberOfCompletedIterations,
                 numberOfFailedIterations,
-                numberOfUncompletedIterations
+                numberOfCancelledIterations
               )}
             />
           </div>
@@ -97,33 +114,66 @@ export const PostAutomationSummary = () => {
         </div>
 
         <div className="row mx-1 mt-2">
-          <div className="col col-4 full-flex">
+          <div className="col col-6 full-flex">
             <h3>Completed Iterations</h3>
           </div>
-          <div className="col col-4 full-flex">
-            <h3>Cancelled Iterations</h3>
-          </div>
-          <div className="col col-4 full-flex">
+          <div className="col col-6 full-flex">
             <h3>Failed Iterations</h3>
           </div>
         </div>
+
         <div className="row mx-1 mt-2">
           <div
             id="completed-iterations-wrapper"
-            className="col col-4 full-flex"
+            className="col col-6 full-flex"
           >
-            <SpreadsheetButton />
+            <SpreadsheetButton
+              selectedSpreadsheetData={selectedSpreadsheetData}
+              setSelectedSpreadsheetData={setSelectedSpreadsheetData}
+              newSpreadsheetData={completedIterations}
+            />
+            <DownloadButton />
+          </div>
+          <div id="failed-iterations-wrapper" className="col col-6 full-flex">
+            <SpreadsheetButton
+              selectedSpreadsheetData={selectedSpreadsheetData}
+              setSelectedSpreadsheetData={setSelectedSpreadsheetData}
+              newSpreadsheetData={failedIterations}
+            />
+            <DownloadButton />
+          </div>
+        </div>
+
+        <div className="row mx-1 mt-2">
+          <div className="col col-6 full-flex">
+            <h3>Cancelled Iterations</h3>
+          </div>
+          <div className="col col-6 full-flex">
+            <h3>Cancelled & Failed Iterations</h3>
+          </div>
+        </div>
+
+        <div className="row mx-1 mt-2">
+          <div
+            id="cancelled-iterations-wrapper"
+            className="col col-6 full-flex"
+          >
+            <SpreadsheetButton
+              selectedSpreadsheetData={selectedSpreadsheetData}
+              setSelectedSpreadsheetData={setSelectedSpreadsheetData}
+              newSpreadsheetData={cancelledIterations}
+            />
             <DownloadButton />
           </div>
           <div
-            id="unattempted-iterations-wrapper"
-            className="col col-4 full-flex"
+            id="cancelled-failed-iterations-wrapper"
+            className="col col-6 full-flex"
           >
-            <SpreadsheetButton />
-            <DownloadButton />
-          </div>
-          <div id="failed-iterations-wrapper" className="col col-4 full-flex">
-            <SpreadsheetButton />
+            <SpreadsheetButton
+              selectedSpreadsheetData={selectedSpreadsheetData}
+              setSelectedSpreadsheetData={setSelectedSpreadsheetData}
+              newSpreadsheetData={[...cancelledIterations, ...failedIterations]}
+            />
             <DownloadButton />
           </div>
         </div>
@@ -131,7 +181,7 @@ export const PostAutomationSummary = () => {
           id="post-automation-spreadsheet-previewer"
           className="row mx-1 mt-2"
         >
-          <SpreadsheetPreviewer spreadSheetData={[]} />
+          <SpreadsheetPreviewer spreadSheetData={selectedSpreadsheetData} />
         </div>
       </div>
     </div>

@@ -1,0 +1,9 @@
+export const checkObjectEquality = (x, y) => {
+  const ok = Object.keys,
+    tx = typeof x,
+    ty = typeof y;
+  return x && y && tx === "object" && tx === ty
+    ? ok(x).length === ok(y).length &&
+        ok(x).every((key) => checkObjectEquality(x[key], y[key]))
+    : x === y;
+};

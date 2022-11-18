@@ -4,20 +4,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
 
 export const SpreadsheetButton = ({
-  idForButton,
-  onClickHandler,
-  isAnimated,
+  selectedSpreadsheetData,
+  setSelectedSpreadsheetData,
+  newSpreadsheetData,
 }) => {
+  /* 
+    Determine if button has been clicked
+  */
+
   return (
     <Button
-      className={
-        isAnimated === true
-          ? "full-width-button styled-button animated-button"
-          : "full-width-button styled-button"
-      }
-      onClick={onClickHandler !== undefined ? onClickHandler : null}
+      className={`full-width-button styled-button${
+        newSpreadsheetData?.length === 0 ? " disabled" : ""
+      }`}
+      onClick={() => {
+        if (selectedSpreadsheetData === newSpreadsheetData) {
+          setSelectedSpreadsheetData([]);
+        } else {
+          setSelectedSpreadsheetData(newSpreadsheetData);
+        }
+      }}
       alt="clipboard-button"
-      id={idForButton ? idForButton : null}
     >
       <FontAwesomeIcon icon={faFileExcel} size="xl" />
     </Button>

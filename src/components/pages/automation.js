@@ -14,18 +14,21 @@ import { READ_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators
 import {
   RECEIVE_ITERATION,
   AUTOMATION_FINISHED,
+  COMPLETED_ITERATIONS,
+  FAILED_ITERATIONS,
 } from "../../redux/actionCreators/automationCreators";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
 import { EventLog } from "../automation/eventLog";
 import { ProgressBar } from "../automation/progressBar";
-import { TimeTracker } from "../automation/timeTracker";
+//import { TimeTracker } from "../automation/timeTracker";
 import { SpreadSheetExampleAndValidator } from "../automation/spreadSheetExampleAndValidator";
 import { SpreadsheetPreviewer } from "../spreadsheet-previewer/spreadsheetPreviewer";
 import { NumericalProgressTracker } from "../automation/numericalProgressTracker";
 import { CascadingInputs } from "../input-fields/cascadingInputs";
 import { StartAutomationButton } from "../buttons/startAutomationButton";
+import { StopAutomationButton } from "../buttons/stopAutomationButton";
 import { Card } from "../card/card";
 import { GeneralAlert } from "../alert/generalAlert";
 import { ViewPostAutomationSummaryButton } from "../buttons/viewPostAutomationSummaryButton";
@@ -62,6 +65,9 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const [animationParentLeft] = useAutoAnimate();
   const [animationParentRight] = useAutoAnimate();
   const [animationParentTop] = useAutoAnimate();
+
+  const completedIterations = automationState.contents[COMPLETED_ITERATIONS];
+  const failedIterations = automationState.contents[FAILED_ITERATIONS];
 
   useAutomationData(busClientRenderer);
 
@@ -197,6 +203,17 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
       setFormReady(true);
     }
   }, [selectedChoices]);
+  
+  /*
+    Set the local automation status to complete if back-end sends
+    the signal
+  */
+ 
+  useEffect(() => {
+    if(automationFinished === true) {
+      setAutomationStatus("Completed")
+    }
+  }, [automationFinished])
 
   /* 
     Start the IPC bridge
@@ -345,13 +362,27 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                   cardBody={configCardContents}
                   isConfigurationCard={true}
                 />
-                <StartAutomationButton
-                  automationConfigObject={selectedChoices}
-                  automationStatus={automationStatus}
-                  setAutomationStatus={setAutomationStatus}
-                  isEnabled={formReady}
-                  spreadsheetContents={spreadsheetContents}
-                />
+                <div className="row">
+                  <div className="col col-6">
+                    <StartAutomationButton
+                      automationConfigObject={selectedChoices}
+                      automationStatus={automationStatus}
+                      setAutomationStatus={setAutomationStatus}
+                      isEnabled={formReady}
+                      spreadsheetContents={spreadsheetContents}
+                    />
+                  </div>
+                  <div className="col col-6">
+                    <StopAutomationButton
+                      busClientRenderer={busClientRenderer}
+                      automationName={automationName}
+                      allIterations={spreadsheetContents}
+                      completedIterations={completedIterations}
+                      failedIterations={failedIterations}
+                      setAutomationStatus={setAutomationStatus}
+                    />
+                  </div>
+                </div>
               </>
             ) : (
               <></>
@@ -360,7 +391,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
             {/* Returns once automation is completed */}
             {automationReady === true &&
             formReady === true &&
-            automationFinished === true ? (
+            automationStatus === "Completed" ? (
               <div className="row">
                 <div className="col col-12">
                   <GeneralAlert

@@ -7,7 +7,8 @@ const scrollElementIntoView = require("../../../../../functions/general/scrollEl
 const fillOutPayments = async (
   driver,
   selectors,
-  installmentTotalString,
+  installmentStringOne,
+  installmentStringTwo,
   installmentNumber
 ) => {
   if (installmentNumber === "1") {
@@ -25,30 +26,28 @@ const fillOutPayments = async (
       selectors.finalPayment1,
       "id"
     );
-    await sendKeysPTaxInputFields(finalPayment1, installmentTotalString, false);
+    await sendKeysPTaxInputFields(finalPayment1, installmentStringOne, false);
 
     const basePayment1 = await awaitElementLocatedAndReturn(
       driver,
       selectors.basePayment1,
       "id"
     );
-    await sendKeysPTaxInputFields(basePayment1, installmentTotalString, false);
-
-    // For the first installment, must delete the input of final/base payment for all other installments
+    await sendKeysPTaxInputFields(basePayment1, installmentStringOne, false);
 
     const finalPayment2 = await awaitElementLocatedAndReturn(
       driver,
       selectors.finalPayment2,
       "id"
     );
-    await deleteInputFieldContents(finalPayment2);
+    await sendKeysPTaxInputFields(finalPayment2, installmentStringTwo, false);
 
     const basePayment2 = await awaitElementLocatedAndReturn(
       driver,
       selectors.basePayment2,
       "id"
     );
-    await deleteInputFieldContents(basePayment2);
+    await sendKeysPTaxInputFields(basePayment2, installmentStringTwo, false);
 
     const btnSaveAllPayment = await awaitElementLocatedAndReturn(
       driver,
@@ -60,27 +59,20 @@ const fillOutPayments = async (
 
     await waitForLoading();
   } else if (installmentNumber === "2") {
-    /* 
-      Fill out final and base payment for payment 2
-    */
-
     const finalPayment2 = await awaitElementLocatedAndReturn(
       driver,
       selectors.finalPayment2,
       "id"
     );
-    await sendKeysPTaxInputFields(finalPayment2, installmentTotalString, false);
+    await sendKeysPTaxInputFields(finalPayment2, installmentStringTwo, false);
 
     const basePayment2 = await awaitElementLocatedAndReturn(
       driver,
       selectors.basePayment2,
       "id"
     );
-    await sendKeysPTaxInputFields(basePayment2, installmentTotalString, false);
+    await sendKeysPTaxInputFields(basePayment2, installmentStringTwo, false);
 
-    /* 
-      Save
-    */
     const btnSaveAllPayment = await awaitElementLocatedAndReturn(
       driver,
       selectors.saveAll,

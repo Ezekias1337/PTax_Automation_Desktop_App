@@ -67,7 +67,7 @@ const handleAutomationCancel = require("../../../../../ipc-bus/handleAutomationC
 
 // Helpers
 
-const performDataEntryAndDownload = async (
+const performUploadOriginalDocument = async (
   {
     taxYear,
     downloadDirectory,
@@ -117,41 +117,6 @@ const performDataEntryAndDownload = async (
     await swapToIFrame0(driver);
     await clickCheckMyPropertiesCheckBox(driver);
 
-    await sendEventLogInfo(ipcBusClientNodeMain, {
-      color: "yellow",
-      message: "Logging into Parcel Quest",
-    });
-    await openNewTab(driver);
-    await driver.get(parcelQuestLoginPage);
-    const taxWebsiteWindow = await driver.getWindowHandle();
-
-    const loginToParcelQuestSuccessful = await loginToParcelQuest(
-      driver,
-      parcelQuestUsername,
-      parcelQuestPassword,
-      websiteSelectors,
-      parcelQuestLoginPage,
-      parcelQuestHomePage
-    );
-
-    /* 
-        if loginToParcelQuestSuccessful is false,
-        it means the login credentials are invalid,
-        or the selectors are no longer valid
-    */
-    if (loginToParcelQuestSuccessful === false) {
-      await sendEventLogInfo(ipcBusClientNodeMain, {
-        color: "red",
-        message:
-          "Login to Parcel Quest failed! Please check your username and password.",
-      });
-      return;
-    }
-    await sendEventLogInfo(ipcBusClientNodeMain, {
-      color: "green",
-      message: "Login into Parcel Quest Successful!",
-    });
-
     for (const item of spreadsheetContents) {
       try {
         await sendEventLogInfo(ipcBusClientNodeMain, {
@@ -160,185 +125,12 @@ const performDataEntryAndDownload = async (
         });
         await sendCurrentIterationInfo(ipcBusClientNodeMain, item.ParcelNumber);
 
-        /* 
-          Reset the browser tabs for new iteration
-        */
-        const currentUrl = await driver.getCurrentUrl();
-        if (currentUrl !== parcelQuestHomePage) {
-          await driver.sleep(5000);
-          await driver.get(parcelQuestLoginPage);
-          await loginToParcelQuest(
-            driver,
-            parcelQuestUsername,
-            parcelQuestPassword,
-            websiteSelectors,
-            parcelQuestHomePage
-          );
-        }
-
-        /* 
-          Proceed with iteration
-        */
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "orange",
-          message: `Searching for: ${item.ParcelNumber}`,
-        });
-        const searchSuccessful = await searchForParcel(
-          driver,
-          item.ParcelNumber,
-          county,
-          websiteSelectors,
-          "up"
-        );
-        if (searchSuccessful === false) {
-          arrayOfFailedOperations.push(item);
-
-          await sendFailedIteration(
-            ipcBusClientNodeMain,
-            item,
-            `Failed to find parcel: ${item.ParcelNumber} in database.`
-          );
-          await sendEventLogInfo(ipcBusClientNodeMain, {
-            color: "red",
-            message: `Failed to find parcel: ${item.ParcelNumber} in database.`,
-          });
-          await switchToTaxWebsiteTab(taxWebsiteWindow);
-          continue;
-        }
-
-        /* 
-          Navigate to the bill
-          
-          For some reason parcel quest has tons of duplicate elements which share a selector, but
-          are not visible in the DOM. To get to the Tax Bill Data, we must select the 2nd element
-          returned from the array.
-        */
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "orange",
-          message: `Navigating to bill for: ${item.ParcelNumber}`,
-        });
-        await driver.sleep(2000);
-        const arrayOfPossibleTaxBillDataTabElements = await driver.findElements(
-          By.css(websiteSelectors.taxBillDataTab)
-        );
-        const taxBillDataTabElement = arrayOfPossibleTaxBillDataTabElements[1];
-        await taxBillDataTabElement.click();
-        await driver.sleep(2000);
-        const navigatedToBillSuccessfully = await fluentWait(
-          driver,
-          websiteSelectors.taxSummaryDiv,
-          "xpath",
-          10,
-          2
-        );
-        if (navigatedToBillSuccessfully === false) {
-          arrayOfFailedOperations.push(item);
-
-          await sendFailedIteration(
-            ipcBusClientNodeMain,
-            item,
-            `Failed to navigate to the bill for parcel: ${item.ParcelNumber}.`
-          );
-          await sendEventLogInfo(ipcBusClientNodeMain, {
-            color: "red",
-            message: `Failed to navigate to the bill for parcel: ${item.ParcelNumber}.`,
-          });
-          await switchToTaxWebsiteTab(taxWebsiteWindow);
-          continue;
-        }
-
-        /* 
-            Download the bill
-        */
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "purple",
-          message: `Downloading bill for: ${item.ParcelNumber}`,
-        });
-        const fileNameForFile = replaceSpacesWithUnderscore(
-          `${item.CompanyName} ${item.EntityName} ${item.ParcelNumber}`
-        );
-        const billDownloadedSuccessfully = await printPageToPDF(
-          driver,
-          downloadDirectory,
-          fileNameForFile,
-          websiteSelectors.screenShotSelector,
-          false
-        );
-        if (billDownloadedSuccessfully === false) {
-          arrayOfFailedOperations.push(item);
-          await sendFailedIteration(
-            ipcBusClientNodeMain,
-            item,
-            `Failed to download the bill for parcel: ${item.ParcelNumber}.`
-          );
-          await sendEventLogInfo(ipcBusClientNodeMain, {
-            color: "red",
-            message: `Failed to download the bill for parcel: ${item.ParcelNumber}.`,
-          });
-          await switchToTaxWebsiteTab(taxWebsiteWindow);
-          continue;
-        }
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "blue",
-          message: `Bill for: ${item.ParcelNumber} downloaded successfully`,
-        });
-
-        /* 
-            Pull Tax Data Strings
-        */
-
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "orange",
-          message: `Pulling Tax Data for: ${item.ParcelNumber}`,
-        });
-        let taxDataStringObject = await pullTaxBillStrings(
-          driver,
-          taxYear,
-          county,
-          websiteSelectors
-        );
-        if (Object.keys(taxDataStringObject).length === 0) {
-          /* 
-            Try getting tax data one more time in case
-            parcelQuest failed to load
-          */
-          await pressHomeButton(driver);
-          taxDataStringObject = await pullTaxBillStrings(
-            driver,
-            taxYear,
-            county,
-            websiteSelectors
-          );
-          /* 
-            If this still returns 0, something else is wrong
-          */
-          if (Object.keys(taxDataStringObject).length === 0) {
-            arrayOfFailedOperations.push(item);
-            await sendFailedIteration(
-              ipcBusClientNodeMain,
-              item,
-              `Failed to pull tax data for parcel: ${item.ParcelNumber}.`
-            );
-            await sendEventLogInfo(ipcBusClientNodeMain, {
-              color: "red",
-              message: `Failed to pull tax data for parcel: ${item.ParcelNumber}.`,
-            });
-            await driver.get(parcelQuestHomePage);
-            continue;
-          }
-        }
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "regular",
-          message: `Total taxes due: ${taxDataStringObject.totalTaxesDue} || Total NAVs due: ${taxDataStringObject.totalNAVs}`,
-        });
-
-        /* 
-            Ptax Data Entry
-        */
-
-        // Navigate to parcel in PTax
-        await switchToPTaxTab(driver, ptaxWindow);
         await driver.navigate().refresh();
+
+        /* 
+          Navigate to parcel in PTax
+        */
+
         await swapToIFrameDefaultContent(driver);
         await sendEventLogInfo(ipcBusClientNodeMain, {
           color: "blue",
@@ -391,7 +183,7 @@ const performDataEntryAndDownload = async (
         await selectDropdownElement(
           driver,
           taxBillSelectors.dataSourceAssessment,
-          "ParcelQuest"
+          "Legal Document"
         );
         const saveAssessmentButton = await awaitElementLocatedAndReturn(
           driver,
@@ -402,40 +194,32 @@ const performDataEntryAndDownload = async (
         await saveAssessmentButton.click();
         await waitForLoading(driver);
 
-        // Fill out the input fields and save
-        await fillOutLiability(
+        await selectDropdownElement(
           driver,
-          taxBillSelectors,
-          taxDataStringObject.totalTaxesDue,
-          taxDataStringObject.totalNAVs
-        );
-
-        const installmentStringOne =
-          taxDataStringObject.installmentOneAmountDue;
-
-        const installmentStringTwo =
-          taxDataStringObject.installmentTwoAmountDue;
-
-        await fillOutPayments(
-          driver,
-          taxBillSelectors,
-          installmentStringOne,
-          installmentStringTwo,
-          installmentNumber
+          taxBillSelectors.dataSourceLiability,
+          "Legal Document",
+          true,
+          taxBillSelectors.dataSourceLiabilityParcelQuest
         );
 
         await sendEventLogInfo(ipcBusClientNodeMain, {
           color: "purple",
           message: `Uploading Bill for: ${item.ParcelNumber}`,
         });
-        // Upload Document
+
+        /* 
+          Upload Document
+        */
+        const fileNameForFile = replaceSpacesWithUnderscore(
+          `${item.CompanyName} ${item.EntityName} ${item.ParcelNumber}`
+        );
         await uploadTaxBill(
           driver,
           fileNameForFile,
           taxYear,
           taxYearEnd,
           downloadDirectory,
-          "Annual (PQ)"
+          "Annual"
         );
         await sendEventLogInfo(ipcBusClientNodeMain, {
           color: "green",
@@ -443,13 +227,6 @@ const performDataEntryAndDownload = async (
         });
 
         await swapToIFrame0(driver);
-        await switchToTaxWebsiteTab(driver, taxWebsiteWindow);
-        const homeButton = await awaitElementLocatedAndReturn(
-          driver,
-          websiteSelectors.homeButton,
-          "css"
-        );
-        await homeButton.click();
 
         arrayOfSuccessfulOperations.push(item);
         await sendSuccessfulIteration(ipcBusClientNodeMain, item);
@@ -471,7 +248,7 @@ const performDataEntryAndDownload = async (
           color: "red",
           message: `Failed for parcel: ${item.ParcelNumber}`,
         });
-        await switchToTaxWebsiteTab(taxWebsiteWindow);
+        await driver.navigate().refresh();
         console.log(colors.red.bold(`Failed for parcel: ${item.ParcelNumber}`));
         consoleLogLine();
         arrayOfFailedOperations.push(item);
@@ -501,4 +278,4 @@ const performDataEntryAndDownload = async (
   }
 };
 
-module.exports = performDataEntryAndDownload;
+module.exports = performUploadOriginalDocument;

@@ -11,12 +11,7 @@ const removeSpecialCharsFromString = require("../../../../../utils/strings/remov
     etc.
 */
 
-const pullTaxBillStrings = async (
-  driver,
-  taxYear,
-  county,
-  selectors
-) => {
+const pullTaxBillStrings = async (driver, taxYear, county, selectors) => {
   try {
     /* 
       First verify the server returned the tax data, once in a blue
@@ -49,7 +44,35 @@ const pullTaxBillStrings = async (
     }
 
     /* 
-        Now that the tax year has been confirmed, get the general tax
+        Second verify that the Bill Type is "Regular", if not
+        return an empty obj, uses a fluent wait to ensure script
+        doesn't get stuck on the xpath selector
+    */
+
+    const billTypeIsRegular = await fluentWait(
+      driver,
+      selectors.billType,
+      "xpath",
+      10,
+      2
+    );
+    if (billTypeIsRegular === true) {
+      const billTypeElement = await awaitElementLocatedAndReturn(
+        driver,
+        selectors.billType,
+        "xpath"
+      );
+      const billTypeText = await billTypeElement.getAttribute("innerText");
+      if (billTypeText !== "Regular") {
+        return {};
+      }
+    } else {
+      return {};
+    }
+
+    /* 
+        Now that the tax year and bill type has been confirmed, get the 
+        general tax
     */
     const taxDetailsBreakdownTable = await awaitElementLocatedAndReturn(
       driver,
