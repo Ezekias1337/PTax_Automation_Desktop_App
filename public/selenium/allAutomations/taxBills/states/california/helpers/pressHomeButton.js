@@ -2,12 +2,14 @@ const awaitElementLocatedAndReturn = require("../../../../../functions/general/a
 const websiteSelectors = require("../websiteSelectors");
 
 const pressHomeButton = async (driver) => {
-  const homeButton = await awaitElementLocatedAndReturn(
-    driver,
-    websiteSelectors.homeButton,
-    "css"
-  );
-  await homeButton.click();
+  try {
+    const homeButton = await awaitElementLocatedAndReturn(
+      driver,
+      websiteSelectors.homeButton,
+      "css"
+    );
+    await homeButton.click();
+  } catch (error) {}
 };
 
 module.exports = pressHomeButton;

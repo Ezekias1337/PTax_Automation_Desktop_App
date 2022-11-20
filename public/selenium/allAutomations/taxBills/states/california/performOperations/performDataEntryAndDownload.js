@@ -123,6 +123,7 @@ const performDataEntryAndDownload = async (
     });
     await openNewTab(driver);
     await driver.get(parcelQuestLoginPage);
+    await driver.wait(until.urlIs(parcelQuestLoginPage));
     const taxWebsiteWindow = await driver.getWindowHandle();
 
     const loginToParcelQuestSuccessful = await loginToParcelQuest(
@@ -217,18 +218,48 @@ const performDataEntryAndDownload = async (
           color: "orange",
           message: `Navigating to bill for: ${item.ParcelNumber}`,
         });
-        await driver.sleep(2000);
+        await driver.sleep(6000);
         const arrayOfPossibleTaxBillDataTabElements = await driver.findElements(
           By.css(websiteSelectors.taxBillDataTab)
         );
         const taxBillDataTabElement = arrayOfPossibleTaxBillDataTabElements[1];
         await taxBillDataTabElement.click();
         await driver.sleep(2000);
+
+        /* 
+          Now verify that parcelquest yielded results by getting the pagination element,
+          if the innertext === -1, no data was found (there are two elements, get the 2nd)
+        */
+        const parcelQuestPaginationArray = await driver.findElements(
+          By.css(websiteSelectors.parcelQuestPagination, "css")
+        );
+        const parcelQuestPaginationCorrectEle = parcelQuestPaginationArray[1];
+        const paginationString = await parcelQuestPaginationCorrectEle.getAttribute("innerText");
+        if(paginationString === "-1") {
+          arrayOfFailedOperations.push(item);
+
+          await sendFailedIteration(
+            ipcBusClientNodeMain,
+            item,
+            `Parcel quest failed to render the tax data for: ${item.ParcelNumber}.`
+          );
+          await sendEventLogInfo(ipcBusClientNodeMain, {
+            color: "red",
+            message: `Parcel quest failed to render the tax data for: ${item.ParcelNumber}.`,
+          });
+          await pressHomeButton(driver);
+          continue;
+        }
+        
+        /* 
+          Now ensure that we are on the tax bill data tab
+        */
+
         const navigatedToBillSuccessfully = await fluentWait(
           driver,
           websiteSelectors.taxSummaryDiv,
           "xpath",
-          10,
+          20,
           2
         );
         if (navigatedToBillSuccessfully === false) {
@@ -243,7 +274,7 @@ const performDataEntryAndDownload = async (
             color: "red",
             message: `Failed to navigate to the bill for parcel: ${item.ParcelNumber}.`,
           });
-          await switchToTaxWebsiteTab(taxWebsiteWindow);
+          await pressHomeButton(driver);
           continue;
         }
 
@@ -275,7 +306,7 @@ const performDataEntryAndDownload = async (
             color: "red",
             message: `Failed to download the bill for parcel: ${item.ParcelNumber}.`,
           });
-          await switchToTaxWebsiteTab(taxWebsiteWindow);
+          await pressHomeButton(driver);
           continue;
         }
         await sendEventLogInfo(ipcBusClientNodeMain, {
@@ -323,7 +354,7 @@ const performDataEntryAndDownload = async (
               color: "red",
               message: `Failed to pull tax data for parcel: ${item.ParcelNumber}.`,
             });
-            await driver.get(parcelQuestHomePage);
+            await pressHomeButton(driver);
             continue;
           }
         }
@@ -462,6 +493,11 @@ const performDataEntryAndDownload = async (
         );
         consoleLogLine();
       } catch (error) {
+        /*
+          Here I have to add an artificial delay, because if too many parcels fail in quick
+          succession, it causes the app to crash
+        */
+        await driver.sleep(6500);
         await sendFailedIteration(
           ipcBusClientNodeMain,
           item,
@@ -471,7 +507,11 @@ const performDataEntryAndDownload = async (
           color: "red",
           message: `Failed for parcel: ${item.ParcelNumber}`,
         });
-        await switchToTaxWebsiteTab(taxWebsiteWindow);
+        const urlPostFailure = await driver.getCurrentUrl();
+        if (urlPostFailure !== parcelQuestHomePage) {
+          await switchToTaxWebsiteTab(taxWebsiteWindow);
+        }
+
         console.log(colors.red.bold(`Failed for parcel: ${item.ParcelNumber}`));
         consoleLogLine();
         arrayOfFailedOperations.push(item);

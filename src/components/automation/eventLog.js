@@ -1,8 +1,10 @@
 // Library Imports
+import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { nanoid } from "nanoid";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Functions, Helpers, Utils and Hooks
+import { scrollIntoView } from "../../utils/window/scrollIntoView";
 import { useEventLogData } from "../../hooks/ipc/useEventLogData";
 // Action Types
 import { RECEIVE_EVENT_LOG_DATA } from "../../redux/actionCreators/eventLogCreators";
@@ -17,7 +19,16 @@ export const EventLog = ({ busClientRenderer, automationStatus }) => {
   const [animationParent] = useAutoAnimate();
   const eventLogState = useSelector((state) => state.eventLog);
   const eventLogContents = eventLogState.contents[RECEIVE_EVENT_LOG_DATA];
+  const scrollRef = useRef(null);
   useEventLogData(busClientRenderer);
+
+  /* 
+    Scroll to the bottom of the event log when it updates
+  */
+
+  useEffect(() => {
+    scrollIntoView(scrollRef);
+  }, [eventLogContents, scrollRef]);
 
   return (
     <div
@@ -44,6 +55,9 @@ export const EventLog = ({ busClientRenderer, automationStatus }) => {
               );
             })
           )}
+          <div id="element-for-scroll" ref={scrollRef} onLoad={() => {
+            scrollIntoView(scrollRef)
+          }}></div>
         </div>
       </div>
       {/* <div className="row mt-2">

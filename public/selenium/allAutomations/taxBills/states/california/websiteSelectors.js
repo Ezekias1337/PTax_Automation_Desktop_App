@@ -30,6 +30,7 @@ const websiteSelectors = {
   billType: "//span[contains(text(), 'Regular')]",
 
   screenShotSelector: "body",
+  parcelQuestPagination: "#gridFooter span.recordCount > span.recordCount",
 
   loader:
     "#searchResults > div > div.resultsPanel > div.resultsProgress > div > div",

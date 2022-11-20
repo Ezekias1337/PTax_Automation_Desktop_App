@@ -35,10 +35,6 @@ export const PostAutomationSummary = () => {
   const failedIterations = automationState.contents[FAILED_ITERATIONS];
   const cancelledIterations = automationState.contents[CANCELLED_ITERATIONS];
 
-  console.log("completedIterations: ", completedIterations);
-  console.log("failedIterations: ", failedIterations);
-  console.log("cancelledIterations: ", cancelledIterations);
-
   const [numberOfCompletedIterations, setNumberOfCompletedIterations] =
     useState(false);
   const [numberOfFailedIterations, setNumberOfFailedIterations] =
@@ -172,7 +168,7 @@ export const PostAutomationSummary = () => {
             <SpreadsheetButton
               selectedSpreadsheetData={selectedSpreadsheetData}
               setSelectedSpreadsheetData={setSelectedSpreadsheetData}
-              newSpreadsheetData={[...cancelledIterations, ...failedIterations]}
+              newSpreadsheetData={[...failedIterations, ...cancelledIterations]}
             />
             <DownloadButton />
           </div>
