@@ -40,8 +40,8 @@ export const EventLog = ({ busClientRenderer, automationStatus }) => {
           {eventLogContents?.length < 1 ? (
             <div key={nanoid()} className={`col col-12`}>
               This is the event log! When the automation begins this section
-              will display import information about what is happening while it's
-              running.
+              will display important information about what is happening while
+              it's running.
             </div>
           ) : (
             eventLogContents.map((logEntry) => {
@@ -55,9 +55,7 @@ export const EventLog = ({ busClientRenderer, automationStatus }) => {
               );
             })
           )}
-          <div id="element-for-scroll" ref={scrollRef} onLoad={() => {
-            scrollIntoView(scrollRef)
-          }}></div>
+          <div id="element-for-scroll" ref={scrollRef}></div>
         </div>
       </div>
       {/* <div className="row mt-2">

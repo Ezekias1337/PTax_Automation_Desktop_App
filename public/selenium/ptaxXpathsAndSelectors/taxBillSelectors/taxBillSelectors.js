@@ -12,7 +12,10 @@ const taxBillSelectors = {
   finalTotalLiability: "tbTotalTaxLiability2",
   dataSourceAssessment: "ddDataSourceAssessment",
   dataSourceLiability: "ddDataSourceTaxLiability",
-  dataSourceLiabilityParcelQuest: "#ddDataSourceTaxLiability > option:nth-child(12)",
+  dataSourceLiabilityParcelQuest:
+    "#ddDataSourceTaxLiability > option:nth-child(12)",
+  dataSourceLiabilityLegalDocument:
+    "#ddDataSourceTaxLiability > option:nth-child(1)",
   milRate: "tbMillRate",
   exemptionPercentage: "tbTaxExemptionPercentage",
   btnSaveAssessment: "btnSaveAssessment",

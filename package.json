@@ -56,7 +56,7 @@
   "scripts": {
     "app": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electronmon .\"",
     "prestart": "browserify -o ./public/preload.bundle.js -x electron ./preload.js",
-    "start": "cross-env GENERATE_SOURCEMAP=false",
+    "start": "cross-env GENERATE_SOURCEMAP=false && set ELECTRON_ENABLE_LOGGING=true",
     "poststart": "react-scripts start",
     "build": "react-scripts build && electron-builder -p always",
     "electron:package:win": "npm run build && electron-builder -p -always",

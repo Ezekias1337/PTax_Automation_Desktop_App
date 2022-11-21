@@ -114,6 +114,28 @@ try {
   // code. You can also put them in separate files and require them here.
 
   /* 
+    There is a bug that is causing the app screen to turn white while the script keeps running,
+    here a logger is added to catch what's causing the issue
+  */
+
+  //handle crashes and kill events
+  process.on("uncaughtException", function (err) {
+    //log the message and stack trace
+    log.warn(err);
+    //relaunch the app
+    app.relaunch({ args: [] });
+    app.exit(0);
+  });
+
+  process.on("SIGTERM", function (err) {
+    //log the message and stack trace
+    log.warn(err, "SIGTERM ISSUE");
+    //relaunch the app
+    app.relaunch({ args: [] });
+    app.exit(0);
+  });
+
+  /* 
 ---------------------------END OF BASE TEMPLATE---------------------------
 */
 

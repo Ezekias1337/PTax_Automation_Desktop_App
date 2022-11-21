@@ -199,8 +199,17 @@ const performUploadOriginalDocument = async (
           taxBillSelectors.dataSourceLiability,
           "Legal Document",
           true,
-          taxBillSelectors.dataSourceLiabilityParcelQuest
+          taxBillSelectors.dataSourceLiabilityLegalDocument
         );
+
+        const saveLiabilityButton = await awaitElementLocatedAndReturn(
+          driver,
+          taxBillSelectors.saveLiability,
+          "id"
+        );
+        await scrollElementIntoView(driver, saveLiabilityButton);
+        await saveLiabilityButton.click();
+        await waitForLoading(driver);
 
         await sendEventLogInfo(ipcBusClientNodeMain, {
           color: "purple",
@@ -221,11 +230,12 @@ const performUploadOriginalDocument = async (
           downloadDirectory,
           "Annual"
         );
+        await driver.sleep(2500);
         await sendEventLogInfo(ipcBusClientNodeMain, {
           color: "green",
           message: `Bill successfully uploaded for: ${item.ParcelNumber}`,
         });
-
+        await driver.sleep(2500);
         await swapToIFrame0(driver);
 
         arrayOfSuccessfulOperations.push(item);
@@ -242,11 +252,11 @@ const performUploadOriginalDocument = async (
         await sendFailedIteration(
           ipcBusClientNodeMain,
           item,
-          `Failed for parcel: ${item.ParcelNumber}`
+          `Failed for parcel: ${item.ParcelNumber} || ${error.message}`
         );
         await sendEventLogInfo(ipcBusClientNodeMain, {
           color: "red",
-          message: `Failed for parcel: ${item.ParcelNumber}`,
+          message: `Failed for parcel: ${item.ParcelNumber} || ${error.message}`,
         });
         await driver.navigate().refresh();
         console.log(colors.red.bold(`Failed for parcel: ${item.ParcelNumber}`));
