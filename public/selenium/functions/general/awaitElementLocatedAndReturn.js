@@ -1,5 +1,14 @@
 const { until, By } = require("selenium-webdriver");
 
+/* 
+  fluentElementLocatedAndReturn and awaitElementLocatedAndReturn are
+  nearly identical, the only difference being that the fluent method
+  gives up after the specified wait time has elapsed and returns null.
+  
+  Whereas awaitElement method will wait forever until the condition
+  passed returns true.
+*/
+
 const awaitElementLocatedAndReturn = async (
   driver,
   selector,

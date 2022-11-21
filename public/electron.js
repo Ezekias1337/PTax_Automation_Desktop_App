@@ -21,7 +21,7 @@ try {
 */
   log.info("CREATING STORE");
   let store = new Store();
-  let tray;
+  let tray, window;
 
   /* 
   The whenReady method will be called when Electron has finished
@@ -42,7 +42,7 @@ try {
         .catch((err) => console.log("An error occurred: ", err));
     }
     log.info("CREATING WINDOW...........");
-    const window = createWindow(__dirname, process, store, isDev);
+    window = createWindow(__dirname, process, store, isDev);
     if (tray !== undefined) {
       tray.destroy();
     }

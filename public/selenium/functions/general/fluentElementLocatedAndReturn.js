@@ -1,6 +1,15 @@
 const { until, By } = require("selenium-webdriver");
 
-const fluentWait = async (
+/* 
+  fluentElementLocatedAndReturn and awaitElementLocatedAndReturn are
+  nearly identical, the only difference being that the fluent method
+  gives up after the specified wait time has elapsed and returns null,
+  
+  Whereas awaitElement method will wait forever until the condition
+  passed returns true.
+*/
+
+const fluentElementLocatedAndReturn = async (
   driver,
   selector,
   method,
@@ -8,6 +17,7 @@ const fluentWait = async (
   checkFrequency,
   timeOutMessage = "Fluent wait timed out!"
 ) => {
+  let elementToReturn;
   try {
     switch (method) {
       case "className":
@@ -17,6 +27,7 @@ const fluentWait = async (
           timeOutMessage,
           checkFrequency * 1000
         );
+        elementToReturn = driver.findElement(By.className(selector));
         break;
       case "css":
         await driver.wait(
@@ -25,6 +36,7 @@ const fluentWait = async (
           timeOutMessage,
           checkFrequency * 1000
         );
+        elementToReturn = driver.findElement(By.css(selector));
         break;
       case "id":
         await driver.wait(
@@ -33,6 +45,7 @@ const fluentWait = async (
           timeOutMessage,
           checkFrequency * 1000
         );
+        elementToReturn = driver.findElement(By.id(selector));
         break;
       case "name":
         await driver.wait(
@@ -41,6 +54,7 @@ const fluentWait = async (
           timeOutMessage,
           checkFrequency * 1000
         );
+        elementToReturn = driver.findElement(By.name(selector));
         break;
       case "linkText":
         await driver.wait(
@@ -49,6 +63,7 @@ const fluentWait = async (
           timeOutMessage,
           checkFrequency * 1000
         );
+        elementToReturn = driver.findElement(By.linkText(selector));
         break;
       case "partialLinkText":
         await driver.wait(
@@ -57,6 +72,7 @@ const fluentWait = async (
           timeOutMessage,
           checkFrequency * 1000
         );
+        elementToReturn = driver.findElement(By.partialLinkText(selector));
         break;
       case "tagName":
         await driver.wait(
@@ -65,6 +81,7 @@ const fluentWait = async (
           timeOutMessage,
           checkFrequency * 1000
         );
+        elementToReturn = driver.findElement(By.tagName(selector));
         break;
       case "xpath":
         await driver.wait(
@@ -73,14 +90,18 @@ const fluentWait = async (
           timeOutMessage,
           checkFrequency * 1000
         );
+        elementToReturn = driver.findElement(By.xpath(selector));
         break;
       default:
+        elementToReturn = null;
         console.log("No match found for element locator method");
     }
-    return true;
   } catch (error) {
-    return false;
+    elementToReturn = null;
+    console.log("Failed to store element, check selector and method");
+    console.log(error, error.message);
   }
+  return elementToReturn;
 };
 
-module.exports = fluentWait;
+module.exports = fluentElementLocatedAndReturn;
