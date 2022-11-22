@@ -6,10 +6,11 @@ import { handleFormChange } from "../../functions/forms/handleFormChange";
 import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
 import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 
-export const TextInput = ({ data, state, setStateHook }) => {
+export const TextInput = ({ data, state = null, setStateHook }) => {
   const [defaultValueProp, setDefaultValueProp] = useState(null);
 
   useEffect(() => {
+    
     let tempValueProp = inputFieldFillDefault(
       data.name.split(" ").join(""),
       state,
@@ -19,6 +20,8 @@ export const TextInput = ({ data, state, setStateHook }) => {
     if (tempValueProp !== null) {
       setDefaultValueProp(tempValueProp);
     }
+    
+    
   }, [data.name, state]);
 
   useEffect(() => {

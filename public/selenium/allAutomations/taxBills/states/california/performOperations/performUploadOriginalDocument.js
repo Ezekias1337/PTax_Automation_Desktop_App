@@ -239,7 +239,14 @@ const performUploadOriginalDocument = async (
         await swapToIFrame0(driver);
 
         arrayOfSuccessfulOperations.push(item);
-        await sendSuccessfulIteration(ipcBusClientNodeMain, item);
+        let itemErrorColRemoved = item;
+        if (itemErrorColRemoved?.Error) {
+          delete itemErrorColRemoved.Error;
+        }
+        await sendSuccessfulIteration(
+          ipcBusClientNodeMain,
+          itemErrorColRemoved
+        );
         await sendEventLogInfo(ipcBusClientNodeMain, {
           color: "green",
           message: `Succeeded for parcel: ${item.ParcelNumber}`,

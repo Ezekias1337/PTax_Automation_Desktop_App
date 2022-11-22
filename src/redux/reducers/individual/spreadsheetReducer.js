@@ -6,10 +6,14 @@ import {
   READ_SPREADSHEET_LOADING_TOGGLE,
   READ_SPREADSHEET_ERROR,
   READ_SPREADSHEET_RESET,
+  SAVE_SPREADSHEET,
+  SAVE_SPREADSHEET_LOADING_TOGGLE,
+  SAVE_SPREADSHEET_ERROR,
+  SAVE_SPREADSHEET_RESET,
 } from "../../actionCreators/spreadsheetCreators";
 
 const INITIAL_STATE = {
-  ...buildInitialState([READ_SPREADSHEET]),
+  ...buildInitialState([READ_SPREADSHEET, SAVE_SPREADSHEET]),
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -51,6 +55,18 @@ const reducer = (state = INITIAL_STATE, action) => {
 
       return newStateObject;
 
+    case SAVE_SPREADSHEET:
+      newStateObject = {
+        ...state,
+      };
+      
+      /* 
+        ! NEED TO FIGURE OUT DATA STRUCTURE I WANT TO USE HERE BECAUSE OF NULL
+        ! THIS WILL ONLY BE USED TO DISPLAY TOAST WHEN FILE IS SAVED SUCCESSFULLY
+        ! OR THERE IS AN ERROR
+      */
+
+      return newStateObject;
     default:
       return state;
   }

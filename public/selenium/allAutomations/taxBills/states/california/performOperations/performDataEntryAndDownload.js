@@ -64,6 +64,7 @@ const waitForLoading = require("../../../../../functions/pTaxSpecific/waitForLoa
 const scrollElementIntoView = require("../../../../../functions/general/scrollElementIntoView");
 const pressHomeButton = require("../helpers/pressHomeButton");
 const handleAutomationCancel = require("../../../../../ipc-bus/handleAutomationCancel");
+const checkIfObjectIsEmpty = require("../../../../../../shared/utils/checkIfObjectIsEmpty");
 
 // Helpers
 
@@ -234,8 +235,9 @@ const performDataEntryAndDownload = async (
           By.css(websiteSelectors.parcelQuestPagination, "css")
         );
         const parcelQuestPaginationCorrectEle = parcelQuestPaginationArray[1];
-        const paginationString = await parcelQuestPaginationCorrectEle.getAttribute("innerText");
-        if(paginationString === "-1") {
+        const paginationString =
+          await parcelQuestPaginationCorrectEle.getAttribute("innerText");
+        if (paginationString === "-1") {
           arrayOfFailedOperations.push(item);
 
           await sendFailedIteration(
@@ -250,7 +252,7 @@ const performDataEntryAndDownload = async (
           await pressHomeButton(driver);
           continue;
         }
-        
+
         /* 
           Now ensure that we are on the tax bill data tab
         */
@@ -328,7 +330,7 @@ const performDataEntryAndDownload = async (
           county,
           websiteSelectors
         );
-        if (Object.keys(taxDataStringObject).length === 0) {
+        if (checkIfObjectIsEmpty(taxDataStringObject)) {
           /* 
             Try getting tax data one more time in case
             parcelQuest failed to load
@@ -343,7 +345,7 @@ const performDataEntryAndDownload = async (
           /* 
             If this still returns 0, something else is wrong
           */
-          if (Object.keys(taxDataStringObject).length === 0) {
+          if (checkIfObjectIsEmpty(taxDataStringObject)) {
             arrayOfFailedOperations.push(item);
             await sendFailedIteration(
               ipcBusClientNodeMain,
@@ -483,7 +485,11 @@ const performDataEntryAndDownload = async (
         await homeButton.click();
 
         arrayOfSuccessfulOperations.push(item);
-        await sendSuccessfulIteration(ipcBusClientNodeMain, item);
+        let itemErrorColRemoved = item;
+        if(itemErrorColRemoved?.Error) {
+          delete itemErrorColRemoved.Error
+        }
+        await sendSuccessfulIteration(ipcBusClientNodeMain, itemErrorColRemoved);
         await sendEventLogInfo(ipcBusClientNodeMain, {
           color: "green",
           message: `Succeeded for parcel: ${item.ParcelNumber}`,

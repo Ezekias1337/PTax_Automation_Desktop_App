@@ -11,18 +11,22 @@ const {
 
 const readSpreadsheetFile = async (pathToSpreadsheet) => {
   try {
-    let workbook = xlsx.readFile(pathToSpreadsheet);
-    let sheetNameList = workbook.SheetNames;
-    let worksheet = xlsx.utils.sheet_to_json(workbook.Sheets[sheetNameList[0]]);
+    const workbook = xlsx.readFile(pathToSpreadsheet);
+    const sheetNameList = workbook.SheetNames;
+    const arrayOfWorksheets = [];
 
-    const arrayOfObjects = [];
-
-    for (const item of Object.entries(worksheet)) {
-      const arrayOfObjectsKeysParsed = removeQuotesFromObjectKeys(item[1]);
-      arrayOfObjects.push(arrayOfObjectsKeysParsed);
+    for (const [index, sheet] of sheetNameList.entries()) {
+      let tempSheet = xlsx.utils.sheet_to_json(
+        workbook.Sheets[sheetNameList[index]]
+      );
+      let tempObj = {
+        sheetName: sheet,
+        data: tempSheet,
+      };
+      arrayOfWorksheets.push(tempObj);
     }
 
-    return arrayOfObjects;
+    return arrayOfWorksheets;
   } catch (error) {
     return null;
   }

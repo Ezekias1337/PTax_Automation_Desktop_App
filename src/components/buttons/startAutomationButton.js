@@ -14,11 +14,9 @@ export const StartAutomationButton = ({
   automationStatus,
   setAutomationStatus,
   isEnabled,
-  spreadsheetContents, 
-  setBusClientRenderer
+  spreadsheetContents,
+  setBusClientRenderer,
 }) => {
-  
-
   if (isEnabled === false) {
     return <></>;
   }
@@ -33,9 +31,14 @@ export const StartAutomationButton = ({
           }mx-2`}
           onClick={() => {
             setAutomationStatus("In Progress");
+            console.log("automationConfigObject: ", automationConfigObject);
+            /*
+              ! After multi-page support has been added to previewer,
+              ! remove the reference to [0].data
+            */
             startAutomation(
               automationConfigObject,
-              spreadsheetContents,
+              spreadsheetContents[0].data,
               ipcRenderer,
               setBusClientRenderer
             );

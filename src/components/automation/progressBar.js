@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Functions, Helpers, Utils, and Hooks
 import { removeSpacesFromString } from "../../utils/strings/removeSpacesFromString";
+import { roundDecimal } from "../../utils/numbers/roundDecimal";
 // Constants
 import { iteratorTypes } from "../../constants/iteratorTypes";
 // Action Types
@@ -51,7 +52,7 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
   useEffect(() => {
     if (numberOfDataPoints !== 0) {
       let tempPercentagePerDataPoint = 100 / numberOfDataPoints;
-      setPercentagePerDataPoint(tempPercentagePerDataPoint);
+      setPercentagePerDataPoint(roundDecimal(tempPercentagePerDataPoint));
     }
   }, [numberOfDataPoints]);
 
@@ -105,13 +106,13 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
   useEffect(() => {
     const tempCurrentPercentage =
       currentIterationNumber * percentagePerDataPoint;
-    setCurrentPercentage(tempCurrentPercentage);
+    setCurrentPercentage(roundDecimal(tempCurrentPercentage));
   }, [currentIterationNumber, percentagePerDataPoint]);
 
   /* 
     Increase width to 100 if the automation is done running
   */
-  
+
   useEffect(() => {
     if (automationFinished === true) {
       setCurrentPercentage(100);

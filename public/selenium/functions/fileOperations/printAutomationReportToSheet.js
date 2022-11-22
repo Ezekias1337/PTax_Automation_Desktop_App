@@ -16,7 +16,6 @@ const printAutomationReportToSheet = async (
   xlsx.utils.book_append_sheet(workBook, wsSuccessful, "Successful Operations");
   xlsx.utils.book_append_sheet(workBook, wsFailed, "Failed Operations");
   xlsx.writeFile(workBook, `${path}AutomationResults.xlsx`);
-  //xlsx.writeFile(workBook, `./output/AutomationResults.xlsx`);
 };
 
 module.exports = printAutomationReportToSheet;

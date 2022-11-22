@@ -4,25 +4,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileExcel } from "@fortawesome/free-solid-svg-icons";
 
 export const SpreadsheetButton = ({
-  selectedSpreadsheetData,
-  setSelectedSpreadsheetData,
-  newSpreadsheetData,
+  spreadsheetData,
+  displaySpreadsheet,
+  setDisplaySpreadsheet,
 }) => {
-  /* 
-    Determine if button has been clicked
-  */
-
   return (
     <Button
       className={`full-width-button styled-button${
-        newSpreadsheetData?.length === 0 ? " disabled" : ""
+        spreadsheetData?.length === 0 ? " disabled" : ""
       }`}
       onClick={() => {
-        if (selectedSpreadsheetData === newSpreadsheetData) {
+        setDisplaySpreadsheet(!displaySpreadsheet);
+        /* if (selectedSpreadsheetData === spreadsheetData) {
           setSelectedSpreadsheetData([]);
         } else {
-          setSelectedSpreadsheetData(newSpreadsheetData);
-        }
+          setSelectedSpreadsheetData(spreadsheetData);
+        } */
       }}
       alt="clipboard-button"
     >

@@ -17,6 +17,8 @@ import {
   COMPLETED_ITERATIONS,
   FAILED_ITERATIONS,
 } from "../../redux/actionCreators/automationCreators";
+// Functions, Helpers, Utils, and Hooks
+import { useIsFormFilled } from "../../hooks/useIsFormFilled";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
@@ -70,6 +72,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const failedIterations = automationState.contents[FAILED_ITERATIONS];
 
   useAutomationData(busClientRenderer);
+  useIsFormFilled(selectedChoices, setFormReady, true);
 
   /* 
     Handle theme preferences
@@ -176,44 +179,16 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
     setConfigCardContents(Object.entries(tempSelectedChoices));
   }, [selectedChoices]);
 
-  /* 
-    When the form has been filled out and the spreadsheet filepath
-    ends in .xlsx, setFormReady to true
-  */
-
-  useEffect(() => {
-    const tempSelectedChoices = { ...selectedChoices };
-    let doesEmptyValueExist = false;
-    let isSpreadsheetSelected = false;
-
-    for (const [key, value] of Object.entries(tempSelectedChoices)) {
-      if (value === "" || value === undefined) {
-        doesEmptyValueExist = true;
-      }
-
-      if (key === "spreadsheetFile") {
-        let checkFileExtension = value.slice(-5);
-        if (checkFileExtension.toLowerCase() === ".xlsx") {
-          isSpreadsheetSelected = true;
-        }
-      }
-    }
-
-    if (doesEmptyValueExist === false && isSpreadsheetSelected === true) {
-      setFormReady(true);
-    }
-  }, [selectedChoices]);
-  
   /*
     Set the local automation status to complete if back-end sends
     the signal
   */
- 
+
   useEffect(() => {
-    if(automationFinished === true) {
-      setAutomationStatus("Completed")
+    if (automationFinished === true) {
+      setAutomationStatus("Completed");
     }
-  }, [automationFinished])
+  }, [automationFinished]);
 
   /* 
     Start the IPC bridge

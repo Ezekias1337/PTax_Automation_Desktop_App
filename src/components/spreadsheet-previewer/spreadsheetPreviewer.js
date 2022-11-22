@@ -1,6 +1,8 @@
 // Library Imports
+import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 // Functions, Helpers, Utils, and Hooks
+import { renderEmptyTds } from "../../functions/spreadsheet-previewer/renderEmptyTds";
 import { pascalCasifyString } from "../../utils/strings/pascalCasifyString";
 // Constants
 import { alphabet } from "../../constants/alphabet";
@@ -14,6 +16,19 @@ import "../../css/spreadsheet-previewer.scss";
 */
 
 export const SpreadsheetPreviewer = ({ spreadSheetData }) => {
+  const [numOfColumns, setNumOfColumns] = useState(0);
+
+  /* 
+    Sets the number of columns so it can be used to render
+    empty tds if necessary
+  */
+
+  useEffect(() => {
+    if (spreadSheetData?.length !== 0) {
+      setNumOfColumns(Object.values(spreadSheetData[0].data[0]).length);
+    }
+  }, [spreadSheetData]);
+
   if (spreadSheetData?.length === 0) {
     return <></>;
   }
@@ -25,7 +40,7 @@ export const SpreadsheetPreviewer = ({ spreadSheetData }) => {
           <thead className="column-provider">
             <tr>
               <th></th>
-              {Object.keys(spreadSheetData[0]).map((rowData, index) => {
+              {Object.keys(spreadSheetData[0].data[0]).map((rowData, index) => {
                 return <th key={nanoid()}>{alphabet[index]}</th>;
               })}
             </tr>
@@ -33,21 +48,38 @@ export const SpreadsheetPreviewer = ({ spreadSheetData }) => {
           <thead className="column-names">
             <tr>
               <th></th>
-              {Object.keys(spreadSheetData[0]).map((rowData, index) => {
+              {Object.keys(spreadSheetData[0].data[0]).map((rowData, index) => {
                 return <th key={nanoid()}>{pascalCasifyString(rowData)}</th>;
               })}
             </tr>
           </thead>
           <tbody>
-            {spreadSheetData.map((rowData, index) => {
+            {spreadSheetData[0].data.map((rowData, index) => {
+              console.log("rowData: ", rowData);
+              console.log("numOfColumns: ", numOfColumns)
               return (
                 <tr key={nanoid()}>
                   <td className="row-numbers">{index + 1}</td>
+                  {/* Renders the cells with data */}
+                  {spreadSheetData[0].data[index] !== undefined ? (
+                    Object.values(spreadSheetData[0].data[index]).map(
+                      (rowData, tdIndex) => {
+                        return <td key={nanoid()}>{rowData}</td>;
+                      }
+                    )
+                  ) : (
+                    <></>
+                  )}
+                  {/* 
+                      Renders the empty cells if first row has more columns
+                      than the one being rendered                 
+                  */}
 
-                  {Object.values(spreadSheetData[index]).map(
-                    (rowData, tdIndex) => {
-                      return <td key={nanoid()}>{rowData}</td>;
-                    }
+                  {rowData !== undefined &&
+                  Object.values(rowData).length === numOfColumns ? (
+                    <></>
+                  ) : (
+                    renderEmptyTds(numOfColumns, rowData)
                   )}
                 </tr>
               );
@@ -55,6 +87,21 @@ export const SpreadsheetPreviewer = ({ spreadSheetData }) => {
           </tbody>
         </table>
       </div>
+      <ul id="worksheet-selection-navigation" className="nav nav-tabs">
+        {spreadSheetData?.length > 1 ? (
+          spreadSheetData.map((sheet, index) => {
+            return (
+              <li key={nanoid()} className="nav-item">
+                <button className={`nav-link ${index === 0 ? "active" : ""}`}>
+                  {sheet.sheetName}
+                </button>
+              </li>
+            );
+          })
+        ) : (
+          <></>
+        )}
+      </ul>
     </div>
   );
 };

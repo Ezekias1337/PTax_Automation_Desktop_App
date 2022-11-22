@@ -13,14 +13,18 @@ const { ipcRenderer } = window.require("electron");
 
 export const useSpreadsheetData = () => {
   const dispatch = useDispatch();
-  const { readSpreadsheet, readSpreadsheetError } = bindActionCreators(
-    actionCreators.spreadsheetCreators,
-    dispatch
-  );
+  const {
+    readSpreadsheet,
+    readSpreadsheetError,
+    saveSpreadsheet,
+    saveSpreadsheetError,
+  } = bindActionCreators(actionCreators.spreadsheetCreators, dispatch);
 
   useEffect(() => {
     ipcRenderer.on("spreadsheet parsed", readSpreadsheet);
     ipcRenderer.on("spreadsheet parse failed", readSpreadsheetError);
+    ipcRenderer.on("spreadsheet save", saveSpreadsheet);
+    ipcRenderer.on("spreadsheet save failed", saveSpreadsheetError);
 
     return () => {
       ipcRenderer.removeListener("spreadsheet parsed", readSpreadsheet);
@@ -28,6 +32,16 @@ export const useSpreadsheetData = () => {
         "spreadsheet parse failed",
         readSpreadsheetError
       );
+      ipcRenderer.removeListener("spreadsheet save", saveSpreadsheet);
+      ipcRenderer.removeListener(
+        "spreadsheet save failed",
+        saveSpreadsheetError
+      );
     };
-  }, [readSpreadsheet, readSpreadsheetError]);
+  }, [
+    readSpreadsheet,
+    readSpreadsheetError,
+    saveSpreadsheet,
+    saveSpreadsheetError,
+  ]);
 };

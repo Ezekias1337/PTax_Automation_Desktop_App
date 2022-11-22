@@ -6,6 +6,8 @@ import {
   faThumbsDown,
   faChartPie,
 } from "@fortawesome/free-solid-svg-icons";
+// Functions, Helpers, Utils, and Hooks
+import { roundDecimal } from "../../utils/numbers/roundDecimal";
 
 export const renderPostAutomationSummaryCard = (
   totalIterations,
@@ -13,21 +15,48 @@ export const renderPostAutomationSummaryCard = (
   numberOfFailedIterations,
   numberOfCancelledIterations
 ) => {
-  /* 
+  let completedRate,
+    completedPercentage,
+    failedRate,
+    failedPercentage,
+    cancelledRate,
+    cancelledPercentage,
+    finalTotalIterations;
+
+  if (totalIterations !== undefined) {
+    /* 
     Determine the % of completedIterations relative to all iterations
   */
-  const completedRate = numberOfCompletedIterations / totalIterations;
-  const completedPercentage = completedRate * 100;
-  /* 
+    completedRate = numberOfCompletedIterations / totalIterations;
+    completedPercentage = roundDecimal(completedRate * 100);
+    /* 
     Determine the % of failedIterations relative to all iterations
   */
-  const failedRate = numberOfFailedIterations / totalIterations;
-  const failedPercentage = failedRate * 100;
-  /* 
+    failedRate = numberOfFailedIterations / totalIterations;
+    failedPercentage = roundDecimal(failedRate * 100);
+    /* 
     Determine the % of cancelledIterations relative to all iterations
   */
-  const cancelledRate = numberOfCancelledIterations / totalIterations;
-  const cancelledPercentage = cancelledRate * 100;
+    cancelledRate = numberOfCancelledIterations / totalIterations;
+    cancelledPercentage = roundDecimal(cancelledRate * 100);
+
+    finalTotalIterations = totalIterations;
+  } else {
+    completedRate =
+      completedPercentage =
+      failedRate =
+      failedPercentage =
+      cancelledRate =
+      cancelledPercentage =
+      finalTotalIterations =
+        0;
+  }
+
+  /* 
+    finalTotalIterations is just used so that when the page reloads
+    in development mode you don't get an error for the redux state
+    being undefined
+  */
 
   return (
     <>
@@ -35,7 +64,7 @@ export const renderPostAutomationSummaryCard = (
         <div className="col col-6 completed-icon">
           <FontAwesomeIcon icon={faThumbsUp} />
           <b>Completed Iterations:</b>
-          {` ${numberOfCompletedIterations}/${totalIterations}`}
+          {` ${numberOfCompletedIterations}/${finalTotalIterations}`}
         </div>
         <div className="col col-6 completed-icon">
           <FontAwesomeIcon icon={faThumbsUp} />
@@ -47,7 +76,7 @@ export const renderPostAutomationSummaryCard = (
         <div className="col col-6 cancelled-icon">
           <FontAwesomeIcon icon={faChartPie} />
           <b>Cancelled Iterations:</b>
-          {` ${numberOfCancelledIterations}/${totalIterations}`}
+          {` ${numberOfCancelledIterations}/${finalTotalIterations}`}
         </div>
         <div className="col col-6 cancelled-icon">
           <FontAwesomeIcon icon={faChartPie} />
@@ -59,7 +88,7 @@ export const renderPostAutomationSummaryCard = (
         <div className="col col-6 failed-icon">
           <FontAwesomeIcon icon={faThumbsDown} />
           <b>Failed Iterations:</b>
-          {` ${numberOfFailedIterations}/${totalIterations}`}
+          {` ${numberOfFailedIterations}/${finalTotalIterations}`}
         </div>
         <div className="col col-6 failed-icon">
           <FontAwesomeIcon icon={faThumbsDown} />

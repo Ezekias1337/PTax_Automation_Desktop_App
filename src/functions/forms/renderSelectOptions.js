@@ -5,7 +5,7 @@ export const renderSelectOptions = (arrayOfOptions) => {
     arrayOfInputFields.push(
       <option
         value={option.name}
-        key={option.key}
+        key={option.name}
         name={option.name}
         id={`${option.name}-option`}
       >

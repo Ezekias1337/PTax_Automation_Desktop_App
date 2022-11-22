@@ -1,6 +1,6 @@
 @import "variables/light-mode-variables";
 @import "variables/dark-mode-variables";
-
+@import "variables/common-variables";
 /* 
   General Styling
 */
@@ -12,17 +12,13 @@ div.event-log {
   max-height: 50vh;
 }
 
+.nav-link {
+  color: $brown;
+}
+
 /* 
   Theme Specific Styling
 */
-
-[data-theme="Gradient"] {
-  div.event-log {
-    background-color: $bg-secondary-dark;
-    color: $color-text-dark;
-    border: 1px solid $bg-light;
-  }
-}
 
 [data-theme="Light"] {
   div.event-log {
@@ -30,17 +26,7 @@ div.event-log {
     color: $color-text-light;
     border: 1px solid $bg-dark;
   }
-}
 
-[data-theme="Dark"] {
-  div.event-log {
-    background-color: $bg-secondary-dark;
-    color: $color-text-dark;
-    border: 1px solid $bg-light;
-  }
-}
-
-[data-theme="Light"] {
   div.event-log > div.row > div {
     &.regular-message {
       color: inherit;
@@ -64,10 +50,25 @@ div.event-log {
       color: $purple-message-light;
     }
   }
+
+  .nav-link.active {
+    background-color: $bg-secondary-light;
+    color: $black;
+  }
+
+  .nav-link:hover {
+    color: $black;
+  }
 }
 
 [data-theme="Dark"],
 [data-theme="Gradient"] {
+  div.event-log {
+    background-color: $bg-secondary-dark;
+    color: $color-text-dark;
+    border: 1px solid $bg-light;
+  }
+
   div.event-log > div.row > div {
     &.regular-message {
       color: inherit;
@@ -90,5 +91,14 @@ div.event-log {
     &.purple-message {
       color: $purple-message-dark;
     }
+  }
+
+  .nav-link.active {
+    background-color: $bg-secondary-dark;
+    color: $white;
+  }
+
+  .nav-link:hover {
+    color: $white;
   }
 }

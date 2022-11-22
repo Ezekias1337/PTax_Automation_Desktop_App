@@ -13,6 +13,8 @@ import { renderPostAutomationSummaryCard } from "../../functions/automation/rend
 import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { useResetRedux } from "../../hooks/useResetRedux";
+import { useIsFormFilled } from "../../hooks/useIsFormFilled";
+import { useSpreadsheetData } from "../../hooks/ipc/useSpreadsheetData";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
@@ -20,11 +22,15 @@ import { Card } from "../card/card";
 import { SpreadsheetButton } from "../buttons/spreadsheetButton";
 import { DownloadButton } from "../buttons/downloadButton";
 import { SpreadsheetPreviewer } from "../spreadsheet-previewer/spreadsheetPreviewer";
+import { Switch } from "../input-fields/switch";
+import { TextInput } from "../input-fields/textInput";
+import { FileOrDirectoryPicker } from "../input-fields/fileOrDirectoryPicker";
 // CSS
 import "../../css/styles.scss";
 
 export const PostAutomationSummary = () => {
   usePersistentSettings();
+  useSpreadsheetData();
   /* 
     Commenting this out for now, because I plan to experiment
     with providing the user the ability to rerun the operation
@@ -49,6 +55,18 @@ export const PostAutomationSummary = () => {
   const [numberOfCancelledIterations, setNumberOfCancelledIterations] =
     useState(false);
   const [selectedSpreadsheetData, setSelectedSpreadsheetData] = useState([]);
+  const [formReady, setFormReady] = useState(false);
+  const [displaySpreadsheet, setDisplaySpreadsheet] = useState(false)
+  const [downloadOptions, setDownloadOptions] = useState({
+    downloadDirectory: "",
+    fileName: "",
+    includeCompletedIterations: false,
+    includeCancelledIterations: false,
+    includeFailedIterations: false,
+    arrayOfSheets: [],
+  });
+
+  useIsFormFilled(downloadOptions, setFormReady);
 
   useLayoutEffect(() => {
     const backgroundInterval = animateGradientBackground();
@@ -81,6 +99,88 @@ export const PostAutomationSummary = () => {
     setNumberOfFailedIterations(tempFailedIterations);
   }, [completedIterations, failedIterations, cancelledIterations]);
 
+  /* 
+    When the user changes the filters for what iterations they want to download,
+    update the downloadOptions.arrayOfSheets array
+    
+    Note: ESLint wants downloadOptions.arrayOfSheets to be in the 
+    dependency array, but it was removed intentionally because it
+    causes an infinite loop
+  */
+
+  useEffect(() => {
+    const tempArrayOfSheets = [...downloadOptions.arrayOfSheets];
+
+    if (
+      downloadOptions.includeCompletedIterations === true &&
+      !tempArrayOfSheets.some(
+        (sheet) => sheet.sheetName === "Completed Iterations"
+      )
+    ) {
+      tempArrayOfSheets.push({
+        sheetName: "Completed Iterations",
+        sheetData: completedIterations,
+      });
+    } else if (downloadOptions.includeCompletedIterations === false) {
+      const arrayIndexToRemove = tempArrayOfSheets.findIndex(
+        (element) => element.sheetName === "Completed Iterations"
+      );
+      if (arrayIndexToRemove !== -1) {
+        tempArrayOfSheets.splice(arrayIndexToRemove, 1);
+      }
+    }
+
+    if (
+      downloadOptions.includeCancelledIterations === true &&
+      !tempArrayOfSheets.some(
+        (sheet) => sheet.sheetName === "Cancelled Iterations"
+      )
+    ) {
+      tempArrayOfSheets.push({
+        sheetName: "Cancelled Iterations",
+        sheetData: cancelledIterations,
+      });
+    } else if (downloadOptions.includeCancelledIterations === false) {
+      const arrayIndexToRemove = tempArrayOfSheets.findIndex(
+        (element) => element.sheetName === "Cancelled Iterations"
+      );
+      if (arrayIndexToRemove !== -1) {
+        tempArrayOfSheets.splice(arrayIndexToRemove, 1);
+      }
+    }
+
+    if (
+      downloadOptions.includeFailedIterations === true &&
+      !tempArrayOfSheets.some(
+        (sheet) => sheet.sheetName === "Failed Iterations"
+      )
+    ) {
+      tempArrayOfSheets.push({
+        sheetName: "Failed Iterations",
+        sheetData: failedIterations,
+      });
+    } else if (downloadOptions.includeFailedIterations === false) {
+      const arrayIndexToRemove = tempArrayOfSheets.findIndex(
+        (element) => element.sheetName === "Failed Iterations"
+      );
+      if (arrayIndexToRemove !== -1) {
+        tempArrayOfSheets.splice(arrayIndexToRemove, 1);
+      }
+    }
+
+    setDownloadOptions({
+      ...downloadOptions,
+      arrayOfSheets: tempArrayOfSheets,
+    });
+  }, [
+    downloadOptions.includeCompletedIterations,
+    downloadOptions.includeCancelledIterations,
+    downloadOptions.includeFailedIterations,
+    completedIterations,
+    cancelledIterations,
+    failedIterations,
+  ]);
+
   return (
     <div
       data-theme={
@@ -99,7 +199,7 @@ export const PostAutomationSummary = () => {
           <div className="col col-8">
             <Card
               cardBody={renderPostAutomationSummaryCard(
-                spreadsheetState.length,
+                spreadsheetState[0]?.data.length,
                 numberOfCompletedIterations,
                 numberOfFailedIterations,
                 numberOfCancelledIterations
@@ -117,46 +217,52 @@ export const PostAutomationSummary = () => {
         </div>
 
         <div className="row mx-1 mt-2">
-          <div className="col col-6 full-flex">
-            <h3>Completed Iterations</h3>
-          </div>
-          <div className="col col-6 full-flex">
-            <h3>Failed Iterations</h3>
-          </div>
+          <TextInput
+            data={{ name: "File Name" }}
+            setStateHook={setDownloadOptions}
+          />
+          <FileOrDirectoryPicker
+            data={{
+              name: "Download Directory",
+              customInputType: "text",
+              placeholder: "C:/Users/Name/Downloads/",
+            }}
+            state={state}
+            promptType="directory"
+            setStateHook={setDownloadOptions}
+            inputValueState={downloadOptions?.downloadDirectory}
+            reduxStateName="downloadDirectory"
+            isFullWidth={true}
+          />
+          <Switch
+            data={{ name: "Include Completed Iterations" }}
+            setStateHook={setDownloadOptions}
+          />
+          <Switch
+            data={{ name: "Include Cancelled Iterations" }}
+            setStateHook={setDownloadOptions}
+          />
+          <Switch
+            data={{ name: "Include Failed Iterations" }}
+            setStateHook={setDownloadOptions}
+          />
         </div>
-
         <div className="row mx-1 mt-2">
-          <div
-            id="completed-iterations-wrapper"
-            className="col col-6 full-flex"
-          >
+          <div className="col col-6">
             <SpreadsheetButton
-              selectedSpreadsheetData={selectedSpreadsheetData}
-              setSelectedSpreadsheetData={setSelectedSpreadsheetData}
-              newSpreadsheetData={completedIterations}
+              spreadsheetData={downloadOptions.arrayOfSheets}
+              displaySpreadsheet={displaySpreadsheet}
+              setDisplaySpreadsheet={setDisplaySpreadsheet}
             />
-            <DownloadButton />
           </div>
-          <div id="failed-iterations-wrapper" className="col col-6 full-flex">
-            <SpreadsheetButton
-              selectedSpreadsheetData={selectedSpreadsheetData}
-              setSelectedSpreadsheetData={setSelectedSpreadsheetData}
-              newSpreadsheetData={failedIterations}
+          <div className="col col-6">
+            <DownloadButton 
+              downloadOptions={downloadOptions}
             />
-            <DownloadButton />
           </div>
         </div>
 
-        <div className="row mx-1 mt-2">
-          <div className="col col-6 full-flex">
-            <h3>Cancelled Iterations</h3>
-          </div>
-          <div className="col col-6 full-flex">
-            <h3>Cancelled & Failed Iterations</h3>
-          </div>
-        </div>
-
-        <div className="row mx-1 mt-2">
+        {/* <div className="row mx-1 mt-2">
           <div
             id="cancelled-iterations-wrapper"
             className="col col-6 full-flex"
@@ -179,7 +285,7 @@ export const PostAutomationSummary = () => {
             />
             <DownloadButton />
           </div>
-        </div>
+        </div> */}
         <div
           id="post-automation-spreadsheet-previewer"
           className="row mx-1 mt-2"

@@ -25,7 +25,7 @@ export const inputFieldFillDefault = (
     }
   } else if (isDropDown === false) {
     const inputFieldCamelCasified = camelCasifyString(inputField);
-    if (state.settings[inputFieldCamelCasified] !== undefined) {
+    if (state?.settings[inputFieldCamelCasified] !== undefined) {
       return state.settings[inputFieldCamelCasified];
     } else {
       return null;

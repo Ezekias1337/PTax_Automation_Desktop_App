@@ -6,7 +6,7 @@ import { handleFormChange } from "../../functions/forms/handleFormChange";
 import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
 import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 
-export const Switch = ({ data, state, setStateHook = null }) => {
+export const Switch = ({ data, state = null, setStateHook = null }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   /* 
@@ -38,15 +38,13 @@ export const Switch = ({ data, state, setStateHook = null }) => {
   return (
     <div className="col col-6 mt-2">
       <div className="form-check form-switch row">
-        <div className="col col-12">
-          <label
-            htmlFor={camelCasifyString(data.name)}
-            className="col-form-label"
-          >
-            {data.name}
-          </label>
-        </div>
-        <div className="col col-12">
+        <label
+          htmlFor={camelCasifyString(data.name)}
+          className="col-form-label"
+        >
+          {data.name}
+        </label>
+        <div>
           <input
             className="form-check-input brown-input"
             name={data.name}
