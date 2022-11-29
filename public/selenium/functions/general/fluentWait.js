@@ -8,10 +8,11 @@ const fluentWait = async (
   checkFrequency,
   timeOutMessage = "Fluent wait timed out!"
 ) => {
+  let elementIsFound = false;
   try {
     switch (method) {
       case "className":
-        await driver.wait(
+        elementIsFound = await driver.wait(
           until.elementLocated(By.className(selector)),
           secondsToSearch * 1000,
           timeOutMessage,
@@ -19,7 +20,7 @@ const fluentWait = async (
         );
         break;
       case "css":
-        await driver.wait(
+        elementIsFound = await driver.wait(
           until.elementLocated(By.css(selector)),
           secondsToSearch * 1000,
           timeOutMessage,
@@ -27,7 +28,7 @@ const fluentWait = async (
         );
         break;
       case "id":
-        await driver.wait(
+        elementIsFound = await driver.wait(
           until.elementLocated(By.id(selector)),
           secondsToSearch * 1000,
           timeOutMessage,
@@ -35,7 +36,7 @@ const fluentWait = async (
         );
         break;
       case "name":
-        await driver.wait(
+        elementIsFound = await driver.wait(
           until.elementLocated(By.name(selector)),
           secondsToSearch * 1000,
           timeOutMessage,
@@ -43,7 +44,7 @@ const fluentWait = async (
         );
         break;
       case "linkText":
-        await driver.wait(
+        elementIsFound = await driver.wait(
           until.elementLocated(By.linkText(selector)),
           secondsToSearch * 1000,
           timeOutMessage,
@@ -51,7 +52,7 @@ const fluentWait = async (
         );
         break;
       case "partialLinkText":
-        await driver.wait(
+        elementIsFound = await driver.wait(
           until.elementLocated(By.partialLinkText(selector)),
           secondsToSearch * 1000,
           timeOutMessage,
@@ -59,7 +60,7 @@ const fluentWait = async (
         );
         break;
       case "tagName":
-        await driver.wait(
+        elementIsFound = await driver.wait(
           until.elementLocated(By.tagName(selector)),
           secondsToSearch * 1000,
           timeOutMessage,
@@ -67,7 +68,7 @@ const fluentWait = async (
         );
         break;
       case "xpath":
-        await driver.wait(
+        elementIsFound = await driver.wait(
           until.elementLocated(By.xpath(selector)),
           secondsToSearch * 1000,
           timeOutMessage,
@@ -77,9 +78,9 @@ const fluentWait = async (
       default:
         console.log("No match found for element locator method");
     }
-    return true;
+    return elementIsFound;
   } catch (error) {
-    return false;
+    return elementIsFound;
   }
 };
 

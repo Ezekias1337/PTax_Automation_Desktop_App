@@ -23,6 +23,7 @@ const pullTaxBillStrings = async (driver, taxYear, county, selectors) => {
       selectors.totalTaxesDue,
       "css"
     );
+    console.log("isTaxDataPresent: ", isTaxDataPresent);
 
     if (isTaxDataPresent === false) {
       return {};

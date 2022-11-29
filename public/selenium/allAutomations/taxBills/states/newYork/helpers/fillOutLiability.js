@@ -9,7 +9,7 @@ const fillOutLiability = async (
   installmentTotalString,
   installmentNumber
 ) => {
-  // ! NEED TO ADD SUPPORT FOR OTHER INSTALLMENT #S OTHER THAN 1
+  // ! NEED TO ADD SUPPORT FOR INSTALLMENTS #S 2/4
   
   if (installmentNumber === "1") {
     const totalAmountLiabilityInput = await awaitElementLocatedAndReturn(
@@ -30,6 +30,29 @@ const fillOutLiability = async (
     );
     await saveLiabilityBtn.click();
     await waitForLoading(driver);
+  } else if (installmentNumber === "2") {
+    
+  } else if (installmentNumber === "3") {
+    const totalAmountLiabilityInput = await awaitElementLocatedAndReturn(
+      driver,
+      selectors.totalAmountLiability,
+      "id"
+    );
+    await sendKeysPTaxInputFields(
+      totalAmountLiabilityInput,
+      installmentTotalString,
+      false
+    );
+
+    const saveLiabilityBtn = await awaitElementLocatedAndReturn(
+      driver,
+      selectors.saveLiability,
+      "id"
+    );
+    await saveLiabilityBtn.click();
+    await waitForLoading(driver);
+  } else if (installmentNumber === "4") {
+    
   }
 
   const collectorDropdownEle = await awaitElementLocatedAndReturn(

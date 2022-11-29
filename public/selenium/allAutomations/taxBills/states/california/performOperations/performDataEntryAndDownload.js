@@ -498,10 +498,6 @@ const performDataEntryAndDownload = async (
           color: "green",
           message: `Succeeded for parcel: ${item.ParcelNumber}`,
         });
-        console.log(
-          colors.green.bold(`Succeeded for parcel: ${item.ParcelNumber}`)
-        );
-        consoleLogLine();
       } catch (error) {
         /*
           Here I have to add an artificial delay, because if too many parcels fail in quick
@@ -517,13 +513,11 @@ const performDataEntryAndDownload = async (
           color: "red",
           message: `Failed for parcel: ${item.ParcelNumber}`,
         });
+
         const urlPostFailure = await driver.getCurrentUrl();
         if (urlPostFailure !== parcelQuestHomePage) {
           await switchToTaxWebsiteTab(taxWebsiteWindow);
         }
-
-        console.log(colors.red.bold(`Failed for parcel: ${item.ParcelNumber}`));
-        consoleLogLine();
         arrayOfFailedOperations.push(item);
       }
     }

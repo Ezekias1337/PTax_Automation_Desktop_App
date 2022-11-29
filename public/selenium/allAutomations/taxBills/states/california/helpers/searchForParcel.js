@@ -1,3 +1,4 @@
+const { Key } = require("selenium-webdriver");
 const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn");
 const fluentWait = require("../../../../../functions/general/fluentWait");
 const handleParcelQuestDropdown = require("../helpers/handleParcelQuestDropdown");
@@ -22,6 +23,8 @@ const searchForParcel = async (
       selectors.parcelInputField,
       "css"
     );
+    await parcelNumberInput.sendKeys(Key.CONTROL, "a");
+    await parcelNumberInput.sendKeys(Key.DELETE);
     await parcelNumberInput.sendKeys(parcelNumber);
 
     const parcelQuestSearchButton = await awaitElementLocatedAndReturn(

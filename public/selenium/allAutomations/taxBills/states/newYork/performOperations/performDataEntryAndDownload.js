@@ -50,11 +50,28 @@ const bblSearch = require("../helpers/bblSearch");
 const fillOutLiability = require("../helpers/fillOutLiability");
 const fillOutPayments = require("../helpers/fillOutPayments");
 
+// New imports from re-factor
+const sendCurrentIterationInfo = require("../../../../../ipc-bus/sendCurrentIterationInfo");
+const sendSuccessfulIteration = require("../../../../../ipc-bus/sendSuccessfulIteration");
+const sendFailedIteration = require("../../../../../ipc-bus/sendFailedIteration");
+const sendEventLogInfo = require("../../../../../ipc-bus/sendEventLogInfo");
+const sendAutomationCompleted = require("../../../../../ipc-bus/sendAutomationCompleted");
+const handleAutomationCancel = require("../../../../../ipc-bus/handleAutomationCancel");
+const websiteSelectors = require("../websiteSelectors");
+
 const performDataEntryAndDownload = async (
-  state,
-  sublocation,
-  operation,
-  taxWebsiteSelectors
+  {
+    taxYear,
+    downloadDirectory,
+    ptaxUsername,
+    ptaxPassword,
+    parcelQuestUsername,
+    parcelQuestPassword,
+    spreadsheetContents,
+    county,
+    installmentNumber,
+  },
+  ipcBusClientNodeMain
 ) => {
   /* 
       Goes to the NY Tax Bill website, downloads the bill, then gets the
@@ -67,70 +84,104 @@ const performDataEntryAndDownload = async (
   const arrayOfFailedOperations = [];
 
   try {
-    console.log(`Running Tax Bill Data Entry Automation: `);
+    const taxYearEnd = parseInt(taxYear) + 1;
 
-    const dataFromSpreadsheet = await readSpreadsheetFile();
-    const uploadDirectory = await promptUploadDirectory("upload");
-    const installmentNumber = await promptForInstallment();
-    const [areCorrectSheetColumnsPresent, arrayOfMissingColumnNames] =
-      verifySpreadSheetColumnNames(
-        dataEntryTaxBillsColumns,
-        dataFromSpreadsheet[0]
-      );
+    await sendEventLogInfo(ipcBusClientNodeMain, {
+      color: "yellow",
+      message: "Logging into Ptax",
+    });
+    const [ptaxWindow, driver] = await loginToPTAX(ptaxUsername, ptaxPassword);
+    handleAutomationCancel(ipcBusClientNodeMain, driver);
 
-    await handleColumnNameLogging(
-      areCorrectSheetColumnsPresent,
-      arrayOfMissingColumnNames
-    );
-    if (areCorrectSheetColumnsPresent === false) {
-      return;
-    }
-
-    const { username, password } = await promptLogin();
-    const [ptaxWindow, driver] = await loginToPTAX(username, password);
-
-    /* These values will be null if the login failed, this will cause the execution
-      to stop */
+    /* 
+      These values will be null if the login failed, this will cause the execution
+      to stop. If it fails before even loading ptax, it means
+      that the chrome web driver is out of date. Otherwise,
+      it means the login credentials are incorrect 
+    */
 
     if (ptaxWindow === null || driver === null) {
+      await sendEventLogInfo(ipcBusClientNodeMain, {
+        color: "red",
+        message:
+          "Login to PTax failed! Please check your username and password.",
+      });
       return;
     }
+    await sendEventLogInfo(ipcBusClientNodeMain, {
+      color: "green",
+      message: "Login into Ptax Successful!",
+    });
 
     await swapToIFrame0(driver);
     await clickCheckMyPropertiesCheckBox(driver);
 
+    await sendEventLogInfo(ipcBusClientNodeMain, {
+      color: "yellow",
+      message: "Navigating to tax website",
+    });
     await openNewTab(driver);
     await driver.get(nyTaxBillSite);
     const taxWebsiteWindow = await driver.getWindowHandle();
 
     const maintenanceStatus = await checkIfWebsiteUnderMaintenance(driver);
     if (maintenanceStatus === true) {
-      throw "Website Under Maintenance";
+      await sendEventLogInfo(ipcBusClientNodeMain, {
+        color: "red",
+        message: "Website Under Maintenance.",
+      });
+      return;
     }
 
     const agreeBtnElement = await awaitElementLocatedAndReturn(
       driver,
-      taxWebsiteSelectors.agreeBtn,
+      websiteSelectors.agreeBtn,
       "id"
     );
     await agreeBtnElement.click();
+    await sendEventLogInfo(ipcBusClientNodeMain, {
+      color: "purple",
+      message: "Beginning work on first parcel...",
+    });
 
-    for (const item of dataFromSpreadsheet) {
+    for (const item of spreadsheetContents) {
       try {
-        console.log(
-          colors.magenta.bold(`Working on parcel: ${item.ParcelNumber}`)
-        );
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "orange",
+          message: `Working on parcel: ${item.ParcelNumber}`,
+        });
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "blue",
+          message: "Checking if session expired",
+        });
+        await checkIfSessionExpired(driver, websiteSelectors);
 
-        await checkIfSessionExpired(driver, taxWebsiteSelectors);
-        await bblSearch(driver, item, taxWebsiteSelectors);
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "yellow",
+          message: `Searching for parcel: ${item.ParcelNumber}`,
+        });
+        await bblSearch(driver, item, websiteSelectors);
 
         const resultsNotPresent = await checkIfNoResultsOrMultipleResults(
           driver,
           item,
-          taxWebsiteSelectors,
+          websiteSelectors,
           arrayOfFailedOperations
         );
-        if (resultsNotPresent === true) {
+        if (resultsNotPresent === false) {
+          arrayOfFailedOperations.push(item);
+
+          await switchToTaxWebsiteTab(taxWebsiteWindow);
+          await sendFailedIteration(
+            ipcBusClientNodeMain,
+            item,
+            `Failed to find parcel: ${item.ParcelNumber} in database.`
+          );
+          await sendEventLogInfo(ipcBusClientNodeMain, {
+            color: "red",
+            message: `Failed to find parcel: ${item.ParcelNumber} in database.`,
+          });
+
           continue;
         }
 
@@ -138,43 +189,48 @@ const performDataEntryAndDownload = async (
             -----------------------------------------Download the bill--------------------------------
         */
 
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "regular",
+          message: `Navigating to bill for parcel: ${item.ParcelNumber}`,
+        });
+
         const sideMenuTabElement = await awaitElementLocatedAndReturn(
           driver,
-          taxWebsiteSelectors.sideMenuTab,
+          websiteSelectors.sideMenuTab,
           "id"
         );
         const propertyTaxBillsTab = await sideMenuTabElement.findElement(
-          By.xpath(taxWebsiteSelectors.propertyTaxBillsTab)
+          By.xpath(websiteSelectors.propertyTaxBillsTab)
         );
         await propertyTaxBillsTab.click();
         await driver.wait(until.urlContains("soa_docs"));
         await driver.sleep(5000);
         /* 
-            Before trying to download, need to check for the table element which contains the
-            links to ensure the script doesn't get stuck
-          */
+          Before trying to download, need to check for the table element which contains the
+          links to ensure the script doesn't get stuck
+        */
 
         const continueExecution = await checkForTaxBillTable(
           driver,
-          taxWebsiteSelectors
+          websiteSelectors
         );
 
         if (continueExecution === false) {
           await driver.navigate().back();
           await driver.navigate().back();
-          console.log(
-            colors.red.bold(
-              `Failed for parcel: ${item.ParcelNumber} Parcel found, but no tax bill in database`
-            )
-          );
-          consoleLogLine();
           arrayOfFailedOperations.push(item);
+          await sendFailedIteration(
+            ipcBusClientNodeMain,
+            item,
+            `Failed for parcel: ${item.ParcelNumber} Parcel found, but no tax bill in database`
+          );
+          await sendEventLogInfo(ipcBusClientNodeMain, {
+            color: "red",
+            message: `Failed for parcel: ${item.ParcelNumber} Parcel found, but no tax bill in database`,
+          });
+
           continue;
         }
-
-        /* 
-            -----------------------------------------Pull Tax Data Strings--------------------------------
-        */
 
         try {
           /* 
@@ -197,46 +253,71 @@ const performDataEntryAndDownload = async (
 
           const downloadSucceeded = await saveLinkToFile(
             downloadLink,
-            outputDirectory,
+            downloadDirectory,
             fileNameForFile,
             "pdf"
           );
 
           if (downloadSucceeded === true) {
-            console.log(
-              colors.yellow.bold(
-                `Parcel: ${item.ParcelNumber} downloaded successfuly`
-              )
-            );
+            await sendEventLogInfo(ipcBusClientNodeMain, {
+              color: "yellow",
+              message: `Parcel: ${item.ParcelNumber} downloaded successfuly`,
+            });
           } else {
-            console.log(
-              colors.red.bold(`Parcel: ${item.ParcelNumber} failed to download`)
-            );
-            consoleLogLine();
             arrayOfFailedOperations.push(item);
+            await sendFailedIteration(
+              ipcBusClientNodeMain,
+              item,
+              `Parcel: ${item.ParcelNumber} failed to download`
+            );
+            await sendEventLogInfo(ipcBusClientNodeMain, {
+              color: "red",
+              message: `Parcel: ${item.ParcelNumber} failed to download`,
+            });
+
+            continue;
           }
         } catch (error) {
-          console.log(
-            colors.red.bold(`Parcel: ${item.ParcelNumber} failed to download`)
-          );
-          consoleLogLine();
           arrayOfFailedOperations.push(item);
+          await sendFailedIteration(
+            ipcBusClientNodeMain,
+            item,
+            `Parcel: ${item.ParcelNumber} failed to download`
+          );
+          await sendEventLogInfo(ipcBusClientNodeMain, {
+            color: "red",
+            message: `Parcel: ${item.ParcelNumber} failed to download`,
+          });
+
+          continue;
         }
 
+        /* 
+            -----------------------------------------Pull Tax Data Strings--------------------------------
+        */
+
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "blue",
+          message: "Pulling Tax Bill data",
+        });
 
         const [installmentTotalString, installmentTotalInt] =
-          await pullTaxBillStrings(
-            driver,
-            taxWebsiteSelectors,
-            installmentNumber
-          );
-        const bblSearchBtn = driver.findElement(
-          By.xpath(taxWebsiteSelectors.bblSearchBtn)
+          await pullTaxBillStrings(driver, websiteSelectors, installmentNumber);
+        const bblSearchBtn = await awaitElementLocatedAndReturn(
+          driver,
+          websiteSelectors.bblSearchBtn,
+          "xpath"
         );
+
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "regular",
+          message: `Installment as string: ${installmentTotalString}, Installment as integer: ${installmentTotalInt}`,
+        });
         await bblSearchBtn.click();
         await driver.wait(
           until.urlContains("search/commonsearch.aspx?mode=persprop")
         );
+
         await switchToPTaxTab(driver, ptaxWindow);
 
         // Navigate to parcel in PTax
@@ -244,6 +325,10 @@ const performDataEntryAndDownload = async (
         await driver.navigate().refresh();
         await swapToIFrameDefaultContent(driver);
 
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "orange",
+          message: `Searching for parcel: ${item.ParcelNumber} in Ptax`,
+        });
         const searchByParcelInput = await awaitElementLocatedAndReturn(
           driver,
           searchByParcelNumberSelector,
@@ -256,7 +341,7 @@ const performDataEntryAndDownload = async (
         );
 
         await swapToIFrame0(driver);
-        propertySideBarXPath = generateDynamicXPath(
+        const propertySideBarXPath = generateDynamicXPath(
           "a",
           item.ParcelNumber,
           "contains"
@@ -269,11 +354,19 @@ const performDataEntryAndDownload = async (
         await propertyToAddTaxBill.click();
         await driver.sleep(2500);
 
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "regular",
+          message: "Navigating to existing assessment",
+        });
         await swapToIFrame1(driver);
         await navigateToExistingAssessment(driver);
 
         // Fill out the input fields and save
 
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "purple",
+          message: "Performing data entry",
+        });
         const twoOrFourInstallments = await fillOutLiability(
           driver,
           taxBillSelectors,
@@ -287,26 +380,41 @@ const performDataEntryAndDownload = async (
           twoOrFourInstallments
         );
 
-        // Upload Document
-
-        // April did not want this for 85Jay Street/Trump Soho 6/8/2022, will add later
-
         // Reset to default
 
         await swapToIFrame0(driver);
         await switchToTaxWebsiteTab(driver, taxWebsiteWindow);
-        /* const amountToSleep = generateDelayNumber();
-        await driver.sleep(amountToSleep); */
+        await driver.sleep(5000);
 
         arrayOfSuccessfulOperations.push(item);
-        console.log(
-          colors.green.bold(`Succeeded for parcel: ${item.ParcelNumber}`)
+        let itemErrorColRemoved = item;
+        if (itemErrorColRemoved?.Error) {
+          delete itemErrorColRemoved.Error;
+        }
+        await sendSuccessfulIteration(
+          ipcBusClientNodeMain,
+          itemErrorColRemoved
         );
-        consoleLogLine();
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "green",
+          message: `Succeeded for parcel: ${item.ParcelNumber}`,
+        });
       } catch (error) {
-        console.log("ERROR CAUSING ISSUES: ", error);
-        console.log(colors.red.bold(`Failed for parcel: ${item.ParcelNumber}`));
-        consoleLogLine();
+        /*
+          Here I have to add an artificial delay, because if too many parcels fail in quick
+          succession, it causes the app to crash
+        */
+        await driver.sleep(6500);
+        await sendFailedIteration(
+          ipcBusClientNodeMain,
+          item,
+          `Failed for parcel: ${item.ParcelNumber}`
+        );
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "red",
+          message: `Failed for parcel: ${item.ParcelNumber}`,
+        });
+
         arrayOfFailedOperations.push(item);
       }
     }
@@ -316,6 +424,11 @@ const performDataEntryAndDownload = async (
       arrayOfFailedOperations,
       "./output/"
     );
+    await sendAutomationCompleted(ipcBusClientNodeMain);
+    await sendEventLogInfo(ipcBusClientNodeMain, {
+      color: "blue",
+      message: "The automation is complete.",
+    });
 
     console.log(
       colors.blue.bold(
@@ -323,7 +436,7 @@ const performDataEntryAndDownload = async (
       ),
       "\n"
     );
-    await closingAutomationSystem();
+    await closingAutomationSystem(driver);
   } catch (error) {
     logErrorMessageCatch(error);
   }
