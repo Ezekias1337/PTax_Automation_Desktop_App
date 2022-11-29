@@ -15,7 +15,7 @@ import { actionCreators } from "../redux/allActions";
 export const useResetRedux = () => {
   const dispatch = useDispatch();
 
-  const { readSpreadsheetReset } = bindActionCreators(
+  const { readSpreadsheetReset, selectSpreadsheetReset } = bindActionCreators(
     actionCreators.spreadsheetCreators,
     dispatch
   );
@@ -31,6 +31,7 @@ export const useResetRedux = () => {
   useEffect(() => {
     return () => {
       readSpreadsheetReset();
+      selectSpreadsheetReset();
       recieveIterationReset();
       recieveEventLogReset();
     };

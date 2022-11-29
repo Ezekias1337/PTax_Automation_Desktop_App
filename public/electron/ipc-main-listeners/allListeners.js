@@ -11,7 +11,7 @@ const {
 module.exports = {
   directoryListener,
   filePathListener,
-  /* browserListener,
-  readSpreadsheetListener, */
+  browserListener,
+  readSpreadsheetListener,
   saveSpreadsheetListener,
 };

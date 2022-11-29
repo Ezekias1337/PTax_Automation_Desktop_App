@@ -9,7 +9,7 @@ import { roundDecimal } from "../../utils/numbers/roundDecimal";
 // Constants
 import { iteratorTypes } from "../../constants/iteratorTypes";
 // Action Types
-import { READ_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
+import { SELECT_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
 import { RECEIVE_ITERATION } from "../../redux/actionCreators/automationCreators";
 // CSS
 import "../../css/progress-bar.scss";
@@ -21,7 +21,7 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
 
   const automationCurrentIteration =
     automationState.currentIteration[RECEIVE_ITERATION];
-  const spreadsheetContents = spreadsheetState.contents[READ_SPREADSHEET];
+  const spreadsheetContents = spreadsheetState.contents[SELECT_SPREADSHEET];
 
   const [animationParent] = useAutoAnimate();
 
@@ -37,7 +37,7 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
   */
 
   useEffect(() => {
-    let numberOfRows = spreadsheetContents?.length;
+    let numberOfRows = spreadsheetContents?.data?.length;
 
     if (typeof (numberOfRows === "number") && numberOfRows > 0) {
       setNumberOfDataPoints(numberOfRows);
@@ -83,7 +83,7 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
 
   useEffect(() => {
     if (attributeToFindCurrentIteration !== null) {
-      const tempCurrentIterationNumber = spreadsheetContents.findIndex(
+      const tempCurrentIterationNumber = spreadsheetContents.data.findIndex(
         (spreadSheetRow) =>
           spreadSheetRow[attributeToFindCurrentIteration] ===
           automationCurrentIteration

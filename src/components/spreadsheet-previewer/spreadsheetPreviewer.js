@@ -1,6 +1,10 @@
 // Library Imports
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
 import { nanoid } from "nanoid";
+// Redux
+import { actionCreators } from "../../redux/allActions";
 // Functions, Helpers, Utils, and Hooks
 import { renderEmptyTds } from "../../functions/spreadsheet-previewer/renderEmptyTds";
 import { pascalCasifyString } from "../../utils/strings/pascalCasifyString";
@@ -15,8 +19,33 @@ import "../../css/spreadsheet-previewer.scss";
   for more than 26 columns. 
 */
 
-export const SpreadsheetPreviewer = ({ spreadSheetData }) => {
+export const SpreadsheetPreviewer = ({
+  spreadSheetData,
+  isPreautomation = false,
+}) => {
+  const dispatch = useDispatch();
+
+  const { selectSpreadsheet } = bindActionCreators(
+    actionCreators.spreadsheetCreators,
+    dispatch
+  );
+
   const [numOfColumns, setNumOfColumns] = useState(0);
+  const [selectedSheetIndex, setSelectedSheetIndex] = useState(0);
+
+  /* 
+    When the user changes the tab they are viewing, save
+    the selected option to redux
+    
+    selectSpreadsheet is intentionally not in the dependency array
+    to prevent infinite loop
+  */
+
+  useEffect(() => {
+    if (isPreautomation === true) {
+      selectSpreadsheet(spreadSheetData[selectedSheetIndex]);
+    }
+  }, [spreadSheetData, selectedSheetIndex]);
 
   /* 
     Sets the number of columns so it can be used to render
@@ -24,10 +53,15 @@ export const SpreadsheetPreviewer = ({ spreadSheetData }) => {
   */
 
   useEffect(() => {
-    if (spreadSheetData?.length !== 0) {
-      setNumOfColumns(Object.values(spreadSheetData[0].data[0]).length);
+    if (
+      spreadSheetData?.length !== 0 &&
+      spreadSheetData[selectedSheetIndex]?.data[0] !== undefined
+    ) {
+      setNumOfColumns(
+        Object.values(spreadSheetData[selectedSheetIndex].data[0]).length
+      );
     }
-  }, [spreadSheetData]);
+  }, [spreadSheetData, selectedSheetIndex]);
 
   if (spreadSheetData?.length === 0) {
     return <></>;
@@ -36,72 +70,98 @@ export const SpreadsheetPreviewer = ({ spreadSheetData }) => {
   return (
     <div className="container mt-1" id="spreadsheetPreviewerWrapper">
       <div className="row">
-        <table id="spreadsheetPreviewer" className="table table-hover">
-          <thead className="column-provider">
-            <tr>
-              <th></th>
-              {Object.keys(spreadSheetData[0].data[0]).map((rowData, index) => {
-                return <th key={nanoid()}>{alphabet[index]}</th>;
-              })}
-            </tr>
-          </thead>
-          <thead className="column-names">
-            <tr>
-              <th></th>
-              {Object.keys(spreadSheetData[0].data[0]).map((rowData, index) => {
-                return <th key={nanoid()}>{pascalCasifyString(rowData)}</th>;
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {spreadSheetData[0].data.map((rowData, index) => {
-              console.log("rowData: ", rowData);
-              console.log("numOfColumns: ", numOfColumns)
-              return (
-                <tr key={nanoid()}>
-                  <td className="row-numbers">{index + 1}</td>
-                  {/* Renders the cells with data */}
-                  {spreadSheetData[0].data[index] !== undefined ? (
-                    Object.values(spreadSheetData[0].data[index]).map(
-                      (rowData, tdIndex) => {
-                        return <td key={nanoid()}>{rowData}</td>;
-                      }
-                    )
-                  ) : (
-                    <></>
-                  )}
-                  {/* 
-                      Renders the empty cells if first row has more columns
-                      than the one being rendered                 
-                  */}
+        {spreadSheetData[selectedSheetIndex]?.data[0] !== undefined ? (
+          <table id="spreadsheetPreviewer" className="table table-hover">
+            <thead className="column-provider">
+              <tr>
+                <th></th>
+                {spreadSheetData[selectedSheetIndex]?.data[0] !== undefined ? (
+                  Object.keys(spreadSheetData[selectedSheetIndex].data[0]).map(
+                    (rowData, index) => {
+                      return <th key={nanoid()}>{alphabet[index]}</th>;
+                    }
+                  )
+                ) : (
+                  <></>
+                )}
+              </tr>
+            </thead>
+            <thead className="column-names">
+              <tr>
+                <th></th>
+                {spreadSheetData[selectedSheetIndex]?.data[0] !== undefined ? (
+                  Object.keys(spreadSheetData[selectedSheetIndex].data[0]).map(
+                    (rowData, index) => {
+                      return (
+                        <th key={nanoid()}>{pascalCasifyString(rowData)}</th>
+                      );
+                    }
+                  )
+                ) : (
+                  <></>
+                )}
+              </tr>
+            </thead>
+            <tbody>
+              {spreadSheetData[selectedSheetIndex].data.map(
+                (rowData, index) => {
+                  return (
+                    <tr key={nanoid()}>
+                      <td className="row-numbers">{index + 1}</td>
+                      {/* Renders the cells with data */}
+                      {spreadSheetData[selectedSheetIndex].data[index] !==
+                      undefined ? (
+                        Object.values(
+                          spreadSheetData[selectedSheetIndex].data[index]
+                        ).map((rowData, tdIndex) => {
+                          return <td key={nanoid()}>{rowData}</td>;
+                        })
+                      ) : (
+                        <></>
+                      )}
+                      {/* 
+                        Renders the empty cells if first row has more columns
+                        than the one being rendered                 
+                      */}
 
-                  {rowData !== undefined &&
-                  Object.values(rowData).length === numOfColumns ? (
-                    <></>
-                  ) : (
-                    renderEmptyTds(numOfColumns, rowData)
-                  )}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                      {rowData !== undefined &&
+                      Object.values(rowData).length === numOfColumns ? (
+                        <></>
+                      ) : (
+                        renderEmptyTds(numOfColumns, rowData)
+                      )}
+                    </tr>
+                  );
+                }
+              )}
+            </tbody>
+          </table>
+        ) : (
+          <></>
+        )}
       </div>
-      <ul id="worksheet-selection-navigation" className="nav nav-tabs">
-        {spreadSheetData?.length > 1 ? (
-          spreadSheetData.map((sheet, index) => {
+      {spreadSheetData?.length > 1 ? (
+        <ul id="worksheet-selection-navigation" className="nav nav-tabs">
+          {spreadSheetData.map((sheet, index) => {
             return (
               <li key={nanoid()} className="nav-item">
-                <button className={`nav-link ${index === 0 ? "active" : ""}`}>
+                <button
+                  className={`nav-link ${
+                    index === selectedSheetIndex ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    setSelectedSheetIndex(index);
+                  }}
+                >
                   {sheet.sheetName}
                 </button>
               </li>
             );
-          })
-        ) : (
-          <></>
-        )}
-      </ul>
+          })}
+        </ul>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

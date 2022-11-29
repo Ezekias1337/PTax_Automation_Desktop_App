@@ -2,7 +2,7 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
 //Redux
-import { READ_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
+import { SELECT_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
 import {
   COMPLETED_ITERATIONS,
   CANCELLED_ITERATIONS,
@@ -42,7 +42,7 @@ export const PostAutomationSummary = () => {
 
   const state = useSelector((state) => state);
   const automationState = state.automation;
-  const spreadsheetState = state.spreadsheet.contents[READ_SPREADSHEET];
+  const spreadsheetState = state.spreadsheet.contents[SELECT_SPREADSHEET];
 
   const completedIterations = automationState.contents[COMPLETED_ITERATIONS];
   const failedIterations = automationState.contents[FAILED_ITERATIONS];
@@ -56,13 +56,13 @@ export const PostAutomationSummary = () => {
     useState(false);
   const [selectedSpreadsheetData, setSelectedSpreadsheetData] = useState([]);
   const [formReady, setFormReady] = useState(false);
-  const [displaySpreadsheet, setDisplaySpreadsheet] = useState(false)
+  const [displaySpreadsheet, setDisplaySpreadsheet] = useState(false);
   const [downloadOptions, setDownloadOptions] = useState({
     downloadDirectory: "",
     fileName: "",
-    includeCompletedIterations: false,
-    includeCancelledIterations: false,
-    includeFailedIterations: false,
+    includeCompletedIterations: true,
+    includeCancelledIterations: true,
+    includeFailedIterations: true,
     arrayOfSheets: [],
   });
 
@@ -74,6 +74,17 @@ export const PostAutomationSummary = () => {
       clearInterval(backgroundInterval);
     };
   }, []);
+
+  /* 
+    When the user changes which iterations they want included,
+    update the spreadsheet state for the previewer
+  */
+
+  useEffect(() => {
+    if (downloadOptions.arrayOfSheets?.length > 0) {
+      setSelectedSpreadsheetData(downloadOptions.arrayOfSheets);
+    }
+  }, [downloadOptions.arrayOfSheets]);
 
   /* 
     Find the length of the successful, failed, and uncompleted iterations,
@@ -119,7 +130,7 @@ export const PostAutomationSummary = () => {
     ) {
       tempArrayOfSheets.push({
         sheetName: "Completed Iterations",
-        sheetData: completedIterations,
+        data: completedIterations,
       });
     } else if (downloadOptions.includeCompletedIterations === false) {
       const arrayIndexToRemove = tempArrayOfSheets.findIndex(
@@ -138,7 +149,7 @@ export const PostAutomationSummary = () => {
     ) {
       tempArrayOfSheets.push({
         sheetName: "Cancelled Iterations",
-        sheetData: cancelledIterations,
+        data: cancelledIterations,
       });
     } else if (downloadOptions.includeCancelledIterations === false) {
       const arrayIndexToRemove = tempArrayOfSheets.findIndex(
@@ -157,7 +168,7 @@ export const PostAutomationSummary = () => {
     ) {
       tempArrayOfSheets.push({
         sheetName: "Failed Iterations",
-        sheetData: failedIterations,
+        data: failedIterations,
       });
     } else if (downloadOptions.includeFailedIterations === false) {
       const arrayIndexToRemove = tempArrayOfSheets.findIndex(
@@ -199,7 +210,7 @@ export const PostAutomationSummary = () => {
           <div className="col col-8">
             <Card
               cardBody={renderPostAutomationSummaryCard(
-                spreadsheetState[0]?.data.length,
+                spreadsheetState?.data?.length,
                 numberOfCompletedIterations,
                 numberOfFailedIterations,
                 numberOfCancelledIterations
@@ -237,14 +248,17 @@ export const PostAutomationSummary = () => {
           <Switch
             data={{ name: "Include Completed Iterations" }}
             setStateHook={setDownloadOptions}
+            nonReduxDefaultValue={true}
           />
           <Switch
             data={{ name: "Include Cancelled Iterations" }}
             setStateHook={setDownloadOptions}
+            nonReduxDefaultValue={true}
           />
           <Switch
             data={{ name: "Include Failed Iterations" }}
             setStateHook={setDownloadOptions}
+            nonReduxDefaultValue={true}
           />
         </div>
         <div className="row mx-1 mt-2">
@@ -253,39 +267,17 @@ export const PostAutomationSummary = () => {
               spreadsheetData={downloadOptions.arrayOfSheets}
               displaySpreadsheet={displaySpreadsheet}
               setDisplaySpreadsheet={setDisplaySpreadsheet}
+              enabled={formReady}
             />
           </div>
           <div className="col col-6">
-            <DownloadButton 
+            <DownloadButton
               downloadOptions={downloadOptions}
+              enabled={formReady}
             />
           </div>
         </div>
 
-        {/* <div className="row mx-1 mt-2">
-          <div
-            id="cancelled-iterations-wrapper"
-            className="col col-6 full-flex"
-          >
-            <SpreadsheetButton
-              selectedSpreadsheetData={selectedSpreadsheetData}
-              setSelectedSpreadsheetData={setSelectedSpreadsheetData}
-              newSpreadsheetData={cancelledIterations}
-            />
-            <DownloadButton />
-          </div>
-          <div
-            id="cancelled-failed-iterations-wrapper"
-            className="col col-6 full-flex"
-          >
-            <SpreadsheetButton
-              selectedSpreadsheetData={selectedSpreadsheetData}
-              setSelectedSpreadsheetData={setSelectedSpreadsheetData}
-              newSpreadsheetData={[...failedIterations, ...cancelledIterations]}
-            />
-            <DownloadButton />
-          </div>
-        </div> */}
         <div
           id="post-automation-spreadsheet-previewer"
           className="row mx-1 mt-2"

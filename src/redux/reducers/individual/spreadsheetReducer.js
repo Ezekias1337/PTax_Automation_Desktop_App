@@ -6,6 +6,10 @@ import {
   READ_SPREADSHEET_LOADING_TOGGLE,
   READ_SPREADSHEET_ERROR,
   READ_SPREADSHEET_RESET,
+  SELECT_SPREADSHEET,
+  SELECT_SPREADSHEET_LOADING_TOGGLE,
+  SELECT_SPREADSHEET_ERROR,
+  SELECT_SPREADSHEET_RESET,
   SAVE_SPREADSHEET,
   SAVE_SPREADSHEET_LOADING_TOGGLE,
   SAVE_SPREADSHEET_ERROR,
@@ -13,7 +17,11 @@ import {
 } from "../../actionCreators/spreadsheetCreators";
 
 const INITIAL_STATE = {
-  ...buildInitialState([READ_SPREADSHEET, SAVE_SPREADSHEET]),
+  ...buildInitialState([
+    READ_SPREADSHEET,
+    SELECT_SPREADSHEET,
+    SAVE_SPREADSHEET,
+  ]),
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -51,7 +59,50 @@ const reducer = (state = INITIAL_STATE, action) => {
       return newStateObject;
 
     case READ_SPREADSHEET_RESET:
-      newStateObject = buildInitialState([READ_SPREADSHEET]);
+      newStateObject = buildInitialState([
+        READ_SPREADSHEET,
+        SELECT_SPREADSHEET,
+        SAVE_SPREADSHEET,
+      ]);
+
+      return newStateObject;
+
+    case SELECT_SPREADSHEET:
+      newStateObject = {
+        ...state,
+      };
+
+      if (action.payload === null || action.payload === undefined) {
+        newStateObject.errors[SELECT_SPREADSHEET].push(
+          "Failed to select the spreadsheet. Check the data structure."
+        );
+      } else {
+        newStateObject.contents[SELECT_SPREADSHEET] = action.payload;
+      }
+      return newStateObject;
+
+    case SELECT_SPREADSHEET_LOADING_TOGGLE:
+      newStateObject = {
+        ...state,
+      };
+
+      newStateObject.loading[SELECT_SPREADSHEET] = action.payload;
+      return newStateObject;
+
+    case SELECT_SPREADSHEET_ERROR:
+      newStateObject = {
+        ...state,
+      };
+
+      newStateObject.errors[SELECT_SPREADSHEET].push(action.payload);
+      return newStateObject;
+
+    case SELECT_SPREADSHEET_RESET:
+      newStateObject = buildInitialState([
+        READ_SPREADSHEET,
+        SELECT_SPREADSHEET,
+        SAVE_SPREADSHEET,
+      ]);
 
       return newStateObject;
 
@@ -59,7 +110,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       newStateObject = {
         ...state,
       };
-      
+
       /* 
         ! NEED TO FIGURE OUT DATA STRUCTURE I WANT TO USE HERE BECAUSE OF NULL
         ! THIS WILL ONLY BE USED TO DISPLAY TOAST WHEN FILE IS SAVED SUCCESSFULLY

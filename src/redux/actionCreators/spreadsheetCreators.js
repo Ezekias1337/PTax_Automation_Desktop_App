@@ -6,6 +6,11 @@ export const READ_SPREADSHEET_LOADING_TOGGLE = `${typeBase}READ_SPREADSHEET_LOAD
 export const READ_SPREADSHEET_ERROR = `${typeBase}READ_SPREADSHEET_ERROR`;
 export const READ_SPREADSHEET_RESET = `${typeBase}READ_SPREADSHEET_RESET`;
 
+export const SELECT_SPREADSHEET = `${typeBase}SELECT_SPREADSHEET`;
+export const SELECT_SPREADSHEET_LOADING_TOGGLE = `${typeBase}SELECT_SPREADSHEET_LOADING_TOGGLE`;
+export const SELECT_SPREADSHEET_ERROR = `${typeBase}SELECT_SPREADSHEET_ERROR`;
+export const SELECT_SPREADSHEET_RESET = `${typeBase}SELECT_SPREADSHEET_RESET`;
+
 export const SAVE_SPREADSHEET = `${typeBase}SAVE_SPREADSHEET`;
 export const SAVE_SPREADSHEET_LOADING_TOGGLE = `${typeBase}SAVE_SPREADSHEET_LOADING_TOGGLE`;
 export const SAVE_SPREADSHEET_ERROR = `${typeBase}SAVE_SPREADSHEET_ERROR`;
@@ -55,6 +60,49 @@ export const readSpreadsheetReset = () => {
   return (dispatch) => {
     dispatch({
       type: READ_SPREADSHEET_RESET,
+      payload: null,
+    });
+  };
+};
+
+export const selectSpreadsheet = (spreadsheetContents) => {
+  let dispatchPayload;
+  if (spreadsheetContents !== null) {
+    dispatchPayload = spreadsheetContents;
+  } else {
+    dispatchPayload = null;
+  }
+
+  return (dispatch) => {
+    dispatch({
+      type: SELECT_SPREADSHEET,
+      payload: dispatchPayload,
+    });
+  };
+};
+
+export const selectSpreadsheetLoadingToggle = (boolean) => {
+  return (dispatch) => {
+    dispatch({
+      type: SELECT_SPREADSHEET_LOADING_TOGGLE,
+      payload: boolean,
+    });
+  };
+};
+
+export const selectSpreadsheetError = (error) => {
+  return (dispatch) => {
+    dispatch({
+      type: SELECT_SPREADSHEET_ERROR,
+      payload: error,
+    });
+  };
+};
+
+export const selectSpreadsheetReset = () => {
+  return (dispatch) => {
+    dispatch({
+      type: SELECT_SPREADSHEET_RESET,
       payload: null,
     });
   };

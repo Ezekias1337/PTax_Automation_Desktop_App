@@ -10,7 +10,6 @@ export const TextInput = ({ data, state = null, setStateHook }) => {
   const [defaultValueProp, setDefaultValueProp] = useState(null);
 
   useEffect(() => {
-    
     let tempValueProp = inputFieldFillDefault(
       data.name.split(" ").join(""),
       state,
@@ -20,8 +19,6 @@ export const TextInput = ({ data, state = null, setStateHook }) => {
     if (tempValueProp !== null) {
       setDefaultValueProp(tempValueProp);
     }
-    
-    
   }, [data.name, state]);
 
   useEffect(() => {

@@ -10,7 +10,10 @@ import { useAutomationData } from "../../hooks/ipc/useAutomationData";
 // Constants
 import { listOfAutomations } from "../../constants/listOfAutomations";
 // Action Types
-import { READ_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
+import {
+  READ_SPREADSHEET,
+  SELECT_SPREADSHEET,
+} from "../../redux/actionCreators/spreadsheetCreators";
 import {
   RECEIVE_ITERATION,
   AUTOMATION_FINISHED,
@@ -47,6 +50,8 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const automationState = state.automation;
 
   const spreadsheetContents = spreadsheetState.contents[READ_SPREADSHEET];
+  const selectedSpreadsheetContents =
+    spreadsheetState.contents[SELECT_SPREADSHEET];
   const automationFinished =
     automationState.automationFinished[AUTOMATION_FINISHED];
   const currentIteration = automationState.currentIteration[RECEIVE_ITERATION];
@@ -225,14 +230,14 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
           theme="colored"
         />
 
-        {spreadsheetContents?.length !== 0 &&
+        {selectedSpreadsheetContents?.length !== 0 &&
         automationStatus === "In Progress" ? (
           <>
             <NumericalProgressTracker
               isInitializing={currentIteration === null ? true : false}
               maxNumberOfOperations={
-                spreadsheetContents?.length >= 1
-                  ? spreadsheetContents.length
+                selectedSpreadsheetContents?.data?.length >= 1
+                  ? selectedSpreadsheetContents.data.length
                   : 0
               }
               automationName={automationName}
@@ -251,7 +256,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
           <div className="col col-12 mt-2">
             <div className="row">
               {automationStatus === "Idle" &&
-              spreadsheetContents?.length === 0 ? (
+              selectedSpreadsheetContents?.length === 0 ? (
                 <>
                   <CascadingInputs
                     arrayOfQuestions={arrayOfDropdownQuestions}
@@ -283,7 +288,10 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                     setStateHook={setAutomationReady}
                     automationReady={automationReady}
                   />
-                  <SpreadsheetPreviewer spreadSheetData={spreadsheetContents} />
+                  <SpreadsheetPreviewer
+                    spreadSheetData={spreadsheetContents}
+                    isPreautomation={true}
+                  />
                 </>
               ) : (
                 <></>
@@ -312,7 +320,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                   automationStatus={automationStatus}
                   setAutomationStatus={setAutomationStatus}
                   isEnabled={formReady}
-                  spreadsheetContents={spreadsheetContents}
+                  spreadsheetContents={selectedSpreadsheetContents}
                   setBusClientRenderer={setBusClientRenderer}
                 />
               </>
@@ -344,14 +352,14 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                       automationStatus={automationStatus}
                       setAutomationStatus={setAutomationStatus}
                       isEnabled={formReady}
-                      spreadsheetContents={spreadsheetContents}
+                      spreadsheetContents={selectedSpreadsheetContents}
                     />
                   </div>
                   <div className="col col-6">
                     <StopAutomationButton
                       busClientRenderer={busClientRenderer}
                       automationName={automationName}
-                      allIterations={spreadsheetContents}
+                      allIterations={selectedSpreadsheetContents.data}
                       completedIterations={completedIterations}
                       failedIterations={failedIterations}
                       setAutomationStatus={setAutomationStatus}

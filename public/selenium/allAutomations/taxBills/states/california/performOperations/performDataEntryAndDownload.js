@@ -195,6 +195,7 @@ const performDataEntryAndDownload = async (
         if (searchSuccessful === false) {
           arrayOfFailedOperations.push(item);
 
+          await switchToTaxWebsiteTab(taxWebsiteWindow);
           await sendFailedIteration(
             ipcBusClientNodeMain,
             item,
@@ -204,7 +205,7 @@ const performDataEntryAndDownload = async (
             color: "red",
             message: `Failed to find parcel: ${item.ParcelNumber} in database.`,
           });
-          await switchToTaxWebsiteTab(taxWebsiteWindow);
+
           continue;
         }
 
@@ -486,10 +487,13 @@ const performDataEntryAndDownload = async (
 
         arrayOfSuccessfulOperations.push(item);
         let itemErrorColRemoved = item;
-        if(itemErrorColRemoved?.Error) {
-          delete itemErrorColRemoved.Error
+        if (itemErrorColRemoved?.Error) {
+          delete itemErrorColRemoved.Error;
         }
-        await sendSuccessfulIteration(ipcBusClientNodeMain, itemErrorColRemoved);
+        await sendSuccessfulIteration(
+          ipcBusClientNodeMain,
+          itemErrorColRemoved
+        );
         await sendEventLogInfo(ipcBusClientNodeMain, {
           color: "green",
           message: `Succeeded for parcel: ${item.ParcelNumber}`,

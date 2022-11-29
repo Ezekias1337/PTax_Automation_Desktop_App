@@ -7,11 +7,12 @@ export const SpreadsheetButton = ({
   spreadsheetData,
   displaySpreadsheet,
   setDisplaySpreadsheet,
+  enabled
 }) => {
   return (
     <Button
       className={`full-width-button styled-button${
-        spreadsheetData?.length === 0 ? " disabled" : ""
+        enabled === false || spreadsheetData?.length <= 0 ? " disabled" : ""
       }`}
       onClick={() => {
         setDisplaySpreadsheet(!displaySpreadsheet);

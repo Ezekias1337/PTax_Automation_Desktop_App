@@ -6,34 +6,54 @@ import { handleFormChange } from "../../functions/forms/handleFormChange";
 import { generateEventTargetStructure } from "../../helpers/generateEventTargetStructure";
 import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 
-export const Switch = ({ data, state = null, setStateHook = null }) => {
+export const Switch = ({
+  data,
+  state = null,
+  setStateHook = null,
+  nonReduxDefaultValue = null,
+}) => {
   const [isChecked, setIsChecked] = useState(false);
 
   /* 
-    Prepare default value for input field if it exists
+    Prepare default value for input field if it exists in redux
+    store, but if user passes a nonReduxDefaultValue prop, use that
+    instead
   */
 
   useEffect(() => {
-    const isCheckedHelper = camelCasifyString(data.name.split(" ").join(""));
-    const isCheckedTemp = inputFieldFillDefault(
-      data.name.split(" ").join(""),
-      state,
-      false,
-      true,
-      isCheckedHelper
-    );
+    if (nonReduxDefaultValue === null) {
+      const isCheckedHelper = camelCasifyString(data.name.split(" ").join(""));
+      const isCheckedTemp = inputFieldFillDefault(
+        data.name.split(" ").join(""),
+        state,
+        false,
+        true,
+        isCheckedHelper
+      );
 
-    setIsChecked(isCheckedTemp);
+      setIsChecked(isCheckedTemp);
+      /* 
+        Ensure the parent components form data state is updated if the 
+        default input value from electron-store is different from what is 
+        defined in useState's default
+      */
 
-    /* 
-      Ensure the parent components form data state is updated if the 
-      default input value from electron-store is different from what is 
-      defined in useState's default
-    */
+      const e = generateEventTargetStructure(data.name, isCheckedTemp);
+      handleFormChange(e, setStateHook);
+    } else {
+      setIsChecked(nonReduxDefaultValue);
+      console.log("nonReduxDefaultValue: ", nonReduxDefaultValue)
 
-    const e = generateEventTargetStructure(data.name, isCheckedTemp);
-    handleFormChange(e, setStateHook);
-  }, [data.name, setStateHook, state]);
+      /* 
+        Ensure the parent components form data state is updated if the 
+        value of nonReduxDefaultValue is not null 
+      */
+
+      const e = generateEventTargetStructure(data.name, nonReduxDefaultValue);
+      console.log("e: ", e)
+      handleFormChange(e, setStateHook);
+    }
+  }, [data.name, setStateHook, state, nonReduxDefaultValue]);
 
   return (
     <div className="col col-6 mt-2">

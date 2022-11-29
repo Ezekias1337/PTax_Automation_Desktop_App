@@ -70,7 +70,7 @@ export const SpreadSheetExampleAndValidator = ({
               additionalClassNames: "animated-button",
             },
           ]}
-          cardText="Below are the contents of the spreadsheet you uploaded. Verify this is the correct spreadsheet before proceeding."
+          cardText="Below are the contents of the spreadsheet you uploaded. If the spreadsheet has multiple pages, the currently selected page will be used."
         />
       </div>
     );

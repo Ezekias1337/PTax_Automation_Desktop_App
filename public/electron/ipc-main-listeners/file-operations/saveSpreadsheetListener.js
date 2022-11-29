@@ -27,7 +27,7 @@ const saveSpreadsheetFile = async (
       and append them to the workbook
     */
     for (const sheet of arrayOfSheets) {
-      const currentSheet = xlsx.utils.json_to_sheet(sheet.sheetData);
+      const currentSheet = xlsx.utils.json_to_sheet(sheet.data);
       xlsx.utils.book_append_sheet(workBook, currentSheet, sheet.sheetName);
     }
 

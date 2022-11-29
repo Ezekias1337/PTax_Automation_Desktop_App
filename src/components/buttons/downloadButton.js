@@ -10,14 +10,16 @@ const { ipcRenderer } = window.require("electron");
   trigger the download
 */
 
-export const DownloadButton = ({ isAnimated = false, downloadOptions }) => {
+export const DownloadButton = ({
+  isAnimated = false,
+  downloadOptions,
+  enabled,
+}) => {
   return (
     <Button
-      className={
-        isAnimated === true
-          ? "full-width-button styled-button animated-button"
-          : "full-width-button styled-button"
-      }
+      className={`full-width-button styled-button${
+        enabled === false ? " disabled" : ""
+      }`}
       alt="settings-button"
       onClick={() => ipcRenderer.send("save spreadsheet", downloadOptions)}
     >

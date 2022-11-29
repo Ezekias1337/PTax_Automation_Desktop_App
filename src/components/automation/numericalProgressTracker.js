@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Action Types
-import { READ_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
+import { SELECT_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
 import { RECEIVE_ITERATION } from "../../redux/actionCreators/automationCreators";
 // Functions, Helpers, Utils, and Hooks
 import { removeSpacesFromString } from "../../utils/strings/removeSpacesFromString";
@@ -23,7 +23,7 @@ export const NumericalProgressTracker = ({
 
   const automationCurrentIteration =
     automationState.currentIteration[RECEIVE_ITERATION];
-  const spreadsheetContents = spreadsheetState.contents[READ_SPREADSHEET];
+  const spreadsheetContents = spreadsheetState.contents[SELECT_SPREADSHEET];
 
   const [animationParent] = useAutoAnimate();
 
@@ -57,7 +57,8 @@ export const NumericalProgressTracker = ({
 
   useEffect(() => {
     if (attributeToFindCurrentIteration !== null) {
-      const tempCurrentIterationNumber = spreadsheetContents.findIndex(
+      console.log("spreadsheetContents: ", spreadsheetContents);
+      const tempCurrentIterationNumber = spreadsheetContents.data.findIndex(
         (spreadSheetRow) =>
           spreadSheetRow[attributeToFindCurrentIteration] ===
           automationCurrentIteration

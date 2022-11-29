@@ -41,6 +41,10 @@ export const renderPostAutomationSummaryCard = (
     cancelledPercentage = roundDecimal(cancelledRate * 100);
 
     finalTotalIterations = totalIterations;
+    
+    console.log("cancelledRate: ", cancelledRate);
+    console.log("cancelledPercentage: ", cancelledPercentage);
+    console.log("finalTotalIterations: ", finalTotalIterations);
   } else {
     completedRate =
       completedPercentage =
