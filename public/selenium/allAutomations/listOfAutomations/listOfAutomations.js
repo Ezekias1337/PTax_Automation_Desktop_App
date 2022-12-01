@@ -183,7 +183,7 @@ const listOfAutomations = {
         subLocations: [
           {
             key: 1,
-            name: "New York",
+            name: "New York City",
             function: taxBills,
             availableOperations: [
               "Data Entry",

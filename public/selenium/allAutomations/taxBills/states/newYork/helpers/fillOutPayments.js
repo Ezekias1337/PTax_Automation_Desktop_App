@@ -8,7 +8,7 @@ const scrollElementIntoView = require("../../../../../functions/general/scrollEl
 const fillOutPayments = async (
   driver,
   selectors,
-  installmentTotalString,
+  taxBillObj,
   installmentNumber,
   twoOrFourInstallments = 4
 ) => {
@@ -26,14 +26,22 @@ const fillOutPayments = async (
       selectors.finalPayment1,
       "id"
     );
-    await sendKeysPTaxInputFields(finalPayment1, installmentTotalString, false);
+    await sendKeysPTaxInputFields(
+      finalPayment1,
+      taxBillObj.installmentTotalString,
+      false
+    );
 
     const basePayment1 = await awaitElementLocatedAndReturn(
       driver,
       selectors.basePayment1,
       "id"
     );
-    await sendKeysPTaxInputFields(basePayment1, installmentTotalString, false);
+    await sendKeysPTaxInputFields(
+      basePayment1,
+      taxBillObj.installmentTotalString,
+      false
+    );
 
     // For the first installment, must delete the input of final/base payment for all other installments
 
@@ -122,7 +130,9 @@ const fillOutPayments = async (
 
     /* const finalPayment1Number = parseFloat(finalPayment1StringParsed); */
     const totalLiabilityNumber = parseFloat(totalLiabilityStringParsed);
-    const installmentTotalStringToNumber = parseFloat(installmentTotalString);
+    const installmentTotalStringToNumber = parseFloat(
+      taxBillObj.installmentTotalString
+    );
 
     /* 
       Add the amount from payment 1 to the Final liability
@@ -168,14 +178,22 @@ const fillOutPayments = async (
       selectors.finalPayment2,
       "id"
     );
-    await sendKeysPTaxInputFields(finalPayment2, installmentTotalString, false);
+    await sendKeysPTaxInputFields(
+      finalPayment2,
+      taxBillObj.installmentTotalString,
+      false
+    );
 
     const basePayment2 = await awaitElementLocatedAndReturn(
       driver,
       selectors.basePayment2,
       "id"
     );
-    await sendKeysPTaxInputFields(basePayment2, installmentTotalString, false);
+    await sendKeysPTaxInputFields(
+      basePayment2,
+      taxBillObj.installmentTotalString,
+      false
+    );
 
     /* 
       Save
@@ -188,9 +206,68 @@ const fillOutPayments = async (
     await scrollElementIntoView(driver, btnSaveAllPayment);
     await btnSaveAllPayment.click();
     await waitForLoading();
+  }
+  if (installmentNumber === "3") {
+    /* 
+      installmentThreeString,
+      installmentFourString,
+      totalOwed,
+    */
+    const finalPayment3 = await awaitElementLocatedAndReturn(
+      driver,
+      selectors.finalPayment3,
+      "id"
+    );
+    await sendKeysPTaxInputFields(
+      finalPayment3,
+      taxBillObj.installmentThreeString,
+      false
+    );
+
+    const basePayment3 = await awaitElementLocatedAndReturn(
+      driver,
+      selectors.basePayment3,
+      "id"
+    );
+    await sendKeysPTaxInputFields(
+      basePayment3,
+      taxBillObj.installmentThreeString,
+      false
+    );
+
+    const finalPayment4 = await awaitElementLocatedAndReturn(
+      driver,
+      selectors.finalPayment4,
+      "id"
+    );
+    await sendKeysPTaxInputFields(
+      finalPayment4,
+      taxBillObj.installmentFourString,
+      false
+    );
+
+    const basePayment4 = await awaitElementLocatedAndReturn(
+      driver,
+      selectors.basePayment4,
+      "id"
+    );
+    await sendKeysPTaxInputFields(
+      basePayment4,
+      taxBillObj.installmentFourString,
+      false
+    );
+
+    const btnSaveAllPayment = await awaitElementLocatedAndReturn(
+      driver,
+      selectors.saveAll,
+      "id"
+    );
+    await scrollElementIntoView(driver, btnSaveAllPayment);
+    await btnSaveAllPayment.click();
+    await waitForLoading();
   } else {
     console.log(
-      "Support for installments past 2 are not yet supported, contact Frank Edwards for assistance if needed"
+      "Support for installments past 3 are not yet supported, contact Frank Edwards for assistance if needed"
     );
   }
 };

@@ -249,7 +249,7 @@ const performDataEntryAndDownload = async (
             By.xpath("./../..")
           );
 
-          const fileNameForFile = `${item.CompanyName} ${item.EntityName} ${item.ParcelNumber}`;
+          const fileNameForFile = `${item.CompanyName} ${item.LocationName} ${item.ParcelNumber}`;
 
           const downloadSucceeded = await saveLinkToFile(
             downloadLink,
@@ -301,18 +301,36 @@ const performDataEntryAndDownload = async (
           message: "Pulling Tax Bill data",
         });
 
-        const [installmentTotalString, installmentTotalInt] =
-          await pullTaxBillStrings(driver, websiteSelectors, installmentNumber);
+        /* const [installmentTotalString, installmentTotalInt] =
+          await pullTaxBillStrings(
+            driver,
+            websiteSelectors,
+            installmentNumber,
+            taxYearEnd
+          ); */
+        const taxBillObj = await pullTaxBillStrings(
+          driver,
+          websiteSelectors,
+          installmentNumber,
+          taxYearEnd
+        );
         const bblSearchBtn = await awaitElementLocatedAndReturn(
           driver,
           websiteSelectors.bblSearchBtn,
           "xpath"
         );
+        if (installmentNumber === "1") {
+          await sendEventLogInfo(ipcBusClientNodeMain, {
+            color: "regular",
+            message: `Installment as string: ${taxBillObj.installmentTotalString}, Installment as integer: ${taxBillObj.installmentTotalInt}`,
+          });
+        } else if (installmentNumber === "3") {
+          await sendEventLogInfo(ipcBusClientNodeMain, {
+            color: "regular",
+            message: `Installment 3: ${taxBillObj.installmentThreeString}, Installment 4: ${taxBillObj.installmentFourString}, Total Liability: ${taxBillObj.totalOwed}`,
+          });
+        }
 
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "regular",
-          message: `Installment as string: ${installmentTotalString}, Installment as integer: ${installmentTotalInt}`,
-        });
         await bblSearchBtn.click();
         await driver.wait(
           until.urlContains("search/commonsearch.aspx?mode=persprop")
@@ -370,12 +388,13 @@ const performDataEntryAndDownload = async (
         const twoOrFourInstallments = await fillOutLiability(
           driver,
           taxBillSelectors,
-          installmentTotalString
+          taxBillObj,
+          installmentNumber
         );
         await fillOutPayments(
           driver,
           taxBillSelectors,
-          installmentTotalString,
+          taxBillObj,
           installmentNumber,
           twoOrFourInstallments
         );
@@ -419,11 +438,11 @@ const performDataEntryAndDownload = async (
       }
     }
 
-    await printAutomationReportToSheet(
+    /* await printAutomationReportToSheet(
       arrayOfSuccessfulOperations,
       arrayOfFailedOperations,
       "./output/"
-    );
+    ); */
     await sendAutomationCompleted(ipcBusClientNodeMain);
     await sendEventLogInfo(ipcBusClientNodeMain, {
       color: "blue",
