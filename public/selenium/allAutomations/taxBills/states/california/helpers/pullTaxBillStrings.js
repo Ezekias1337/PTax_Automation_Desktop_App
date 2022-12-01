@@ -21,7 +21,9 @@ const pullTaxBillStrings = async (driver, taxYear, county, selectors) => {
     const isTaxDataPresent = await fluentWait(
       driver,
       selectors.totalTaxesDue,
-      "css"
+      "css",
+      10,
+      2
     );
     console.log("isTaxDataPresent: ", isTaxDataPresent);
 
