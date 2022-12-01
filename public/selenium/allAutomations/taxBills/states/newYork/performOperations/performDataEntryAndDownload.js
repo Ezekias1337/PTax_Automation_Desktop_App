@@ -57,6 +57,7 @@ const sendFailedIteration = require("../../../../../ipc-bus/sendFailedIteration"
 const sendEventLogInfo = require("../../../../../ipc-bus/sendEventLogInfo");
 const sendAutomationCompleted = require("../../../../../ipc-bus/sendAutomationCompleted");
 const handleAutomationCancel = require("../../../../../ipc-bus/handleAutomationCancel");
+const checkIfObjectIsEmpty = require("../../../../../../shared/utils/checkIfObjectIsEmpty");
 const websiteSelectors = require("../websiteSelectors");
 
 const performDataEntryAndDownload = async (
@@ -146,10 +147,12 @@ const performDataEntryAndDownload = async (
 
     for (const item of spreadsheetContents) {
       try {
+        await sendCurrentIterationInfo(ipcBusClientNodeMain, item.ParcelNumber);
         await sendEventLogInfo(ipcBusClientNodeMain, {
           color: "orange",
           message: `Working on parcel: ${item.ParcelNumber}`,
         });
+
         await sendEventLogInfo(ipcBusClientNodeMain, {
           color: "blue",
           message: "Checking if session expired",
@@ -301,24 +304,41 @@ const performDataEntryAndDownload = async (
           message: "Pulling Tax Bill data",
         });
 
-        /* const [installmentTotalString, installmentTotalInt] =
-          await pullTaxBillStrings(
-            driver,
-            websiteSelectors,
-            installmentNumber,
-            taxYearEnd
-          ); */
         const taxBillObj = await pullTaxBillStrings(
           driver,
           websiteSelectors,
           installmentNumber,
           taxYearEnd
         );
+
         const bblSearchBtn = await awaitElementLocatedAndReturn(
           driver,
           websiteSelectors.bblSearchBtn,
           "xpath"
         );
+        await bblSearchBtn.click();
+        await driver.wait(
+          until.urlContains("search/commonsearch.aspx?mode=persprop")
+        );
+
+        const isTaxBillObjEmpty = checkIfObjectIsEmpty(taxBillObj);
+
+        if (isTaxBillObjEmpty === true) {
+          arrayOfFailedOperations.push(item);
+          await sendFailedIteration(
+            ipcBusClientNodeMain,
+            item,
+            `Parcel: ${item.ParcelNumber} did not have 4 rows of tax data, requires human review.`
+          );
+          await sendEventLogInfo(ipcBusClientNodeMain, {
+            color: "red",
+            message: `Parcel: ${item.ParcelNumber} did not have 4 rows of tax data, requires human review.`,
+          });
+
+          continue;
+        }
+
+        await switchToPTaxTab(driver, ptaxWindow);
         if (installmentNumber === "1") {
           await sendEventLogInfo(ipcBusClientNodeMain, {
             color: "regular",
@@ -331,12 +351,9 @@ const performDataEntryAndDownload = async (
           });
         }
 
-        await bblSearchBtn.click();
-        await driver.wait(
-          until.urlContains("search/commonsearch.aspx?mode=persprop")
-        );
-
-        await switchToPTaxTab(driver, ptaxWindow);
+        /* 
+            -----------------------------------------PTax Part--------------------------------
+        */
 
         // Navigate to parcel in PTax
 

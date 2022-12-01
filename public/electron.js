@@ -3,7 +3,7 @@ const log = require("electron-log");
 try {
   log.info("IMPORTING MODULES");
   // Modules to control application life and create native browser window
-  const { app, BrowserWindow, dialog } = require("electron");
+  const { app, BrowserWindow, dialog, crashReporter } = require("electron");
   // Library Imports
   const Store = require("electron-store");
   const { autoUpdater } = require("electron-updater");
@@ -118,10 +118,25 @@ try {
     here a logger is added to catch what's causing the issue
   */
 
+  crashReporter.start({
+    productName: "ptax-automation-desktop-app",
+    companyName: "Property Tax Resources",
+    submitUrl: "",
+    uploadToServer: false,
+  });
+
+  app.on("child-process-gone", function (err) {
+    log.warn("Child Process Gone: ", err);
+  });
+
+  app.on("render-process-gone", function (err) {
+    log.warn("Render Process Gone: ", err);
+  });
+
   //handle crashes and kill events
   process.on("uncaughtException", function (err) {
     //log the message and stack trace
-    log.warn(err);
+    log.warn("uncaught Exception: ", err);
     //relaunch the app
     app.relaunch({ args: [] });
     app.exit(0);
@@ -139,8 +154,10 @@ try {
 ---------------------------END OF BASE TEMPLATE---------------------------
 */
 
-  console.log("Settings path: ", app.getPath("userData"));
+  /*  console.log("Settings path: ", app.getPath("userData"));
+  console.log("Crash log path: ", app.getPath("crashDumps"));
+  console.log("Temp path: ", app.getPath("temp")); */
   log.info("BUILD SUCCESSFUL");
 } catch (error) {
-  log.warn(error);
+  log.warn("Error in catch block: ", error);
 }
