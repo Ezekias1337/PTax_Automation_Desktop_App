@@ -19,9 +19,11 @@ const websiteSelectors = {
   sideMenuTab: "sidemenu",
   propertyTaxBillsTab: `//span[contains(text(), 'Property Tax Bills')]`,
   accountBalanceTab: `//span[contains(text(), 'Account Balance')]`,
+  accountHistoryTab: `//span[contains(text(), 'Account History')]`,
   taxBillTable: "datalet_div_1",
   bblSearchBtn: "//span[contains(text(), 'BBL Search')]",
   taxBillInformation: "Account Balance Details",
+  accountHistorySummary: "Account History Summary",
 };
 
 module.exports = websiteSelectors;

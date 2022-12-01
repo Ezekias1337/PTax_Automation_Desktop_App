@@ -7,21 +7,26 @@ const saveLinkToFile = async (
   fileName,
   fileExtension
 ) => {
-  const anchorTagToDownloadHREF = await anchorTag.getAttribute("href");
   let downloadSucceeded = false;
-  const fileNameSpecialCharactersRemoved = fileName.replace("*", "");
-
-  request
-    .get(anchorTagToDownloadHREF, { timeout: 20000 }, function (err) {
-      return downloadSucceeded;
-    })
-    .pipe(
-      fs.createWriteStream(
-        `${outputDirectory}${fileNameSpecialCharactersRemoved}.${fileExtension}`
-      )
-    );
-  downloadSucceeded = true;
-  return downloadSucceeded;
+  try {
+    const anchorTagToDownloadHREF = await anchorTag.getAttribute("href");
+    const fileNameSpecialCharactersRemoved = fileName.replace("*", "");
+    const destinationPath = `${outputDirectory}/${fileNameSpecialCharactersRemoved}.${fileExtension}`;
+    
+    request
+      .get(anchorTagToDownloadHREF, { timeout: 20000 }, function (err) {
+        return downloadSucceeded;
+      })
+      .pipe(
+        fs.createWriteStream(
+          destinationPath
+        )
+      );
+    downloadSucceeded = true;
+    return downloadSucceeded;
+  } catch (error) {
+    return downloadSucceeded;
+  }
 };
 
 module.exports = saveLinkToFile;
