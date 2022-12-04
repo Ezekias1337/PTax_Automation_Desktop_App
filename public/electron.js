@@ -3,20 +3,15 @@ const log = require("electron-log");
 try {
   log.info("IMPORTING MODULES");
   // Modules to control application life and create native browser window
-  const { app, BrowserWindow, dialog, crashReporter } = require("electron");
+  const { app, crashReporter } = require("electron");
   // Library Imports
   const Store = require("electron-store");
-  const { autoUpdater } = require("electron-updater");
   //Functions
-  const {
-    createIpcBusBridge,
-  } = require("./electron/functions/ipc/createIpcBusBridge");
-  const { createWindow } = require("./electron/functions/window/createWindow");
-  const { createTray } = require("./electron/functions/tray/createTray");
+  const { handleLaunch } = require("./electron/functions/launch/handleLaunch");
   // Listeners
   require("./electron/ipc-main-listeners/allListeners");
 
-  /* 
+/* 
 ---------------------------START OF BASE TEMPLATE---------------------------
 */
   log.info("CREATING STORE");
@@ -24,88 +19,28 @@ try {
   let tray, window;
 
   /* 
-  The whenReady method will be called when Electron has finished
-  initialization and is ready to create browser windows.
-  Some APIs can only be used after this event occurs. 
-*/
+    The whenReady method will be called when Electron has finished
+    initialization and is ready to create browser windows.
+    Some APIs can only be used after this event occurs. 
+  */
 
   app.whenReady().then(() => {
-    const isDev = !app.isPackaged;
-    if (isDev === true) {
-      const reactDevToolsId = "fmkadmapgofadopljbjfkapdkoienihi";
-      const {
-        default: installExtension,
-        REDUX_DEVTOOLS,
-      } = require("electron-devtools-installer");
-      installExtension([REDUX_DEVTOOLS, reactDevToolsId])
-        .then((name) => console.log(`Added Extension:  ${name}`))
-        .catch((err) => console.log("An error occurred: ", err));
-    }
-    log.info("CREATING WINDOW...........");
-    window = createWindow(__dirname, process, store, isDev);
-    if (tray !== undefined) {
-      tray.destroy();
-    }
-
-    tray = createTray(window, __dirname, process);
-    createIpcBusBridge();
-
-    app.on("activate", function () {
-      /* 
-      On macOS it's common to re-create a window in the app when the
-      dock icon is clicked and there are no other windows open.
-    */
-      if (BrowserWindow.getAllWindows().length === 0)
-        createWindow(window, tray, __dirname, process, store);
-    });
-
-    if (isDev === false) {
-      autoUpdater.on(
-        "update-available",
-        (_event, releaseNotes, releaseName) => {
-          const dialogOpts = {
-            type: "info",
-            buttons: ["Ok"],
-            title: "Application Update",
-            message: process.platform === "win32" ? releaseNotes : releaseName,
-            detail: "A new version is being downloaded.",
-          };
-          dialog.showMessageBox(dialogOpts, (response) => {});
-        }
-      );
-
-      autoUpdater.on(
-        "update-downloaded",
-        (_event, releaseNotes, releaseName) => {
-          const dialogOpts = {
-            type: "info",
-            buttons: ["Restart", "Later"],
-            title: "Application Update",
-            message: process.platform === "win32" ? releaseNotes : releaseName,
-            detail:
-              "A new version has been downloaded. Restart the application to apply the updates.",
-          };
-          dialog.showMessageBox(dialogOpts).then((returnValue) => {
-            if (returnValue.response === 0) autoUpdater.quitAndInstall();
-          });
-        }
-      );
-    }
+    handleLaunch(tray, window, store, __dirname);
   });
 
   /* 
-  Prevent Tray Icon Duplication
-*/
+    Prevent Tray Icon Duplication
+  */
 
   app.on("before-quit", function () {
     tray.destroy();
   });
 
   /* 
-  Quit when all windows are closed, except on macOS. There, it's common
-  for applications and their menu bar to stay active until the user quits
-  explicitly with Cmd + Q. 
-*/
+    Quit when all windows are closed, except on macOS. There, it's common
+    for applications and their menu bar to stay active until the user quits
+    explicitly with Cmd + Q. 
+  */
   app.on("window-all-closed", function () {
     if (process.platform !== "darwin") app.quit();
   });
@@ -140,6 +75,7 @@ try {
     //relaunch the app
     app.relaunch({ args: [] });
     app.exit(0);
+    handleLaunch(tray, window, store, __dirname);
   });
 
   process.on("SIGTERM", function (err) {
@@ -148,6 +84,7 @@ try {
     //relaunch the app
     app.relaunch({ args: [] });
     app.exit(0);
+    handleLaunch(tray, window, store, __dirname);
   });
 
   /* 
