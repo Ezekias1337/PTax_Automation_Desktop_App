@@ -110,12 +110,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       newStateObject = {
         ...state,
       };
-
-      /* 
-        ! NEED TO FIGURE OUT DATA STRUCTURE I WANT TO USE HERE BECAUSE OF NULL
-        ! THIS WILL ONLY BE USED TO DISPLAY TOAST WHEN FILE IS SAVED SUCCESSFULLY
-        ! OR THERE IS AN ERROR
-      */
+      newStateObject.messages[SAVE_SPREADSHEET].push("Download Successful");
 
       return newStateObject;
     default:

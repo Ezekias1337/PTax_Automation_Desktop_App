@@ -1,12 +1,17 @@
+// Library Imports
 import React from "react";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
+// Constants
+import { assessmentNoticeQuestions } from "./constants/automation-questions/assessmentNoticeQuestions";
+import { taxBillQuestions } from "./constants/automation-questions/taxBillQuestions";
+// Components
 import { Home } from "./components/pages/home";
 import { SelectAnAutomation } from "./components/pages/selectAnAutomation";
 import { Settings } from "./components/pages/settings";
+import { PreAutomationConfig } from "./components/pages/preAutomationConfig";
 import { Automation } from "./components/pages/automation";
 import { PostAutomationSummary } from "./components/pages/postAutomationSummary";
-import { assessmentNoticeQuestions } from "./constants/automation-questions/assessmentNoticeQuestions";
-import { taxBillQuestions } from "./constants/automation-questions/taxBillQuestions";
+// CSS
 import "./App.css";
 
 const App = () => {

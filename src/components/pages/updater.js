@@ -3,18 +3,13 @@ import { useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 // Functions, Helpers, Utils, and Hooks
 import { animateGradientBackground } from "../../helpers/animateGradientBackground";
+import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 // CSS
 import "../../css/styles.scss";
 
 export const Updater = () => {
   const state = useSelector((state) => state);
-
-  useLayoutEffect(() => {
-    const backgroundInterval = animateGradientBackground();
-    return function cleanup() {
-      clearInterval(backgroundInterval);
-    };
-  }, []);
+  useAnimatedBackground();
 
   return (
     <div

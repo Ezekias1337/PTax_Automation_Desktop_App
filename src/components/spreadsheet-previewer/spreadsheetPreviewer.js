@@ -69,6 +69,28 @@ export const SpreadsheetPreviewer = ({
 
   return (
     <div className="container mt-1" id="spreadsheetPreviewerWrapper">
+      {spreadSheetData?.length > 1 ? (
+        <ul id="worksheet-selection-navigation" className="nav nav-tabs">
+          {spreadSheetData.map((sheet, index) => {
+            return (
+              <li key={nanoid()} className="nav-item">
+                <button
+                  className={`nav-link ${
+                    index === selectedSheetIndex ? "active" : ""
+                  }`}
+                  onClick={() => {
+                    setSelectedSheetIndex(index);
+                  }}
+                >
+                  {sheet.sheetName}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <></>
+      )}
       <div className="row">
         {spreadSheetData[selectedSheetIndex]?.data[0] !== undefined ? (
           <table id="spreadsheetPreviewer" className="table table-hover">
@@ -140,28 +162,6 @@ export const SpreadsheetPreviewer = ({
           <></>
         )}
       </div>
-      {spreadSheetData?.length > 1 ? (
-        <ul id="worksheet-selection-navigation" className="nav nav-tabs">
-          {spreadSheetData.map((sheet, index) => {
-            return (
-              <li key={nanoid()} className="nav-item">
-                <button
-                  className={`nav-link ${
-                    index === selectedSheetIndex ? "active" : ""
-                  }`}
-                  onClick={() => {
-                    setSelectedSheetIndex(index);
-                  }}
-                >
-                  {sheet.sheetName}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      ) : (
-        <></>
-      )}
     </div>
   );
 };

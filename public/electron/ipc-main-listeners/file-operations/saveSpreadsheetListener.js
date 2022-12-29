@@ -34,9 +34,6 @@ const saveSpreadsheetFile = async (
     /* 
       Create the spreadsheet file
     */
-    console.log("workBook: ", workBook);
-    console.log("pathToSaveSpreadsheet: ", pathToSaveSpreadsheet);
-    console.log("fileName: ", fileName);
     xlsx.writeFile(workBook, `${pathToSaveSpreadsheet}/${fileName}.xlsx`);
   } catch (error) {
     console.log(

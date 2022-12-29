@@ -1,8 +1,13 @@
 // Library Imports
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 //Redux
-import { SELECT_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
+import {
+  SELECT_SPREADSHEET,
+  SAVE_SPREADSHEET,
+} from "../../redux/actionCreators/spreadsheetCreators";
 import {
   COMPLETED_ITERATIONS,
   CANCELLED_ITERATIONS,
@@ -10,11 +15,13 @@ import {
 } from "../../redux/actionCreators/automationCreators";
 // Functions, Helpers, Utils, and Hooks
 import { renderPostAutomationSummaryCard } from "../../functions/automation/renderPostAutomationSummaryCard";
+import { showToast } from "../../functions/toast/showToast";
 import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { useResetRedux } from "../../hooks/useResetRedux";
 import { useIsFormFilled } from "../../hooks/useIsFormFilled";
 import { useSpreadsheetData } from "../../hooks/ipc/useSpreadsheetData";
+import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
@@ -43,17 +50,17 @@ export const PostAutomationSummary = () => {
   const state = useSelector((state) => state);
   const automationState = state.automation;
   const spreadsheetState = state.spreadsheet.contents[SELECT_SPREADSHEET];
+  const saveSpreadsheetMessages = state.spreadsheet.messages[SAVE_SPREADSHEET];
 
   const completedIterations = automationState.contents[COMPLETED_ITERATIONS];
   const failedIterations = automationState.contents[FAILED_ITERATIONS];
   const cancelledIterations = automationState.contents[CANCELLED_ITERATIONS];
 
   const [numberOfCompletedIterations, setNumberOfCompletedIterations] =
-    useState(false);
-  const [numberOfFailedIterations, setNumberOfFailedIterations] =
-    useState(false);
+    useState(0);
+  const [numberOfFailedIterations, setNumberOfFailedIterations] = useState(0);
   const [numberOfCancelledIterations, setNumberOfCancelledIterations] =
-    useState(false);
+    useState(0);
   const [selectedSpreadsheetData, setSelectedSpreadsheetData] = useState([]);
   const [formReady, setFormReady] = useState(false);
   const [displaySpreadsheet, setDisplaySpreadsheet] = useState(false);
@@ -67,13 +74,7 @@ export const PostAutomationSummary = () => {
   });
 
   useIsFormFilled(downloadOptions, setFormReady);
-
-  useLayoutEffect(() => {
-    const backgroundInterval = animateGradientBackground();
-    return function cleanup() {
-      clearInterval(backgroundInterval);
-    };
-  }, []);
+  useAnimatedBackground();
 
   /* 
     When the user changes which iterations they want included,
@@ -91,28 +92,65 @@ export const PostAutomationSummary = () => {
     and set the value in the state
   */
   useEffect(() => {
-    let tempCompletedIterations = 0;
-    let tempCancelledIterations = 0;
-    let tempFailedIterations = 0;
+    let tempCompletedIterationsQty = 0;
+    let tempCancelledIterationsQty = 0;
+    let tempFailedIterationsQty = 0;
+    let tempCancelledIterations = [...cancelledIterations];
+
+    /* 
+      Check if the completed or failed arrays have any duplicates shared with
+      the cancelled array
+    */
+
+    const commonElementsCompleted = [];
+    const commonElementsFailed = [];
+
+    for (const iteration of tempCancelledIterations) {
+      if (
+        completedIterations.some(
+          (item) => item.ParcelNumber === iteration.ParcelNumber
+        )
+      ) {
+        commonElementsCompleted.push(iteration);
+      } else if (
+        cancelledIterations.some(
+          (item) => item.ParcelNumber === iteration.ParcelNumber
+        )
+      ) {
+        commonElementsFailed.push(iteration);
+      }
+    }
+
+    /* 
+      If there are duplicates, subtract the length of the matches
+      from the cancelled array
+    */
+
+    tempCancelledIterationsQty = cancelledIterations.length;
+    if (commonElementsCompleted?.length > 0) {
+      tempCancelledIterationsQty -= commonElementsCompleted.length;
+    }
+    if (commonElementsFailed?.length > 0) {
+      tempCancelledIterationsQty -= commonElementsFailed.length;
+    }
 
     if (completedIterations?.length) {
-      tempCompletedIterations = completedIterations.length;
+      tempCompletedIterationsQty = completedIterations.length;
     }
     if (failedIterations?.length) {
-      tempFailedIterations = failedIterations.length;
-    }
-    if (cancelledIterations?.length) {
-      tempCancelledIterations = cancelledIterations.length;
+      tempFailedIterationsQty = failedIterations.length;
     }
 
-    setNumberOfCompletedIterations(tempCompletedIterations);
-    setNumberOfCancelledIterations(tempCancelledIterations);
-    setNumberOfFailedIterations(tempFailedIterations);
+    setNumberOfCompletedIterations(tempCompletedIterationsQty);
+    setNumberOfCancelledIterations(tempCancelledIterationsQty);
+    setNumberOfFailedIterations(tempFailedIterationsQty);
   }, [completedIterations, failedIterations, cancelledIterations]);
 
   /* 
     When the user changes the filters for what iterations they want to download,
-    update the downloadOptions.arrayOfSheets array
+    update the downloadOptions.arrayOfSheets array.
+    
+    Also, 
     
     Note: ESLint wants downloadOptions.arrayOfSheets to be in the 
     dependency array, but it was removed intentionally because it
@@ -147,9 +185,34 @@ export const PostAutomationSummary = () => {
         (sheet) => sheet.sheetName === "Cancelled Iterations"
       )
     ) {
+      /* 
+        Remove any duplicates that are included in cancelled and
+        either the completed/failed arrays
+      */
+
+      let tempCancelledIterations = [...cancelledIterations];
+
+      for (const [index, iteration] of tempCancelledIterations.entries()) {
+        if (
+          completedIterations.some(
+            (item) => item.ParcelNumber === iteration.ParcelNumber
+          )
+        ) {
+          tempCancelledIterations.splice(index, 1);
+        }
+
+        if (
+          cancelledIterations.some(
+            (item) => item.ParcelNumber === iteration.ParcelNumber
+          )
+        ) {
+          tempCancelledIterations.splice(index, 1);
+        }
+      }
+
       tempArrayOfSheets.push({
         sheetName: "Cancelled Iterations",
-        data: cancelledIterations,
+        data: tempCancelledIterations,
       });
     } else if (downloadOptions.includeCancelledIterations === false) {
       const arrayIndexToRemove = tempArrayOfSheets.findIndex(
@@ -192,6 +255,27 @@ export const PostAutomationSummary = () => {
     failedIterations,
   ]);
 
+  /* 
+    Show success toast when spreadsheet saves successfully
+  */
+
+  useEffect(() => {
+    let tempSaveSpreadsheetMessages = [...saveSpreadsheetMessages];
+
+    if (tempSaveSpreadsheetMessages.slice(-1) === "Download Successful") {
+      showToast("Spreadsheet Saved!", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [saveSpreadsheetMessages]);
+
   return (
     <div
       data-theme={
@@ -205,6 +289,18 @@ export const PostAutomationSummary = () => {
 
       <div className="container-for-scroll">
         <Header pageTitle="Post Automation Summary" includeArrow={false} />
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
         <div className="row mx-1 mt-2">
           <div className="col col-2"></div>
           <div className="col col-8">
@@ -267,7 +363,7 @@ export const PostAutomationSummary = () => {
               spreadsheetData={downloadOptions.arrayOfSheets}
               displaySpreadsheet={displaySpreadsheet}
               setDisplaySpreadsheet={setDisplaySpreadsheet}
-              enabled={formReady}
+              enabled={true}
             />
           </div>
           <div className="col col-6">

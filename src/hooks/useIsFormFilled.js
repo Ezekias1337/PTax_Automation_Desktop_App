@@ -43,5 +43,5 @@ export const useIsFormFilled = (
         setStateHook(false);
       }
     }
-  }, [selectedChoices, setStateHook]);
+  }, [selectedChoices, setStateHook, includeSpreadsheet]);
 };

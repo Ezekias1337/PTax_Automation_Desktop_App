@@ -22,6 +22,7 @@ import {
 } from "../../redux/actionCreators/automationCreators";
 // Functions, Helpers, Utils, and Hooks
 import { useIsFormFilled } from "../../hooks/useIsFormFilled";
+import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
@@ -78,12 +79,15 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
 
   useAutomationData(busClientRenderer);
   useIsFormFilled(selectedChoices, setFormReady, true);
+  //useAnimatedBackground();
 
   /* 
     Handle theme preferences
   */
 
   useLayoutEffect(() => {
+   console.log("automationName: ", automationName)
+    
     const backgroundInterval = animateGradientBackground();
 
     return function cleanup() {
@@ -345,27 +349,14 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                   cardBody={configCardContents}
                   isConfigurationCard={true}
                 />
-                <div className="row">
-                  <div className="col col-6">
-                    <StartAutomationButton
-                      automationConfigObject={selectedChoices}
-                      automationStatus={automationStatus}
-                      setAutomationStatus={setAutomationStatus}
-                      isEnabled={formReady}
-                      spreadsheetContents={selectedSpreadsheetContents}
-                    />
-                  </div>
-                  <div className="col col-6">
-                    <StopAutomationButton
-                      busClientRenderer={busClientRenderer}
-                      automationName={automationName}
-                      allIterations={selectedSpreadsheetContents.data}
-                      completedIterations={completedIterations}
-                      failedIterations={failedIterations}
-                      setAutomationStatus={setAutomationStatus}
-                    />
-                  </div>
-                </div>
+                <StopAutomationButton
+                  busClientRenderer={busClientRenderer}
+                  automationName={automationName}
+                  allIterations={selectedSpreadsheetContents.data}
+                  completedIterations={completedIterations}
+                  failedIterations={failedIterations}
+                  setAutomationStatus={setAutomationStatus}
+                />
               </>
             ) : (
               <></>

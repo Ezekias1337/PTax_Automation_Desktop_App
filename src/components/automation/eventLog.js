@@ -1,10 +1,9 @@
 // Library Imports
-import { useRef, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { nanoid } from "nanoid";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Functions, Helpers, Utils and Hooks
-import { scrollIntoView } from "../../utils/window/scrollIntoView";
 import { useEventLogData } from "../../hooks/ipc/useEventLogData";
 // Action Types
 import { RECEIVE_EVENT_LOG_DATA } from "../../redux/actionCreators/eventLogCreators";
@@ -15,36 +14,55 @@ import { RECEIVE_EVENT_LOG_DATA } from "../../redux/actionCreators/eventLogCreat
 import "../../css/styles.scss";
 import "../../css/event-log.scss";
 
+/*
+  When the component was first made, it would simply map through the entire
+  eventLogContents array, but it was causing performance issues and  white screen
+  crashes when the array got too long.
+  
+  For performance's sake, the event log now displays the 20 most recent messages.
+*/
+
 export const EventLog = ({ busClientRenderer, automationStatus }) => {
   const [animationParent] = useAutoAnimate();
   const eventLogState = useSelector((state) => state.eventLog);
   const eventLogContents = eventLogState.contents[RECEIVE_EVENT_LOG_DATA];
-  const scrollRef = useRef(null);
+  const [visibleMessages, setVisibleMessages] = useState([]);
   useEventLogData(busClientRenderer);
 
   /* 
-    Scroll to the bottom of the event log when it updates
+    When the eventLogContents changes, get the last
+    20 elements of the array and display those
   */
 
   useEffect(() => {
-    scrollIntoView(scrollRef);
-  }, [eventLogContents, scrollRef]);
+    let tempVisibleMessages = [];
+    if (eventLogContents.length <= 20) {
+      tempVisibleMessages = [...eventLogContents];
+    } else {
+      const tempEventLogContents = [...eventLogContents];
+      tempVisibleMessages = tempEventLogContents.slice(-20);
+    }
+
+    if (tempVisibleMessages.length > 0) {
+      setVisibleMessages(tempVisibleMessages);
+    }
+  }, [eventLogState, eventLogContents]);
 
   return (
     <div
       id="event-log-wrapper"
       className={`${automationStatus === "In Progress" ? "" : "mt-2"}`}
     >
-      <div className="container-fluid event-log">
+      <div id="event-log" className="container-fluid">
         <div className="row py-4" ref={animationParent}>
-          {eventLogContents?.length < 1 ? (
+          {visibleMessages?.length < 1 ? (
             <div key={nanoid()} className={`col col-12`}>
               This is the event log! When the automation begins this section
               will display important information about what is happening while
               it's running.
             </div>
           ) : (
-            eventLogContents.map((logEntry) => {
+            visibleMessages.map((logEntry) => {
               return (
                 <div
                   key={nanoid()}
@@ -55,7 +73,6 @@ export const EventLog = ({ busClientRenderer, automationStatus }) => {
               );
             })
           )}
-          <div id="element-for-scroll" ref={scrollRef}></div>
         </div>
       </div>
       {/* <div className="row mt-2">

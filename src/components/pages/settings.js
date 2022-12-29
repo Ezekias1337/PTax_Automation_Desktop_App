@@ -10,6 +10,7 @@ import { actionCreators } from "../../redux/allActions";
 import { showToast } from "../../functions/toast/showToast";
 import { saveUserSettings } from "../../functions/settings/saveUserSettings";
 import { animateGradientBackground } from "../../helpers/animateGradientBackground";
+import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 // Constants
 import { listOfSettings } from "../../constants/listOfSettings";
 // Components
@@ -42,14 +43,7 @@ export const Settings = () => {
     uploadDirectory: "",
     launchWindowinCurrentPosition: false,
   });
-
-  useLayoutEffect(() => {
-    const backgroundInterval = animateGradientBackground();
-
-    return function cleanup() {
-      clearInterval(backgroundInterval);
-    };
-  }, []);
+  useAnimatedBackground();
 
   useEffect(() => {
     const tempArrayOfSettings = [];

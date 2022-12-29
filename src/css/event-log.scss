@@ -5,7 +5,7 @@
   General Styling
 */
 
-div.event-log {
+div#event-log {
   border-radius: 5px;
   overflow-y: scroll;
   height: 100%;
@@ -21,13 +21,13 @@ div.event-log {
 */
 
 [data-theme="Light"] {
-  div.event-log {
+  div#event-log {
     background-color: $bg-secondary-light;
     color: $color-text-light;
     border: 1px solid $bg-dark;
   }
 
-  div.event-log > div.row > div {
+  div#event-log > div.row > div {
     &.regular-message {
       color: inherit;
     }
@@ -63,13 +63,13 @@ div.event-log {
 
 [data-theme="Dark"],
 [data-theme="Gradient"] {
-  div.event-log {
+  div#event-log {
     background-color: $bg-secondary-dark;
     color: $color-text-dark;
     border: 1px solid $bg-light;
   }
 
-  div.event-log > div.row > div {
+  div#event-log > div.row > div {
     &.regular-message {
       color: inherit;
     }

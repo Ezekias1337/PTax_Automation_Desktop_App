@@ -16,7 +16,13 @@ import { Header } from "../general-page-layout/header";
 // CSS
 import "../../css/styles.scss";
 
-export const SelectAnAutomation = () => {
+/* 
+    !This component will replace the form section of the automation component
+    !and the automation component will now start off with the config card
+    !and start button
+*/
+
+export const PreAutomationConfig = () => {
   const state = useSelector((state) => state);
   usePersistentSettings();
   useResetRedux();
@@ -48,7 +54,7 @@ export const SelectAnAutomation = () => {
       <TitleBar />
 
       <div className="container-for-scroll">
-        <Header pageTitle="Select an Automation" includeArrow={false} />
+        <Header pageTitle="Select an Automation" includeArrow={true} />
         <div className="row mx-1">{arrayOfAutomations}</div>
       </div>
     </div>

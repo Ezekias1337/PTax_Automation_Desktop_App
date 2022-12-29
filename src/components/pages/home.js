@@ -8,6 +8,7 @@ import { animateGradientBackground } from "../../helpers/animateGradientBackgrou
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { useIsFirstTimeRunning } from "../../hooks/useIsFirstTimeRunning";
 import { useResetRedux } from "../../hooks/useResetRedux";
+import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { SettingsButton } from "../buttons/settingsButton";
@@ -23,15 +24,9 @@ export const Home = () => {
   const isFirstTimeRunning = useIsFirstTimeRunning();
   usePersistentSettings();
   useResetRedux();
+  useAnimatedBackground();
 
   const state = useSelector((state) => state);
-
-  useLayoutEffect(() => {
-    const backgroundInterval = animateGradientBackground();
-    return function cleanup() {
-      clearInterval(backgroundInterval);
-    };
-  }, []);
 
   return (
     <div
