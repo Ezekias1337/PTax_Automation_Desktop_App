@@ -1,7 +1,7 @@
 // Library Imports
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
+//import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Action Types
 import { SELECT_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
 import { RECEIVE_ITERATION } from "../../redux/actionCreators/automationCreators";
@@ -10,7 +10,7 @@ import { removeSpacesFromString } from "../../utils/strings/removeSpacesFromStri
 // Constants
 import { iteratorTypes } from "../../constants/iteratorTypes";
 // CSS
-import "../../css/numerical-progress-tracker.scss";
+//import "../../css/numerical-progress-tracker.scss";
 
 export const NumericalProgressTracker = ({
   isInitializing = false,
@@ -25,7 +25,7 @@ export const NumericalProgressTracker = ({
     automationState.currentIteration[RECEIVE_ITERATION];
   const spreadsheetContents = spreadsheetState.contents[SELECT_SPREADSHEET];
 
-  const [animationParent] = useAutoAnimate();
+  //const [animationParent] = useAutoAnimate();
 
   const [currentIterationNumber, setCurrentIterationNumber] = useState(0);
   const [attributeToFindCurrentIteration, setAttributeToFindCurrentIteration] =
@@ -81,7 +81,7 @@ export const NumericalProgressTracker = ({
     <div className="container" id="numericalProgressTrackerWrapper">
       <div className="row">
         <div className="col col-12">
-          <h4 id="numericalProgressTracker" ref={animationParent}>
+          <h4 id="numericalProgressTracker" /* ref={animationParent} */>
             Working on {currentIterationNumber}/{maxNumberOfOperations}
           </h4>
         </div>

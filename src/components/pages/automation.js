@@ -86,7 +86,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   */
 
   useLayoutEffect(() => {
-   console.log("automationName: ", automationName)
+   //console.log("automationName: ", automationName)
     
     const backgroundInterval = animateGradientBackground();
 

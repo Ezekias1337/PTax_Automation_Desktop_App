@@ -15,24 +15,12 @@ require("../updater/listeners/updateDownloaded");
 
 const createWindow = (directoryName, process, store, isDev) => {
   try {
-    log.info("INSIDE CREATE WINDOW");
-    log.info(
-      "Path to index: ",
-      url.format({
-        pathname: path.join(directoryName, "index.html"),
-        protocol: "file:",
-        slashes: true,
-      })
-    );
+
 
     const [screenWidth, screenHeight] = handleResolutionPref(store);
     const [screenXCoordinate, screenYCoordinate, isScreenPositionCustom] =
       handlePositionPref(store);
 
-    console.log(
-      "preload directory",
-      path.join(directoryName, "preload.bundle.js")
-    );
 
     let window = null;
 
