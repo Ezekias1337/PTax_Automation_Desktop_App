@@ -1,7 +1,7 @@
 // Library Imports
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-//import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Functions, Helpers, Utils, and Hooks
 import { removeSpacesFromString } from "../../utils/strings/removeSpacesFromString";
 import { roundDecimal } from "../../utils/numbers/roundDecimal";
@@ -11,7 +11,7 @@ import { iteratorTypes } from "../../constants/iteratorTypes";
 import { SELECT_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
 import { RECEIVE_ITERATION } from "../../redux/actionCreators/automationCreators";
 // CSS
-//import "../../css/progress-bar.scss";
+import "../../css/progress-bar.scss";
 
 export const ProgressBar = ({ automationName, automationFinished }) => {
   const state = useSelector((state) => state);
@@ -22,7 +22,7 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
     automationState.currentIteration[RECEIVE_ITERATION];
   const spreadsheetContents = spreadsheetState.contents[SELECT_SPREADSHEET];
 
-  //const [animationParent] = useAutoAnimate();
+  const [animationParent] = useAutoAnimate();
 
   const [numberOfDataPoints, setNumberOfDataPoints] = useState(0);
   const [percentagePerDataPoint, setPercentagePerDataPoint] = useState(0);
@@ -87,7 +87,7 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
           spreadSheetRow[attributeToFindCurrentIteration] ===
           automationCurrentIteration
       );
-      console.log("tempCurrentIterationNumber: ", tempCurrentIterationNumber)
+      //console.log("tempCurrentIterationNumber: ", tempCurrentIterationNumber)
       if (tempCurrentIterationNumber >= 0) {
         setCurrentIterationNumber(tempCurrentIterationNumber);
       }
@@ -123,7 +123,7 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
     <div
       className="container mx-auto"
       id="progressBarWrapper"
-      /* ref={animationParent} */
+      ref={animationParent}
     >
       <div id="progressBar" style={{ width: `${currentPercentage}%` }}></div>
       <div
