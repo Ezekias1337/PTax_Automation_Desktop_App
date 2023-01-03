@@ -42,7 +42,6 @@ export const Switch = ({
       handleFormChange(e, setStateHook);
     } else {
       setIsChecked(nonReduxDefaultValue);
-      console.log("nonReduxDefaultValue: ", nonReduxDefaultValue)
 
       /* 
         Ensure the parent components form data state is updated if the 
@@ -50,7 +49,6 @@ export const Switch = ({
       */
 
       const e = generateEventTargetStructure(data.name, nonReduxDefaultValue);
-      console.log("e: ", e)
       handleFormChange(e, setStateHook);
     }
   }, [data.name, setStateHook, state, nonReduxDefaultValue]);

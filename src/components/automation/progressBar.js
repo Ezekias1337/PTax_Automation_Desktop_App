@@ -87,7 +87,7 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
           spreadSheetRow[attributeToFindCurrentIteration] ===
           automationCurrentIteration
       );
-      //console.log("tempCurrentIterationNumber: ", tempCurrentIterationNumber)
+      console.log(tempCurrentIterationNumber);
       if (tempCurrentIterationNumber >= 0) {
         setCurrentIterationNumber(tempCurrentIterationNumber);
       }

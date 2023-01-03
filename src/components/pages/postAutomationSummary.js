@@ -113,7 +113,7 @@ export const PostAutomationSummary = () => {
       ) {
         commonElementsCompleted.push(iteration);
       } else if (
-        cancelledIterations.some(
+        failedIterations.some(
           (item) => item.ParcelNumber === iteration.ParcelNumber
         )
       ) {
@@ -149,8 +149,6 @@ export const PostAutomationSummary = () => {
   /* 
     When the user changes the filters for what iterations they want to download,
     update the downloadOptions.arrayOfSheets array.
-    
-    Also, 
     
     Note: ESLint wants downloadOptions.arrayOfSheets to be in the 
     dependency array, but it was removed intentionally because it
@@ -202,7 +200,7 @@ export const PostAutomationSummary = () => {
         }
 
         if (
-          cancelledIterations.some(
+          failedIterations.some(
             (item) => item.ParcelNumber === iteration.ParcelNumber
           )
         ) {
@@ -262,7 +260,7 @@ export const PostAutomationSummary = () => {
   useEffect(() => {
     let tempSaveSpreadsheetMessages = [...saveSpreadsheetMessages];
 
-    if (tempSaveSpreadsheetMessages.slice(-1) === "Download Successful") {
+    if (tempSaveSpreadsheetMessages.slice(-1)[0] === "Download Successful") {
       showToast("Spreadsheet Saved!", {
         position: "bottom-center",
         autoClose: 5000,

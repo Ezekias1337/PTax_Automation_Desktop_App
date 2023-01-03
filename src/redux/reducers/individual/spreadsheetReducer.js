@@ -110,7 +110,10 @@ const reducer = (state = INITIAL_STATE, action) => {
       newStateObject = {
         ...state,
       };
-      newStateObject.messages[SAVE_SPREADSHEET].push("Download Successful");
+
+      const newMessagesArray = [...newStateObject.messages[SAVE_SPREADSHEET]];
+      newMessagesArray.push("Download Successful");
+      newStateObject.messages[SAVE_SPREADSHEET] = newMessagesArray;
 
       return newStateObject;
     default:

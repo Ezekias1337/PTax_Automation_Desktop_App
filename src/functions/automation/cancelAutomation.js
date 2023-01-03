@@ -41,7 +41,6 @@ export const cancelAutomation = async (
     arrayOfCancelledIterations.push(iteration);
   }
 
-  console.log("arrayOfCancelledIterations: ", arrayOfCancelledIterations)
   
   ipcBusClientRenderer.send("cancel-automation", null);
   return arrayOfCancelledIterations;

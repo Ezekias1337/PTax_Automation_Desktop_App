@@ -62,6 +62,7 @@ export const NumericalProgressTracker = ({
           spreadSheetRow[attributeToFindCurrentIteration] ===
           automationCurrentIteration
       );
+      console.log(tempCurrentIterationNumber)
       if (tempCurrentIterationNumber >= 0) {
         setCurrentIterationNumber(tempCurrentIterationNumber + 1);
       }
