@@ -28,7 +28,7 @@ This app utilizes multiple technologies which are not typically used together. S
 
 **Selenium** is the web automation framework being used to open the browser window and interact with the page via automation. Selenium is the **"backend"** for this application. It is located in the **public/selenium folder.**
 
-There are some things shared between Electron and Selenium in the **public/shared folder**. However, because of the way React works, the front end cannot access anything outside of the src folder. Therefore, some pieces of code are duplicated due to this resitriction.
+There are some things shared between Electron and Selenium in the **public/shared folder**. However, because of the way React works, the front end cannot access anything outside of the src folder. Therefore, some pieces of code are duplicated due to this restriction.
 
 ## Comments
 
