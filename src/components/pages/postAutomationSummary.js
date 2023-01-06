@@ -1,5 +1,5 @@
 // Library Imports
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,7 +16,6 @@ import {
 // Functions, Helpers, Utils, and Hooks
 import { renderPostAutomationSummaryCard } from "../../functions/automation/renderPostAutomationSummaryCard";
 import { showToast } from "../../functions/toast/showToast";
-import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { useResetRedux } from "../../hooks/useResetRedux";
 import { useIsFormFilled } from "../../hooks/useIsFormFilled";
@@ -38,6 +37,7 @@ import "../../css/styles.scss";
 export const PostAutomationSummary = () => {
   usePersistentSettings();
   useSpreadsheetData();
+  useAnimatedBackground();
   /* 
     Commenting this out for now, because I plan to experiment
     with providing the user the ability to rerun the operation
@@ -74,7 +74,6 @@ export const PostAutomationSummary = () => {
   });
 
   useIsFormFilled(downloadOptions, setFormReady);
-  useAnimatedBackground();
 
   /* 
     When the user changes which iterations they want included,

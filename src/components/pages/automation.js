@@ -79,21 +79,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
 
   useAutomationData(busClientRenderer);
   useIsFormFilled(selectedChoices, setFormReady, true);
-  //useAnimatedBackground();
-
-  /* 
-    Handle theme preferences
-  */
-
-  useLayoutEffect(() => {
-   //console.log("automationName: ", automationName)
-    
-    const backgroundInterval = animateGradientBackground();
-
-    return function cleanup() {
-      clearInterval(backgroundInterval);
-    };
-  }, [automationName]);
+  useAnimatedBackground();
 
   /* 
     Initialize the selectedOptions object
@@ -291,6 +277,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                     formReady={formReady}
                     setStateHook={setAutomationReady}
                     automationReady={automationReady}
+                    automationName={automationName}
                   />
                   <SpreadsheetPreviewer
                     spreadSheetData={spreadsheetContents}

@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
 // Functions, Helpers, Utils and Hooks
-import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { useIsFirstTimeRunning } from "../../hooks/useIsFirstTimeRunning";
 import { useResetRedux } from "../../hooks/useResetRedux";

@@ -72,7 +72,10 @@ export const Card = ({
                     onClick={() =>
                       button.onClickHandler(
                         button.buttonArguments[0],
-                        button.buttonArguments[1]
+                        button.buttonArguments[1],
+                        button.buttonArguments[2],
+                        button.buttonArguments[3],
+                        button.buttonArguments[4]
                       )
                     }
                   >

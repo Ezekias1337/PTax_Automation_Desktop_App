@@ -5,7 +5,7 @@ import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 // CSS
 import "../../css/styles.scss";
 
-export const Updater = () => {
+export const SpreadsheetTemplateViewer = () => {
   const state = useSelector((state) => state);
   useAnimatedBackground();
 

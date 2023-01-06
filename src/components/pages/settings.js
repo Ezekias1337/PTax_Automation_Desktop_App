@@ -1,5 +1,5 @@
 // Library Imports
-import { useLayoutEffect, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { ToastContainer } from "react-toastify";
@@ -9,7 +9,6 @@ import { actionCreators } from "../../redux/allActions";
 // Functions, Helpers, Utils, and Hooks
 import { showToast } from "../../functions/toast/showToast";
 import { saveUserSettings } from "../../functions/settings/saveUserSettings";
-import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 // Constants
 import { listOfSettings } from "../../constants/listOfSettings";
@@ -26,6 +25,7 @@ import "../../css/styles.scss";
 import "../../css/inputs.scss";
 
 export const Settings = () => {
+  useAnimatedBackground();
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const { saveSettings } = bindActionCreators(
@@ -43,7 +43,6 @@ export const Settings = () => {
     uploadDirectory: "",
     launchWindowinCurrentPosition: false,
   });
-  useAnimatedBackground();
 
   useEffect(() => {
     const tempArrayOfSettings = [];

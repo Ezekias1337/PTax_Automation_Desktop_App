@@ -1,24 +1,23 @@
 // Library Imports
-import { useEffect, useState } from "react";
-import { Button } from "reactstrap";
-import { useSelector, useDispatch } from "react-redux";
-import { bindActionCreators } from "redux";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// Redux
-import { actionCreators } from "../../redux/allActions";
 // Functions, Helpers, Utils, and Hooks
+import { validateSpreadsheet } from "../../helpers/validateSpreadsheet";
 import { showToast } from "../../functions/toast/showToast";
 import { sendToIpc } from "../../functions/ipc/renderer/send/sendToIpc";
-import { replaceBackslashWithForwardSlash } from "../../utils/strings/replaceBackslashWithForwardSlash";
 import { useSpreadsheetData } from "../../hooks/ipc/useSpreadsheetData";
 // Constants
+import { spreadsheetColumns } from "../../constants/spreadsheet-columns/allColumns";
 // Action Types
-import { READ_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
+import {
+  READ_SPREADSHEET,
+  SELECT_SPREADSHEET,
+} from "../../redux/actionCreators/spreadsheetCreators";
 // Components
 import { Card } from "../card/card";
 import { Loader } from "../general-page-layout/loader";
-// CSS
 
 export const SpreadSheetExampleAndValidator = ({
   automationConfig,
@@ -26,13 +25,19 @@ export const SpreadSheetExampleAndValidator = ({
   setStateHook = null,
   automationReady = null,
   automationStatus = null,
+  automationName = null,
 }) => {
   useSpreadsheetData();
   const spreadsheetState = useSelector((state) => state.spreadsheet);
-  const spreadsheetMessages = spreadsheetState.messages[READ_SPREADSHEET];
   const spreadsheetContents = spreadsheetState.contents[READ_SPREADSHEET];
   const spreadsheetLoading = spreadsheetState.loading[READ_SPREADSHEET];
   const spreadsheetErrors = spreadsheetState.errors[READ_SPREADSHEET];
+  const selectedSpreadsheetContents =
+    spreadsheetState.contents[SELECT_SPREADSHEET];
+
+  /* 
+    Show toast if there is an error parsing the spreadsheet
+  */
 
   useEffect(() => {
     const tempErrorArrayIndex = spreadsheetErrors?.length - 1;
@@ -65,8 +70,13 @@ export const SpreadSheetExampleAndValidator = ({
           buttonContent={[
             {
               text: "Proceed",
-              onClickHandler: setStateHook,
-              buttonArguments: [true],
+              onClickHandler: validateSpreadsheet,
+              buttonArguments: [
+                setStateHook,
+                selectedSpreadsheetContents,
+                spreadsheetColumns,
+                automationName,
+              ],
               additionalClassNames: "animated-button",
             },
           ]}

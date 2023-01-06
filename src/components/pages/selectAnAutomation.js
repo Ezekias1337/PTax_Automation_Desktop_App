@@ -1,10 +1,8 @@
 // Library Imports
-import { useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
 // Functions, Helpers, Utils, and Hooks
-import { animateGradientBackground } from "../../helpers/animateGradientBackground";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { useResetRedux } from "../../hooks/useResetRedux";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
