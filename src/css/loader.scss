@@ -44,13 +44,6 @@
   animation-delay: -0.15s;
 }
 
-.is-loading:hover > #loaderElement div,
-.is-loading:focus > #loaderElement div,
-.is-loading:active > #loaderElement div {
-  border: 5px solid $brown;
-  border-color: $brown transparent transparent transparent;
-}
-
 @-webkit-keyframes lds-ring {
   0% {
     transform: rotate(0deg);
@@ -74,21 +67,42 @@
 
 [data-theme="Gradient"] {
   #loaderElement div {
-    border: 5px solid $bg-dark;
-    border-color: $bg-dark transparent transparent transparent;
+    border: 5px solid $brown;
+    border-color: $brown transparent transparent transparent;
+  }
+
+  .is-loading:hover > #loaderElement div,
+  .is-loading:focus > #loaderElement div,
+  .is-loading:active > #loaderElement div {
+    border: 5px solid $color-text-dark;
+    border-color: $color-text-dark transparent transparent transparent;
   }
 }
 
 [data-theme="Light"] {
   #loaderElement div {
-    border: 5px solid $white;
-    border-color: $white transparent transparent transparent;
+    border: 5px solid $brown;
+    border-color: $brown transparent transparent transparent;
+  }
+
+  .is-loading:hover > #loaderElement div,
+  .is-loading:focus > #loaderElement div,
+  .is-loading:active > #loaderElement div {
+    border: 5px solid $color-text-light;
+    border-color: $color-text-light transparent transparent transparent;
   }
 }
 
 [data-theme="Dark"] {
   #loaderElement div {
-    border: 5px solid $bg-dark;
-    border-color: $bg-dark transparent transparent transparent;
+    border: 5px solid $brown;
+    border-color: $brown transparent transparent transparent;
+  }
+
+  .is-loading:hover > #loaderElement div,
+  .is-loading:focus > #loaderElement div,
+  .is-loading:active > #loaderElement div {
+    border: 5px solid $color-text-dark;
+    border-color: $color-text-dark transparent transparent transparent;
   }
 }

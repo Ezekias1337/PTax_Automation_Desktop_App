@@ -1,4 +1,4 @@
-export const assessmentNoticeQuestions = [
+export const paymentConfirmationsQuestions = [
   {
     key: 0,
     name: "State",

@@ -1,5 +1,16 @@
 export const addNewParcelsColumns = [
-  "CompanyName",
-  "EntityName",
+  "Location",
   "ParcelNumber",
+  "Address",
+  "City",
+  "Zip",
+  "OwnerOfRecord",
+  "DefaultAssessor",
+  "DefaultCollector",
+  "DefaultPaymentMethod",
+  "ParcelType",
+  "OwnershipStatus",
+  "ServiceLevel",
+  "ManagementLevel",
+  "TaxResponsibility",
 ];

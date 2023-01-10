@@ -1,4 +1,4 @@
-export const taxBillQuestions = [
+export const propertyTaxBillsQuestions = [
   {
     key: 0,
     name: "State",

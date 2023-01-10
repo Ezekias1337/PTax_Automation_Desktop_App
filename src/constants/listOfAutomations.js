@@ -168,18 +168,18 @@ export const listOfAutomations = {
       },
     ],
   },
-  changeMailingAddress: {
+  /* changeMailingAddress: {
     key: 2,
     name: "Change Mailing Address",
     WIP: true,
-    /* state: [{ key: 1, name: "", county: [] }], */
-  },
-  checkRequests: {
+    state: [{ key: 1, name: "", county: [] }],
+  }, */
+  /* checkRequests: {
     key: 3,
     name: "Check Requests",
     WIP: true,
-  },
-  paymentConfirmations: {
+  }, */
+  /* paymentConfirmations: {
     key: 4,
     name: "Payment Confirmations",
     state: [
@@ -187,23 +187,23 @@ export const listOfAutomations = {
         key: 1,
         name: "California",
         county: [
-          { key: 1, name: "Los Angeles" /* function: paymentConfirmations */ },
+          { key: 1, name: "Los Angeles" function: paymentConfirmations },
           {
             key: 2,
-            name: "Orange County" /* function: paymentConfirmations */,
+            name: "Orange County" function: paymentConfirmations,
           },
           {
             key: 3,
-            name: "Riverside County" /* function: paymentConfirmations */,
+            name: "Riverside County" function: paymentConfirmations,
           },
           {
             key: 4,
-            name: "San Bernardino" /* function: paymentConfirmations */,
+            name: "San Bernardino" function: paymentConfirmations,
           },
-          { key: 5, name: "San Diego" /* function: paymentConfirmations */ },
+          { key: 5, name: "San Diego" function: paymentConfirmations },
           {
             key: 4,
-            name: "Ventura County" /* function: paymentConfirmations */,
+            name: "Ventura County" function: paymentConfirmations,
           },
         ],
       },
@@ -213,12 +213,12 @@ export const listOfAutomations = {
         county: [
           {
             key: 1,
-            name: "Multnomah County" /* function: paymentConfirmations */,
+            name: "Multnomah County" function: paymentConfirmations,
           },
         ],
       },
     ],
-  },
+  }, */
   propertyPointOfContact: {
     key: 5,
     name: "Property Point Of Contact",
@@ -2024,11 +2024,11 @@ export const listOfAutomations = {
     name: "Check Assessor And Collector URLs",
     /* function: checkWebsiteURLs, */
   },
-  pullParcelInformationFromRealquest: {
+  /* pullParcelInformationFromRealquest: {
     key: 10,
     name: "Pull parcel information from Realquest",
     WIP: true,
-  },
+  }, */
 };
 const listOfAutomationsArray = [];
 

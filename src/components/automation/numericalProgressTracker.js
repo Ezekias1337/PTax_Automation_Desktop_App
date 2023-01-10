@@ -7,6 +7,7 @@ import { SELECT_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreato
 import { RECEIVE_ITERATION } from "../../redux/actionCreators/automationCreators";
 // Functions, Helpers, Utils, and Hooks
 import { removeSpacesFromString } from "../../utils/strings/removeSpacesFromString";
+import { useCurrentIteration } from "../../hooks/useCurrentIteration";
 // Constants
 import { iteratorTypes } from "../../constants/iteratorTypes";
 // CSS
@@ -31,6 +32,16 @@ export const NumericalProgressTracker = ({
   const [attributeToFindCurrentIteration, setAttributeToFindCurrentIteration] =
     useState(null);
 
+  useCurrentIteration(
+    automationName,
+    attributeToFindCurrentIteration,
+    setAttributeToFindCurrentIteration,
+    spreadsheetContents,
+    automationCurrentIteration,
+    setCurrentIterationNumber,
+    true
+  );
+
   /* 
     ! NEED THESE TWO USEFFECTS TO BE EXTRACTED TO A CUSTOM HOOK,
     ! AS THE LOGIC IS REPEATED IN progressBar.js
@@ -42,27 +53,27 @@ export const NumericalProgressTracker = ({
     others.
   */
 
-  useEffect(() => {
+  /* useEffect(() => {
     const automationNameSpacesRemoved = removeSpacesFromString(automationName);
 
     setAttributeToFindCurrentIteration(
       iteratorTypes[automationNameSpacesRemoved]
     );
-  }, [automationName]);
+  }, [automationName]); */
 
   /* 
     Find the index of the current iteration in the spreadsheetContents,
     then add 1 to it to display the progress to the user
   */
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (attributeToFindCurrentIteration !== null) {
       const tempCurrentIterationNumber = spreadsheetContents.data.findIndex(
         (spreadSheetRow) =>
           spreadSheetRow[attributeToFindCurrentIteration] ===
           automationCurrentIteration
       );
-      console.log(tempCurrentIterationNumber)
+      console.log(tempCurrentIterationNumber);
       if (tempCurrentIterationNumber >= 0) {
         setCurrentIterationNumber(tempCurrentIterationNumber + 1);
       }
@@ -71,7 +82,7 @@ export const NumericalProgressTracker = ({
     attributeToFindCurrentIteration,
     automationCurrentIteration,
     spreadsheetContents,
-  ]);
+  ]); */
 
   if (isInitializing === true || currentIterationNumber === 0) {
     return <></>;

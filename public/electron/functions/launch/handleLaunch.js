@@ -38,7 +38,9 @@ const handleLaunch = (tray, window, store, directoryName) => {
   });
 
   if (isDev === false) {
-    autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
+    autoUpdater.checkForUpdates();
+
+    /* autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
       const dialogOpts = {
         type: "info",
         buttons: ["Ok"],
@@ -61,7 +63,7 @@ const handleLaunch = (tray, window, store, directoryName) => {
       dialog.showMessageBox(dialogOpts).then((returnValue) => {
         if (returnValue.response === 0) autoUpdater.quitAndInstall();
       });
-    });
+    }); */
   }
 };
 

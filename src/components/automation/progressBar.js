@@ -5,6 +5,7 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Functions, Helpers, Utils, and Hooks
 import { removeSpacesFromString } from "../../utils/strings/removeSpacesFromString";
 import { roundDecimal } from "../../utils/numbers/roundDecimal";
+import { useCurrentIteration } from "../../hooks/useCurrentIteration";
 // Constants
 import { iteratorTypes } from "../../constants/iteratorTypes";
 // Action Types
@@ -30,6 +31,16 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
   const [currentIterationNumber, setCurrentIterationNumber] = useState(0);
   const [attributeToFindCurrentIteration, setAttributeToFindCurrentIteration] =
     useState(null);
+
+  useCurrentIteration(
+    automationName,
+    attributeToFindCurrentIteration,
+    setAttributeToFindCurrentIteration,
+    spreadsheetContents,
+    automationCurrentIteration,
+    setCurrentIterationNumber,
+    false
+  );
 
   /* 
     Get the number of rows the spreadsheet has
@@ -67,20 +78,20 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
     others.
   */
 
-  useEffect(() => {
+  /* useEffect(() => {
     const automationNameSpacesRemoved = removeSpacesFromString(automationName);
 
     setAttributeToFindCurrentIteration(
       iteratorTypes[automationNameSpacesRemoved]
     );
-  }, [automationName]);
+  }, [automationName]); */
 
   /* 
     Find the index of the current iteration in the spreadsheetContents,
     then add 1 to it to display the progress to the user
   */
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (attributeToFindCurrentIteration !== null) {
       const tempCurrentIterationNumber = spreadsheetContents.data.findIndex(
         (spreadSheetRow) =>
@@ -96,7 +107,7 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
     attributeToFindCurrentIteration,
     automationCurrentIteration,
     spreadsheetContents,
-  ]);
+  ]); */
 
   /* 
     Now that we have the currentIterationNumber, multiply it by the

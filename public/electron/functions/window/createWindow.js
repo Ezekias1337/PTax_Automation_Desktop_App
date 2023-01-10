@@ -9,58 +9,39 @@ const { handlePositionPref } = require("./handlePositionPref");
 const { maximizeWindow } = require("./maximizeWindow");
 const { minimizeWindow } = require("./minimizeWindow");
 const { closeWindow } = require("./closeWindow");
-// Listeners
-require("../updater/listeners/updateAvailable");
-require("../updater/listeners/updateDownloaded");
 
 const createWindow = (directoryName, process, store, isDev) => {
   try {
-
-
     const [screenWidth, screenHeight] = handleResolutionPref(store);
     const [screenXCoordinate, screenYCoordinate, isScreenPositionCustom] =
       handlePositionPref(store);
 
-
     let window = null;
+    const browserWindowOptions = {
+      width: screenWidth,
+      height: screenHeight,
+      frame: false,
+      fullscreenable: true,
+      resizable: true,
+      transparent: false,
+      webPreferences: {
+        preload: path.join(directoryName, "preload.bundle.js"),
+        contextIsolation: false,
+        nodeIntegration: true,
+        sandbox: false,
+        webSecurity: false,
+      },
+      icon: path.join(directoryName, "icon.ico"),
+    };
 
     // Create the browser window.
     if (isScreenPositionCustom === true) {
-      window = new BrowserWindow({
-        width: screenWidth,
-        height: screenHeight,
-        frame: false,
-        fullscreenable: true,
-        resizable: true,
-        transparent: false,
-        x: screenXCoordinate,
-        y: screenYCoordinate,
-        webPreferences: {
-          preload: path.join(directoryName, "preload.bundle.js"),
-          contextIsolation: false,
-          nodeIntegration: true,
-          sandbox: false,
-          webSecurity: false,
-        },
-        icon: path.join(directoryName, "icon.ico"),
-      });
+      browserWindowOptions.x = screenXCoordinate;
+      browserWindowOptions.y = screenYCoordinate;
+
+      window = new BrowserWindow(browserWindowOptions);
     } else {
-      window = new BrowserWindow({
-        width: screenWidth,
-        height: screenHeight,
-        frame: false,
-        fullscreenable: true,
-        resizable: true,
-        transparent: false,
-        webPreferences: {
-          preload: path.join(directoryName, "preload.bundle.js"),
-          contextIsolation: false,
-          nodeIntegration: true,
-          sandbox: false,
-          webSecurity: false,
-        },
-        icon: path.join(directoryName, "icon.ico"),
-      });
+      window = new BrowserWindow(browserWindowOptions);
     }
 
     window.on("closed", () => (window = null));

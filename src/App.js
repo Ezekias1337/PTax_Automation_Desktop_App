@@ -2,8 +2,13 @@
 import React from "react";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
 // Constants
-import { assessmentNoticeQuestions } from "./constants/automation-questions/assessmentNoticeQuestions";
-import { taxBillQuestions } from "./constants/automation-questions/taxBillQuestions";
+import { addNewParcelsQuestions } from "./constants/automation-questions/addNewParcelsQuestions";
+import { assessmentNoticesQuestions } from "./constants/automation-questions/assessmentNoticesQuestions";
+import { checkAssessorAndCollectorUrlsQuestions } from "./constants/automation-questions/checkAssessorAndCollectorUrlsQuestions";
+import { paymentConfirmationsQuestions } from "./constants/automation-questions/paymentConfirmationsQuestions";
+import { propertyPointOfContactQuestions } from "./constants/automation-questions/propertyPointOfContactQuestions";
+import { propertyTaxBillsQuestions } from "./constants/automation-questions/propertyTaxBillsQuestions";
+import { updateParcelNamesQuestions } from "./constants/automation-questions/updateParcelNamesQuestions";
 // Components
 import { Home } from "./components/pages/home";
 import { SelectAnAutomation } from "./components/pages/selectAnAutomation";
@@ -24,30 +29,31 @@ const App = () => {
           element={<SelectAnAutomation />}
         ></Route>
         <Route path="/settings" element={<Settings />}></Route>
+        {/* Routes that use the Automation component */}
+        <Route
+          path="/add-new-parcels"
+          element={
+            <Automation
+              automationName="Add New Parcels"
+              preOperationQuestions={addNewParcelsQuestions}
+            />
+          }
+        ></Route>
         <Route
           path="/assessment-notices"
           element={
             <Automation
               automationName="Assessment Notices"
-              preOperationQuestions={assessmentNoticeQuestions}
+              preOperationQuestions={assessmentNoticesQuestions}
             />
           }
         ></Route>
         <Route
-          path="/change-mailing-address"
+          path="/check-assessor-and-collector-urls"
           element={
             <Automation
-              automationName="Change Mailing Address"
-              preOperationQuestions={[]}
-            />
-          }
-        ></Route>
-        <Route
-          path="/check-requests"
-          element={
-            <Automation
-              automationName="Check Requests"
-              preOperationQuestions={[]}
+              automationName="Check Assessor And Collector Urls"
+              preOperationQuestions={checkAssessorAndCollectorUrlsQuestions}
             />
           }
         ></Route>
@@ -56,7 +62,7 @@ const App = () => {
           element={
             <Automation
               automationName="Payment Confirmations"
-              preOperationQuestions={[]}
+              preOperationQuestions={paymentConfirmationsQuestions /*  */}
             />
           }
         ></Route>
@@ -65,7 +71,7 @@ const App = () => {
           element={
             <Automation
               automationName="Property Point of Contact"
-              preOperationQuestions={[]}
+              preOperationQuestions={propertyPointOfContactQuestions}
             />
           }
         ></Route>
@@ -74,46 +80,21 @@ const App = () => {
           element={
             <Automation
               automationName="Property Tax Bills"
-              preOperationQuestions={taxBillQuestions}
+              preOperationQuestions={propertyTaxBillsQuestions}
             />
           }
         ></Route>
-        <Route
-          path="/add-new-parcels"
-          element={
-            <Automation
-              automationName="Add New Parcels"
-              preOperationQuestions={[]}
-            />
-          }
-        ></Route>
+
         <Route
           path="/update-parcel-names"
           element={
             <Automation
               automationName="Update Parcel Names"
-              preOperationQuestions={[]}
+              preOperationQuestions={updateParcelNamesQuestions}
             />
           }
         ></Route>
-        <Route
-          path="/check-assessor-and-collector-links"
-          element={
-            <Automation
-              automationName="Check Assessor and Collector Links"
-              preOperationQuestions={[]}
-            />
-          }
-        ></Route>
-        <Route
-          path="/pull-parcel-information-from-realquest"
-          element={
-            <Automation
-              automationName="Pull Parcel Information From Realquest"
-              preOperationQuestions={[]}
-            />
-          }
-        ></Route>
+        {/* End of Routes that use the Automation component */}
         <Route
           path="/post-automation-summary"
           element={<PostAutomationSummary />}

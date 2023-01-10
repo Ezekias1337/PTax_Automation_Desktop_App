@@ -19,7 +19,7 @@ const {
   searchByLocationSelector,
   navbarEditSelectors,
   addNewParcelsSelectors,
-  newParcelHeader
+  newParcelHeader,
 } = require("../../ptaxXpathsAndSelectors/allSelectors");
 const sendKeysPTaxInputFields = require("../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
 const clickNavbarMenu = require("../../functions/pTaxSpecific/clickNavbar/clickNavbarMenu");
@@ -113,7 +113,7 @@ const addNewParcels = async () => {
           addNewParcelsSelectors.parcel,
           "id"
         );
-        await sendKeysPTaxInputFields(parcelInput, item.Parcel, false);
+        await sendKeysPTaxInputFields(parcelInput, item.ParcelNumber, false);
 
         const addressInput = await awaitElementLocatedAndReturn(
           driver,
@@ -283,9 +283,11 @@ const addNewParcels = async () => {
         await saveButton.click();
         await driver.sleep(5000);
         arrayOfSuccessfulOperations.push(item);
-        console.log(colors.green.bold(`Succeeded for parcel: ${item.Parcel}`));
+        console.log(
+          colors.green.bold(`Succeeded for parcel: ${item.ParcelNumber}`)
+        );
       } catch (error) {
-        console.log(colors.red.bold(`Failed for parcel: ${item.Parcel}`));
+        console.log(colors.red.bold(`Failed for parcel: ${item.ParcelNumber}`));
         arrayOfFailedOperations.push(item);
       }
     }

@@ -93,11 +93,7 @@ const checkWebsiteURLs = async () => {
     for (const item of dataFromSpreadsheet) {
       try {
         consoleLogLine();
-        if (item?.AssessorName) {
-          console.log(`Working on: ${item.AssessorName}`);
-        } else if (item?.CollectorName) {
-          console.log(`Working on: ${item.CollectorName}`);
-        }
+        console.log(`Working on: ${item.AssessorOrCollectorName}`);
 
         if (item?.WebSite === "NULL") {
           arrayOfFailedOperations.push(item);

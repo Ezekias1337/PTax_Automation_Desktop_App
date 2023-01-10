@@ -7,6 +7,8 @@ const log = require("electron-log");
 const { handleLaunch } = require("./electron/functions/launch/handleLaunch");
 // Listeners
 require("./electron/ipc-main-listeners/allListeners");
+require("./electron/functions/updater/listeners/updateAvailable");
+require("./electron/functions/updater/listeners/updateDownloaded");
 
 /* 
 ---------------------------START OF BASE TEMPLATE---------------------------
