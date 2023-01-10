@@ -1,7 +1,7 @@
 {
   "name": "ptax-automation-desktop-app",
   "author": "Frank Edwards",
-  "version": "0.4.2",
+  "version": "0.4.4",
   "description": "Ptax Automation App",
   "main": "./public/electron.js",
   "homepage": "./",
