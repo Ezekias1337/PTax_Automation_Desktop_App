@@ -1,7 +1,7 @@
 {
   "name": "ptax-automation-desktop-app",
   "author": "Frank Edwards",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "description": "Ptax Automation App",
   "main": "./public/electron.js",
   "homepage": "./",
@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "electron": "^21.2.2",
-    "electron-builder": "^23.6.0",
+    "electron-builder": "^22.14.13",
     "electron-devtools-installer": "^3.2.0",
     "electronmon": "^2.0.2",
     "node-sass": "^7.0.1",
