@@ -1,3 +1,4 @@
+const { Key } = require("selenium-webdriver");
 const trimLeadingZeros = require("../../../../../functions/general/trimLeadingZeros");
 const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn");
 
@@ -55,6 +56,8 @@ const bblSearch = async (driver, item, assessmentWebsiteSelectors) => {
     assessmentWebsiteSelectors.blockInputField,
     "id"
   );
+  await blockInputFieldElement.sendKeys(Key.CONTROL, "a");
+  await blockInputFieldElement.sendKeys(Key.DELETE);
   await blockInputFieldElement.sendKeys(blockNumber);
 
   const lotInputFieldElement = await awaitElementLocatedAndReturn(
@@ -62,6 +65,8 @@ const bblSearch = async (driver, item, assessmentWebsiteSelectors) => {
     assessmentWebsiteSelectors.lotInputField,
     "id"
   );
+  await lotInputFieldElement.sendKeys(Key.CONTROL, "a");
+  await lotInputFieldElement.sendKeys(Key.DELETE);
   await lotInputFieldElement.sendKeys(lotNumber);
 
   const taxWebsiteSearchBtn = await awaitElementLocatedAndReturn(
