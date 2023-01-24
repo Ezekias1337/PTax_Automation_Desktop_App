@@ -7,7 +7,7 @@ const { createIpcBusBridge } = require("../ipc/createIpcBusBridge");
 const { createWindow } = require("../window/createWindow");
 const { createTray } = require("../tray/createTray");
 
-const handleLaunch = (tray, window, store, directoryName) => {
+const handleLaunch = async (tray, window, store, directoryName) => {
   const isDev = !app.isPackaged;
   if (isDev === true) {
     const reactDevToolsId = "fmkadmapgofadopljbjfkapdkoienihi";
@@ -26,7 +26,7 @@ const handleLaunch = (tray, window, store, directoryName) => {
   }
 
   tray = createTray(window, directoryName, process);
-  createIpcBusBridge();
+  await createIpcBusBridge();
 
   app.on("activate", function () {
     /* 

@@ -42,18 +42,23 @@ export const Home = () => {
         <img src={logo} className="App-logo mb-5" alt="logo" />
         <div className="container">
           <div className="row">
-            <div className="col col-12 col-lg-3"></div>
-            <div className="col col-6 col-lg-3">
+            <div className="col col-12 col-md-4">
               <Link to={"/select-an-automation"}>
                 <Button className="full-width-button styled-button">
                   Select Automation
                 </Button>
               </Link>
             </div>
-            <div className="col col-6 col-lg-3">
+            <div className="col col-12 col-md-4">
+              <Link to={"/spreadsheet-templates"}>
+                <Button className="full-width-button styled-button">
+                  Spreadsheet Templates
+                </Button>
+              </Link>
+            </div>
+            <div className="col col-12 col-md-4">
               <SettingsButton isAnimated={isFirstTimeRunning}></SettingsButton>
             </div>
-            <div className="col col-12 col-lg-3"></div>
           </div>
           <GeneralAlert
             isVisible={isFirstTimeRunning}

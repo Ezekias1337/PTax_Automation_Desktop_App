@@ -16,6 +16,8 @@ import { Settings } from "./components/pages/settings";
 import { PreAutomationConfig } from "./components/pages/preAutomationConfig";
 import { Automation } from "./components/pages/automation";
 import { PostAutomationSummary } from "./components/pages/postAutomationSummary";
+import { SpreadsheetTemplateViewer } from "./components/pages/spreadsheetTemplateViewer";
+
 // CSS
 import "./App.css";
 
@@ -29,6 +31,10 @@ const App = () => {
           element={<SelectAnAutomation />}
         ></Route>
         <Route path="/settings" element={<Settings />}></Route>
+        <Route
+          path="/spreadsheet-templates"
+          element={<SpreadsheetTemplateViewer />}
+        ></Route>
         {/* Routes that use the Automation component */}
         <Route
           path="/add-new-parcels"

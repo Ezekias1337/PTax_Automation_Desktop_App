@@ -70,8 +70,9 @@ process.on("uncaughtException", function (err) {
   //log the message and stack trace
   log.warn("uncaught Exception: ", err);
   //relaunch the app
-  app.relaunch({ args: [] });
-  app.exit(0);
+  app.relaunch();
+  app.exit();
+  log.info("Relaunching application...")
   handleLaunch(tray, window, store, __dirname);
 });
 
@@ -79,8 +80,9 @@ process.on("SIGTERM", function (err) {
   //log the message and stack trace
   log.warn(err, "SIGTERM ISSUE");
   //relaunch the app
-  app.relaunch({ args: [] });
-  app.exit(0);
+  app.relaunch();
+  app.exit();
+  log.info("Relaunching application...")
   handleLaunch(tray, window, store, __dirname);
 });
 

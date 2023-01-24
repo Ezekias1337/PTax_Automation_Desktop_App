@@ -38,12 +38,8 @@ const createWindow = (directoryName, process, store, isDev) => {
     if (isScreenPositionCustom === true) {
       browserWindowOptions.x = screenXCoordinate;
       browserWindowOptions.y = screenYCoordinate;
-
-      window = new BrowserWindow(browserWindowOptions);
-    } else {
-      window = new BrowserWindow(browserWindowOptions);
     }
-
+    window = new BrowserWindow(browserWindowOptions);
     window.on("closed", () => (window = null));
 
     if (isDev === true) {
@@ -62,9 +58,6 @@ const createWindow = (directoryName, process, store, isDev) => {
     ipcMain.on("windowMinimize", () => minimizeWindow(window));
     ipcMain.on("windowMaximize", () => maximizeWindow(window));
     ipcMain.on("windowClose", () => closeWindow(window));
-
-    // Open the DevTools.
-    // window.webContents.openDevTools()
 
     return window;
   } catch (error) {

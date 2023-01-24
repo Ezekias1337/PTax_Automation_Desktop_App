@@ -1,18 +1,19 @@
 const colors = require("colors");
 const { until, By } = require("selenium-webdriver");
-const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn")
-const consoleLogLine = require("../../../../../functions/general/consoleLogLine")
-const checkForNoticesOfPropertyValueTable = require("./checkForNoticesOfPropertyValueTable")
-const generateDynamicXPath = require("../../../../../functions/general/generateDynamicXPath")
-const saveLinkToFile = require("../../../../../functions/fileOperations/saveLinkToFile")
+const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn");
+const consoleLogLine = require("../../../../../functions/general/consoleLogLine");
+const checkForNoticesOfPropertyValueTable = require("./checkForNoticesOfPropertyValueTable");
+const generateDynamicXPath = require("../../../../../functions/general/generateDynamicXPath");
+const saveLinkToFile = require("../../../../../functions/fileOperations/saveLinkToFile");
 
-const downloadAssessment = async (driver, item, assessmentWebsiteSelectors, outputDirectory, assessmentYear) => {
-  // Get side menu so it can be used to safely get notice of property value tab
-  let sideMenuTabElement = await awaitElementLocatedAndReturn(
-    driver,
-    assessmentWebsiteSelectors.sideMenuTab,
-    "id"
-  );
+const downloadAssessment = async (
+  driver,
+  item,
+  assessmentWebsiteSelectors,
+  outputDirectory,
+  assessmentYear,
+  arrayOfFailedOperations
+) => {
   const noticesOfPropertyValueTabelement = await awaitElementLocatedAndReturn(
     driver,
     assessmentWebsiteSelectors.noticesOfPropertyValueTab,
@@ -26,7 +27,10 @@ const downloadAssessment = async (driver, item, assessmentWebsiteSelectors, outp
       links to ensure the script doesn't get stuck
   */
 
-  const continueExecution = await checkForNoticesOfPropertyValueTable(driver, assessmentWebsiteSelectors);
+  const continueExecution = await checkForNoticesOfPropertyValueTable(
+    driver,
+    assessmentWebsiteSelectors
+  );
 
   if (continueExecution === false) {
     await driver.navigate().back();
@@ -68,14 +72,14 @@ const downloadAssessment = async (driver, item, assessmentWebsiteSelectors, outp
     console.log(
       colors.yellow.bold(`Parcel: ${item.ParcelNumber} downloaded successfuly`)
     );
-    return fileNameForFile
+    return fileNameForFile;
   } else {
     console.log(
       colors.red.bold(`Parcel: ${item.ParcelNumber} failed to download`)
     );
     consoleLogLine();
     arrayOfFailedOperations.push(item);
-    return null
+    return null;
   }
 };
 

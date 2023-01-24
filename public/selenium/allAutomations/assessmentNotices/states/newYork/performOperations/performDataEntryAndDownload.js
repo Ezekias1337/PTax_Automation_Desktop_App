@@ -24,9 +24,7 @@ const saveLinkToFile = require("../../../../../functions/fileOperations/saveLink
 const trimLeadingZeros = require("../../../../../functions/general/trimLeadingZeros");
 const generateDelayNumber = require("../../../../../functions/general/generateDelayNumber");
 const sendKeysPTaxInputFields = require("../../../../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
-const {
-  nyTaxBillSite,
-} = require("../../../../../constants/urls");
+const { nyTaxBillSite } = require("../../../../../constants/urls");
 const {
   downloadAndDataEntryAssessmentNoticesColumns,
 } = require("../../../../../dataValidation/spreadsheetColumns/allSpreadSheetColumns");
@@ -46,7 +44,14 @@ const checkIfSessionExpired = require("../helpers/checkIfSessionExpired");
 const checkIfWebsiteUnderMaintenance = require("../helpers/checkIfWebsiteUnderMaintenance");
 const downloadAssessment = require("../helpers/downloadAssessment");
 const pullAssessmentStrings = require("../helpers/pullAssessmentStrings");
-const uploadAssessment = require("../../../cross-state-helpers/addAssessment");
+const uploadAssessment = require("../../../cross-state-helpers/uploadAssessment");
+
+const sendCurrentIterationInfo = require("../../../../../ipc-bus/sendCurrentIterationInfo");
+const sendSuccessfulIteration = require("../../../../../ipc-bus/sendSuccessfulIteration");
+const sendFailedIteration = require("../../../../../ipc-bus/sendFailedIteration");
+const sendEventLogInfo = require("../../../../../ipc-bus/sendEventLogInfo");
+const sendAutomationCompleted = require("../../../../../ipc-bus/sendAutomationCompleted");
+const handleAutomationCancel = require("../../../../../ipc-bus/handleAutomationCancel");
 
 const assessmentWebsiteSelectors = {
   agreeBtn: "btAgree",
@@ -72,42 +77,51 @@ const assessmentWebsiteSelectors = {
   bblSearchBtn: "//span[contains(text(), 'BBL Search')]",
   assessmentInformation: "Assessment Information",
 };
-const arrayOfSuccessfulOperations = [];
-const arrayOfFailedOperations = [];
 
-const performDataEntryAndDownload = async () => {
+const performDataEntryAndDownload = async (
+  {
+    assessmentYear,
+    downloadDirectory,
+    ptaxUsername,
+    ptaxPassword,
+    parcelQuestUsername,
+    parcelQuestPassword,
+    spreadsheetContents,
+    county,
+    installmentNumber,
+  },
+  ipcBusClientNodeMain
+) => {
+  const arrayOfSuccessfulOperations = [];
+  const arrayOfFailedOperations = [];
+
   try {
     console.log(`Running download Tax Bill automation: `);
 
-    const dataFromSpreadsheet = await readSpreadsheetFile();
-    const outputDirectory = await promptOutputDirectory();
-
-    const assessmentYear = await promptForYear();
     const assessmentYearEnd = parseInt(assessmentYear) + 1;
 
-    const [areCorrectSheetColumnsPresent, arrayOfMissingColumnNames] =
-      verifySpreadSheetColumnNames(
-        downloadAndDataEntryAssessmentNoticesColumns,
-        dataFromSpreadsheet[0]
-      );
+    const [ptaxWindow, driver] = await loginToPTAX(ptaxUsername, ptaxPassword);
+    handleAutomationCancel(ipcBusClientNodeMain, driver);
 
-    await handleColumnNameLogging(
-      areCorrectSheetColumnsPresent,
-      arrayOfMissingColumnNames
-    );
-    if (areCorrectSheetColumnsPresent === false) {
-      return;
-    }
-
-    const { username, password } = await promptLogin();
-    const [ptaxWindow, driver] = await loginToPTAX(username, password);
-
-    /* These values will be null if the login failed, this will cause the execution
-      to stop */
+    /* 
+        These values will be null if the login failed, this will cause the execution
+        to stop. If it fails before even loading ptax, it means
+        that the chrome web driver is out of date. Otherwise,
+        it means the login credentials are incorrect 
+    */
 
     if (ptaxWindow === null || driver === null) {
+      await sendEventLogInfo(ipcBusClientNodeMain, {
+        color: "red",
+        message:
+          "Login to PTax failed! Please check your username and password.",
+      });
       return;
     }
+    await sendEventLogInfo(ipcBusClientNodeMain, {
+      color: "green",
+      message: "Login into Ptax Successful!",
+    });
 
     await swapToIFrame0(driver);
     await clickCheckMyPropertiesCheckBox(driver);
@@ -118,7 +132,7 @@ const performDataEntryAndDownload = async () => {
 
     const maintenanceStatus = await checkIfWebsiteUnderMaintenance(driver);
     if (maintenanceStatus === true) {
-      throw "Website Under Maintenance";
+      throw new Error("Website Under Maintenance");
     }
 
     const agreeBtnElement = await awaitElementLocatedAndReturn(
@@ -128,13 +142,22 @@ const performDataEntryAndDownload = async () => {
     );
     await agreeBtnElement.click();
 
-    for (const item of dataFromSpreadsheet) {
+    for (const item of spreadsheetContents) {
       try {
         console.log(
           colors.magenta.bold(`Working on parcel: ${item.ParcelNumber}`)
         );
+        await sendCurrentIterationInfo(ipcBusClientNodeMain, item.ParcelNumber);
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "orange",
+          message: `Working on parcel: ${item.ParcelNumber}`,
+        });
 
         await checkIfSessionExpired(driver, assessmentWebsiteSelectors);
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "orange",
+          message: `Searching for parcel: ${item.ParcelNumber}`,
+        });
         await bblSearch(driver, item, assessmentWebsiteSelectors);
 
         const resultsNotPresent = await checkIfNoResultsOrMultipleResults(
@@ -142,16 +165,34 @@ const performDataEntryAndDownload = async () => {
           item,
           assessmentWebsiteSelectors
         );
+
         if (resultsNotPresent === true) {
+          arrayOfFailedOperations.push(item);
+
+          await sendFailedIteration(
+            ipcBusClientNodeMain,
+            item,
+            `Failed to find parcel: ${item.ParcelNumber} in database.`
+          );
+          await sendEventLogInfo(ipcBusClientNodeMain, {
+            color: "red",
+            message: `Failed to find parcel: ${item.ParcelNumber} in database.`,
+          });
+
           continue;
         }
 
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "purple",
+          message: `Downloading Assessment for: ${item.ParcelNumber}`,
+        });
         const fileNameForFile = await downloadAssessment(
           driver,
           item,
           assessmentWebsiteSelectors,
-          outputDirectory,
-          assessmentYear
+          downloadDirectory,
+          assessmentYear,
+          arrayOfFailedOperations
         );
 
         const [
@@ -166,6 +207,10 @@ const performDataEntryAndDownload = async () => {
           assessmentYearEnd
         );
 
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "yellow",
+          message: `Resetting tax site window for next search: ${item.ParcelNumber}`,
+        });
         await driver.navigate().back();
         await driver.navigate().back();
         await driver.navigate().back();
@@ -173,6 +218,10 @@ const performDataEntryAndDownload = async () => {
         await switchToPTaxTab(driver, ptaxWindow);
         await driver.navigate().refresh();
         await swapToIFrameDefaultContent(driver);
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "blue",
+          message: `Searching for: ${item.ParcelNumber} in Ptax`,
+        });
 
         const searchByParcelInput = await awaitElementLocatedAndReturn(
           driver,
@@ -186,7 +235,7 @@ const performDataEntryAndDownload = async () => {
         );
 
         await swapToIFrame0(driver);
-        propertySideBarXPath = generateDynamicXPath(
+        const propertySideBarXPath = generateDynamicXPath(
           "a",
           item.ParcelNumber,
           "contains"
@@ -201,6 +250,10 @@ const performDataEntryAndDownload = async () => {
 
         await swapToIFrame1(driver);
 
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "orange",
+          message: `Performing data entry...`,
+        });
         await addAssessment(
           driver,
           assessmentNoticesSelectors,
@@ -210,12 +263,17 @@ const performDataEntryAndDownload = async () => {
           improvementMarketValueString,
           improvementAssessedValueString
         );
+
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "yellow",
+          message: `Uploading Assessment PDF...`,
+        });
         await uploadAssessment(
           driver,
           fileNameForFile,
           assessmentYear,
           assessmentYearEnd,
-          outputDirectory
+          downloadDirectory
         );
         await switchToTaxWebsiteTab(driver, taxWebsiteWindow);
 
@@ -223,6 +281,20 @@ const performDataEntryAndDownload = async () => {
         console.log(
           colors.green.bold(`Succeeded for parcel: ${item.ParcelNumber}`)
         );
+
+        let itemErrorColRemoved = item;
+        if (itemErrorColRemoved?.Error) {
+          delete itemErrorColRemoved.Error;
+        }
+
+        await sendSuccessfulIteration(
+          ipcBusClientNodeMain,
+          itemErrorColRemoved
+        );
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "green",
+          message: `Succeeded for parcel: ${item.ParcelNumber}`,
+        });
         const amountToSleep = generateDelayNumber();
         await driver.sleep(amountToSleep);
         consoleLogLine();
@@ -231,14 +303,28 @@ const performDataEntryAndDownload = async () => {
         console.log(error);
         consoleLogLine();
         arrayOfFailedOperations.push(item);
+        await sendFailedIteration(
+          ipcBusClientNodeMain,
+          item,
+          `Failed to find parcel: ${item.ParcelNumber} in database.`
+        );
+        await sendEventLogInfo(ipcBusClientNodeMain, {
+          color: "red",
+          message: `Failed for parcel: ${item.ParcelNumber}`,
+        });
       }
     }
 
-    await printAutomationReportToSheet(
+    /* await printAutomationReportToSheet(
       arrayOfSuccessfulOperations,
       arrayOfFailedOperations,
       "./output/"
-    );
+    ); */
+    await sendAutomationCompleted(ipcBusClientNodeMain);
+    await sendEventLogInfo(ipcBusClientNodeMain, {
+      color: "blue",
+      message: "The automation is complete.",
+    });
 
     console.log(
       colors.blue.bold(

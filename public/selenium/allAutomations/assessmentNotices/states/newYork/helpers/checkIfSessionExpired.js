@@ -1,3 +1,5 @@
+const { By } = require("selenium-webdriver");
+
 const checkIfSessionExpired = async (driver, assessmentWebsiteSelectors) => {
   /* 
       If the script has been executing for a long time, the session times out and

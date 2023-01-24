@@ -102,6 +102,12 @@
   }
 }
 
+[data-theme="Gradient"] {
+  .nav-link {
+    color: $bg-dark;
+  }
+}
+
 [data-theme="Gradient"],
 [data-theme="Dark"] {
   #spreadsheetPreviewer th,

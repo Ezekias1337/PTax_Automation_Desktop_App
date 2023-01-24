@@ -3,7 +3,10 @@ const performDataEntry = require("./performOperations/performDataEntry");
 const performDownload = require("./performOperations/performDownload");
 const performDataEntryAndDownload = require("./performOperations/performDataEntryAndDownload");
 
-const newYorkAssessmentNotices = async (sublocation, operation) => {
+const newYorkAssessmentNotices = async (
+  automationConfigObject,
+  ipcBusClientNodeMain
+) => {
   console.log(
     colors.bold.red(
       "Warning: ensure the data in the Parcel Number column all follow the convention: "
@@ -13,16 +16,20 @@ const newYorkAssessmentNotices = async (sublocation, operation) => {
     "\n",
     "Example: 1-482-1302"
   );
+  console.table(automationConfigObject);
 
-  switch (operation) {
+  switch (automationConfigObject.operation) {
     case "Data Entry":
-      await performDataEntry();
+      await performDataEntry(automationConfigObject, ipcBusClientNodeMain);
       return;
     case "Download Files":
-      await performDownload();
+      await performDownload(automationConfigObject, ipcBusClientNodeMain);
       break;
     case "Data Entry, Download, & Upload Document":
-      await performDataEntryAndDownload();
+      await performDataEntryAndDownload(
+        automationConfigObject,
+        ipcBusClientNodeMain
+      );
       return;
     default:
       console.log("No operation found, check spelling of operation");

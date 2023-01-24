@@ -47,7 +47,7 @@ const listOfAutomations = {
         subLocations: [
           {
             key: 1,
-            name: "New York",
+            name: "New York County",
             function: assessmentNotices,
             availableOperations: [
               "Data Entry",
