@@ -33,6 +33,7 @@ export const TimeTracker = ({ automationName, currentIteration }) => {
   const [attributeToFindCurrentIteration, setAttributeToFindCurrentIteration] =
     useState(null);
 
+  const [timePerIterationList, setTimePerIterationList] = useState([]);
   const [estimatedTimeRemaining, setEstimatedTimeRemaining] = useState({
     seconds: 0,
     minutes: 0,
@@ -71,15 +72,15 @@ export const TimeTracker = ({ automationName, currentIteration }) => {
   */
 
   useEffect(() => {
-    console.log("currentIterationNumber: ", currentIterationNumber);
-    if (currentIterationNumber === 1) {
+    if (
+      currentIterationNumber === 1 &&
+      seconds === 0 &&
+      minutes === 0 &&
+      hours === 0
+    ) {
       start();
     }
-  }, [currentIterationNumber]);
-
-  /* useEffect(() => {
-    start();
-  }, []); */
+  }, [currentIterationNumber, seconds, minutes, hours]);
 
   /* 
     When current iteration is no longer null, start using the average

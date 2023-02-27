@@ -62,52 +62,9 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
   useEffect(() => {
     if (numberOfDataPoints !== 0) {
       let tempPercentagePerDataPoint = 100 / numberOfDataPoints;
-      setPercentagePerDataPoint(roundDecimal(tempPercentagePerDataPoint));
+      setPercentagePerDataPoint(roundDecimal(tempPercentagePerDataPoint, 2));
     }
   }, [numberOfDataPoints]);
-
-  /* 
-    ! NEED THESE TWO USEFFECTS TO BE EXTRACTED TO A CUSTOM HOOK,
-    ! AS THE LOGIC IS REPEATED IN numericalProgressTracker.js,
-    ! Except this one doesn't add a + 1
-  */
-
-  /* 
-    Use the iteratorTypes const file to find the name of the "iterator" for the
-    automation. In most cases this is ParcelNumber, but it can be "URL" for
-    others.
-  */
-
-  /* useEffect(() => {
-    const automationNameSpacesRemoved = removeSpacesFromString(automationName);
-
-    setAttributeToFindCurrentIteration(
-      iteratorTypes[automationNameSpacesRemoved]
-    );
-  }, [automationName]); */
-
-  /* 
-    Find the index of the current iteration in the spreadsheetContents,
-    then add 1 to it to display the progress to the user
-  */
-
-  /* useEffect(() => {
-    if (attributeToFindCurrentIteration !== null) {
-      const tempCurrentIterationNumber = spreadsheetContents.data.findIndex(
-        (spreadSheetRow) =>
-          spreadSheetRow[attributeToFindCurrentIteration] ===
-          automationCurrentIteration
-      );
-      console.log(tempCurrentIterationNumber);
-      if (tempCurrentIterationNumber >= 0) {
-        setCurrentIterationNumber(tempCurrentIterationNumber);
-      }
-    }
-  }, [
-    attributeToFindCurrentIteration,
-    automationCurrentIteration,
-    spreadsheetContents,
-  ]); */
 
   /* 
     Now that we have the currentIterationNumber, multiply it by the
@@ -117,7 +74,7 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
   useEffect(() => {
     const tempCurrentPercentage =
       currentIterationNumber * percentagePerDataPoint;
-    setCurrentPercentage(roundDecimal(tempCurrentPercentage));
+    setCurrentPercentage(roundDecimal(tempCurrentPercentage, 2));
   }, [currentIterationNumber, percentagePerDataPoint]);
 
   /* 

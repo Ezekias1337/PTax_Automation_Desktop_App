@@ -11,9 +11,7 @@ const fillOutLiability = async (
   installmentNumber
 ) => {
   try {
-    // ! NEED TO ADD SUPPORT FOR INSTALLMENTS #S 2/4
-
-    if (installmentNumber === "1") {
+    if (installmentNumber === "1" || installmentNumber === "2") {
       const totalAmountLiabilityInput = await awaitElementLocatedAndReturn(
         driver,
         selectors.totalAmountLiability,
@@ -33,8 +31,7 @@ const fillOutLiability = async (
       await scrollElementIntoView(driver, saveLiabilityBtn);
       await saveLiabilityBtn.click();
       await waitForLoading(driver);
-    } else if (installmentNumber === "2") {
-    } else if (installmentNumber === "3") {
+    } /* else if (installmentNumber === "3" || installmentNumber === "4") {
       const totalAmountLiabilityInput = await awaitElementLocatedAndReturn(
         driver,
         selectors.totalAmountLiability,
@@ -54,8 +51,12 @@ const fillOutLiability = async (
       await scrollElementIntoView(driver, saveLiabilityBtn);
       await saveLiabilityBtn.click();
       await waitForLoading(driver);
-    } else if (installmentNumber === "4") {
-    }
+    }  */
+    
+    /* 
+      Using the default collector determine if the parcel should have
+      2 or 4 installments
+    */
 
     const collectorDropdownEle = await awaitElementLocatedAndReturn(
       driver,

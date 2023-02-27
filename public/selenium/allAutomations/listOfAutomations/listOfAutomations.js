@@ -8,6 +8,7 @@ const pullParcelInformationFromRealquest = require("../pullParcelInformationFrom
 const taxBills = require("../taxBills/taxBills");
 const addNewParcels = require("../addNewParcels/addNewParcels");
 const updateParcelNames = require("../updateParcelNames/updateParcelNames");
+const importPropertyValues = require("../importPropertyValues/importPropertyValues");
 
 /* 
   I wanted to place this in a shared folder at the root directory,
@@ -235,6 +236,11 @@ const listOfAutomations = {
     key: 10,
     name: "Pull parcel information from Realquest",
     WIP: true,
+  },
+  importPropertyValues: {
+    key: 11,
+    name: "Import Property Values",
+    function: importPropertyValues,
   },
 };
 

@@ -162,7 +162,7 @@ const performDataEntryAndDownload = async () => {
         );
 
         await swapToIFrame0(driver);
-        propertySideBarXPath = generateDynamicXPath(
+        const propertySideBarXPath = generateDynamicXPath(
           "a",
           item.ParcelNumber,
           "contains"
@@ -220,7 +220,7 @@ const performDataEntryAndDownload = async () => {
         `Reports have been generated for parcels that were added successful and unsuccessfuly, located in the output folder. Please check the 'Failed Operations' tab to verify if any results need manual review.`
       )
     );
-    await closingAutomationSystem();
+    await closingAutomationSystem(driver);
   } catch (error) {
     logErrorMessageCatch(error);
   }

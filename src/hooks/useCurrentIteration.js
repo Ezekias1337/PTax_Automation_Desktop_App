@@ -1,5 +1,5 @@
 // Library Imports
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 // Functions, Helpers, Utils, and Hooks
 import { removeSpacesFromString } from "../utils/strings/removeSpacesFromString";
 // Constants
@@ -21,6 +21,8 @@ export const useCurrentIteration = (
   setCurrentIterationNumber,
   addOne = true
 ) => {
+  const [oneAdded, setOneAdded] = useState(false);
+
   /* 
     Use the iteratorTypes const file to find the name of the "iterator" for the
     automation. In most cases this is ParcelNumber, but it can be "URL" for
@@ -49,8 +51,9 @@ export const useCurrentIteration = (
       );
 
       if (tempCurrentIterationNumber >= 0) {
-        if (addOne === true) {
+        if (addOne === true && oneAdded === false) {
           tempCurrentIterationNumber += 1;
+          setOneAdded(true);
         }
 
         setCurrentIterationNumber(tempCurrentIterationNumber);
@@ -62,5 +65,6 @@ export const useCurrentIteration = (
     spreadsheetContents,
     setCurrentIterationNumber,
     addOne,
+    oneAdded,
   ]);
 };

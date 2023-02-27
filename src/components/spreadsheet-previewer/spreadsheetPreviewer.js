@@ -91,8 +91,9 @@ export const SpreadsheetPreviewer = ({
       ) : (
         <></>
       )}
-      <div className="row">
-        {spreadSheetData[selectedSheetIndex]?.data[0] !== undefined ? (
+
+      {spreadSheetData[selectedSheetIndex]?.data[0] !== undefined ? (
+        <>
           <table id="spreadsheetPreviewer" className="table table-hover">
             <thead className="column-provider">
               <tr>
@@ -142,9 +143,9 @@ export const SpreadsheetPreviewer = ({
                         <></>
                       )}
                       {/* 
-                        Renders the empty cells if first row has more columns
-                        than the one being rendered                 
-                      */}
+                          Renders the empty cells if first row has more columns
+                          than the one being rendered                 
+                        */}
 
                       {rowData !== undefined &&
                       Object.values(rowData).length === numOfColumns ? (
@@ -158,10 +159,10 @@ export const SpreadsheetPreviewer = ({
               )}
             </tbody>
           </table>
-        ) : (
-          <></>
-        )}
-      </div>
+        </>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

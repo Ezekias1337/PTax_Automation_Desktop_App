@@ -1,35 +1,47 @@
-export const assessmentNoticesTemplate = [
+export const importPropertyValuesTemplate = [
   {
     data: [
       {
         ParcelNumber: "1-234-5671",
         CompanyName: "CIM Group Inc.",
         EntityName: "101 Montgomery",
+        MarketValue: "18700",
+        AssessedValue: "18700",
       },
       {
         ParcelNumber: "1-234-5672",
         CompanyName: "CIM Group Inc.",
         EntityName: "102 Montgomery",
+        MarketValue: "18700",
+        AssessedValue: "18700",
       },
       {
         ParcelNumber: "1-234-5673",
         CompanyName: "CIM Group Inc.",
         EntityName: "103 Montgomery",
+        MarketValue: "18700",
+        AssessedValue: "18700",
       },
       {
         ParcelNumber: "1-234-5674",
         CompanyName: "CIM Group Inc.",
         EntityName: "104 Montgomery",
+        MarketValue: "18700",
+        AssessedValue: "18700",
       },
       {
         ParcelNumber: "1-234-5675",
         CompanyName: "CIM Group Inc.",
         EntityName: "105 Montgomery",
+        MarketValue: "18700",
+        AssessedValue: "18700",
       },
       {
         ParcelNumber: "1-234-5676",
         CompanyName: "CIM Group Inc.",
         EntityName: "106 Montgomery",
+        MarketValue: "18700",
+        AssessedValue: "18700",
       },
     ],
   },

@@ -1,3 +1,3 @@
-const newParcelHeader = "h1.page-info-header";
+const newParcelHeader = ".page-info-header";
 
 module.exports = newParcelHeader;

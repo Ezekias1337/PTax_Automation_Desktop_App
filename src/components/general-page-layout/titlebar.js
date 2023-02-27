@@ -1,5 +1,4 @@
 // Library Imports
-import { Link } from "react-router-dom";
 import {
   faWindowMinimize,
   faWindowMaximize,
@@ -21,9 +20,7 @@ export const TitleBar = () => {
     <div id="titleBar">
       <div className="row" id="titleBarRow">
         <div id="titleBarLogoContainer" className="col col-9">
-          <Link to={"/"}>
-            <img src={logo} className="title-logo" alt="PTax Logo" />
-          </Link>
+          <img src={logo} className="title-logo" alt="PTax Logo" />
         </div>
         <div id="titleBarButtonContainer" className="col col-3">
           <TitleBarButton

@@ -177,7 +177,7 @@ const performDataEntry = async (
         );
 
         await swapToIFrame0(driver);
-        propertySideBarXPath = generateDynamicXPath(
+        const propertySideBarXPath = generateDynamicXPath(
           "a",
           item.ParcelNumber,
           "contains"
@@ -251,7 +251,7 @@ const performDataEntry = async (
       ),
       "\n"
     );
-    await closingAutomationSystem();
+    await closingAutomationSystem(driver);
   } catch (error) {
     logErrorMessageCatch(error);
   }

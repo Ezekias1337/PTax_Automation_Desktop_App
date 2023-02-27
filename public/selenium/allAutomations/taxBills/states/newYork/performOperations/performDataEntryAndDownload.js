@@ -91,6 +91,7 @@ const performDataEntryAndDownload = async (
       color: "yellow",
       message: "Logging into Ptax",
     });
+
     const [ptaxWindow, driver] = await loginToPTAX(ptaxUsername, ptaxPassword);
     handleAutomationCancel(ipcBusClientNodeMain, driver);
 
@@ -171,7 +172,7 @@ const performDataEntryAndDownload = async (
           websiteSelectors,
           arrayOfFailedOperations
         );
-        if (resultsNotPresent === false) {
+        if (resultsNotPresent === true) {
           arrayOfFailedOperations.push(item);
 
           await switchToTaxWebsiteTab(taxWebsiteWindow);
@@ -252,7 +253,7 @@ const performDataEntryAndDownload = async (
             By.xpath("./../..")
           );
 
-          const fileNameForFile = `${item.CompanyName} ${item.LocationName} ${item.ParcelNumber}`;
+          const fileNameForFile = `${item.CompanyName} ${item.EntityName} ${item.ParcelNumber}`;
 
           const downloadSucceeded = await saveLinkToFile(
             downloadLink,
@@ -339,12 +340,12 @@ const performDataEntryAndDownload = async (
         }
 
         await switchToPTaxTab(driver, ptaxWindow);
-        if (installmentNumber === "1") {
+        if (installmentNumber === "1" || installmentNumber === "2") {
           await sendEventLogInfo(ipcBusClientNodeMain, {
             color: "regular",
             message: `Installment as string: ${taxBillObj.installmentTotalString}, Installment as integer: ${taxBillObj.installmentTotalInt}`,
           });
-        } else if (installmentNumber === "3") {
+        } else if (installmentNumber === "3" || installmentNumber === "4") {
           await sendEventLogInfo(ipcBusClientNodeMain, {
             color: "regular",
             message: `Installment 3: ${taxBillObj.installmentThreeString}, Installment 4: ${taxBillObj.installmentFourString}, Total Liability: ${taxBillObj.totalOwed}`,
@@ -474,6 +475,19 @@ const performDataEntryAndDownload = async (
     );
     await closingAutomationSystem(driver);
   } catch (error) {
+    if (error.message === "(intermediate value) is not iterable") {
+      await sendEventLogInfo(ipcBusClientNodeMain, {
+        color: "red",
+        message:
+          "There is a mismatch between your google chrome version and the version of the chrome webdriver. Visit https://chromedriver.chromium.org/home to download the version that matches with your chrome version (make sure to pick chromedriver_win32.zip), and extract it to C:/Windows",
+      });
+    } else {
+      await sendEventLogInfo(ipcBusClientNodeMain, {
+        color: "red",
+        message: error.message,
+      });
+    }
+
     logErrorMessageCatch(error);
   }
 };

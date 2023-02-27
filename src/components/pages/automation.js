@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Constants
-import { listOfAutomations } from "../../constants/listOfAutomations";
+import { automationList } from "../../constants/automation-list/automationList";
 // Action Types
 import {
   READ_SPREADSHEET,
@@ -21,6 +21,7 @@ import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 import { useIsFormFilled } from "../../hooks/useIsFormFilled";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
+import { useResetRedux } from "../../hooks/useResetRedux"
 import { useAutomationData } from "../../hooks/ipc/useAutomationData";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
@@ -259,7 +260,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
                     childrenChoices={childrenChoices}
                     nonDropdownChoices={nonDropdownChoices}
                     optionObj={
-                      listOfAutomations[camelCasifyString(automationName)]
+                      automationList[camelCasifyString(automationName)]
                     }
                   />
                   <SpreadSheetExampleAndValidator

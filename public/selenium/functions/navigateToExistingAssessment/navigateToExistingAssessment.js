@@ -9,6 +9,7 @@ const navigateToExistingAssessment = async (driver) => {
     allSelectors.taxBillDrivenTabSelector,
     "xpath"
   );
+  await scrollElementIntoView(driver, taxBillDrivenTab)
   await taxBillDrivenTab.click();
 
   const currentYear = new Date().getFullYear().toString();

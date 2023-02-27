@@ -12,7 +12,7 @@ const {
   checkWebsiteURLsColumns,
 } = require("../../dataValidation/spreadsheetColumns/allSpreadSheetColumns");
 
-checkURLSelectors = {
+const checkURLSelectors = {
   deadLink: "body.neterror",
   pageMoved: "//*[contains(text(), 'Not Found')]",
   fourOFour: "//*[contains(text(), '404')]",
@@ -71,6 +71,8 @@ const checkForPageMoved = async (driver, item) => {
 };
 
 const checkWebsiteURLs = async () => {
+  let driver;
+
   try {
     const dataFromSpreadsheet = await readSpreadsheetFile();
     const [areCorrectSheetColumnsPresent, arrayOfMissingColumnNames] =
@@ -87,7 +89,7 @@ const checkWebsiteURLs = async () => {
       return;
     }
 
-    const driver = await buildDriver();
+    driver = await buildDriver();
     console.log(`Running check Assessor URL automation: `);
 
     for (const item of dataFromSpreadsheet) {
@@ -139,7 +141,7 @@ const checkWebsiteURLs = async () => {
       `Reports have been generated for URLs that were added successful and unsuccessfuly, located in the output folder. Please check the 'Failed Operations' tab to verify if any results need manual review.`
     )
   );
-  await closingAutomationSystem();
+  await closingAutomationSystem(driver);
 };
 
 module.exports = checkWebsiteURLs;

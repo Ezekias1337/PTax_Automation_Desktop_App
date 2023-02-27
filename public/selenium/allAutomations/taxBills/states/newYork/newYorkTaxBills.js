@@ -17,8 +17,8 @@ const newYorkTaxBills = async (
         taxWebsiteSelectors
       ); */
       return;
-    case "Download Files":
-      /* await performDownload(state, sublocation, operation, taxWebsiteSelectors); */
+    case "Download Document":
+      await performDownload(automationConfigObject, ipcBusClientNodeMain);
       break;
     case "Data Entry, Download, & Upload Document":
       await performDataEntryAndDownload(

@@ -38,14 +38,7 @@ export const PostAutomationSummary = () => {
   usePersistentSettings();
   useSpreadsheetData();
   useAnimatedBackground();
-  /* 
-    Commenting this out for now, because I plan to experiment
-    with providing the user the ability to rerun the operation
-    with the previous configuration and a list of the failed,
-    cancelled, or both iterations.
-  
-    useResetRedux(); 
-  */
+  useResetRedux();
 
   const state = useSelector((state) => state);
   const automationState = state.automation;

@@ -1,3 +1,4 @@
+const { By } = require("selenium-webdriver");
 const closingAutomationSystem = require("../../../../../functions/general/closingAutomationSystem");
 
 const checkIfWebsiteUnderMaintenance = async (driver, taxWebsiteSelectors) => {
@@ -6,7 +7,7 @@ const checkIfWebsiteUnderMaintenance = async (driver, taxWebsiteSelectors) => {
       By.xpath(taxWebsiteSelectors.websiteMaintenanceWarner)
     );
     console.log("Website is under maintenance, unable to proceed.");
-    await closingAutomationSystem();
+    await closingAutomationSystem(driver);
     return true;
   } catch (error) {
     console.log("Website not under maintance. Continuing.");

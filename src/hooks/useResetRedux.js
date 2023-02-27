@@ -6,7 +6,7 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../redux/allActions";
 
 /* 
-    Revert the state in redux when leaving the automation page
+    Revert the state in redux when leaving the page
     
     ESLINT wants a dependancy array here, but it causes an infinite loop,
     so it is not included intentionally

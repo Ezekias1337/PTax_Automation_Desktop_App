@@ -10,10 +10,16 @@
 
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
   background: $brown;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
 }
 
 ::selection {
@@ -191,18 +197,11 @@ button.animated-button:active {
     color: $bg-secondary-dark;
   }
 
-  /* Track */
-  ::-webkit-scrollbar-track {
-    border-radius: 5px;
-  }
-
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: $bg-dark;
-    border-radius: 5px;
+    background: darken($bg-secondary-dark, 5);
   }
 
-  /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: $bg-secondary-light;
   }
@@ -300,18 +299,11 @@ button.animated-button:active {
     color: $bg-secondary-light;
   }
 
-  /* Track */
-  ::-webkit-scrollbar-track {
-    border-radius: 5px;
-  }
-
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: $bg-light;
-    border-radius: 5px;
+    background: $bg-secondary-light;
   }
 
-  /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: $bg-secondary-dark;
   }
@@ -440,16 +432,15 @@ button.animated-button:active {
 
   /* Track */
   ::-webkit-scrollbar-track {
-    border-radius: 5px;
+    width: 3px;
+    height: 3px;
   }
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: darken($bg-secondary-dark, 5);
-    border-radius: 5px;
   }
 
-  /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background: $bg-secondary-light;
   }

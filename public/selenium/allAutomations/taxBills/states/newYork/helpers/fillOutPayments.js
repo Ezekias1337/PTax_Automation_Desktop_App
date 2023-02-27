@@ -98,21 +98,6 @@ const fillOutPayments = async (
     await waitForLoading();
   } else if (installmentNumber === "2") {
     /* 
-      Get the the Final payment amount for payment 1
-    */
-    /* const finalPayment1 = await awaitElementLocatedAndReturn(
-      driver,
-      selectors.finalPayment1,
-      "id"
-    );
-    const finalPayment1StringUnparsed = await finalPayment1.getAttribute(
-      "value"
-    );
-    const finalPayment1StringParsed = removeSpecialCharsFromString(
-      finalPayment1StringUnparsed
-    ); */
-
-    /* 
       Get the current total liability
     */
 
@@ -206,13 +191,7 @@ const fillOutPayments = async (
     await scrollElementIntoView(driver, btnSaveAllPayment);
     await btnSaveAllPayment.click();
     await waitForLoading();
-  }
-  if (installmentNumber === "3") {
-    /* 
-      installmentThreeString,
-      installmentFourString,
-      totalOwed,
-    */
+  } else if (installmentNumber === "3" || installmentNumber === "4") {
     const finalPayment3 = await awaitElementLocatedAndReturn(
       driver,
       selectors.finalPayment3,
@@ -265,10 +244,6 @@ const fillOutPayments = async (
     await scrollElementIntoView(driver, btnSaveAllPayment);
     await btnSaveAllPayment.click();
     await waitForLoading();
-  } else {
-    console.log(
-      "Support for installments past 3 are not yet supported, contact Frank Edwards for assistance if needed"
-    );
   }
 };
 

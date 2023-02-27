@@ -1,4 +1,5 @@
 const colors = require("colors");
+const { By, until } = require("selenium-webdriver");
 const promptLogin = require("../../functions/userPrompts/individual/promptLogin");
 const loginToPTAX = require("../../functions/pTaxSpecific/login/loginToPTAX");
 const readSpreadsheetFile = require("../../functions/fileOperations/readSpreadsheetFile");
@@ -15,17 +16,17 @@ const handleColumnNameLogging = require("../../functions/fileOperations/handleCo
 const awaitElementLocatedAndReturn = require("../../functions/general/awaitElementLocatedAndReturn");
 const generateDynamicXPath = require("../../functions/general/generateDynamicXPath");
 const printAutomationReportToSheet = require("../../functions/fileOperations/printAutomationReportToSheet");
+const waitForLoading = require("../../functions/pTaxSpecific/waitForLoading/waitForLoading");
 const {
   searchByLocationSelector,
   navbarEditSelectors,
   addNewParcelsSelectors,
   newParcelHeader,
+  searchByParcelNumberSelector,
 } = require("../../ptaxXpathsAndSelectors/allSelectors");
 const sendKeysPTaxInputFields = require("../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
 const clickNavbarMenu = require("../../functions/pTaxSpecific/clickNavbar/clickNavbarMenu");
-const {
-  addNewParcelsColumns,
-} = require("../../dataValidation/spreadsheetColumns/allSpreadSheetColumns");
+const assessmentNoticesSelectors = require("../../ptaxXpathsAndSelectors/assessmentNoticesSelectors/assessmentNoticesSelectors");
 
 const sendCurrentIterationInfo = require("../../ipc-bus/sendCurrentIterationInfo");
 const sendSuccessfulIteration = require("../../ipc-bus/sendSuccessfulIteration");
@@ -35,10 +36,44 @@ const sendAutomationCompleted = require("../../ipc-bus/sendAutomationCompleted")
 const handleAutomationCancel = require("../../ipc-bus/handleAutomationCancel");
 const scrollElementIntoView = require("../../functions/general/scrollElementIntoView");
 
-const addNewParcels = async (
-  { downloadDirectory, ptaxUsername, ptaxPassword, spreadsheetContents },
+const importPropertyValues = async (
+  {
+    downloadDirectory,
+    ptaxUsername,
+    ptaxPassword,
+    spreadsheetContents,
+    assessmentYear,
+  },
   ipcBusClientNodeMain
 ) => {
+  const importPropertyValuesSelectors = {
+    countyInputField: "#QuickSearch_CountyId",
+    parcelInputField: "#QuickSearch_ApnId",
+    parcelQuestSearchButton: "#Quick > button.btnQuickSearch",
+    parcelQuestViewResultsButton: "#resultsView > button",
+    noResultsWarning:
+      "//span[contains(text(), 'Total found was 0. Please revise your search criteria.')]",
+
+    landMarketValue:
+      "body > div.body-content.ng-scope > div > section.panel.panel-secondary.ng-scope.summary > div.panel-body.ng-scope > div > div > div.col-lg-7.info > div.table-responsive.info-section.info-section-taxvalue > table > tbody > tr:nth-child(1) > td:nth-child(2) > span",
+    improvementMarketValue:
+      "body > div.body-content.ng-scope > div > section.panel.panel-secondary.ng-scope.summary > div.panel-body.ng-scope > div > div > div.col-lg-7.info > div.table-responsive.info-section.info-section-taxvalue > table > tbody > tr:nth-child(2) > td:nth-child(2) > span",
+    summary:
+      "body > div > div > section.panel.panel-secondary.ng-scope.summary > div.panel-body.ng-scope > div > div > div.col-lg-7.info",
+    buildingsLandCharacteristics:
+      "body > div.body-content.ng-scope > div > section.panel.panel-secondary.ng-scope.buildingland",
+    eventsHistory:
+      "body > div.body-content.ng-scope > div > section.panel.panel-secondary.ng-scope.eventshistory",
+    assessmentHistory:
+      "body > div.body-content.ng-scope > div > section.panel.panel-secondary.ng-scope.assessment",
+    paginationElement:
+      "body > div.body-content.ng-scope > div > section.panel.panel-secondary.ng-scope.assessment > div.panel-body.ng-scope > div > div:nth-child(3)",
+    loader: "//h3[contains(text(), 'Loading')]",
+    btnNewAssessment: "Button2",
+    startAssessmentBtn: "btnStart",
+    taxYearNewAssessmentDropdown: "ddTaxYear",
+  };
+
   const arrayOfSuccessfulOperations = [];
   const arrayOfFailedOperations = [];
 
@@ -80,41 +115,30 @@ const addNewParcels = async (
         });
 
         await swapToIFrameDefaultContent(driver);
-        const searchByLocationInput = await awaitElementLocatedAndReturn(
+        const searchByParcelNumberInput = await awaitElementLocatedAndReturn(
           driver,
-          searchByLocationSelector,
+          searchByParcelNumberSelector,
           "id"
         );
         await sendKeysPTaxInputFields(
-          searchByLocationInput,
-          item.Location,
+          searchByParcelNumberInput,
+          item.ParcelNumber,
           true
         );
         await swapToIFrame0(driver);
 
         const propertySideBarXPath = generateDynamicXPath(
           "a",
-          item.Location,
+          item.ParcelNumber,
           "contains"
         );
-        const propertyToAddParcel = await awaitElementLocatedAndReturn(
+        const parcelToImportValues = await awaitElementLocatedAndReturn(
           driver,
           propertySideBarXPath,
           "xpath"
         );
-        await propertyToAddParcel.click();
+        await parcelToImportValues.click();
         await driver.sleep(2500);
-
-        await clickNavbarMenu(driver, "edit", navbarEditSelectors.newParcel);
-        await swapToIFrame1(driver);
-
-        // Need to simulate mousehover over this element to dismiss navbar
-        const parcelInformationH1 = await awaitElementLocatedAndReturn(
-          driver,
-          newParcelHeader,
-          "css"
-        );
-        await simulateMouseHover(driver, parcelInformationH1);
 
         // Do data entry for adding parcel, and then save
         await sendEventLogInfo(ipcBusClientNodeMain, {
@@ -122,189 +146,91 @@ const addNewParcels = async (
           message: `Performing data entry...`,
         });
 
-        const parcelInput = await awaitElementLocatedAndReturn(
+        /*
+         ***************************************************************
+         */
+
+        await swapToIFrame1(driver);
+
+        const btnNewAssessment = await awaitElementLocatedAndReturn(
           driver,
-          addNewParcelsSelectors.parcel,
+          importPropertyValuesSelectors.btnNewAssessment,
           "id"
         );
-        await sendKeysPTaxInputFields(parcelInput, item.ParcelNumber, false);
+        await btnNewAssessment.click();
 
-        const addressInput = await awaitElementLocatedAndReturn(
+        const taxYearNewAssessmentDropdown = await awaitElementLocatedAndReturn(
           driver,
-          addNewParcelsSelectors.address,
+          importPropertyValuesSelectors.taxYearNewAssessmentDropdown,
           "id"
         );
-        await sendKeysPTaxInputFields(addressInput, item.Address, false);
-
-        const cityInput = await awaitElementLocatedAndReturn(
-          driver,
-          addNewParcelsSelectors.city,
-          "id"
-        );
-        await sendKeysPTaxInputFields(cityInput, item.City, false);
-
-        const zipInput = await awaitElementLocatedAndReturn(
-          driver,
-          addNewParcelsSelectors.zip,
-          "id"
-        );
-        await sendKeysPTaxInputFields(zipInput, item.Zip, false);
-
-        const ownerOfRecordInput = await awaitElementLocatedAndReturn(
-          driver,
-          addNewParcelsSelectors.ownerOfRecord,
-          "id"
-        );
-        await sendKeysPTaxInputFields(
-          ownerOfRecordInput,
-          item.OwnerOfRecord,
-          false
-        );
-
-        /* 
-          Sometimes the Assessor/Collector have the same name and it can
-          cause issues with the xpath, because of this the collector
-          uses a more specific selector
-        */
-
-        const defaultAssessorDropdown = await awaitElementLocatedAndReturn(
-          driver,
-          addNewParcelsSelectors.defaultAssessor,
-          "id"
-        );
-        const correctAssessorSelector = generateDynamicXPath(
+        const taxYearNewAssessmentXPath = generateDynamicXPath(
           "option",
-          item.DefaultAssessor,
-          "contains"
-        );
-        await clickOnSelectOption(
-          driver,
-          defaultAssessorDropdown,
-          correctAssessorSelector
-        );
-
-        const defaultCollectorDropdown = await awaitElementLocatedAndReturn(
-          driver,
-          addNewParcelsSelectors.defaultCollector,
-          "id"
-        );
-
-        const correctCollectorSelector = generateDynamicXPath(
-          "option",
-          item.DefaultCollector,
-          "contains"
-        );
-
-        await clickOnSelectOption(
-          driver,
-          defaultCollectorDropdown,
-          correctCollectorSelector
-        );
-
-        const defaultPaymentMethodDropdown = await awaitElementLocatedAndReturn(
-          driver,
-          addNewParcelsSelectors.defaultPaymentMethod,
-          "id"
-        );
-        const correctPaymentMethodSelector = generateDynamicXPath(
-          "option",
-          item.DefaultPaymentMethod,
-          "contains"
-        );
-        await clickOnSelectOption(
-          driver,
-          defaultPaymentMethodDropdown,
-          correctPaymentMethodSelector
-        );
-
-        const parcelTypeDropdown = await awaitElementLocatedAndReturn(
-          driver,
-          addNewParcelsSelectors.parcelType,
-          "id"
-        );
-        const correctParcelTypeSelector = generateDynamicXPath(
-          "option",
-          item.ParcelType,
-          "contains"
-        );
-        await clickOnSelectOption(
-          driver,
-          parcelTypeDropdown,
-          correctParcelTypeSelector
-        );
-
-        const ownershipStatusDropdown = await awaitElementLocatedAndReturn(
-          driver,
-          addNewParcelsSelectors.ownershipStatus,
-          "id"
-        );
-        const correctOwnershipStatusSelector = generateDynamicXPath(
-          "option",
-          item.OwnershipStatus,
+          assessmentYear,
           "equals"
         );
-        await clickOnSelectOption(
-          driver,
-          ownershipStatusDropdown,
-          correctOwnershipStatusSelector
-        );
+        const taxYearForDropdown =
+          await taxYearNewAssessmentDropdown.findElement(
+            By.xpath(taxYearNewAssessmentXPath)
+          );
+        await taxYearForDropdown.click();
 
-        const serviceLevelDropdown = await awaitElementLocatedAndReturn(
+        const startAssessmentBtn = await awaitElementLocatedAndReturn(
           driver,
-          addNewParcelsSelectors.serviceLevel,
+          importPropertyValuesSelectors.startAssessmentBtn,
           "id"
         );
-        const correctServiceLevelSelector = generateDynamicXPath(
-          "option",
-          item.ServiceLevel,
-          "contains"
-        );
-        await clickOnSelectOption(
-          driver,
-          serviceLevelDropdown,
-          correctServiceLevelSelector
+        await startAssessmentBtn.click();
+        await driver.wait(
+          until.elementLocated(
+            By.id(assessmentNoticesSelectors.assessmentSection)
+          )
         );
 
-        const managementLevelDropdown = await awaitElementLocatedAndReturn(
+        const landMarketValueInputField = await awaitElementLocatedAndReturn(
           driver,
-          addNewParcelsSelectors.managementLevel,
-          "id"
+          assessmentNoticesSelectors.landMarketValueInput,
+          "name"
         );
-        const correctManagementLevelSelector = generateDynamicXPath(
-          "option",
-          item.ManagementLevel,
-          "contains"
-        );
-        await clickOnSelectOption(
-          driver,
-          managementLevelDropdown,
-          correctManagementLevelSelector
-        );
+        await landMarketValueInputField.sendKeys(item.MarketValue);
 
-        const taxResponsibilityDropdown = await awaitElementLocatedAndReturn(
+        const landAssessedValueInputField = await awaitElementLocatedAndReturn(
           driver,
-          addNewParcelsSelectors.taxResponsibility,
-          "id"
+          assessmentNoticesSelectors.landAssessedValueInput,
+          "name"
         );
-        const correctTaxResponsibilitySelector = generateDynamicXPath(
-          "option",
-          item.TaxResponsibility,
-          "contains"
-        );
-        await clickOnSelectOption(
-          driver,
-          taxResponsibilityDropdown,
-          correctTaxResponsibilitySelector
-        );
+        await landAssessedValueInputField.sendKeys(item.MarketValue);
 
-        const saveButton = await awaitElementLocatedAndReturn(
+        const improvementsMarketValueInputField =
+          await awaitElementLocatedAndReturn(
+            driver,
+            assessmentNoticesSelectors.improvementsMarketValueInput,
+            "name"
+          );
+        await improvementsMarketValueInputField.sendKeys(item.AssessedValue);
+
+        const improvementAssessedValueInputField =
+          await awaitElementLocatedAndReturn(
+            driver,
+            assessmentNoticesSelectors.improvementsAssessedValueInput,
+            "name"
+          );
+
+        await improvementAssessedValueInputField.sendKeys(item.AssessedValue);
+
+        const btnSaveAssessment = await awaitElementLocatedAndReturn(
           driver,
-          addNewParcelsSelectors.saveButton,
-          "id"
+          assessmentNoticesSelectors.btnSaveAssessment,
+          "name"
         );
-        await scrollElementIntoView(driver, saveButton);
-        await saveButton.click();
-        await driver.sleep(5000);
+        await scrollElementIntoView(driver, btnSaveAssessment);
+        await btnSaveAssessment.click();
+        await waitForLoading(driver);
+
+        /*
+         ***************************************************************
+        */
+
         let itemErrorColRemoved = item;
         if (itemErrorColRemoved?.Error) {
           delete itemErrorColRemoved.Error;
@@ -356,4 +282,4 @@ const addNewParcels = async (
   }
 };
 
-module.exports = addNewParcels;
+module.exports = importPropertyValues;

@@ -1,5 +1,6 @@
 const { until, By } = require("selenium-webdriver");
 const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn");
+const fluentElementLocatedAndReturn = require("../../../../../functions/general/fluentElementLocatedAndReturn");
 const removeSpecialCharsFromString = require("../../../../../utils/strings/removeSpecialCharsFromString");
 
 /* 
@@ -13,7 +14,7 @@ const pullTaxBillStrings = async (
   installmentNumber,
   taxYearEnd
 ) => {
-  if (installmentNumber === "1") {
+  if (installmentNumber === "1" || installmentNumber === "2") {
     const sideMenuTabElement = await awaitElementLocatedAndReturn(
       driver,
       taxWebsiteSelectors.accountBalanceTab,
@@ -23,11 +24,17 @@ const pullTaxBillStrings = async (
     await sideMenuTabElement.click();
     await driver.wait(until.urlContains("account_balance"));
 
-    const tableWithTaxBillData = await awaitElementLocatedAndReturn(
+    const tableWithTaxBillData = await fluentElementLocatedAndReturn(
       driver,
       taxWebsiteSelectors.taxBillInformation,
-      "id"
+      "id",
+      15,
+      2,
+      "Failed to find tax bill table"
     );
+    if (tableWithTaxBillData === null) {
+      return {};
+    }
 
     const assessmentTableArrayOfRows = await tableWithTaxBillData.findElements(
       By.css("tr")
@@ -66,8 +73,7 @@ const pullTaxBillStrings = async (
     };
 
     return objToReturn;
-  } else if (installmentNumber === "2") {
-  } else if (installmentNumber === "3") {
+  } else if (installmentNumber === "3" || installmentNumber === "4") {
     try {
       const sideMenuTabElement = await awaitElementLocatedAndReturn(
         driver,
@@ -78,11 +84,17 @@ const pullTaxBillStrings = async (
       await sideMenuTabElement.click();
       await driver.wait(until.urlContains("acc_hist"));
 
-      const tableWithTaxBillData = await awaitElementLocatedAndReturn(
+      const tableWithTaxBillData = await fluentElementLocatedAndReturn(
         driver,
         taxWebsiteSelectors.accountHistorySummary,
-        "id"
+        "id",
+        15,
+        2,
+        "Failed to find tax bill table"
       );
+      if (tableWithTaxBillData === null) {
+        return {};
+      }
       const tableArrayOfRows = await tableWithTaxBillData.findElements(
         By.css("tr")
       );
@@ -123,9 +135,9 @@ const pullTaxBillStrings = async (
         and the parcel will require human attention.
       */
 
-      if (arrayOfRows?.length !== 4) {
+      /* if (arrayOfRows?.length !== 4) {
         return {};
-      }
+      } */
 
       /* 
         Now that we have all the rows, get the 3rd and 4th installment data

@@ -7,7 +7,7 @@ import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { useResetRedux } from "../../hooks/useResetRedux";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 // Constants
-import { listOfAutomationsArrayExport } from "../../constants/listOfAutomations";
+import { automationListArrayExport } from "../../constants/automation-list/automationList";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
@@ -28,7 +28,7 @@ export const PreAutomationConfig = () => {
 
   const arrayOfAutomations = [];
 
-  for (const item of listOfAutomationsArrayExport) {
+  for (const item of automationListArrayExport) {
     arrayOfAutomations.push(
       <div key={item.key} className="col col-6 mt-3">
         <Link to={`/${item.name.split(" ").join("-").toLowerCase()}`}>

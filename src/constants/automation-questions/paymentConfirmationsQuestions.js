@@ -13,18 +13,12 @@ export const paymentConfirmationsQuestions = [
   },
   {
     key: 2,
-    name: "Operation",
-    parentQuestions: ["state", "county"],
-    inputType: "Dropdown",
-  },
-  {
-    key: 3,
     name: "Download Directory",
     parentQuestions: null,
     inputType: "Directory",
   },
   {
-    key: 4,
+    key: 3,
     name: "Spreadsheet File",
     parentQuestions: null,
     inputType: "File",

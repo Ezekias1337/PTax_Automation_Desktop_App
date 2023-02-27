@@ -5,6 +5,8 @@ import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import { addNewParcelsQuestions } from "./constants/automation-questions/addNewParcelsQuestions";
 import { assessmentNoticesQuestions } from "./constants/automation-questions/assessmentNoticesQuestions";
 import { checkAssessorAndCollectorUrlsQuestions } from "./constants/automation-questions/checkAssessorAndCollectorUrlsQuestions";
+import { importPropertyValuesQuestions } from "./constants/automation-questions/importPropertyValuesQuestions";
+import { parcelQuestChargesQuestions } from "./constants/automation-questions/parcelQuestChargesQuestions";
 import { paymentConfirmationsQuestions } from "./constants/automation-questions/paymentConfirmationsQuestions";
 import { propertyPointOfContactQuestions } from "./constants/automation-questions/propertyPointOfContactQuestions";
 import { propertyTaxBillsQuestions } from "./constants/automation-questions/propertyTaxBillsQuestions";
@@ -17,7 +19,6 @@ import { PreAutomationConfig } from "./components/pages/preAutomationConfig";
 import { Automation } from "./components/pages/automation";
 import { PostAutomationSummary } from "./components/pages/postAutomationSummary";
 import { SpreadsheetTemplateViewer } from "./components/pages/spreadsheetTemplateViewer";
-
 // CSS
 import "./App.css";
 
@@ -64,11 +65,29 @@ const App = () => {
           }
         ></Route>
         <Route
+          path="/import-property-values"
+          element={
+            <Automation
+              automationName="Import Property Values"
+              preOperationQuestions={importPropertyValuesQuestions}
+            />
+          }
+        ></Route>
+        <Route
+          path="/parcel-quest-charges"
+          element={
+            <Automation
+              automationName="Parcel Quest Charges"
+              preOperationQuestions={parcelQuestChargesQuestions}
+            />
+          }
+        ></Route>
+        <Route
           path="/payment-confirmations"
           element={
             <Automation
               automationName="Payment Confirmations"
-              preOperationQuestions={paymentConfirmationsQuestions /*  */}
+              preOperationQuestions={paymentConfirmationsQuestions}
             />
           }
         ></Route>

@@ -14,12 +14,13 @@ export const DownloadButton = ({
   isAnimated = false,
   downloadOptions,
   enabled,
+  isFullSize = true,
 }) => {
   return (
     <Button
-      className={`full-width-button styled-button${
-        enabled === false ? " disabled" : ""
-      }`}
+      className={`${
+        isFullSize === true ? "full-width-button" : ""
+      } styled-button${enabled === false ? " disabled" : ""}`}
       alt="settings-button"
       onClick={() => ipcRenderer.send("save spreadsheet", downloadOptions)}
     >
