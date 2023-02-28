@@ -1,3 +1,4 @@
+// Functions, Helpers, Utils
 const { windowPosition } = require("./windowPosition");
 
 const showWindow = (window, tray, process) => {

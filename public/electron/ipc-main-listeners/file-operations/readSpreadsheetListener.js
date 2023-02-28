@@ -5,9 +5,6 @@ const xlsx = require("xlsx");
 const {
   replaceBackslashWithForwardSlash,
 } = require("../../../shared/utils/replaceBackslashWithForwardSlash");
-const {
-  removeQuotesFromObjectKeys,
-} = require("../../../shared/utils/removeQuotesFromObjectKeys");
 
 const readSpreadsheetFile = async (pathToSpreadsheet) => {
   try {

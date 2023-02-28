@@ -1,5 +1,7 @@
+// Library Imports
 const { Tray, nativeImage } = require("electron");
 const path = require("path");
+// Functions, Helpers, Utils
 const { toggleWindow } = require("../window/toggleWindow");
 
 const createTray = (window, directoryName, process) => {

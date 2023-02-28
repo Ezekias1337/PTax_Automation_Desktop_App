@@ -1,3 +1,4 @@
+// Functions, Helpers, Utils
 const { showWindow } = require("./showWindow");
 
 const toggleWindow = (window, tray, process) => {
