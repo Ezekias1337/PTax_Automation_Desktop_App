@@ -1,3 +1,4 @@
+// Library Imports
 const { until, By } = require("selenium-webdriver");
 
 const checkForTaxBillTable = async (driver, taxWebsiteSelectors) => {

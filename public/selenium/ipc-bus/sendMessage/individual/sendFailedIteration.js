@@ -1,5 +1,5 @@
 /* 
-  Sends the iteration to be pushed to the successfulIteration
+  Sends the iteration to be pushed to the failedIteration
   array in the front end
 */
 

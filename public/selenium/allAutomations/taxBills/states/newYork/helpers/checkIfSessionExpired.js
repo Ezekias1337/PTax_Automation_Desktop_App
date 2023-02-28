@@ -1,3 +1,4 @@
+// Library Imports
 const { By } = require("selenium-webdriver");
 
 const checkIfSessionExpired = async (driver, taxWebsiteSelectors) => {

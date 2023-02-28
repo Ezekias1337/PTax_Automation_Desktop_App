@@ -1,71 +1,40 @@
-//  Main Imports
-
+// Library Imports
 const colors = require("colors");
-const { until, By } = require("selenium-webdriver");
-const buildDriver = require("../../../../../functions/driver/buildDriver");
-const verifySpreadSheetColumnNames = require("../../../../../functions/fileOperations/verifySpreadSheetColumnNames");
-const handleColumnNameLogging = require("../../../../../functions/fileOperations/handleColumnNameLogging");
-const readSpreadsheetFile = require("../../../../../functions/fileOperations/readSpreadsheetFile");
+// Functions, Helpers, Utils
 const logErrorMessageCatch = require("../../../../../functions/general/consoleLogErrors/logErrorMessageCatch");
 const printAutomationReportToSheet = require("../../../../../functions/fileOperations/printAutomationReportToSheet");
 const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn");
 const closingAutomationSystem = require("../../../../../functions/general/closingAutomationSystem");
 const generateDynamicXPath = require("../../../../../functions/general/generateDynamicXPath");
-const deleteInputFieldContents = require("../../../../../functions/general/deleteInputFieldContents");
-const promptForInstallment = require("../../../../../functions/userPrompts/individual/promptForInstallment");
-const promptLogin = require("../../../../../functions/userPrompts/individual/promptLogin");
-const promptUploadDirectory = require("../../../../../functions/userPrompts/individual/promptUploadDirectory");
 const loginToPTAX = require("../../../../../functions/pTaxSpecific/login/loginToPTAX");
-const loginToParcelQuest = require("../helpers/loginToParcelQuest");
-const saveLinkToFile = require("../../../../../functions/fileOperations/saveLinkToFile");
-const trimLeadingZeros = require("../../../../../functions/general/trimLeadingZeros");
 const swapToIFrameDefaultContent = require("../../../../../functions/pTaxSpecific/frameSwaps/swapToIFrameDefaultContent");
 const swapToIFrame0 = require("../../../../../functions/pTaxSpecific/frameSwaps/swapToIFrame0");
 const swapToIFrame1 = require("../../../../../functions/pTaxSpecific/frameSwaps/swapToIFrame1");
 const clickCheckMyPropertiesCheckBox = require("../../../../../functions/pTaxSpecific/clickCheckMyPropertiesCheckBox/clickCheckMyPropertiesCheckBox");
-const openNewTab = require("../../../../../functions/tabSwapsAndHandling/openNewTab");
-const switchToPTaxTab = require("../../../../../functions/tabSwapsAndHandling/switchToPTaxTab");
-const switchToTaxWebsiteTab = require("../../../../../functions/tabSwapsAndHandling/switchToTaxWebsiteTab");
-const {
-  parcelQuestLoginPage,
-  parcelQuestHomePage,
-} = require("../../../../../constants/urls");
 const consoleLogLine = require("../../../../../functions/general/consoleLogLine");
-const generateDelayNumber = require("../../../../../functions/general/generateDelayNumber");
 const navigateToExistingAssessment = require("../../../../../functions/navigateToExistingAssessment/navigateToExistingAssessment");
 const sendKeysPTaxInputFields = require("../../../../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
+const waitForLoading = require("../../../../../functions/pTaxSpecific/waitForLoading/waitForLoading");
+const scrollElementIntoView = require("../../../../../functions/general/scrollElementIntoView");
+
+const uploadTaxBill = require("../../../cross-state-helpers/uploadTaxBill");
+
+const selectDropdownElement = require("../../../../../utils/web-elements/selectDropdownElement");
 const {
-  dataEntryTaxBillsColumns,
-} = require("../../../../../dataValidation/spreadsheetColumns/allSpreadSheetColumns");
-const {
-  assessmentNoticesSelectors,
-  navbarDocumentsSelectors,
-  searchByParcelNumberSelector,
-  taxBillSelectors,
-} = require("../../../../../ptaxXpathsAndSelectors/allSelectors");
-const websiteSelectors = require("../websiteSelectors");
+  replaceSpacesWithUnderscore,
+} = require("../../../../../../shared/utils/replaceSpacesWithUnderscore");
+
 const sendCurrentIterationInfo = require("../../../../../ipc-bus/sendCurrentIterationInfo");
 const sendSuccessfulIteration = require("../../../../../ipc-bus/sendSuccessfulIteration");
 const sendFailedIteration = require("../../../../../ipc-bus/sendFailedIteration");
 const sendEventLogInfo = require("../../../../../ipc-bus/sendEventLogInfo");
 const sendAutomationCompleted = require("../../../../../ipc-bus/sendAutomationCompleted");
-const searchForParcel = require("../helpers/searchForParcel");
-const pullTaxBillStrings = require("../helpers/pullTaxBillStrings");
-const printPageToPDF = require("../../../../../functions/fileOperations/printPageToPDF");
-const fillOutLiability = require("../helpers/fillOutLiability");
-const fillOutPayments = require("../helpers/fillOutPayments");
-const selectDropdownElement = require("../../../../../utils/web-elements/selectDropdownElement");
-const uploadTaxBill = require("../../../cross-state-helpers/uploadTaxBill");
-const {
-  replaceSpacesWithUnderscore,
-} = require("../../../../../../shared/utils/replaceSpacesWithUnderscore");
-const fluentWait = require("../../../../../functions/general/fluentWait");
-const waitForLoading = require("../../../../../functions/pTaxSpecific/waitForLoading/waitForLoading");
-const scrollElementIntoView = require("../../../../../functions/general/scrollElementIntoView");
-const pressHomeButton = require("../helpers/pressHomeButton");
 const handleAutomationCancel = require("../../../../../ipc-bus/handleAutomationCancel");
-
-// Helpers
+// Selectors
+const {
+  searchByParcelNumberSelector,
+  taxBillSelectors,
+} = require("../../../../../ptaxXpathsAndSelectors/allSelectors");
 
 const performUploadOriginalDocument = async (
   {

@@ -1,10 +1,17 @@
+// Library Imports
 const colors = require("colors");
 const { until, By } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn");
 const generateDynamicXPath = require("../../../../../functions/general/generateDynamicXPath");
 const deleteInputFieldContents = require("../../../../../functions/general/deleteInputFieldContents");
 
-const checkIfNoResultsOrMultipleResults = async (driver, item, taxWebsiteSelectors, arrayOfFailedOperations) => {
+const checkIfNoResultsOrMultipleResults = async (
+  driver,
+  item,
+  taxWebsiteSelectors,
+  arrayOfFailedOperations
+) => {
   const checkURL = await driver.getCurrentUrl();
 
   if (checkURL.includes("search/CommonSearch.aspx?mode=PERSPROP")) {

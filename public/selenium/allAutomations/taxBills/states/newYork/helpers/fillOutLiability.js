@@ -1,4 +1,6 @@
+// Library Imports
 const { By } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const waitForLoading = require("../../../../../functions/pTaxSpecific/waitForLoading/waitForLoading");
 const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn");
 const sendKeysPTaxInputFields = require("../../../../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
@@ -52,7 +54,7 @@ const fillOutLiability = async (
       await saveLiabilityBtn.click();
       await waitForLoading(driver);
     }  */
-    
+
     /* 
       Using the default collector determine if the parcel should have
       2 or 4 installments

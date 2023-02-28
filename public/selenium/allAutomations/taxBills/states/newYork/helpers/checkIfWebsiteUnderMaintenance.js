@@ -1,4 +1,6 @@
+// Library Imports
 const { By } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const closingAutomationSystem = require("../../../../../functions/general/closingAutomationSystem");
 
 const checkIfWebsiteUnderMaintenance = async (driver, taxWebsiteSelectors) => {
