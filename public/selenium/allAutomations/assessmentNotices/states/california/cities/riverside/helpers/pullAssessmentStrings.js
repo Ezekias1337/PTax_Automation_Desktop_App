@@ -1,5 +1,7 @@
-const awaitElementLocatedAndReturn = require("../../../../../../../functions/general/awaitElementLocatedAndReturn");
+// Library Imports
 const { By } = require("selenium-webdriver");
+// Functions, Helpers, Utils
+const awaitElementLocatedAndReturn = require("../../../../../../../functions/general/awaitElementLocatedAndReturn");
 
 const pullAssessmentStrings = async (driver, assessmentWebsiteSelectors) => {
   let landValueRow;
@@ -108,7 +110,10 @@ const pullAssessmentStrings = async (driver, assessmentWebsiteSelectors) => {
     improvementMarketValueStringCommasRemoved
   );
 
-  return [landMarketValueStringCommasRemoved, improvementMarketValueStringCommasRemoved];
+  return [
+    landMarketValueStringCommasRemoved,
+    improvementMarketValueStringCommasRemoved,
+  ];
 };
 
 module.exports = pullAssessmentStrings;

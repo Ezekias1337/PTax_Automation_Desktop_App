@@ -1,9 +1,7 @@
+// Library Imports
 const colors = require("colors");
-const verifySpreadSheetColumnNames = require("../../../../../../../functions/fileOperations/verifySpreadSheetColumnNames");
-const handleColumnNameLogging = require("../../../../../../../functions/fileOperations/handleColumnNameLogging");
-const readSpreadsheetFile = require("../../../../../../../functions/fileOperations/readSpreadsheetFile");
+// Functions, Helpers, Utils
 const logErrorMessageCatch = require("../../../../../../../functions/general/consoleLogErrors/logErrorMessageCatch");
-const promptLogin = require("../../../../../../../functions/userPrompts/individual/promptLogin");
 const loginToPTAX = require("../../../../../../../functions/pTaxSpecific/login/loginToPTAX");
 const swapToIFrameDefaultContent = require("../../../../../../../functions/pTaxSpecific/frameSwaps/swapToIFrameDefaultContent");
 const swapToIFrame0 = require("../../../../../../../functions/pTaxSpecific/frameSwaps/swapToIFrame0");
@@ -16,33 +14,27 @@ const switchToTaxWebsiteTab = require("../../../../../../../functions/tabSwapsAn
 const awaitElementLocatedAndReturn = require("../../../../../../../functions/general/awaitElementLocatedAndReturn");
 const closingAutomationSystem = require("../../../../../../../functions/general/closingAutomationSystem");
 const generateDynamicXPath = require("../../../../../../../functions/general/generateDynamicXPath");
-const promptForYear = require("../../../../../../../functions/userPrompts/individual/promptForYear");
-const promptOutputDirectory = require("../../../../../../../functions/userPrompts/individual/promptOutputDirectory");
 const generateDelayNumber = require("../../../../../../../functions/general/generateDelayNumber");
 const sendKeysPTaxInputFields = require("../../../../../../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
+const consoleLogLine = require("../../../../../../../functions/general/consoleLogLine");
+const switchToAndDismissAlert = require("../../../../../../../functions/tabSwapsAndHandling/switchToAndDismissAlert");
+
+const addAssessment = require("../../../../../cross-state-helpers/addAssessment");
+const uploadAssessment = require("../../../../../cross-state-helpers/uploadAssessment");
+const searchForParcel = require("../helpers/searchForParcel");
+const pullAssessmentStrings = require("../helpers/pullAssessmentStrings");
+const downloadAssessment = require("../helpers/downloadAssessment.js");
+
+// Constants
 const {
   parcelQuestLoginPage,
   parcelQuestHomePage,
 } = require("../../../../../../../constants/urls");
-const {
-  downloadAndDataEntryAssessmentNoticesColumns,
-} = require("../../../../../../../dataValidation/spreadsheetColumns/allSpreadSheetColumns");
+// Selectors
 const {
   assessmentNoticesSelectors,
   searchByParcelNumberSelector,
 } = require("../../../../../../../ptaxXpathsAndSelectors/allSelectors");
-const consoleLogLine = require("../../../../../../../functions/general/consoleLogLine");
-const addAssessment = require("../../../../../cross-state-helpers/addAssessment");
-const searchForParcel = require("../helpers/searchForParcel");
-const pullAssessmentStrings = require("../helpers/pullAssessmentStrings");
-const uploadAssessment = require("../../../../../cross-state-helpers/uploadAssessment");
-const downloadAssessment = require("../helpers/downloadAssessment.js");
-const switchToAndDismissAlert = require("../../../../../../../functions/tabSwapsAndHandling/switchToAndDismissAlert");
-
-/* 
-  Started refactoring this before I realized the tax bills were the top priority,
-  will finish later
-*/
 
 const assessmentWebsiteSelectors = {
   countyInputField: "#QuickSearch_CountyId",

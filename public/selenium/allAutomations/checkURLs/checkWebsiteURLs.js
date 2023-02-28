@@ -1,6 +1,8 @@
+// Library Imports
 const colors = require("colors");
-const buildDriver = require("../../functions/driver/buildDriver");
 const { By, until } = require("selenium-webdriver");
+// Functions, Helpers, Utils
+const buildDriver = require("../../functions/driver/buildDriver");
 const readSpreadsheetFile = require("../../functions/fileOperations/readSpreadsheetFile");
 const verifySpreadSheetColumnNames = require("../../functions/fileOperations/verifySpreadSheetColumnNames");
 const handleColumnNameLogging = require("../../functions/fileOperations/handleColumnNameLogging");

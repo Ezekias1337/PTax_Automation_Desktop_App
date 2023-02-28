@@ -1,5 +1,7 @@
+// Library Imports
+const colors = require("colors");
+// Functions, Helpers, Utils
 const buildDriver = require("../../functions/driver/buildDriver");
-const colors = require('colors');
 
 const pullParcelInformationFromRealquest = async () => {
   /* 

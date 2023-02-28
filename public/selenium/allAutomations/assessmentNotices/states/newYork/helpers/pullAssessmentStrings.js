@@ -1,8 +1,15 @@
+// Library Imports
 const { until, By } = require("selenium-webdriver");
-const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn")
-const generateDynamicXPath = require("../../../../../functions/general/generateDynamicXPath")
+// Functions, Helpers, Utils
+const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn");
+const generateDynamicXPath = require("../../../../../functions/general/generateDynamicXPath");
 
-const pullAssessmentStrings = async (driver, assessmentWebsiteSelectors, assessmentYear, assessmentYearEnd) => {
+const pullAssessmentStrings = async (
+  driver,
+  assessmentWebsiteSelectors,
+  assessmentYear,
+  assessmentYearEnd
+) => {
   const sideMenuTabElement = await awaitElementLocatedAndReturn(
     driver,
     assessmentWebsiteSelectors.sideMenuTab,

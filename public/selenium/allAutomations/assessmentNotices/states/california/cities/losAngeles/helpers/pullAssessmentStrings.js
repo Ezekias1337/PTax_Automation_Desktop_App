@@ -1,9 +1,7 @@
+// Functions, Helpers, Utils
 const awaitElementLocatedAndReturn = require("../../../../../../../functions/general/awaitElementLocatedAndReturn");
 
-const pullAssessmentStrings = async (
-  driver,
-  assessmentWebsiteSelectors,
-) => {
+const pullAssessmentStrings = async (driver, assessmentWebsiteSelectors) => {
   const landMarketValueElement = await awaitElementLocatedAndReturn(
     driver,
     assessmentWebsiteSelectors.landMarketValue,

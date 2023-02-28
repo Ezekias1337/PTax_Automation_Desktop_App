@@ -1,4 +1,6 @@
+// Library Imports
 const colors = require("colors");
+// Functions, Helpers, Utils
 const verifySpreadSheetColumnNames = require("../../../../../../../functions/fileOperations/verifySpreadSheetColumnNames");
 const handleColumnNameLogging = require("../../../../../../../functions/fileOperations/handleColumnNameLogging");
 const readSpreadsheetFile = require("../../../../../../../functions/fileOperations/readSpreadsheetFile");
@@ -20,24 +22,28 @@ const promptForYear = require("../../../../../../../functions/userPrompts/indivi
 const promptOutputDirectory = require("../../../../../../../functions/userPrompts/individual/promptOutputDirectory");
 const generateDelayNumber = require("../../../../../../../functions/general/generateDelayNumber");
 const sendKeysPTaxInputFields = require("../../../../../../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
-const { kernAssessmentSite } = require("../../../../../../../constants/urls");
-const {
-  downloadAndDataEntryAssessmentNoticesColumns,
-} = require("../../../../../../../dataValidation/spreadsheetColumns/allSpreadSheetColumns");
-const {
-  assessmentNoticesSelectors,
-  searchByParcelNumberSelector,
-} = require("../../../../../../../ptaxXpathsAndSelectors/allSelectors");
 const consoleLogLine = require("../../../../../../../functions/general/consoleLogLine");
+const fluentWait = require("../../../../../../../functions/general/fluentWait");
+const failedToHandleParcel = require("../../../../../../../functions/general/consoleLogErrors/failedToHandleParcel");
+const switchToTaxWebsiteIframe = require("../../../../../../../functions/tabSwapsAndHandling/switchToTaxWebsiteIframe");
+
 const addAssessment = require("../../../../../cross-state-helpers/addAssessment");
 const searchForParcel = require("../helpers/searchForParcel");
 const pullAssessmentStrings = require("../helpers/pullAssessmentStrings");
 const uploadAssessment = require("../../../../../cross-state-helpers/uploadAssessment");
-const downloadAssessment = require("../helpers/downloadAssessment.js");
-const fluentWait = require("../../../../../../../functions/general/fluentWait");
-const failedToHandleParcel = require("../../../../../../../functions/general/consoleLogErrors/failedToHandleParcel");
-const switchToTaxWebsiteIframe = require("../../../../../../../functions/tabSwapsAndHandling/switchToTaxWebsiteIframe");
+const downloadAssessment = require("../helpers/downloadAssessment");
 const pressNewSearch = require("../helpers/pressNewSearch");
+
+// Constants
+const { kernAssessmentSite } = require("../../../../../../../constants/urls");
+const {
+  downloadAndDataEntryAssessmentNoticesColumns,
+} = require("../../../../../../../dataValidation/spreadsheetColumns/allSpreadSheetColumns");
+// Selectors
+const {
+  assessmentNoticesSelectors,
+  searchByParcelNumberSelector,
+} = require("../../../../../../../ptaxXpathsAndSelectors/allSelectors");
 
 const assessmentWebsiteSelectors = {
   searchBar: "#txtSearchText",
@@ -167,7 +173,7 @@ const performDataEntryAndDownload = async () => {
           item.ParcelNumber,
           true
         );
-        
+
         await swapToIFrame0(driver);
         const propertySideBarXPath = generateDynamicXPath(
           "a",

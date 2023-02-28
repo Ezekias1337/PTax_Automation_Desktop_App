@@ -1,3 +1,4 @@
+// Functions, Helpers, Utils
 const awaitElementLocatedAndReturn = require("../../../../../../../functions/general/awaitElementLocatedAndReturn");
 
 const pressNewSearch = async (driver, assessmentWebsiteSelectors) => {

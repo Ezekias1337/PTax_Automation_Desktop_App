@@ -1,7 +1,9 @@
+// Library Imports
+const { By } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const awaitElementLocatedAndReturn = require("../../../../../../../functions/general/awaitElementLocatedAndReturn");
 const scrollElementIntoView = require("../../../../../../../functions/general/scrollElementIntoView");
 const fluentWait = require("../../../../../../../functions/general/fluentWait");
-const { By } = require("selenium-webdriver");
 
 const navigateToAssessmentData = async (driver, assessmentWebsiteSelectors) => {
   let navigationSuccessful;

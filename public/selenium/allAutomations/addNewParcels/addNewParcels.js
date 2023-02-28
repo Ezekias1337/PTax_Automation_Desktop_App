@@ -1,7 +1,7 @@
+// Library Imports
 const colors = require("colors");
-const promptLogin = require("../../functions/userPrompts/individual/promptLogin");
+// Functions, Helpers, Utils
 const loginToPTAX = require("../../functions/pTaxSpecific/login/loginToPTAX");
-const readSpreadsheetFile = require("../../functions/fileOperations/readSpreadsheetFile");
 const closingAutomationSystem = require("../../functions/general/closingAutomationSystem");
 const clickOnSelectOption = require("../../functions/general/clickOnSelectOption");
 const simulateMouseHover = require("../../functions/general/simulateMouseHover");
@@ -10,22 +10,11 @@ const swapToIFrame0 = require("../../functions/pTaxSpecific/frameSwaps/swapToIFr
 const swapToIFrame1 = require("../../functions/pTaxSpecific/frameSwaps/swapToIFrame1");
 const clickCheckMyPropertiesCheckBox = require("../../functions/pTaxSpecific/clickCheckMyPropertiesCheckBox/clickCheckMyPropertiesCheckBox");
 const logErrorMessageCatch = require("../../functions/general/consoleLogErrors/logErrorMessageCatch");
-const verifySpreadSheetColumnNames = require("../../functions/fileOperations/verifySpreadSheetColumnNames");
-const handleColumnNameLogging = require("../../functions/fileOperations/handleColumnNameLogging");
 const awaitElementLocatedAndReturn = require("../../functions/general/awaitElementLocatedAndReturn");
 const generateDynamicXPath = require("../../functions/general/generateDynamicXPath");
-const printAutomationReportToSheet = require("../../functions/fileOperations/printAutomationReportToSheet");
-const {
-  searchByLocationSelector,
-  navbarEditSelectors,
-  addNewParcelsSelectors,
-  newParcelHeader,
-} = require("../../ptaxXpathsAndSelectors/allSelectors");
 const sendKeysPTaxInputFields = require("../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
 const clickNavbarMenu = require("../../functions/pTaxSpecific/clickNavbar/clickNavbarMenu");
-const {
-  addNewParcelsColumns,
-} = require("../../dataValidation/spreadsheetColumns/allSpreadSheetColumns");
+const scrollElementIntoView = require("../../functions/general/scrollElementIntoView");
 
 const sendCurrentIterationInfo = require("../../ipc-bus/sendCurrentIterationInfo");
 const sendSuccessfulIteration = require("../../ipc-bus/sendSuccessfulIteration");
@@ -33,15 +22,18 @@ const sendFailedIteration = require("../../ipc-bus/sendFailedIteration");
 const sendEventLogInfo = require("../../ipc-bus/sendEventLogInfo");
 const sendAutomationCompleted = require("../../ipc-bus/sendAutomationCompleted");
 const handleAutomationCancel = require("../../ipc-bus/handleAutomationCancel");
-const scrollElementIntoView = require("../../functions/general/scrollElementIntoView");
+// Selectors
+const {
+  searchByLocationSelector,
+  navbarEditSelectors,
+  addNewParcelsSelectors,
+  newParcelHeader,
+} = require("../../ptaxXpathsAndSelectors/allSelectors");
 
 const addNewParcels = async (
-  { downloadDirectory, ptaxUsername, ptaxPassword, spreadsheetContents },
+  { ptaxUsername, ptaxPassword, spreadsheetContents },
   ipcBusClientNodeMain
 ) => {
-  const arrayOfSuccessfulOperations = [];
-  const arrayOfFailedOperations = [];
-
   try {
     console.log(`Running add new parcel automation: `);
 
@@ -322,7 +314,6 @@ const addNewParcels = async (
         console.log(colors.red.bold(`Failed for parcel: ${item.ParcelNumber}`));
         console.log(error);
 
-        arrayOfFailedOperations.push(item);
         await sendFailedIteration(
           ipcBusClientNodeMain,
           item,
@@ -334,22 +325,13 @@ const addNewParcels = async (
         });
       }
     }
-    /* await printAutomationReportToSheet(
-      arrayOfSuccessfulOperations,
-      arrayOfFailedOperations,
-      "./output/"
-    ); */
+
     await sendAutomationCompleted(ipcBusClientNodeMain);
     await sendEventLogInfo(ipcBusClientNodeMain, {
       color: "blue",
       message: "The automation is complete.",
     });
 
-    console.log(
-      colors.blue.bold(
-        `Reports have been generated for parcels that were added successful and unsuccessfuly, located in the output folder. Please check the 'Failed Operations' tab to verify if any results need manual review.`
-      )
-    );
     await closingAutomationSystem(driver);
   } catch (error) {
     logErrorMessageCatch(error);

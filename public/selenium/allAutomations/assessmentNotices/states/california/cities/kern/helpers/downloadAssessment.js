@@ -1,5 +1,7 @@
+// Library Imports
 const colors = require("colors");
 const consoleLogLine = require("../../../../../../../functions/general/consoleLogLine");
+// Functions, Helpers, Utils
 const printPageToPDF = require("../../../../../../../functions/fileOperations/printPageToPDF");
 const fluentWait = require("../../../../../../../functions/general/fluentWait");
 

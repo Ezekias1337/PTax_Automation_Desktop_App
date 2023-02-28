@@ -1,4 +1,16 @@
-const checkIfNoResultsOrMultipleResults = async (driver, item, assessmentWebsiteSelectors) => {
+// Library Imports
+const { until, By } = require("selenium-webdriver");
+const colors = require("colors");
+// Functions, Helpers, Utils
+const deleteInputFieldContents = require("../../../../../functions/general/deleteInputFieldContents");
+const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn");
+const generateDynamicXPath = require("../../../../../functions/general/generateDynamicXPath");
+
+const checkIfNoResultsOrMultipleResults = async (
+  driver,
+  item,
+  assessmentWebsiteSelectors
+) => {
   const checkURL = await driver.getCurrentUrl();
 
   if (checkURL.includes("search/CommonSearch.aspx?mode=PERSPROP")) {
@@ -7,8 +19,6 @@ const checkIfNoResultsOrMultipleResults = async (driver, item, assessmentWebsite
       const noResultsFoundElement = await driver.findElement(
         By.xpath(assessmentWebsiteSelectors.noParcelResultsFoundWarner)
       );
-
-      arrayOfFailedOperations.push(item);
 
       const blockInputToDelete = await awaitElementLocatedAndReturn(
         driver,

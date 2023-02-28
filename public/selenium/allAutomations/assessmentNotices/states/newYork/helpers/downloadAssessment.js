@@ -1,10 +1,12 @@
+// Library Imports
 const colors = require("colors");
 const { until, By } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn");
 const consoleLogLine = require("../../../../../functions/general/consoleLogLine");
-const checkForNoticesOfPropertyValueTable = require("./checkForNoticesOfPropertyValueTable");
 const generateDynamicXPath = require("../../../../../functions/general/generateDynamicXPath");
 const saveLinkToFile = require("../../../../../functions/fileOperations/saveLinkToFile");
+const checkForNoticesOfPropertyValueTable = require("./checkForNoticesOfPropertyValueTable");
 
 const downloadAssessment = async (
   driver,

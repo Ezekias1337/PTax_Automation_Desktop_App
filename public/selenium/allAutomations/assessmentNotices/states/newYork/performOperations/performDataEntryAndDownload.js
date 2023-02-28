@@ -1,50 +1,30 @@
+// Library Imports
 const colors = require("colors");
-const { until, By } = require("selenium-webdriver");
-const verifySpreadSheetColumnNames = require("../../../../../functions/fileOperations/verifySpreadSheetColumnNames");
-const handleColumnNameLogging = require("../../../../../functions/fileOperations/handleColumnNameLogging");
-const readSpreadsheetFile = require("../../../../../functions/fileOperations/readSpreadsheetFile");
+// Functions, Helpers, Utils
 const logErrorMessageCatch = require("../../../../../functions/general/consoleLogErrors/logErrorMessageCatch");
-const promptLogin = require("../../../../../functions/userPrompts/individual/promptLogin");
 const loginToPTAX = require("../../../../../functions/pTaxSpecific/login/loginToPTAX");
 const swapToIFrameDefaultContent = require("../../../../../functions/pTaxSpecific/frameSwaps/swapToIFrameDefaultContent");
 const swapToIFrame0 = require("../../../../../functions/pTaxSpecific/frameSwaps/swapToIFrame0");
 const swapToIFrame1 = require("../../../../../functions/pTaxSpecific/frameSwaps/swapToIFrame1");
 const clickCheckMyPropertiesCheckBox = require("../../../../../functions/pTaxSpecific/clickCheckMyPropertiesCheckBox/clickCheckMyPropertiesCheckBox");
-const printAutomationReportToSheet = require("../../../../../functions/fileOperations/printAutomationReportToSheet");
 const openNewTab = require("../../../../../functions/tabSwapsAndHandling/openNewTab");
 const switchToPTaxTab = require("../../../../../functions/tabSwapsAndHandling/switchToPTaxTab");
 const switchToTaxWebsiteTab = require("../../../../../functions/tabSwapsAndHandling/switchToTaxWebsiteTab");
 const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn");
 const closingAutomationSystem = require("../../../../../functions/general/closingAutomationSystem");
 const generateDynamicXPath = require("../../../../../functions/general/generateDynamicXPath");
-const deleteInputFieldContents = require("../../../../../functions/general/deleteInputFieldContents");
-const promptForYear = require("../../../../../functions/userPrompts/individual/promptForYear");
-const promptOutputDirectory = require("../../../../../functions/userPrompts/individual/promptOutputDirectory");
-const saveLinkToFile = require("../../../../../functions/fileOperations/saveLinkToFile");
-const trimLeadingZeros = require("../../../../../functions/general/trimLeadingZeros");
 const generateDelayNumber = require("../../../../../functions/general/generateDelayNumber");
 const sendKeysPTaxInputFields = require("../../../../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
-const { nyTaxBillSite } = require("../../../../../constants/urls");
-const {
-  downloadAndDataEntryAssessmentNoticesColumns,
-} = require("../../../../../dataValidation/spreadsheetColumns/allSpreadSheetColumns");
-const {
-  assessmentNoticesSelectors,
-  navbarDocumentsSelectors,
-  searchByParcelNumberSelector,
-} = require("../../../../../ptaxXpathsAndSelectors/allSelectors");
 const consoleLogLine = require("../../../../../functions/general/consoleLogLine");
-const clickNavbarMenu = require("../../../../../functions/pTaxSpecific/clickNavbar/clickNavbarMenu");
 
 const addAssessment = require("../../../cross-state-helpers/addAssessment");
+const uploadAssessment = require("../../../cross-state-helpers/uploadAssessment");
 const bblSearch = require("../helpers/bblSearch");
-const checkForNoticesOfPropertyValueTable = require("../helpers/checkForNoticesOfPropertyValueTable");
 const checkIfNoResultsOrMultipleResults = require("../helpers/checkIfNoResultsOrMultipleResults");
 const checkIfSessionExpired = require("../helpers/checkIfSessionExpired");
 const checkIfWebsiteUnderMaintenance = require("../helpers/checkIfWebsiteUnderMaintenance");
 const downloadAssessment = require("../helpers/downloadAssessment");
 const pullAssessmentStrings = require("../helpers/pullAssessmentStrings");
-const uploadAssessment = require("../../../cross-state-helpers/uploadAssessment");
 
 const sendCurrentIterationInfo = require("../../../../../ipc-bus/sendCurrentIterationInfo");
 const sendSuccessfulIteration = require("../../../../../ipc-bus/sendSuccessfulIteration");
@@ -52,6 +32,13 @@ const sendFailedIteration = require("../../../../../ipc-bus/sendFailedIteration"
 const sendEventLogInfo = require("../../../../../ipc-bus/sendEventLogInfo");
 const sendAutomationCompleted = require("../../../../../ipc-bus/sendAutomationCompleted");
 const handleAutomationCancel = require("../../../../../ipc-bus/handleAutomationCancel");
+// Constants
+const { nyTaxBillSite } = require("../../../../../constants/urls");
+// Selectors
+const {
+  assessmentNoticesSelectors,
+  searchByParcelNumberSelector,
+} = require("../../../../../ptaxXpathsAndSelectors/allSelectors");
 
 const assessmentWebsiteSelectors = {
   agreeBtn: "btAgree",

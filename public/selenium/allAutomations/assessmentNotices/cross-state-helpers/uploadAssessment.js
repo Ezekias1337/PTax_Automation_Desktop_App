@@ -1,3 +1,4 @@
+// Functions, Helpers, Utils
 const chooseFileToUpload = require("../../../functions/pTaxSpecific/uploadDocumentToPTAX/chooseFileToUpload");
 const enterTitle = require("../../../functions/pTaxSpecific/uploadDocumentToPTAX/enterTitle");
 const selectDocType = require("../../../functions/pTaxSpecific/uploadDocumentToPTAX/selectDocType");
@@ -29,7 +30,7 @@ const uploadAssessment = async (
   fullPathToUploadFile += "\\";
   fullPathToUploadFile += `${fileNameForFile}.pdf`;
 
-  await driver.sleep(10000);
+  await driver.sleep(5000);
   await goToUploadDocumentPage(driver);
   await chooseFileToUpload(driver, fullPathToUploadFile);
   await driver.sleep(3000);

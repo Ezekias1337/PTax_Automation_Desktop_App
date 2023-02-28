@@ -1,5 +1,8 @@
+// Library Imports
 const { By } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const closingAutomationSystem = require("../../../../../functions/general/closingAutomationSystem");
+// Selectors
 const websiteSelectors = require("../../../../taxBills/states/newYork/websiteSelectors");
 
 const checkIfWebsiteUnderMaintenance = async (driver) => {

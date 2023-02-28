@@ -1,4 +1,6 @@
+// Library Imports
 const colors = require("colors");
+// Functions, Helpers, Utils
 const performDataEntry = require("./performOperations/performDataEntry");
 const performDownload = require("./performOperations/performDownload");
 const performDataEntryAndDownload = require("./performOperations/performDataEntryAndDownload");

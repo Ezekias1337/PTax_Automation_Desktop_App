@@ -1,4 +1,6 @@
+// Library Imports
 const colors = require("colors");
+// Functions, Helpers, Utils
 const consoleLogLine = require("../../functions/general/consoleLogLine");
 const readSpreadsheetFile = require("../../functions/fileOperations/readSpreadsheetFile");
 const verifySpreadSheetColumnNames = require("../../functions/fileOperations/verifySpreadSheetColumnNames");
@@ -14,7 +16,9 @@ const sendKeysPTaxInputFields = require("../../functions/pTaxSpecific/sendKeysPT
 const generateDynamicXPath = require("../../functions/general/generateDynamicXPath");
 const generateDelayNumber = require("../../functions/general/generateDelayNumber");
 const printAutomationReportToSheet = require("../../functions/fileOperations/printAutomationReportToSheet");
-
+// Constants
+const renameParcelsColumns = require("../../dataValidation/spreadsheetColumns/individual/renameParcelsColumns");
+// Selectors
 const {
   searchByParcelNumberSelector,
   taxBillSelectors,
@@ -22,7 +26,6 @@ const {
   editDetailsSelector,
   addNewParcelsSelectors,
 } = require("../../ptaxXpathsAndSelectors/allSelectors");
-const renameParcelsColumns = require("../../dataValidation/spreadsheetColumns/individual/renameParcelsColumns");
 
 const updateParcelNames = async () => {
   console.log(`Running update parcel automation: `);

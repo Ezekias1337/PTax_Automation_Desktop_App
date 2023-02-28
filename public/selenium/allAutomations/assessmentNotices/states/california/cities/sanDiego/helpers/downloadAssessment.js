@@ -1,7 +1,9 @@
+// Library Imports
 const colors = require("colors");
+const { By, until } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const consoleLogLine = require("../../../../../../../functions/general/consoleLogLine");
 const printPageToPDF = require("../../../../../../../functions/fileOperations/printPageToPDF");
-const { By, until } = require("selenium-webdriver");
 
 const downloadAssessment = async (
   item,

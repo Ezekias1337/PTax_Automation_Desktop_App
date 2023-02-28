@@ -1,4 +1,6 @@
+// Library Imports
 const colors = require("colors");
+// Functions, Helpers, Utils
 const verifySpreadSheetColumnNames = require("../../../../../../../functions/fileOperations/verifySpreadSheetColumnNames");
 const handleColumnNameLogging = require("../../../../../../../functions/fileOperations/handleColumnNameLogging");
 const readSpreadsheetFile = require("../../../../../../../functions/fileOperations/readSpreadsheetFile");
@@ -20,23 +22,26 @@ const promptForYear = require("../../../../../../../functions/userPrompts/indivi
 const promptOutputDirectory = require("../../../../../../../functions/userPrompts/individual/promptOutputDirectory");
 const generateDelayNumber = require("../../../../../../../functions/general/generateDelayNumber");
 const sendKeysPTaxInputFields = require("../../../../../../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
+const consoleLogLine = require("../../../../../../../functions/general/consoleLogLine");
+const switchToAndDismissAlert = require("../../../../../../../functions/tabSwapsAndHandling/switchToAndDismissAlert");
+
+const addAssessment = require("../../../../../cross-state-helpers/addAssessment");
+const uploadAssessment = require("../../../../../cross-state-helpers/uploadAssessment");
+const searchForParcel = require("../helpers/searchForParcel");
+const pullAssessmentStrings = require("../helpers/pullAssessmentStrings");
+const downloadAssessment = require("../helpers/downloadAssessment.js");
+// Constants
 const {
   sanDiegoAssessmentSite,
 } = require("../../../../../../../constants/urls");
 const {
   downloadAndDataEntryAssessmentNoticesColumns,
 } = require("../../../../../../../dataValidation/spreadsheetColumns/allSpreadSheetColumns");
+// Selectors
 const {
   assessmentNoticesSelectors,
   searchByParcelNumberSelector,
 } = require("../../../../../../../ptaxXpathsAndSelectors/allSelectors");
-const consoleLogLine = require("../../../../../../../functions/general/consoleLogLine");
-const addAssessment = require("../../../../../cross-state-helpers/addAssessment");
-const searchForParcel = require("../helpers/searchForParcel");
-const pullAssessmentStrings = require("../helpers/pullAssessmentStrings");
-const uploadAssessment = require("../../../../../cross-state-helpers/uploadAssessment");
-const downloadAssessment = require("../helpers/downloadAssessment.js");
-const switchToAndDismissAlert = require("../../../../../../../functions/tabSwapsAndHandling/switchToAndDismissAlert");
 
 const assessmentWebsiteSelectors = {
   searchBar: "/html/body/div[1]/div[2]/div/form[1]/div/input",

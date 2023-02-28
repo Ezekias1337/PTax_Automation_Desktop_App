@@ -1,5 +1,7 @@
-const fluentWait = require("../../../../../../../functions/general/fluentWait");
+// Library Imports
 const { By } = require("selenium-webdriver");
+// Functions, Helpers, Utils
+const fluentWait = require("../../../../../../../functions/general/fluentWait");
 
 const ensureSearchReturnedResult = async (
   driver,

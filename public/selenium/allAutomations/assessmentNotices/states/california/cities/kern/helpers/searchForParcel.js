@@ -1,6 +1,8 @@
+// Library Imports
+const { Key } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const awaitElementLocatedAndReturn = require("../../../../../../../functions/general/awaitElementLocatedAndReturn");
 const scrollWindow = require("../../../../../../../functions/general/scrollWindow");
-const { Key } = require("selenium-webdriver");
 
 const searchForParcel = async (driver, item, assessmentWebsiteSelectors) => {
   await scrollWindow(driver, 0, 850);

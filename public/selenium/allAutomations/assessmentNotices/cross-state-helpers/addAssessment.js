@@ -1,4 +1,6 @@
+// Library Imports
 const { until, By } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const awaitElementLocatedAndReturn = require("../../../functions/general/awaitElementLocatedAndReturn");
 const generateDynamicXPath = require("../../../functions/general/generateDynamicXPath");
 const scrollElementIntoView = require("../../../functions/general/scrollElementIntoView");
@@ -19,8 +21,6 @@ const addAssessment = async (
       "id"
     );
     await btnNewAssessment.click();
-
-    /* NEED TO ADD HANDLING TO SELECT PROPER TAX YEAR IN 2021*/
 
     const taxYearNewAssessmentDropdown = await awaitElementLocatedAndReturn(
       driver,

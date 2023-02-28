@@ -1,6 +1,7 @@
-const awaitElementLocatedAndReturn = require("../../../../../../../functions/general/awaitElementLocatedAndReturn");
-const fluentWait = require("../../../../../../../functions/general/fluentWait");
+// Library Imports
 const { By } = require("selenium-webdriver");
+// Functions, Helpers, Utils
+const fluentWait = require("../../../../../../../functions/general/fluentWait");
 
 const dismissDisclaimer = async (driver, assessmentWebsiteSelectors) => {
   try {

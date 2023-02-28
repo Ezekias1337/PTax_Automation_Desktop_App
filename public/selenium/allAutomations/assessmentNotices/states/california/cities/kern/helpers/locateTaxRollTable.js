@@ -1,3 +1,4 @@
+// Library Imports
 const { By } = require("selenium-webdriver");
 
 const checkIfCorrectParentTable = async (tableToCheck) => {

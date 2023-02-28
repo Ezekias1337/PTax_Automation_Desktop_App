@@ -1,32 +1,19 @@
+// Library Imports
 const colors = require("colors");
 const { By, until } = require("selenium-webdriver");
-const promptLogin = require("../../functions/userPrompts/individual/promptLogin");
+// Functions, Helpers, Utils
 const loginToPTAX = require("../../functions/pTaxSpecific/login/loginToPTAX");
-const readSpreadsheetFile = require("../../functions/fileOperations/readSpreadsheetFile");
 const closingAutomationSystem = require("../../functions/general/closingAutomationSystem");
-const clickOnSelectOption = require("../../functions/general/clickOnSelectOption");
-const simulateMouseHover = require("../../functions/general/simulateMouseHover");
 const swapToIFrameDefaultContent = require("../../functions/pTaxSpecific/frameSwaps/swapToIFrameDefaultContent");
 const swapToIFrame0 = require("../../functions/pTaxSpecific/frameSwaps/swapToIFrame0");
 const swapToIFrame1 = require("../../functions/pTaxSpecific/frameSwaps/swapToIFrame1");
 const clickCheckMyPropertiesCheckBox = require("../../functions/pTaxSpecific/clickCheckMyPropertiesCheckBox/clickCheckMyPropertiesCheckBox");
 const logErrorMessageCatch = require("../../functions/general/consoleLogErrors/logErrorMessageCatch");
-const verifySpreadSheetColumnNames = require("../../functions/fileOperations/verifySpreadSheetColumnNames");
-const handleColumnNameLogging = require("../../functions/fileOperations/handleColumnNameLogging");
 const awaitElementLocatedAndReturn = require("../../functions/general/awaitElementLocatedAndReturn");
 const generateDynamicXPath = require("../../functions/general/generateDynamicXPath");
-const printAutomationReportToSheet = require("../../functions/fileOperations/printAutomationReportToSheet");
 const waitForLoading = require("../../functions/pTaxSpecific/waitForLoading/waitForLoading");
-const {
-  searchByLocationSelector,
-  navbarEditSelectors,
-  addNewParcelsSelectors,
-  newParcelHeader,
-  searchByParcelNumberSelector,
-} = require("../../ptaxXpathsAndSelectors/allSelectors");
 const sendKeysPTaxInputFields = require("../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
-const clickNavbarMenu = require("../../functions/pTaxSpecific/clickNavbar/clickNavbarMenu");
-const assessmentNoticesSelectors = require("../../ptaxXpathsAndSelectors/assessmentNoticesSelectors/assessmentNoticesSelectors");
+const scrollElementIntoView = require("../../functions/general/scrollElementIntoView");
 
 const sendCurrentIterationInfo = require("../../ipc-bus/sendCurrentIterationInfo");
 const sendSuccessfulIteration = require("../../ipc-bus/sendSuccessfulIteration");
@@ -34,7 +21,13 @@ const sendFailedIteration = require("../../ipc-bus/sendFailedIteration");
 const sendEventLogInfo = require("../../ipc-bus/sendEventLogInfo");
 const sendAutomationCompleted = require("../../ipc-bus/sendAutomationCompleted");
 const handleAutomationCancel = require("../../ipc-bus/handleAutomationCancel");
-const scrollElementIntoView = require("../../functions/general/scrollElementIntoView");
+// Constants
+
+// Selectors
+const {
+  searchByParcelNumberSelector,
+} = require("../../ptaxXpathsAndSelectors/allSelectors");
+const assessmentNoticesSelectors = require("../../ptaxXpathsAndSelectors/assessmentNoticesSelectors/assessmentNoticesSelectors");
 
 const importPropertyValues = async (
   {
@@ -229,7 +222,7 @@ const importPropertyValues = async (
 
         /*
          ***************************************************************
-        */
+         */
 
         let itemErrorColRemoved = item;
         if (itemErrorColRemoved?.Error) {

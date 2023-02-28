@@ -1,4 +1,6 @@
+// Library Imports
 const { By } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const locateTaxRollTable = require("./locateTaxRollTable");
 const locateImprovementValueRow = require("./locateImprovementValueRow");
 const locateLandValueRow = require("./locateLandValueRow");
@@ -9,7 +11,7 @@ const pullAssessmentStrings = async (driver, assessmentWebsiteSelectors) => {
     assessmentWebsiteSelectors
   );
   const arrayOfTableRows = await tableToPullDataFrom.findElements(By.css("tr"));
-  
+
   /* 
     ----------------------------------Land----------------------------------
   */
@@ -17,7 +19,7 @@ const pullAssessmentStrings = async (driver, assessmentWebsiteSelectors) => {
   const landValueRow = await locateLandValueRow(arrayOfTableRows);
   const landValueRowChildren = await landValueRow.findElements(By.css("td"));
   const landMarketValueElement = landValueRowChildren[1];
-  
+
   const landMarketValueString = await landMarketValueElement.getAttribute(
     "innerText"
   );
