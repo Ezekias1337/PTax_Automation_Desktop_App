@@ -15,11 +15,7 @@ const waitForLoading = require("../../functions/pTaxSpecific/waitForLoading/wait
 const sendKeysPTaxInputFields = require("../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
 const scrollElementIntoView = require("../../functions/general/scrollElementIntoView");
 
-const sendCurrentIterationInfo = require("../../ipc-bus/sendCurrentIterationInfo");
-const sendSuccessfulIteration = require("../../ipc-bus/sendSuccessfulIteration");
-const sendFailedIteration = require("../../ipc-bus/sendFailedIteration");
-const sendEventLogInfo = require("../../ipc-bus/sendEventLogInfo");
-const sendAutomationCompleted = require("../../ipc-bus/sendAutomationCompleted");
+const sendMessageToFrontEnd = require("../../ipc-bus/sendMessage/sendMessageToFrontEnd");
 const handleAutomationCancel = require("../../ipc-bus/handleAutomationCancel");
 // Constants
 
@@ -84,16 +80,16 @@ const importPropertyValues = async (
     */
 
     if (ptaxWindow === null || driver === null) {
-      await sendEventLogInfo(ipcBusClientNodeMain, {
-        color: "red",
-        message:
+      await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+        primaryMessage:
           "Login to PTax failed! Please check your username and password.",
+        messageColor: "red",
       });
       return;
     }
-    await sendEventLogInfo(ipcBusClientNodeMain, {
-      color: "green",
-      message: "Login into Ptax Successful!",
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: "Login to PTax Successful!",
+      messageColor: "green",
     });
 
     await swapToIFrame0(driver);
@@ -101,10 +97,12 @@ const importPropertyValues = async (
 
     for (const item of spreadsheetContents) {
       try {
-        await sendCurrentIterationInfo(ipcBusClientNodeMain, item.ParcelNumber);
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "orange",
-          message: `Working on parcel: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Current Iteration", {
+          primaryMessage: item.ParcelNumber,
+        });
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Working on parcel: ${item.ParcelNumber}`,
+          messageColor: "orange",
         });
 
         await swapToIFrameDefaultContent(driver);
@@ -134,9 +132,10 @@ const importPropertyValues = async (
         await driver.sleep(2500);
 
         // Do data entry for adding parcel, and then save
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "orange",
-          message: `Performing data entry...`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "", {
+          primaryMessage: "Performing data entry...",
+          messageColor: "orange",
+          errorMessage: null,
         });
 
         /*
@@ -229,46 +228,39 @@ const importPropertyValues = async (
           delete itemErrorColRemoved.Error;
         }
 
-        await sendSuccessfulIteration(
+        await sendMessageToFrontEnd(
           ipcBusClientNodeMain,
-          itemErrorColRemoved
+          "Successful Iteration",
+          {
+            primaryMessage: itemErrorColRemoved,
+          }
         );
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "green",
-          message: `Succeeded for parcel: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Succeeded for parcel: ${item.ParcelNumber}`,
+          messageColor: "green",
         });
       } catch (error) {
         console.log(colors.red.bold(`Failed for parcel: ${item.ParcelNumber}`));
         console.log(error);
 
         arrayOfFailedOperations.push(item);
-        await sendFailedIteration(
-          ipcBusClientNodeMain,
-          item,
-          `Failed to find parcel: ${item.ParcelNumber} in database.`
-        );
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "red",
-          message: `Failed for parcel: ${item.ParcelNumber}`,
+
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Failed Iteration", {
+          primaryMessage: item,
+          errorMessage: error,
+        });
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Failed for parcel: ${item.ParcelNumber}`,
+          messageColor: "red",
         });
       }
     }
-    /* await printAutomationReportToSheet(
-      arrayOfSuccessfulOperations,
-      arrayOfFailedOperations,
-      "./output/"
-    ); */
-    await sendAutomationCompleted(ipcBusClientNodeMain);
-    await sendEventLogInfo(ipcBusClientNodeMain, {
-      color: "blue",
-      message: "The automation is complete.",
-    });
 
-    console.log(
-      colors.blue.bold(
-        `Reports have been generated for parcels that were added successful and unsuccessfuly, located in the output folder. Please check the 'Failed Operations' tab to verify if any results need manual review.`
-      )
-    );
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Automation Completed");
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: "The automation is complete.",
+      messageColor: "blue",
+    });
     await closingAutomationSystem(driver);
   } catch (error) {
     logErrorMessageCatch(error);

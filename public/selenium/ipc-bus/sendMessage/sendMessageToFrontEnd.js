@@ -8,7 +8,7 @@ const sendSuccessfulIteration = require("./individual/sendSuccessfulIteration");
 const sendMessageToFrontEnd = async (
   ipcBusClientNodeMain,
   messageType,
-  { primaryMessage, messageColor = null, errorMessage = null }
+  { primaryMessage = null, messageColor = null, errorMessage = null }
 ) => {
   switch (messageType) {
     case "Automation Completed":

@@ -1,8 +1,5 @@
-// Library Imports
-const colors = require("colors");
 // Functions, Helpers, Utils
 const logErrorMessageCatch = require("../../../../../functions/general/consoleLogErrors/logErrorMessageCatch");
-const printAutomationReportToSheet = require("../../../../../functions/fileOperations/printAutomationReportToSheet");
 const awaitElementLocatedAndReturn = require("../../../../../functions/general/awaitElementLocatedAndReturn");
 const closingAutomationSystem = require("../../../../../functions/general/closingAutomationSystem");
 const generateDynamicXPath = require("../../../../../functions/general/generateDynamicXPath");
@@ -11,7 +8,6 @@ const swapToIFrameDefaultContent = require("../../../../../functions/pTaxSpecifi
 const swapToIFrame0 = require("../../../../../functions/pTaxSpecific/frameSwaps/swapToIFrame0");
 const swapToIFrame1 = require("../../../../../functions/pTaxSpecific/frameSwaps/swapToIFrame1");
 const clickCheckMyPropertiesCheckBox = require("../../../../../functions/pTaxSpecific/clickCheckMyPropertiesCheckBox/clickCheckMyPropertiesCheckBox");
-const consoleLogLine = require("../../../../../functions/general/consoleLogLine");
 const navigateToExistingAssessment = require("../../../../../functions/navigateToExistingAssessment/navigateToExistingAssessment");
 const sendKeysPTaxInputFields = require("../../../../../functions/pTaxSpecific/sendKeysPTaxInputFields/sendKeysPTaxInputFields");
 const waitForLoading = require("../../../../../functions/pTaxSpecific/waitForLoading/waitForLoading");
@@ -24,11 +20,7 @@ const {
   replaceSpacesWithUnderscore,
 } = require("../../../../../../shared/utils/replaceSpacesWithUnderscore");
 
-const sendCurrentIterationInfo = require("../../../../../ipc-bus/sendCurrentIterationInfo");
-const sendSuccessfulIteration = require("../../../../../ipc-bus/sendSuccessfulIteration");
-const sendFailedIteration = require("../../../../../ipc-bus/sendFailedIteration");
-const sendEventLogInfo = require("../../../../../ipc-bus/sendEventLogInfo");
-const sendAutomationCompleted = require("../../../../../ipc-bus/sendAutomationCompleted");
+const sendMessageToFrontEnd = require("../../../../../ipc-bus/sendMessage/sendMessageToFrontEnd");
 const handleAutomationCancel = require("../../../../../ipc-bus/handleAutomationCancel");
 // Selectors
 const {
@@ -56,9 +48,10 @@ const performUploadOriginalDocument = async (
   try {
     const taxYearEnd = parseInt(taxYear) + 1;
 
-    await sendEventLogInfo(ipcBusClientNodeMain, {
-      color: "yellow",
-      message: "Logging into Ptax",
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: "Logging into Ptax",
+      messageColor: "yellow",
+      errorMessage: null,
     });
     const [ptaxWindow, driver] = await loginToPTAX(ptaxUsername, ptaxPassword);
     handleAutomationCancel(ipcBusClientNodeMain, driver);
@@ -71,16 +64,18 @@ const performUploadOriginalDocument = async (
     */
 
     if (ptaxWindow === null || driver === null) {
-      await sendEventLogInfo(ipcBusClientNodeMain, {
-        color: "red",
-        message:
+      await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+        primaryMessage:
           "Login to PTax failed! Please check your username and password.",
+        messageColor: "red",
+        errorMessage: null,
       });
       return;
     }
-    await sendEventLogInfo(ipcBusClientNodeMain, {
-      color: "green",
-      message: "Login into Ptax Successful!",
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: "Login into Ptax Successful!",
+      messageColor: "green",
+      errorMessage: null,
     });
 
     await swapToIFrame0(driver);
@@ -88,11 +83,16 @@ const performUploadOriginalDocument = async (
 
     for (const item of spreadsheetContents) {
       try {
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "regular",
-          message: `Working on Parcel Number: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Working on Parcel Number: ${item.ParcelNumber}`,
+          messageColor: "regular",
+          errorMessage: null,
         });
-        await sendCurrentIterationInfo(ipcBusClientNodeMain, item.ParcelNumber);
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Current Iteration", {
+          primaryMessage: item.ParcelNumber,
+          messageColor: null,
+          errorMessage: null,
+        });
 
         await driver.navigate().refresh();
 
@@ -101,9 +101,10 @@ const performUploadOriginalDocument = async (
         */
 
         await swapToIFrameDefaultContent(driver);
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "blue",
-          message: `Searching for: ${item.ParcelNumber} in Ptax`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Searching for: ${item.ParcelNumber} in Ptax`,
+          messageColor: "blue",
+          errorMessage: null,
         });
 
         const searchByParcelInput = await awaitElementLocatedAndReturn(
@@ -123,9 +124,10 @@ const performUploadOriginalDocument = async (
           item.ParcelNumber,
           "contains"
         );
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "regular",
-          message: `Navigating to existing assessment`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: "Navigating to existing assessment",
+          messageColor: "regular",
+          errorMessage: null,
         });
         const propertyToAddTaxBill = await awaitElementLocatedAndReturn(
           driver,
@@ -143,9 +145,10 @@ const performUploadOriginalDocument = async (
         await swapToIFrame1(driver);
         await navigateToExistingAssessment(driver);
 
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "blue",
-          message: `Performing Data Entry for: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Performing Data Entry for: ${item.ParcelNumber}`,
+          messageColor: "blue",
+          errorMessage: null,
         });
 
         // Change Assessment Data Source to ParcelQuest and save
@@ -180,9 +183,10 @@ const performUploadOriginalDocument = async (
         await saveLiabilityButton.click();
         await waitForLoading(driver);
 
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "purple",
-          message: `Uploading Bill for: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Uploading Bill for: ${item.ParcelNumber}`,
+          messageColor: "purple",
+          errorMessage: null,
         });
 
         /* 
@@ -200,9 +204,10 @@ const performUploadOriginalDocument = async (
           "Annual"
         );
         await driver.sleep(2500);
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "green",
-          message: `Bill successfully uploaded for: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Bill successfully uploaded for: ${item.ParcelNumber}`,
+          messageColor: "green",
+          errorMessage: null,
         });
         await driver.sleep(2500);
         await swapToIFrame0(driver);
@@ -212,52 +217,47 @@ const performUploadOriginalDocument = async (
         if (itemErrorColRemoved?.Error) {
           delete itemErrorColRemoved.Error;
         }
-        await sendSuccessfulIteration(
+        await sendMessageToFrontEnd(
           ipcBusClientNodeMain,
-          itemErrorColRemoved
+          "Successful Iteration",
+          {
+            primaryMessage: itemErrorColRemoved,
+            messageColor: null,
+            errorMessage: null,
+          }
         );
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "green",
-          message: `Succeeded for parcel: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Succeeded for parcel: ${item.ParcelNumber}`,
+          messageColor: "green",
+          errorMessage: null,
         });
-        console.log(
-          colors.green.bold(`Succeeded for parcel: ${item.ParcelNumber}`)
-        );
-        consoleLogLine();
       } catch (error) {
-        await sendFailedIteration(
-          ipcBusClientNodeMain,
-          item,
-          `Failed for parcel: ${item.ParcelNumber} || ${error.message}`
-        );
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "red",
-          message: `Failed for parcel: ${item.ParcelNumber} || ${error.message}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Failed Iteration", {
+          primaryMessage: item,
+          messageColor: null,
+          errorMessage: error.message,
         });
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Failed for parcel: ${item.ParcelNumber} || ${error.message}`,
+          messageColor: "red",
+          errorMessage: null,
+        });
+
         await driver.navigate().refresh();
-        console.log(colors.red.bold(`Failed for parcel: ${item.ParcelNumber}`));
-        consoleLogLine();
-        arrayOfFailedOperations.push(item);
       }
     }
 
-    await printAutomationReportToSheet(
-      arrayOfSuccessfulOperations,
-      arrayOfFailedOperations,
-      downloadDirectory
+    await sendMessageToFrontEnd(
+      ipcBusClientNodeMain,
+      "Automation Completed",
+      {}
     );
-
-    await sendAutomationCompleted(ipcBusClientNodeMain);
-    await sendEventLogInfo(ipcBusClientNodeMain, {
-      color: "blue",
-      message: "The automation is complete.",
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: "The automation is complete.",
+      messageColor: "blue",
+      errorMessage: null,
     });
-    console.log(
-      colors.blue.bold(
-        `Reports have been generated for parcels that were added successful and unsuccessfuly, located in the download folder. Please check the 'Failed Operations' tab to verify if any results need manual review.`
-      ),
-      "\n"
-    );
+
     await closingAutomationSystem(driver);
   } catch (error) {
     logErrorMessageCatch(error);

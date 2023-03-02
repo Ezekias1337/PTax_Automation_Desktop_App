@@ -36,11 +36,7 @@ const {
 } = require("../../../../../../shared/utils/replaceSpacesWithUnderscore");
 const checkIfObjectIsEmpty = require("../../../../../../shared/utils/checkIfObjectIsEmpty");
 
-const sendCurrentIterationInfo = require("../../../../../ipc-bus/sendCurrentIterationInfo");
-const sendSuccessfulIteration = require("../../../../../ipc-bus/sendSuccessfulIteration");
-const sendFailedIteration = require("../../../../../ipc-bus/sendFailedIteration");
-const sendEventLogInfo = require("../../../../../ipc-bus/sendEventLogInfo");
-const sendAutomationCompleted = require("../../../../../ipc-bus/sendAutomationCompleted");
+const sendMessageToFrontEnd = require("../../../../../ipc-bus/sendMessage/sendMessageToFrontEnd");
 const handleAutomationCancel = require("../../../../../ipc-bus/handleAutomationCancel");
 // Constants
 const {
@@ -74,9 +70,10 @@ const performDataEntryAndDownload = async (
   try {
     const taxYearEnd = parseInt(taxYear) + 1;
 
-    await sendEventLogInfo(ipcBusClientNodeMain, {
-      color: "yellow",
-      message: "Logging into Ptax",
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: "Logging in to Ptax",
+      messageColor: "yellow",
+      errorMessage: null,
     });
     const [ptaxWindow, driver] = await loginToPTAX(ptaxUsername, ptaxPassword);
     handleAutomationCancel(ipcBusClientNodeMain, driver);
@@ -89,25 +86,29 @@ const performDataEntryAndDownload = async (
     */
 
     if (ptaxWindow === null || driver === null) {
-      await sendEventLogInfo(ipcBusClientNodeMain, {
-        color: "red",
-        message:
+      await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+        primaryMessage:
           "Login to PTax failed! Please check your username and password.",
+        messageColor: "red",
+        errorMessage: null,
       });
       return;
     }
-    await sendEventLogInfo(ipcBusClientNodeMain, {
-      color: "green",
-      message: "Login into Ptax Successful!",
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: "Login into Ptax Successful!",
+      messageColor: "green",
+      errorMessage: null,
     });
 
     await swapToIFrame0(driver);
     await clickCheckMyPropertiesCheckBox(driver);
 
-    await sendEventLogInfo(ipcBusClientNodeMain, {
-      color: "yellow",
-      message: "Logging into Parcel Quest",
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: "Logging into Parcel Quest",
+      messageColor: "yellow",
+      errorMessage: null,
     });
+
     await openNewTab(driver);
     await driver.get(parcelQuestLoginPage);
     await driver.wait(until.urlIs(parcelQuestLoginPage));
@@ -128,25 +129,34 @@ const performDataEntryAndDownload = async (
         or the selectors are no longer valid
     */
     if (loginToParcelQuestSuccessful === false) {
-      await sendEventLogInfo(ipcBusClientNodeMain, {
-        color: "red",
-        message:
+      await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+        primaryMessage:
           "Login to Parcel Quest failed! Please check your username and password.",
+        messageColor: "red",
+        errorMessage: null,
       });
+
       return;
     }
-    await sendEventLogInfo(ipcBusClientNodeMain, {
-      color: "green",
-      message: "Login into Parcel Quest Successful!",
+
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: "Login into Parcel Quest Successful!",
+      messageColor: "green",
+      errorMessage: null,
     });
 
     for (const item of spreadsheetContents) {
       try {
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "regular",
-          message: `Working on Parcel Number: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Working on Parcel Number: ${item.ParcelNumber}`,
+          messageColor: "regular",
+          errorMessage: null,
         });
-        await sendCurrentIterationInfo(ipcBusClientNodeMain, item.ParcelNumber);
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Current Iteration", {
+          primaryMessage: item.ParcelNumber,
+          messageColor: null,
+          errorMessage: null,
+        });
 
         /* 
           Reset the browser tabs for new iteration
@@ -167,10 +177,12 @@ const performDataEntryAndDownload = async (
         /* 
           Proceed with iteration
         */
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "orange",
-          message: `Searching for: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Searching for: ${item.ParcelNumber}`,
+          messageColor: "orange",
+          errorMessage: null,
         });
+
         const searchSuccessful = await searchForParcel(
           driver,
           item.ParcelNumber,
@@ -182,14 +194,20 @@ const performDataEntryAndDownload = async (
           arrayOfFailedOperations.push(item);
 
           await switchToTaxWebsiteTab(taxWebsiteWindow);
-          await sendFailedIteration(
+
+          await sendMessageToFrontEnd(
             ipcBusClientNodeMain,
-            item,
-            `Failed to find parcel: ${item.ParcelNumber} in database.`
+            "Failed Iteration",
+            {
+              primaryMessage: item,
+              messageColor: null,
+              errorMessage: `Failed to find parcel: ${item.ParcelNumber} in database.`,
+            }
           );
-          await sendEventLogInfo(ipcBusClientNodeMain, {
-            color: "red",
-            message: `Failed to find parcel: ${item.ParcelNumber} in database.`,
+          await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+            primaryMessage: `Failed to find parcel: ${item.ParcelNumber} in database.`,
+            messageColor: "red",
+            errorMessage: null,
           });
 
           continue;
@@ -202,10 +220,12 @@ const performDataEntryAndDownload = async (
           are not visible in the DOM. To get to the Tax Bill Data, we must select the 2nd element
           returned from the array.
         */
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "orange",
-          message: `Navigating to bill for: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Navigating to bill for: ${item.ParcelNumber}`,
+          messageColor: "orange",
+          errorMessage: null,
         });
+
         await driver.sleep(6000);
         const arrayOfPossibleTaxBillDataTabElements = await driver.findElements(
           By.css(websiteSelectors.taxBillDataTab)
@@ -227,15 +247,21 @@ const performDataEntryAndDownload = async (
         if (paginationString === "-1") {
           arrayOfFailedOperations.push(item);
 
-          await sendFailedIteration(
+          await sendMessageToFrontEnd(
             ipcBusClientNodeMain,
-            item,
-            `Parcel quest failed to render the tax data for: ${item.ParcelNumber}.`
+            "Failed Iteration",
+            {
+              primaryMessage: item,
+              messageColor: null,
+              errorMessage: `Parcel quest failed to render the tax data for: ${item.ParcelNumber}.`,
+            }
           );
-          await sendEventLogInfo(ipcBusClientNodeMain, {
-            color: "red",
-            message: `Parcel quest failed to render the tax data for: ${item.ParcelNumber}.`,
+          await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+            primaryMessage: `Parcel quest failed to render the tax data for: ${item.ParcelNumber}.`,
+            messageColor: "red",
+            errorMessage: null,
           });
+
           await pressHomeButton(driver);
           continue;
         }
@@ -254,15 +280,21 @@ const performDataEntryAndDownload = async (
         if (navigatedToBillSuccessfully === false) {
           arrayOfFailedOperations.push(item);
 
-          await sendFailedIteration(
+          await sendMessageToFrontEnd(
             ipcBusClientNodeMain,
-            item,
-            `Failed to navigate to the bill for parcel: ${item.ParcelNumber}.`
+            "Failed Iteration",
+            {
+              primaryMessage: item,
+              messageColor: null,
+              errorMessage: `Failed to navigate to the bill for parcel: ${item.ParcelNumber}.`,
+            }
           );
-          await sendEventLogInfo(ipcBusClientNodeMain, {
-            color: "red",
-            message: `Failed to navigate to the bill for parcel: ${item.ParcelNumber}.`,
+          await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+            primaryMessage: `Failed to navigate to the bill for parcel: ${item.ParcelNumber}.`,
+            messageColor: "red",
+            errorMessage: null,
           });
+
           await pressHomeButton(driver);
           continue;
         }
@@ -270,10 +302,12 @@ const performDataEntryAndDownload = async (
         /* 
             Download the bill
         */
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "purple",
-          message: `Downloading bill for: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Downloading bill for: ${item.ParcelNumber}`,
+          messageColor: "purple",
+          errorMessage: null,
         });
+
         const fileNameForFile = replaceSpacesWithUnderscore(
           `${item.CompanyName} ${item.EntityName} ${item.ParcelNumber}`
         );
@@ -286,31 +320,41 @@ const performDataEntryAndDownload = async (
         );
         if (billDownloadedSuccessfully === false) {
           arrayOfFailedOperations.push(item);
-          await sendFailedIteration(
+
+          await sendMessageToFrontEnd(
             ipcBusClientNodeMain,
-            item,
-            `Failed to download the bill for parcel: ${item.ParcelNumber}.`
+            "Failed Iteration",
+            {
+              primaryMessage: item,
+              messageColor: null,
+              errorMessage: `Failed to download the bill for parcel: ${item.ParcelNumber}.`,
+            }
           );
-          await sendEventLogInfo(ipcBusClientNodeMain, {
-            color: "red",
-            message: `Failed to download the bill for parcel: ${item.ParcelNumber}.`,
+          await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+            primaryMessage: `Failed to download the bill for parcel: ${item.ParcelNumber}.`,
+            messageColor: "red",
+            errorMessage: null,
           });
+
           await pressHomeButton(driver);
           continue;
         }
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "blue",
-          message: `Bill for: ${item.ParcelNumber} downloaded successfully`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Bill for: ${item.ParcelNumber} downloaded successfully`,
+          messageColor: "blue",
+          errorMessage: null,
         });
 
         /* 
             Pull Tax Data Strings
         */
 
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "orange",
-          message: `Pulling Tax Data for: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Pulling Tax Data for: ${item.ParcelNumber}`,
+          messageColor: "orange",
+          errorMessage: null,
         });
+
         let taxDataStringObject = await pullTaxBillStrings(
           driver,
           taxYear,
@@ -334,22 +378,30 @@ const performDataEntryAndDownload = async (
           */
           if (checkIfObjectIsEmpty(taxDataStringObject)) {
             arrayOfFailedOperations.push(item);
-            await sendFailedIteration(
+
+            await sendMessageToFrontEnd(
               ipcBusClientNodeMain,
-              item,
-              `Failed to pull tax data for parcel: ${item.ParcelNumber}.`
+              "Failed Iteration",
+              {
+                primaryMessage: item,
+                messageColor: null,
+                errorMessage: `Failed to pull tax data for parcel: ${item.ParcelNumber}.`,
+              }
             );
-            await sendEventLogInfo(ipcBusClientNodeMain, {
-              color: "red",
-              message: `Failed to pull tax data for parcel: ${item.ParcelNumber}.`,
+            await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+              primaryMessage: `Failed to pull tax data for parcel: ${item.ParcelNumber}.`,
+              messageColor: "red",
+              errorMessage: null,
             });
+
             await pressHomeButton(driver);
             continue;
           }
         }
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "regular",
-          message: `Total taxes due: ${taxDataStringObject.totalTaxesDue} || Total NAVs due: ${taxDataStringObject.totalNAVs}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Total taxes due: ${taxDataStringObject.totalTaxesDue} || Total NAVs due: ${taxDataStringObject.totalNAVs}`,
+          messageColor: "regular",
+          errorMessage: null,
         });
 
         /* 
@@ -360,9 +412,10 @@ const performDataEntryAndDownload = async (
         await switchToPTaxTab(driver, ptaxWindow);
         await driver.navigate().refresh();
         await swapToIFrameDefaultContent(driver);
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "blue",
-          message: `Searching for: ${item.ParcelNumber} in Ptax`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Searching for: ${item.ParcelNumber} in Ptax`,
+          messageColor: "blue",
+          errorMessage: null,
         });
 
         const searchByParcelInput = await awaitElementLocatedAndReturn(
@@ -382,9 +435,10 @@ const performDataEntryAndDownload = async (
           item.ParcelNumber,
           "contains"
         );
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "regular",
-          message: `Navigating to existing assessment`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: "Navigating to existing assessment",
+          messageColor: "regular",
+          errorMessage: null,
         });
         const propertyToAddTaxBill = await awaitElementLocatedAndReturn(
           driver,
@@ -402,9 +456,10 @@ const performDataEntryAndDownload = async (
         await swapToIFrame1(driver);
         await navigateToExistingAssessment(driver);
 
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "blue",
-          message: `Performing Data Entry for: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Performing Data Entry for: ${item.ParcelNumber}`,
+          messageColor: "blue",
+          errorMessage: null,
         });
 
         // Change Assessment Data Source to ParcelQuest and save
@@ -444,9 +499,10 @@ const performDataEntryAndDownload = async (
           installmentNumber
         );
 
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "purple",
-          message: `Uploading Bill for: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Uploading Bill for: ${item.ParcelNumber}`,
+          messageColor: "purple",
+          errorMessage: null,
         });
         // Upload Document
         await uploadTaxBill(
@@ -457,9 +513,10 @@ const performDataEntryAndDownload = async (
           downloadDirectory,
           "Annual (PQ)"
         );
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "green",
-          message: `Bill successfully uploaded for: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Bill successfully uploaded for: ${item.ParcelNumber}`,
+          messageColor: "green",
+          errorMessage: null,
         });
 
         await swapToIFrame0(driver);
@@ -476,13 +533,19 @@ const performDataEntryAndDownload = async (
         if (itemErrorColRemoved?.Error) {
           delete itemErrorColRemoved.Error;
         }
-        await sendSuccessfulIteration(
+        await sendMessageToFrontEnd(
           ipcBusClientNodeMain,
-          itemErrorColRemoved
+          "Successful Iteration",
+          {
+            primaryMessage: itemErrorColRemoved,
+            messageColor: null,
+            errorMessage: null,
+          }
         );
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "green",
-          message: `Succeeded for parcel: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Succeeded for parcel: ${item.ParcelNumber}`,
+          messageColor: "green",
+          errorMessage: null,
         });
       } catch (error) {
         /*
@@ -490,14 +553,15 @@ const performDataEntryAndDownload = async (
           succession, it causes the app to crash
         */
         await driver.sleep(6500);
-        await sendFailedIteration(
-          ipcBusClientNodeMain,
-          item,
-          `Failed for parcel: ${item.ParcelNumber}`
-        );
-        await sendEventLogInfo(ipcBusClientNodeMain, {
-          color: "red",
-          message: `Failed for parcel: ${item.ParcelNumber}`,
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Failed Iteration", {
+          primaryMessage: item,
+          messageColor: null,
+          errorMessage: error.message,
+        });
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Failed for parcel: ${item.ParcelNumber}`,
+          messageColor: "red",
+          errorMessage: null,
         });
 
         const urlPostFailure = await driver.getCurrentUrl();
@@ -508,23 +572,17 @@ const performDataEntryAndDownload = async (
       }
     }
 
-    await printAutomationReportToSheet(
-      arrayOfSuccessfulOperations,
-      arrayOfFailedOperations,
-      downloadDirectory
+    await sendMessageToFrontEnd(
+      ipcBusClientNodeMain,
+      "Automation Completed",
+      {}
     );
-
-    await sendAutomationCompleted(ipcBusClientNodeMain);
-    await sendEventLogInfo(ipcBusClientNodeMain, {
-      color: "blue",
-      message: "The automation is complete.",
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: "The automation is complete.",
+      messageColor: "blue",
+      errorMessage: null,
     });
-    console.log(
-      colors.blue.bold(
-        `Reports have been generated for parcels that were added successful and unsuccessfuly, located in the download folder. Please check the 'Failed Operations' tab to verify if any results need manual review.`
-      ),
-      "\n"
-    );
+
     await closingAutomationSystem(driver);
   } catch (error) {
     logErrorMessageCatch(error);
