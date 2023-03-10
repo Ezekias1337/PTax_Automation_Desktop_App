@@ -3,7 +3,7 @@ const { ipcMain } = require("electron");
 // Functions, Helpers, Utils
 const {
   startIpcBusBroker,
-} = require("../../../selenium/ipc-bus/startIpcBusBroker");
+} = require("../../../selenium/functions/ipc-bus/startIpcBusBroker");
 const { automation } = require("../../../selenium/automation");
 
 module.exports = {

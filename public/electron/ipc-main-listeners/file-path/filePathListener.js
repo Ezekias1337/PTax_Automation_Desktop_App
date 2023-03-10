@@ -1,7 +1,7 @@
 const { ipcMain, dialog } = require("electron");
 const {
   replaceForwardslashWithBackwardSlash,
-} = require("../../../shared/utils/replaceForwardslashWithBackwardSlash");
+} = require("../../../shared/utils/strings/replaceForwardslashWithBackwardSlash");
 
 const promptForFile = async (defaultPath = null) => {
   let filePath;

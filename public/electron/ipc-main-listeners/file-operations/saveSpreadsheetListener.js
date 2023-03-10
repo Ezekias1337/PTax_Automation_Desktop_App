@@ -5,8 +5,8 @@ const xlsx = require("xlsx");
 // Functions, Helpers, and Utils
 const {
   replaceBackslashWithForwardSlash,
-} = require("../../../shared/utils/replaceBackslashWithForwardSlash");
-const checkIfObjectIsEmpty = require("../../../shared/utils/checkIfObjectIsEmpty");
+} = require("../../../shared/utils/strings/replaceBackslashWithForwardSlash");
+const checkIfObjectIsEmpty = require("../../../shared/utils/objects/checkIfObjectIsEmpty");
 
 const saveSpreadsheetFile = async (
   pathToSaveSpreadsheet,

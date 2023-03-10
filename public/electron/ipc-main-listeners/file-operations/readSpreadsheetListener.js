@@ -4,7 +4,7 @@ const xlsx = require("xlsx");
 // Functions, Helpers, and Utils
 const {
   replaceBackslashWithForwardSlash,
-} = require("../../../shared/utils/replaceBackslashWithForwardSlash");
+} = require("../../../shared/utils/strings/replaceBackslashWithForwardSlash");
 
 const readSpreadsheetFile = async (pathToSpreadsheet) => {
   try {
