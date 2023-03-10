@@ -1,9 +1,13 @@
+// Library Imports
 const { until } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const swapToIFrameDefaultContent = require("../../frame-swaps/swapToIFrameDefaultContent");
+
+const awaitElementLocatedAndReturn = require("../../../../utils/waits/awaitElementLocatedAndReturn");
+// Selectors
 const {
   navbarFileSelectors,
 } = require("../../../../constants/selectors/allSelectors");
-const awaitElementLocatedAndReturn = require("../../../../utils/waits/awaitElementLocatedAndReturn");
 
 const fileNavbarClick = async (driver, subOption) => {
   try {

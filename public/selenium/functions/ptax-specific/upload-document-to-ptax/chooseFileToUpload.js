@@ -1,10 +1,12 @@
-const { uploadDocument } = require("../../../constants/selectors/allSelectors");
+// Functions, Helpers, Utils
 const awaitElementLocatedAndReturn = require("../../../utils/waits/awaitElementLocatedAndReturn");
+// Selectors
+const { uploadDocument } = require("../../../constants/selectors/allSelectors");
 
 const chooseFileToUpload = async (driver, fullPathToUploadFile) => {
   /* 
-    For selenium to upload file you have to sendkeys of the filename, declaring 
-    part of string to concat in string literal below 
+    For selenium to upload a file in ptax you have to sendkeys of 
+    the filename
   */
 
   const chooseFileButton = await awaitElementLocatedAndReturn(

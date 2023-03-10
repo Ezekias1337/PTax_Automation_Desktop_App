@@ -1,7 +1,10 @@
+// Library Imports
 const { By } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const generateDynamicXPath = require("../strings/generateDynamicXPath");
 const awaitElementLocatedAndReturn = require("../waits/awaitElementLocatedAndReturn");
 const scrollElementIntoView = require("../web-elements/scrollElementIntoView");
+
 /*
  * Dropdown selector is an ID in this case, will refactor later
  * to accept other selectors

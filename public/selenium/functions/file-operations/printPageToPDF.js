@@ -1,6 +1,9 @@
+// Library Imports
 const htmlPdf = require("html-pdf-chrome");
 const { By } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const switchToAndDismissAlert = require("../tab-swaps-and-handling/switchToAndDismissAlert");
+
 const {
   replaceForwardslashWithBackwardSlash,
 } = require("../../../shared/utils/strings/replaceForwardslashWithBackwardSlash");

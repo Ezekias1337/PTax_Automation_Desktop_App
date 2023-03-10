@@ -1,7 +1,10 @@
+// Library Imports
 const { By } = require("selenium-webdriver");
-const { uploadDocument } = require("../../../constants/selectors/allSelectors");
+// Functions, Helpers, Utils
 const awaitElementLocatedAndReturn = require("../../../utils/waits/awaitElementLocatedAndReturn");
 const generateDynamicXPath = require("../../../utils/strings/generateDynamicXPath");
+// Selectors
+const { uploadDocument } = require("../../../constants/selectors/allSelectors");
 
 const selectDocType = async (driver, docType) => {
   const docTypeElement = await awaitElementLocatedAndReturn(

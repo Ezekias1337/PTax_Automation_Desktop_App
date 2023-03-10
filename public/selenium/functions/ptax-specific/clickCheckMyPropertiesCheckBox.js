@@ -1,4 +1,6 @@
+// Functions, Helpers, Utils
 const awaitElementLocatedAndReturn = require("../../utils/waits/awaitElementLocatedAndReturn");
+// Selectors
 const { checkBoxSelector } = require("../../constants/selectors/allSelectors");
 
 const clickCheckMyPropertiesCheckBox = async (driver) => {

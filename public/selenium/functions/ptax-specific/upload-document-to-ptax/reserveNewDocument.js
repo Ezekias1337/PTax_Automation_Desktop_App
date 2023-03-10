@@ -1,7 +1,11 @@
+// Library Imports
 const { until } = require("selenium-webdriver");
+// Functions, Helpers, Utils
+const swapToIFrame1 = require("../../ptax-specific/frame-swaps/swapToIFrame1");
+
 const simulateMouseHover = require("../../../utils/web-elements/simulateMouseHover");
 const awaitElementLocatedAndReturn = require("../../../utils/waits/awaitElementLocatedAndReturn");
-const swapToIFrame1 = require("../../ptax-specific/frame-swaps/swapToIFrame1");
+// Selectors
 const {
   reserveDocument,
 } = require("../../../constants/selectors/allSelectors");

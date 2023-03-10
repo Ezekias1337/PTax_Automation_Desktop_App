@@ -1,3 +1,4 @@
+// Functions, Helpers, Utils
 import determineNumberOfArrayChunks from "./determineNumberOfArrayChunks";
 
 export const chunkArray = (arrayToChunk, chunkSize) => {

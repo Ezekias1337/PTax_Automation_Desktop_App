@@ -1,4 +1,6 @@
+// Library Imports
 const { until } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const awaitElementLocatedAndReturn = require("../../utils/waits/awaitElementLocatedAndReturn");
 
 const waitForLoading = async (driver) => {

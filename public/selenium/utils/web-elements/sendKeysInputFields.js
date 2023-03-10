@@ -1,4 +1,6 @@
+// Library Imports
 const { Key } = require("selenium-webdriver");
+// Functions, Helpers, Utils
 const deleteInputFieldContents = require("./deleteInputFieldContents");
 
 const sendKeysInputFields = async (

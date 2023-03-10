@@ -1,4 +1,6 @@
+// Functions, Helpers, Utils
 const swapToIFrameDefaultContent = require("./swapToIFrameDefaultContent");
+
 const awaitElementLocatedAndReturn = require("../../../utils/waits/awaitElementLocatedAndReturn");
 
 const swapToIFrame1 = async (driver) => {

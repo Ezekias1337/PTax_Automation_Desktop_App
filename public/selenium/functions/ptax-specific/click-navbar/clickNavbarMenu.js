@@ -1,3 +1,4 @@
+// Functions, Helpers, Utils
 const appealsNavbarClick = require("./individual/appealsNavbarClick");
 const documentsNavbarClick = require("./individual/documentsNavbarClick");
 const editNavbarClick = require("./individual/editNavbarClick");

@@ -1,12 +1,16 @@
-const { ptaxLoginPage } = require("../../constants/urls");
-const buildDriver = require("../driver/buildDriver");
+// Library Imports
 const { By, Key } = require("selenium-webdriver");
+// Functions, Helpers, Utils
+const buildDriver = require("../driver/buildDriver");
+const swapToAndDismissAlert = require("../tab-swaps-and-handling/switchToAndDismissAlert");
+const invalidLoginInfo = require("../general/invalidLoginInfo");
+// Constants
+const { ptaxLoginPage } = require("../../constants/urls");
+// Selectors
 const {
   userNameSelector,
   passWordSelector,
 } = require("../../constants/selectors/allSelectors");
-const swapToAndDismissAlert = require("../tab-swaps-and-handling/switchToAndDismissAlert");
-const invalidLoginInfo = require("../general/invalidLoginInfo");
 
 const loginToPTAX = async (username, password) => {
   try {

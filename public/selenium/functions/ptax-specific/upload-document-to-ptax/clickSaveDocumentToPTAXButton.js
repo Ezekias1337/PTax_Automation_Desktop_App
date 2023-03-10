@@ -1,6 +1,8 @@
-const { uploadDocument } = require("../../../constants/selectors/allSelectors");
+// Functions, Helpers, Utils
 const awaitElementLocatedAndReturn = require("../../../utils/waits/awaitElementLocatedAndReturn");
 const scrollElementIntoView = require("../../../utils/web-elements/scrollElementIntoView");
+// Selectors
+const { uploadDocument } = require("../../../constants/selectors/allSelectors");
 
 const clickSaveDocumentToPTAXButton = async (driver) => {
   const saveButton = await awaitElementLocatedAndReturn(

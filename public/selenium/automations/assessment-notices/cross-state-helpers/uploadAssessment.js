@@ -6,6 +6,7 @@ const clickSaveDocumentToPTAXButton = require("../../../functions/ptax-specific/
 const goToUploadDocumentPage = require("../../../functions/ptax-specific/upload-document-to-ptax/goToUploadDocumentPage");
 const selectAssessmentDropdown = require("../../../functions/ptax-specific/upload-document-to-ptax/selectAssessmentDropdown");
 const enterYear = require("../../../functions/ptax-specific/upload-document-to-ptax/enterYear");
+
 const {
   replaceForwardslashWithBackwardSlash,
 } = require("../../../../shared/utils/strings/replaceForwardslashWithBackwardSlash");

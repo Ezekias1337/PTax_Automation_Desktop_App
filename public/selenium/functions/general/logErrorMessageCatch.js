@@ -1,4 +1,6 @@
+// Library Imports
 const colors = require("colors");
+// Functions, Helpers, Utils
 const consoleLogLine = require("./consoleLogLine");
 
 const logErrorMessageCatch = (error) => {

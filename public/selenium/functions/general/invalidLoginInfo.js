@@ -1,4 +1,6 @@
+// Library Imports
 const colors = require("colors");
+// Functions, Helpers, Utils
 const consoleLogLine = require("../general/consoleLogLine");
 const closingAutomationSystem = require("../driver/closingAutomationSystem");
 
@@ -14,7 +16,7 @@ const invalidLoginInfo = async (driver) => {
 
   await closingAutomationSystem(driver);
   consoleLogLine();
-  
+
   return;
 };
 

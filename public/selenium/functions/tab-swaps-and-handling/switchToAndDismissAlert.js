@@ -7,7 +7,7 @@ const switchToAndDismissAlert = async (driver) => {
     await alert.accept();
     console.log("Alert Dismissed");
   } catch (error) {
-    ("No alert to dismiss");
+    console.log("No alert to dismiss");
   }
 };
 

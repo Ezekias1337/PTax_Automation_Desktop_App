@@ -1,7 +1,10 @@
+// Library Imports
 const { By } = require("selenium-webdriver");
-const allSelectors = require("../../constants/selectors/allSelectors");
+// Functions, Helpers, Utils
 const awaitElementLocatedAndReturn = require("../../utils/waits/awaitElementLocatedAndReturn");
 const scrollElementIntoView = require("../../utils/web-elements/scrollElementIntoView");
+// Selectors
+const allSelectors = require("../../constants/selectors/allSelectors");
 
 const navigateToExistingAssessment = async (driver) => {
   const taxBillDrivenTab = await awaitElementLocatedAndReturn(
@@ -9,7 +12,7 @@ const navigateToExistingAssessment = async (driver) => {
     allSelectors.taxBillDrivenTabSelector,
     "xpath"
   );
-  await scrollElementIntoView(driver, taxBillDrivenTab)
+  await scrollElementIntoView(driver, taxBillDrivenTab);
   await taxBillDrivenTab.click();
 
   const currentYear = new Date().getFullYear().toString();

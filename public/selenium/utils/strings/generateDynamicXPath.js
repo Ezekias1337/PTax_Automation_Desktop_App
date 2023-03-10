@@ -1,9 +1,10 @@
+// Library Imports
 const colors = require("colors");
 
 const generateDynamicXPath = (
   elementType,
   textToSearchFor,
-  containsOrEquals,
+  containsOrEquals
 ) => {
   let xpathToReturn;
 

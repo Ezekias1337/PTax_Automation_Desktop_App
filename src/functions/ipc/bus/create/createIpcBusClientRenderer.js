@@ -1,5 +1,3 @@
-// Functions, Helpers, Utils
-const { testConnectivity } = require("../listeners/testConnectivity");
 // window.require Imports
 const { IpcBusClient } = window.require("electron-common-ipc");
 
@@ -15,6 +13,5 @@ export const createIpcBusClientRenderer = async (
 
   console.log("Connection to IpcBus instantiated in React!", new Date());
 
-  testConnectivity(ipcBusClientRenderer);
   return ipcBusClientRenderer;
 };
