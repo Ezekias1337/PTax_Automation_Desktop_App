@@ -17,17 +17,17 @@
     b.) The version in the src folder is exported as an array.
 */
 
-import { addNewParcelsData } from "./individual/addNewParcelsData";
-import { assessmentNoticesData } from "./individual/assessmentNoticesData";
-import { checkAssessorAndCollectorUrlsData } from "./individual/checkAssessorAndCollectorUrlsData";
-import { importPropertyValuesData } from "./individual/importPropertyValuesData";
-import { parcelQuestChargesData } from "./individual/parcelQuestChargesData";
-import { paymentConfirmationsData } from "./individual/paymentConfirmationsData";
-import { propertyPointOfContactData } from "./individual/propertyPointOfContactData";
-import { propertyTaxBillsData } from "./individual/propertyTaxBillsData";
-import { updateParcelNamesData } from "./individual/updateParcelNamesData";
+const addNewParcelsData = require("./individual/addNewParcelsData");
+const assessmentNoticesData = require("./individual/assessmentNoticesData");
+const checkAssessorAndCollectorUrlsData = require("./individual/checkAssessorAndCollectorUrlsData");
+const importPropertyValuesData = require("./individual/importPropertyValuesData");
+const parcelQuestChargesData = require("./individual/parcelQuestChargesData");
+const paymentConfirmationsData = require("./individual/paymentConfirmationsData");
+const propertyPointOfContactData = require("./individual/propertyPointOfContactData");
+const propertyTaxBillsData = require("./individual/propertyTaxBillsData");
+const updateParcelNamesData = require("./individual/updateParcelNamesData");
 
-export const automationList = {
+const automationList = {
   addNewParcels: addNewParcelsData,
   assessmentNotices: assessmentNoticesData,
   checkAssessorAndCollectorUrls: checkAssessorAndCollectorUrlsData,
@@ -39,10 +39,12 @@ export const automationList = {
   updateParcelNames: updateParcelNamesData,
 };
 
-const automationListArray = [];
+module.exports = automationList;
+
+/* const automationListArray = [];
 
 for (const item of Object.entries(automationList)) {
   automationListArray.push(item[1]);
 }
 
-export const automationListArrayExport = automationListArray;
+export const automationListArrayExport = automationListArray; */

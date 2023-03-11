@@ -3,7 +3,7 @@ const { By } = require("selenium-webdriver");
 // Functions, Helpers, Utils
 const closingAutomationSystem = require("../../../../../functions/driver/closingAutomationSystem");
 // Selectors
-const websiteSelectors = require("../../../../tax-bills/states/newYork/websiteSelectors");
+const websiteSelectors = require("../../../../property-tax-bills/states/newYork/websiteSelectors");
 
 const checkIfWebsiteUnderMaintenance = async (driver) => {
   try {

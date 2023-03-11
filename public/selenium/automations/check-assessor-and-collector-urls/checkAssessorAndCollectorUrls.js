@@ -64,7 +64,7 @@ const checkForPageMoved = async (driver, item) => {
   }
 };
 
-const checkWebsiteURLs = async () => {
+const checkAssessorAndCollectorUrls = async () => {
   let driver;
 
   try {
@@ -128,4 +128,4 @@ const checkWebsiteURLs = async () => {
   await closingAutomationSystem(driver);
 };
 
-module.exports = checkWebsiteURLs;
+module.exports = checkAssessorAndCollectorUrls;

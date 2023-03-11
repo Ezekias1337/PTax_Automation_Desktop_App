@@ -1,7 +1,7 @@
 const californiaTaxBills = require("./states/california/californiaTaxBills");
 const newYorkTaxBills = require("./states/newYork/newYorkTaxBills");
 
-const taxBills = async (automationConfigObject, ipcBusClientNodeMain) => {
+const propertyTaxBills = async (automationConfigObject, ipcBusClientNodeMain) => {
   switch (automationConfigObject.state) {
     case "California":
       await californiaTaxBills(automationConfigObject, ipcBusClientNodeMain);
@@ -14,4 +14,4 @@ const taxBills = async (automationConfigObject, ipcBusClientNodeMain) => {
   }
 };
 
-module.exports = taxBills;
+module.exports = propertyTaxBills;
