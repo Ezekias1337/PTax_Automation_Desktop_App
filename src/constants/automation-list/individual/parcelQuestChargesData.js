@@ -23,4 +23,5 @@ export const parcelQuestChargesData = {
       name: "San Diego",
     },
   ],
+  iconName: "faFileInvoiceDollar",
 };

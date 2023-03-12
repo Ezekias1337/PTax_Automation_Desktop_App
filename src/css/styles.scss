@@ -41,6 +41,13 @@ div#root,
   padding-bottom: 30px;
 }
 
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+}
+
 .page-title {
   text-align: center;
 }

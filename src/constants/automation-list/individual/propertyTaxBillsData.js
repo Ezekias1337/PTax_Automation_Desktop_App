@@ -1782,4 +1782,5 @@ export const propertyTaxBillsData = {
       ],
     },
   ],
+  iconName: "faFileInvoiceDollar",
 };

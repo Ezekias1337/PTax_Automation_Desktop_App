@@ -1,8 +1,9 @@
 // Library Imports
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { Button } from "reactstrap";
 // Functions, Helpers, Utils, and Hooks
+import { pickIconForCard } from "../../helpers/pickIconForCard";
+
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { useResetRedux } from "../../hooks/useResetRedux";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
@@ -11,6 +12,7 @@ import { automationListArrayExport } from "../../constants/automation-list/autom
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
+import { Card } from "../card/card";
 // CSS
 import "../../css/styles.scss";
 
@@ -23,12 +25,12 @@ export const SelectAnAutomation = () => {
   const arrayOfAutomations = [];
 
   for (const item of automationListArrayExport) {
+    const cardIcon = pickIconForCard(item.iconName);
+
     arrayOfAutomations.push(
       <div key={item.key} className="col col-6 mt-3">
         <Link to={`/${item.name.split(" ").join("-").toLowerCase()}`}>
-          <Button className="full-width-button styled-button">
-            {item.name}
-          </Button>
+          <Card cardBody={item.name} cardText={cardIcon} />
         </Link>
       </div>
     );

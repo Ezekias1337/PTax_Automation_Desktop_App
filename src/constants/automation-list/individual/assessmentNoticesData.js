@@ -139,4 +139,5 @@ export const assessmentNoticesData = {
       ],
     },
   ],
+  iconName: "faTriangleExclamation",
 };
