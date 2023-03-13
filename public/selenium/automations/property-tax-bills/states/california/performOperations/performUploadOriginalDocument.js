@@ -1,5 +1,4 @@
 // Functions, Helpers, Utils
-const logErrorMessageCatch = require("../../../../../functions/general/logErrorMessageCatch");
 const closingAutomationSystem = require("../../../../../functions/driver/closingAutomationSystem");
 const loginToPtax = require("../../../../../functions/ptax-specific/loginToPtax");
 const swapToIFrameDefaultContent = require("../../../../../functions/ptax-specific/frame-swaps/swapToIFrameDefaultContent");
@@ -10,6 +9,7 @@ const waitForLoading = require("../../../../../functions/ptax-specific/waitForLo
 const sendMessageToFrontEnd = require("../../../../../functions/ipc-bus/sendMessage/sendMessageToFrontEnd");
 
 const uploadTaxBill = require("../../../cross-state-helpers/uploadTaxBill");
+const handleGlobalError = require("../../../../../helpers/handleGlobalError");
 
 const selectDropdownElement = require("../../../../../utils/web-elements/selectDropdownElement");
 const awaitElementLocatedAndReturn = require("../../../../../utils/waits/awaitElementLocatedAndReturn");
@@ -232,7 +232,7 @@ const performUploadOriginalDocument = async (
 
     await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
-    logErrorMessageCatch(error);
+    await handleGlobalError(ipcBusClientNodeMain, error.message);
   }
 };
 

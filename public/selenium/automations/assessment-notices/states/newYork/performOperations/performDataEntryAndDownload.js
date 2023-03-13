@@ -1,7 +1,6 @@
 // Library Imports
 const colors = require("colors");
 // Functions, Helpers, Utils
-const logErrorMessageCatch = require("../../../../../functions/general/logErrorMessageCatch");
 const loginToPtax = require("../../../../../functions/ptax-specific/loginToPtax");
 const swapToIFrameDefaultContent = require("../../../../../functions/ptax-specific/frame-swaps/swapToIFrameDefaultContent");
 const swapToIFrame0 = require("../../../../../functions/ptax-specific/frame-swaps/swapToIFrame0");
@@ -23,6 +22,7 @@ const checkIfSessionExpired = require("../helpers/checkIfSessionExpired");
 const checkIfWebsiteUnderMaintenance = require("../helpers/checkIfWebsiteUnderMaintenance");
 const downloadAssessment = require("../helpers/downloadAssessment");
 const pullAssessmentStrings = require("../helpers/pullAssessmentStrings");
+const handleGlobalError = require("../../../../../helpers/handleGlobalError");
 
 const sendMessageToFrontEnd = require("../../../../../functions/ipc-bus/sendMessage/sendMessageToFrontEnd");
 // Constants
@@ -324,7 +324,7 @@ const performDataEntryAndDownload = async (
 
     await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
-    logErrorMessageCatch(error);
+    await handleGlobalError(ipcBusClientNodeMain, error.errorMessage)
   }
 };
 

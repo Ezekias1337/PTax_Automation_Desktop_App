@@ -6,7 +6,6 @@ const closingAutomationSystem = require("../../functions/driver/closingAutomatio
 const swapToIFrameDefaultContent = require("../../functions/ptax-specific/frame-swaps/swapToIFrameDefaultContent");
 const swapToIFrame0 = require("../../functions/ptax-specific/frame-swaps/swapToIFrame0");
 const swapToIFrame1 = require("../../functions/ptax-specific/frame-swaps/swapToIFrame1");
-const logErrorMessageCatch = require("../../functions/general/logErrorMessageCatch");
 const clickNavbarMenu = require("../../functions/ptax-specific/click-navbar/clickNavbarMenu");
 
 const handleGlobalError = require("../../helpers/handleGlobalError");

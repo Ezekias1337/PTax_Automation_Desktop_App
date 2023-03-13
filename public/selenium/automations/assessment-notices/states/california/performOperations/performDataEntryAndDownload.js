@@ -1,7 +1,6 @@
 // Library Imports
 const colors = require("colors");
 // Functions, Helpers, Utils
-const logErrorMessageCatch = require("../../../../../functions/general/logErrorMessageCatch");
 const loginToPtax = require("../../../../../functions/ptax-specific/loginToPtax");
 const swapToIFrameDefaultContent = require("../../../../../functions/ptax-specific/frame-swaps/swapToIFrameDefaultContent");
 const swapToIFrame0 = require("../../../../../functions/ptax-specific/frame-swaps/swapToIFrame0");
@@ -18,6 +17,7 @@ const uploadAssessment = require("../../../cross-state-helpers/uploadAssessment"
 const searchForParcel = require("../helpers/searchForParcel");
 const pullAssessmentStrings = require("../helpers/pullAssessmentStrings");
 const downloadAssessment = require("../helpers/downloadAssessment.js");
+const handleGlobalError = require("../../../../../helpers/handleGlobalError");
 
 const generateDynamicXPath = require("../../../../../utils/strings/generateDynamicXPath");
 const sendKeysInputFields = require("../../../../../utils/web-elements/sendKeysInputFields");
@@ -198,14 +198,9 @@ const performDataEntryAndDownload = async (
       }
     }
 
-    console.log(
-      colors.blue.bold(
-        `Reports have been generated for parcels that were added successful and unsuccessfuly, located in the output folder. Please check the 'Failed Operations' tab to verify if any results need manual review.`
-      )
-    );
     await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
-    logErrorMessageCatch(error);
+    await handleGlobalError(ipcBusClientNodeMain, error.message);
   }
 };
 

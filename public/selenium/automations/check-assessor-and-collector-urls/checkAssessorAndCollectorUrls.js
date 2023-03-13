@@ -6,6 +6,8 @@ const buildDriver = require("../../functions/driver/buildDriver");
 const consoleLogLine = require("../../functions/general/consoleLogLine");
 const closingAutomationSystem = require("../../functions/driver/closingAutomationSystem");
 
+const handleGlobalError = require("../../helpers/handleGlobalError");
+
 const checkURLSelectors = {
   deadLink: "body.neterror",
   pageMoved: "//*[contains(text(), 'Not Found')]",
@@ -117,7 +119,7 @@ const checkAssessorAndCollectorUrls = async () => {
       }
     }
   } catch (error) {
-    console.log(error);
+    await handleGlobalError(ipcBusClientNodeMain, error.message);
   }
 
   console.log(

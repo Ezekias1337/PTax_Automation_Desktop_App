@@ -4,7 +4,9 @@ const loginToPtax = require("../../functions/ptax-specific/loginToPtax");
 const swapToIFrame0 = require("../../functions/ptax-specific/frame-swaps/swapToIFrame0");
 const swapToIFrame1 = require("../../functions/ptax-specific/frame-swaps/swapToIFrame1");
 const swapToIFrameDefaultContent = require("../../functions/ptax-specific/frame-swaps/swapToIFrameDefaultContent");
-const clickCheckMyPropertiesCheckBox = require("../../functions/ptax-specific/clickCheckMyPropertiesCheckBox");
+
+const handleGlobalError = require("../../helpers/handleGlobalError");
+
 const awaitElementLocatedAndReturn = require("../../utils/waits/awaitElementLocatedAndReturn");
 const sendKeysInputFields = require("../../utils/web-elements/sendKeysInputFields");
 const generateDynamicXPath = require("../../utils/strings/generateDynamicXPath");
@@ -19,118 +21,113 @@ const {
 } = require("../../constants/selectors/allSelectors");
 
 const updateParcelNames = async () => {
-  console.log(`Running update parcel automation: `);
-  //const dataFromSpreadsheet = await readSpreadsheetFile();
-  /* const [areCorrectSheetColumnsPresent, arrayOfMissingColumnNames] =
-    verifySpreadSheetColumnNames(renameParcelsColumns, dataFromSpreadsheet[0]);
+  try {
+    const { username, password } = await promptLogin();
+    const { driver } = await loginToPtax(
+      username,
+      password,
+      ipcBusClientNodeMain
+    );
 
-  if (areCorrectSheetColumnsPresent === false) {
-    return;
-  } */
+    let arrayOfSuccessfulParcels = [];
+    let arrayOfFailedParcels = [];
 
-  const { username, password } = await promptLogin();
-  const { driver } = await loginToPtax(
-    username,
-    password,
-    ipcBusClientNodeMain
-  );
+    for (const item of dataFromSpreadsheet) {
+      const oldParcelName = item.OldParcelNumber;
+      const newParcelName = item.NewParcelNumber;
 
-  let arrayOfSuccessfulParcels = [];
-  let arrayOfFailedParcels = [];
+      consoleLogLine();
+      console.log(`Renaming parcel ${oldParcelName} => ${newParcelName}`);
 
-  for (const item of dataFromSpreadsheet) {
-    const oldParcelName = item.OldParcelNumber;
-    const newParcelName = item.NewParcelNumber;
-
-    consoleLogLine();
-    console.log(`Renaming parcel ${oldParcelName} => ${newParcelName}`);
-
-    try {
-      /* 
+      try {
+        /* 
         Eventually Chrome will run out of memory depending on how long this is running for.
         Refreshing the page will prevent the 'Aw, Snap!' error
       */
-      await driver.navigate().refresh();
-      await swapToIFrameDefaultContent(driver);
+        await driver.navigate().refresh();
+        await swapToIFrameDefaultContent(driver);
 
-      const searchByParcelInput = await awaitElementLocatedAndReturn(
-        driver,
-        searchByParcelNumberSelector,
-        "id"
-      );
-      await sendKeysInputFields(
-        searchByParcelInput,
-        item.OldParcelNumber,
-        true
-      );
+        const searchByParcelInput = await awaitElementLocatedAndReturn(
+          driver,
+          searchByParcelNumberSelector,
+          "id"
+        );
+        await sendKeysInputFields(
+          searchByParcelInput,
+          item.OldParcelNumber,
+          true
+        );
 
-      await swapToIFrame0(driver);
-      const propertySideBarXPath = generateDynamicXPath(
-        "a",
-        item.OldParcelNumber,
-        "contains"
-      );
-      const parcelToRenameLink = await awaitElementLocatedAndReturn(
-        driver,
-        propertySideBarXPath,
-        "xpath"
-      );
+        await swapToIFrame0(driver);
+        const propertySideBarXPath = generateDynamicXPath(
+          "a",
+          item.OldParcelNumber,
+          "contains"
+        );
+        const parcelToRenameLink = await awaitElementLocatedAndReturn(
+          driver,
+          propertySideBarXPath,
+          "xpath"
+        );
 
-      await parcelToRenameLink.click();
-      await driver.sleep(2500);
-      await swapToIFrame1(driver);
+        await parcelToRenameLink.click();
+        await driver.sleep(2500);
+        await swapToIFrame1(driver);
 
-      const taxBillDrivenTab = await awaitElementLocatedAndReturn(
-        driver,
-        taxBillDrivenTabSelector,
-        "xpath"
-      );
+        const taxBillDrivenTab = await awaitElementLocatedAndReturn(
+          driver,
+          taxBillDrivenTabSelector,
+          "xpath"
+        );
 
-      const taxBillDrivenTabClassName = await taxBillDrivenTab.getAttribute(
-        "className"
-      );
-      if (taxBillDrivenTabClassName !== "selected") {
-        await taxBillDrivenTab.click();
-      }
+        const taxBillDrivenTabClassName = await taxBillDrivenTab.getAttribute(
+          "className"
+        );
+        if (taxBillDrivenTabClassName !== "selected") {
+          await taxBillDrivenTab.click();
+        }
 
-      const editParcelNameButton = await awaitElementLocatedAndReturn(
-        driver,
-        editDetailsSelector,
-        "xpath"
-      );
+        const editParcelNameButton = await awaitElementLocatedAndReturn(
+          driver,
+          editDetailsSelector,
+          "xpath"
+        );
 
-      await editParcelNameButton.click();
+        await editParcelNameButton.click();
 
-      const parcelNumberInputField = await awaitElementLocatedAndReturn(
-        driver,
-        addNewParcelsSelectors.parcel,
-        "id"
-      );
-      await sendKeysInputFields(
-        parcelNumberInputField,
-        item.NewParcelNumber,
-        false
-      );
+        const parcelNumberInputField = await awaitElementLocatedAndReturn(
+          driver,
+          addNewParcelsSelectors.parcel,
+          "id"
+        );
+        await sendKeysInputFields(
+          parcelNumberInputField,
+          item.NewParcelNumber,
+          false
+        );
 
-      const saveEditToNameButton = await awaitElementLocatedAndReturn(
-        driver,
-        addNewParcelsSelectors.saveButton,
-        "id"
-      );
-      await saveEditToNameButton.click();
+        const saveEditToNameButton = await awaitElementLocatedAndReturn(
+          driver,
+          addNewParcelsSelectors.saveButton,
+          "id"
+        );
+        await saveEditToNameButton.click();
 
-      arrayOfSuccessfulParcels.push(item);
-      await swapToIFrameDefaultContent(driver);
-      console.log("Parcel renamed successfully!");
-      /* const amountToSleep = generateDelayNumber();
+        arrayOfSuccessfulParcels.push(item);
+        await swapToIFrameDefaultContent(driver);
+        console.log("Parcel renamed successfully!");
+        /* const amountToSleep = generateDelayNumber();
       await driver.sleep(amountToSleep); */
-      consoleLogLine();
-    } catch (error) {
-      arrayOfFailedParcels.push(item);
-      await swapToIFrameDefaultContent(driver);
-      console.log("Parcel failed to be renamed");
-      consoleLogLine();
+        consoleLogLine();
+      } catch (error) {
+        arrayOfFailedParcels.push(item);
+        await swapToIFrameDefaultContent(driver);
+        console.log("Parcel failed to be renamed");
+        consoleLogLine();
+      }
     }
+  } catch (error) {
+    await handleGlobalError(ipcBusClientNodeMain, error.message);
   }
 };
 

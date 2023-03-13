@@ -1,7 +1,6 @@
 // Library Imports
 const { until, By } = require("selenium-webdriver");
 // Functions, Helpers, Utils
-const logErrorMessageCatch = require("../../../../../functions/general/logErrorMessageCatch");
 const closingAutomationSystem = require("../../../../../functions/driver/closingAutomationSystem");
 const loginToPtax = require("../../../../../functions/ptax-specific/loginToPtax");
 const swapToIFrameDefaultContent = require("../../../../../functions/ptax-specific/frame-swaps/swapToIFrameDefaultContent");
@@ -22,6 +21,7 @@ const fillOutLiability = require("../helpers/fillOutLiability");
 const fillOutPayments = require("../helpers/fillOutPayments");
 const pressHomeButton = require("../helpers/pressHomeButton");
 const loginToParcelQuest = require("../helpers/loginToParcelQuest");
+const handleGlobalError = require("../../../../../helpers/handleGlobalError");
 
 const awaitElementLocatedAndReturn = require("../../../../../utils/waits/awaitElementLocatedAndReturn");
 const generateDynamicXPath = require("../../../../../utils/strings/generateDynamicXPath");
@@ -554,7 +554,7 @@ const performDataEntryAndDownload = async (
 
     await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
-    logErrorMessageCatch(error);
+    await handleGlobalError(ipcBusClientNodeMain, error.message);
   }
 };
 

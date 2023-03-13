@@ -1,7 +1,6 @@
 // Library Imports
 const { until, By } = require("selenium-webdriver");
 // Functions, Helpers, Utils
-const logErrorMessageCatch = require("../../../../../functions/general/logErrorMessageCatch");
 const closingAutomationSystem = require("../../../../../functions/driver/closingAutomationSystem");
 const loginToPtax = require("../../../../../functions/ptax-specific/loginToPtax");
 const saveLinkToFile = require("../../../../../functions/file-operations/saveLinkToFile");
@@ -13,6 +12,7 @@ const checkIfNoResultsOrMultipleResults = require("../helpers/checkIfNoResultsOr
 const checkIfSessionExpired = require("../helpers/checkIfSessionExpired");
 const checkIfWebsiteUnderMaintenance = require("../helpers/checkIfWebsiteUnderMaintenance");
 const bblSearch = require("../helpers/bblSearch");
+const handleGlobalError = require("../../../../../helpers/handleGlobalError");
 
 const awaitElementLocatedAndReturn = require("../../../../../utils/waits/awaitElementLocatedAndReturn");
 const generateDynamicXPath = require("../../../../../utils/strings/generateDynamicXPath");
@@ -346,22 +346,7 @@ const performDownload = async (
 
     await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
-    if (error.message === "(intermediate value) is not iterable") {
-      await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
-        primaryMessage:
-          "There is a mismatch between your google chrome version and the version of the chrome webdriver. Visit https://chromedriver.chromium.org/home to download the version that matches with your chrome version (make sure to pick chromedriver_win32.zip), and extract it to C:/Windows",
-        messageColor: "red",
-        errorMessage: null,
-      });
-    } else {
-      await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
-        primaryMessage: error.message,
-        messageColor: "red",
-        errorMessage: null,
-      });
-    }
-
-    logErrorMessageCatch(error);
+    await handleGlobalError(ipcBusClientNodeMain, error.message);
   }
 };
 

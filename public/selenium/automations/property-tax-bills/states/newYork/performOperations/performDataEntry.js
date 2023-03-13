@@ -2,7 +2,6 @@
 const colors = require("colors");
 const { until, By } = require("selenium-webdriver");
 // Functions, Helpers, Utils
-const logErrorMessageCatch = require("../../../../../functions/general/logErrorMessageCatch");
 const closingAutomationSystem = require("../../../../../functions/driver/closingAutomationSystem");
 const loginToPtax = require("../../../../../functions/ptax-specific/loginToPTAX");
 const swapToIFrameDefaultContent = require("../../../../../functions/ptax-specific/frame-swaps/swapToIFrameDefaultContent");
@@ -22,6 +21,7 @@ const pullTaxBillStrings = require("../helpers/pullTaxBillStrings");
 const bblSearch = require("../helpers/bblSearch");
 const fillOutLiability = require("../helpers/fillOutLiability");
 const fillOutPayments = require("../helpers/fillOutPayments");
+const handleGlobalError = require("../../../../../helpers/handleGlobalError");
 
 const awaitElementLocatedAndReturn = require("../../../../../utils/waits/awaitElementLocatedAndReturn");
 const generateDynamicXPath = require("../../../../../utils/strings/generateDynamicXPath");
@@ -219,7 +219,7 @@ const performDataEntry = async (
     );
     await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
-    logErrorMessageCatch(error);
+    await handleGlobalError(ipcBusClientNodeMain, error.message);
   }
 };
 

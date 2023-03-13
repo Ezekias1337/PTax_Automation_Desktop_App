@@ -8,13 +8,14 @@ const swapToIFrameDefaultContent = require("../../functions/ptax-specific/frame-
 const swapToIFrame0 = require("../../functions/ptax-specific/frame-swaps/swapToIFrame0");
 const swapToIFrame1 = require("../../functions/ptax-specific/frame-swaps/swapToIFrame1");
 const clickCheckMyPropertiesCheckBox = require("../../functions/ptax-specific/clickCheckMyPropertiesCheckBox");
-const logErrorMessageCatch = require("../../functions/general/logErrorMessageCatch");
 const sendMessageToFrontEnd = require("../../functions/ipc-bus/sendMessage/sendMessageToFrontEnd");
 const handleAutomationCancel = require("../../functions/ipc-bus/handleAutomationCancel");
+const waitForLoading = require("../../functions/ptax-specific/waitForLoading");
+
+const handleGlobalError = require("../../helpers/handleGlobalError");
 
 const awaitElementLocatedAndReturn = require("../../utils/waits/awaitElementLocatedAndReturn");
 const generateDynamicXPath = require("../../utils/strings/generateDynamicXPath");
-const waitForLoading = require("../../functions/ptax-specific/waitForLoading");
 const sendKeysInputFields = require("../../utils/web-elements/sendKeysInputFields");
 const scrollElementIntoView = require("../../utils/web-elements/scrollElementIntoView");
 
@@ -43,7 +44,7 @@ const parcelQuestCharges = async (
     });
     await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
-    logErrorMessageCatch(error);
+    await handleGlobalError(ipcBusClientNodeMain, error.message);
   }
 };
 
