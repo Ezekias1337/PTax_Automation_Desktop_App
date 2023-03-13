@@ -58,7 +58,7 @@ const addNewParcels = async (
 
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "Login to Ptax Successful!",
-      messageColor: "green",
+      messageColor: "regular",
     });
 
     await swapToIFrame0(driver);
@@ -71,7 +71,7 @@ const addNewParcels = async (
         });
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: `Working on parcel: ${item.ParcelNumber}`,
-          messageColor: "orange",
+          messageColor: "regular",
         });
 
         await swapToIFrameDefaultContent(driver);
@@ -111,7 +111,7 @@ const addNewParcels = async (
 
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: "Performing data entry...",
-          messageColor: "Orange",
+          messageColor: "yellow",
         });
 
         const parcelInput = await awaitElementLocatedAndReturn(
@@ -331,7 +331,7 @@ const addNewParcels = async (
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Automation Complete");
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "The automation is complete.",
-      messageColor: "blue",
+      messageColor: "regular",
     });
 
     await closingAutomationSystem(driver);

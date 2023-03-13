@@ -28,8 +28,6 @@ const parcelQuestCharges = async (
   { ptaxUsername, ptaxPassword, spreadsheetContents, assessmentYear },
   ipcBusClientNodeMain
 ) => {
-  
-
   try {
     console.log(`Running add new parcel automation: `);
 
@@ -53,7 +51,7 @@ const parcelQuestCharges = async (
     }
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "Login to PTax Successful!",
-      messageColor: "green",
+      messageColor: "regular",
     });
 
     await swapToIFrame0(driver);
@@ -61,16 +59,13 @@ const parcelQuestCharges = async (
 
     for (const item of spreadsheetContents) {
       try {
-        
-      } catch (error) {
-        
-      }
+      } catch (error) {}
     }
 
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Automation Completed");
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "The automation is complete.",
-      messageColor: "blue",
+      messageColor: "regular",
     });
     await closingAutomationSystem(driver);
   } catch (error) {

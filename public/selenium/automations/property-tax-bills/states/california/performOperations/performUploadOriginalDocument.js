@@ -50,7 +50,7 @@ const performUploadOriginalDocument = async (
 
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "Logging into Ptax",
-      messageColor: "yellow",
+      messageColor: "regular",
       errorMessage: null,
     });
     const [ptaxWindow, driver] = await loginToPTAX(ptaxUsername, ptaxPassword);
@@ -74,7 +74,7 @@ const performUploadOriginalDocument = async (
     }
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "Login into Ptax Successful!",
-      messageColor: "green",
+      messageColor: "regular",
       errorMessage: null,
     });
 
@@ -103,7 +103,7 @@ const performUploadOriginalDocument = async (
         await swapToIFrameDefaultContent(driver);
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: `Searching for: ${item.ParcelNumber} in Ptax`,
-          messageColor: "blue",
+          messageColor: "orange",
           errorMessage: null,
         });
 
@@ -122,7 +122,7 @@ const performUploadOriginalDocument = async (
         );
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: "Navigating to existing assessment",
-          messageColor: "regular",
+          messageColor: "orange",
           errorMessage: null,
         });
         const propertyToAddTaxBill = await awaitElementLocatedAndReturn(
@@ -143,7 +143,7 @@ const performUploadOriginalDocument = async (
 
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: `Performing Data Entry for: ${item.ParcelNumber}`,
-          messageColor: "blue",
+          messageColor: "yellow",
           errorMessage: null,
         });
 
@@ -181,7 +181,7 @@ const performUploadOriginalDocument = async (
 
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: `Uploading Bill for: ${item.ParcelNumber}`,
-          messageColor: "purple",
+          messageColor: "yellow",
           errorMessage: null,
         });
 
@@ -202,7 +202,7 @@ const performUploadOriginalDocument = async (
         await driver.sleep(2500);
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: `Bill successfully uploaded for: ${item.ParcelNumber}`,
-          messageColor: "green",
+          messageColor: "regular",
           errorMessage: null,
         });
         await driver.sleep(2500);
@@ -250,7 +250,7 @@ const performUploadOriginalDocument = async (
     );
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "The automation is complete.",
-      messageColor: "blue",
+      messageColor: "regular",
       errorMessage: null,
     });
 

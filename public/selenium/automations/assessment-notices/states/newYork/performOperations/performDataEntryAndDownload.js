@@ -104,7 +104,7 @@ const performDataEntryAndDownload = async (
 
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "Login into Ptax Successful!",
-      messageColor: "green",
+      messageColor: "regular",
       errorMessage: null,
     });
 
@@ -139,7 +139,7 @@ const performDataEntryAndDownload = async (
         });
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: `Working on parcel: ${item.ParcelNumber}`,
-          messageColor: "orange",
+          messageColor: "regular",
           errorMessage: null,
         });
 
@@ -182,7 +182,7 @@ const performDataEntryAndDownload = async (
 
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: `Downloading Assessment for: ${item.ParcelNumber}`,
-          messageColor: "purple",
+          messageColor: "blue",
           errorMessage: null,
         });
 
@@ -194,6 +194,12 @@ const performDataEntryAndDownload = async (
           assessmentYear,
           arrayOfFailedOperations
         );
+
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Download successful`,
+          messageColor: "purple",
+          errorMessage: null,
+        });
 
         const [
           landMarketValueString,
@@ -209,7 +215,7 @@ const performDataEntryAndDownload = async (
 
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: "Resetting tax site window for next search...",
-          messageColor: "yellow",
+          messageColor: "orange",
           errorMessage: null,
         });
 
@@ -222,7 +228,7 @@ const performDataEntryAndDownload = async (
         await swapToIFrameDefaultContent(driver);
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: `Searching for: ${item.ParcelNumber} in Ptax`,
-          messageColor: "blue",
+          messageColor: "orange",
           errorMessage: null,
         });
 
@@ -231,11 +237,7 @@ const performDataEntryAndDownload = async (
           searchByParcelNumberSelector,
           "id"
         );
-        await sendKeysPTaxInputFields(
-          searchByParcelInput,
-          item.ParcelNumber,
-          true
-        );
+        await sendKeysInputFields(searchByParcelInput, item.ParcelNumber, true);
 
         await swapToIFrame0(driver);
         const propertySideBarXPath = generateDynamicXPath(
@@ -255,7 +257,7 @@ const performDataEntryAndDownload = async (
 
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: "Performing data entry...",
-          messageColor: "orange",
+          messageColor: "yellow",
           errorMessage: null,
         });
 
@@ -338,7 +340,7 @@ const performDataEntryAndDownload = async (
     );
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "The automation is complete.",
-      messageColor: "blue",
+      messageColor: "regular",
       errorMessage: null,
     });
 

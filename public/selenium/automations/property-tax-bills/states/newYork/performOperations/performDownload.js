@@ -48,9 +48,15 @@ const performDownload = async (
 
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "Logging into Ptax",
-      messageColor: "yellow",
+      messageColor: "regular",
       errorMessage: null,
     });
+
+    /* 
+    
+      ! NEED TO REMOVE LOGIN TO PTAX, UNNEEDED
+    
+    */
 
     const [ptaxWindow, driver] = await loginToPTAX(ptaxUsername, ptaxPassword);
     handleAutomationCancel(ipcBusClientNodeMain, driver);
@@ -74,7 +80,7 @@ const performDownload = async (
     }
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "Login to Ptax successful!",
-      messageColor: "green",
+      messageColor: "regular",
       errorMessage: null,
     });
 
@@ -82,7 +88,7 @@ const performDownload = async (
     await clickCheckMyPropertiesCheckBox(driver);
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "Navigating to tax website",
-      messageColor: "yellow",
+      messageColor: "orange",
       errorMessage: null,
     });
 
@@ -109,7 +115,7 @@ const performDownload = async (
     await agreeBtnElement.click();
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "Beginning work on first parcel...",
-      messageColor: "purple",
+      messageColor: "regular",
       errorMessage: null,
     });
 
@@ -122,19 +128,19 @@ const performDownload = async (
         });
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: `Working on parcel: ${item.ParcelNumber}`,
-          messageColor: "orange",
+          messageColor: "regular",
           errorMessage: null,
         });
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: "Checking if session expired",
-          messageColor: "blue",
+          messageColor: "orange",
           errorMessage: null,
         });
         await checkIfSessionExpired(driver, websiteSelectors);
 
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: `Searching for parcel: ${item.ParcelNumber}`,
-          messageColor: "yellow",
+          messageColor: "orange",
           errorMessage: null,
         });
         await bblSearch(driver, item, websiteSelectors);
@@ -180,7 +186,7 @@ const performDownload = async (
 
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: `Navigating to bill for parcel: ${item.ParcelNumber}`,
-          messageColor: "regular",
+          messageColor: "orange",
           errorMessage: null,
         });
 
@@ -227,6 +233,12 @@ const performDownload = async (
         }
 
         try {
+          await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+            primaryMessage: `Attempting to download tax bill`,
+            messageColor: "blue",
+            errorMessage: null,
+          });
+
           /* 
               Because of the way the DOM is structured, it's necessary to parse out the correct
               anchor tag this way 
@@ -254,8 +266,8 @@ const performDownload = async (
 
           if (downloadSucceeded === true) {
             await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
-              primaryMessage: `Parcel: ${item.ParcelNumber} downloaded successfuly`,
-              messageColor: "yellow",
+              primaryMessage: `Tax bill for parcel: ${item.ParcelNumber} downloaded successfuly`,
+              messageColor: "purple",
               errorMessage: null,
             });
           } else {
@@ -350,7 +362,7 @@ const performDownload = async (
     );
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "The automation is complete.",
-      messageColor: "blue",
+      messageColor: "regular",
       errorMessage: null,
     });
 

@@ -82,7 +82,7 @@ const importPropertyValues = async (
     }
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "Login to PTax Successful!",
-      messageColor: "green",
+      messageColor: "regular",
     });
 
     await swapToIFrame0(driver);
@@ -95,7 +95,7 @@ const importPropertyValues = async (
         });
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
           primaryMessage: `Working on parcel: ${item.ParcelNumber}`,
-          messageColor: "orange",
+          messageColor: "regular",
         });
 
         await swapToIFrameDefaultContent(driver);
@@ -127,7 +127,7 @@ const importPropertyValues = async (
         // Do data entry for adding parcel, and then save
         await sendMessageToFrontEnd(ipcBusClientNodeMain, "", {
           primaryMessage: "Performing data entry...",
-          messageColor: "orange",
+          messageColor: "yellow",
           errorMessage: null,
         });
 
@@ -252,7 +252,7 @@ const importPropertyValues = async (
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Automation Completed");
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "The automation is complete.",
-      messageColor: "blue",
+      messageColor: "regular",
     });
     await closingAutomationSystem(driver);
   } catch (error) {
