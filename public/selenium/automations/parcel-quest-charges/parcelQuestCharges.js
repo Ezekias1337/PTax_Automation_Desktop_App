@@ -2,7 +2,7 @@
 const colors = require("colors");
 const { By, until } = require("selenium-webdriver");
 // Functions, Helpers, Utils
-const loginToPTAX = require("../../functions/ptax-specific/loginToPTAX");
+const buildDriver = require("../../functions/driver/buildDriver");
 const closingAutomationSystem = require("../../functions/driver/closingAutomationSystem");
 const swapToIFrameDefaultContent = require("../../functions/ptax-specific/frame-swaps/swapToIFrameDefaultContent");
 const swapToIFrame0 = require("../../functions/ptax-specific/frame-swaps/swapToIFrame0");
@@ -29,33 +29,7 @@ const parcelQuestCharges = async (
   ipcBusClientNodeMain
 ) => {
   try {
-    console.log(`Running add new parcel automation: `);
-
-    const [ptaxWindow, driver] = await loginToPTAX(ptaxUsername, ptaxPassword);
-    handleAutomationCancel(ipcBusClientNodeMain, driver);
-
-    /* 
-        These values will be null if the login failed, this will cause the execution
-        to stop. If it fails before even loading ptax, it means
-        that the chrome web driver is out of date. Otherwise,
-        it means the login credentials are incorrect 
-    */
-
-    if (ptaxWindow === null || driver === null) {
-      await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
-        primaryMessage:
-          "Login to PTax failed! Please check your username and password.",
-        messageColor: "red",
-      });
-      return;
-    }
-    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
-      primaryMessage: "Login to PTax Successful!",
-      messageColor: "regular",
-    });
-
-    await swapToIFrame0(driver);
-    await clickCheckMyPropertiesCheckBox(driver);
+    const driver = await buildDriver(ipcBusClientNodeMain);
 
     for (const item of spreadsheetContents) {
       try {
@@ -67,7 +41,7 @@ const parcelQuestCharges = async (
       primaryMessage: "The automation is complete.",
       messageColor: "regular",
     });
-    await closingAutomationSystem(driver);
+    await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
     logErrorMessageCatch(error);
   }

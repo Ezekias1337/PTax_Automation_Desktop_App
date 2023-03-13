@@ -1,22 +1,16 @@
-// Library Imports
-const colors = require("colors");
 // Functions, Helpers, Utils
-const consoleLogLine = require("../general/consoleLogLine");
 const closingAutomationSystem = require("../driver/closingAutomationSystem");
+const sendMessageToFrontEnd = require("../ipc-bus/sendMessage/sendMessageToFrontEnd");
 
-const invalidLoginInfo = async (driver) => {
-  consoleLogLine();
+const invalidLoginInfo = async (driver, ipcBusClientNodeMain) => {
+  await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+    primaryMessage:
+      "The login information you entered is not correct. Remember that it is case sensitive. Try again.",
+    messageColor: "red",
+    errorMessage: null,
+  });
 
-  console.log(
-    colors.red.bold(
-      "The login information you entered is not correct. Remember that it is case sensitive. Try again."
-    )
-  );
-  console.log("\n");
-
-  await closingAutomationSystem(driver);
-  consoleLogLine();
-
+  await closingAutomationSystem(driver, ipcBusClientNodeMain);
   return;
 };
 

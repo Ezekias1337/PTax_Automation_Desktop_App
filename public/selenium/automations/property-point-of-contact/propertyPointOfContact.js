@@ -4,7 +4,7 @@ const colors = require("colors");
 const buildDriver = require("../../functions/driver/buildDriver");
 
 const propertyPointOfContact = async (sublocation) => {
-  const driver = await buildDriver();
+  const driver = await buildDriver(ipcBusClientNodeMain);
   console.log(
     `Running change property point of contact automation for: ${sublocation}`
   );

@@ -3,18 +3,16 @@ const { until, By } = require("selenium-webdriver");
 // Functions, Helpers, Utils
 const logErrorMessageCatch = require("../../../../../functions/general/logErrorMessageCatch");
 const closingAutomationSystem = require("../../../../../functions/driver/closingAutomationSystem");
-const loginToPTAX = require("../../../../../functions/ptax-specific/loginToPTAX");
+const loginToPtax = require("../../../../../functions/ptax-specific/loginToPtax");
 const saveLinkToFile = require("../../../../../functions/file-operations/saveLinkToFile");
 const swapToIFrameDefaultContent = require("../../../../../functions/ptax-specific/frame-swaps/swapToIFrameDefaultContent");
 const swapToIFrame0 = require("../../../../../functions/ptax-specific/frame-swaps/swapToIFrame0");
 const swapToIFrame1 = require("../../../../../functions/ptax-specific/frame-swaps/swapToIFrame1");
-const clickCheckMyPropertiesCheckBox = require("../../../../../functions/ptax-specific/clickCheckMyPropertiesCheckBox");
 const openNewTab = require("../../../../../functions/tab-swaps-and-handling/openNewTab");
 const switchToPTaxTab = require("../../../../../functions/tab-swaps-and-handling/switchToPTaxTab");
 const switchToTaxWebsiteTab = require("../../../../../functions/tab-swaps-and-handling/switchToTaxWebsiteTab");
 const navigateToExistingAssessment = require("../../../../../functions/ptax-specific/navigateToExistingAssessment");
 const sendMessageToFrontEnd = require("../../../../../functions/ipc-bus/sendMessage/sendMessageToFrontEnd");
-const handleAutomationCancel = require("../../../../../functions/ipc-bus/handleAutomationCancel");
 
 const checkForTaxBillTable = require("../helpers/checkForTaxBillTable");
 const checkIfNoResultsOrMultipleResults = require("../helpers/checkIfNoResultsOrMultipleResults");
@@ -71,33 +69,11 @@ const performDataEntryAndDownload = async (
       errorMessage: null,
     });
 
-    const [ptaxWindow, driver] = await loginToPTAX(ptaxUsername, ptaxPassword);
-    handleAutomationCancel(ipcBusClientNodeMain, driver);
-
-    /* 
-      These values will be null if the login failed, this will cause the execution
-      to stop. If it fails before even loading ptax, it means
-      that the chrome web driver is out of date. Otherwise,
-      it means the login credentials are incorrect 
-    */
-
-    if (ptaxWindow === null || driver === null) {
-      await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
-        primaryMessage:
-          "Login to PTax failed! Please check your username and password.",
-        messageColor: "red",
-        errorMessage: null,
-      });
-      return;
-    }
-    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
-      primaryMessage: "Login into Ptax Successful!",
-      messageColor: "regular",
-      errorMessage: null,
-    });
-
-    await swapToIFrame0(driver);
-    await clickCheckMyPropertiesCheckBox(driver);
+    const { ptaxWindow, driver } = await loginToPtax(
+      ptaxUsername,
+      ptaxPassword,
+      ipcBusClientNodeMain
+    );
 
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "Navigating to tax website",
@@ -108,7 +84,10 @@ const performDataEntryAndDownload = async (
     await driver.get(nyTaxBillSite);
     const taxWebsiteWindow = await driver.getWindowHandle();
 
-    const maintenanceStatus = await checkIfWebsiteUnderMaintenance(driver);
+    const maintenanceStatus = await checkIfWebsiteUnderMaintenance(
+      driver,
+      ipcBusClientNodeMain
+    );
     if (maintenanceStatus === true) {
       await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
         primaryMessage: "Website Under Maintenance.",
@@ -495,7 +474,7 @@ const performDataEntryAndDownload = async (
       errorMessage: null,
     });
 
-    await closingAutomationSystem(driver);
+    await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
     if (error.message === "(intermediate value) is not iterable") {
       await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {

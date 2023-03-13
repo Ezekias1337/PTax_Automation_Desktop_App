@@ -9,7 +9,7 @@ const checkIfWebsiteUnderMaintenance = async (driver, taxWebsiteSelectors) => {
       By.xpath(taxWebsiteSelectors.websiteMaintenanceWarner)
     );
     console.log("Website is under maintenance, unable to proceed.");
-    await closingAutomationSystem(driver);
+    await closingAutomationSystem(driver, ipcBusClientNodeMain);
     return true;
   } catch (error) {
     console.log("Website not under maintance. Continuing.");

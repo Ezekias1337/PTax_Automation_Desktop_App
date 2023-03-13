@@ -2,11 +2,10 @@
 const colors = require("colors");
 // Functions, Helpers, Utils
 const logErrorMessageCatch = require("../../../../../functions/general/logErrorMessageCatch");
-const loginToPTAX = require("../../../../../functions/ptax-specific/loginToPTAX");
+const loginToPtax = require("../../../../../functions/ptax-specific/loginToPtax");
 const swapToIFrameDefaultContent = require("../../../../../functions/ptax-specific/frame-swaps/swapToIFrameDefaultContent");
 const swapToIFrame0 = require("../../../../../functions/ptax-specific/frame-swaps/swapToIFrame0");
 const swapToIFrame1 = require("../../../../../functions/ptax-specific/frame-swaps/swapToIFrame1");
-const clickCheckMyPropertiesCheckBox = require("../../../../../functions/ptax-specific/clickCheckMyPropertiesCheckBox");
 const openNewTab = require("../../../../../functions/tab-swaps-and-handling/openNewTab");
 const switchToPTaxTab = require("../../../../../functions/tab-swaps-and-handling/switchToPTaxTab");
 const switchToTaxWebsiteTab = require("../../../../../functions/tab-swaps-and-handling/switchToTaxWebsiteTab");
@@ -79,17 +78,11 @@ const performDataEntryAndDownload = async (
 
   try {
     const assessmentYearEnd = parseInt(assessmentYear) + 1;
-    const [ptaxWindow, driver] = await loginToPTAX(ptaxUsername, ptaxPassword);
-
-    /* These values will be null if the login failed, this will cause the execution
-      to stop */
-
-    if (ptaxWindow === null || driver === null) {
-      return;
-    }
-
-    await swapToIFrame0(driver);
-    await clickCheckMyPropertiesCheckBox(driver);
+    const { ptaxWindow, driver } = await loginToPtax(
+      ptaxUsername,
+      ptaxPassword,
+      ipcBusClientNodeMain
+    );
 
     await openNewTab(driver);
     await driver.get(parcelQuestLoginPage);
@@ -155,11 +148,7 @@ const performDataEntryAndDownload = async (
           searchByParcelNumberSelector,
           "id"
         );
-        await sendKeysInputFields(
-          searchByParcelInput,
-          item.ParcelNumber,
-          true
-        );
+        await sendKeysInputFields(searchByParcelInput, item.ParcelNumber, true);
 
         await swapToIFrame0(driver);
         let propertySideBarXPath = generateDynamicXPath(
@@ -214,7 +203,7 @@ const performDataEntryAndDownload = async (
         `Reports have been generated for parcels that were added successful and unsuccessfuly, located in the output folder. Please check the 'Failed Operations' tab to verify if any results need manual review.`
       )
     );
-    await closingAutomationSystem(driver);
+    await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
     logErrorMessageCatch(error);
   }

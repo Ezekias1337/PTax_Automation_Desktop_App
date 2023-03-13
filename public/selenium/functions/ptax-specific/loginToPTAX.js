@@ -2,8 +2,12 @@
 const { By, Key } = require("selenium-webdriver");
 // Functions, Helpers, Utils
 const buildDriver = require("../driver/buildDriver");
+const closingAutomationSystem = require("../driver/closingAutomationSystem");
 const swapToAndDismissAlert = require("../tab-swaps-and-handling/switchToAndDismissAlert");
 const invalidLoginInfo = require("../general/invalidLoginInfo");
+const sendMessageToFrontEnd = require("../ipc-bus/sendMessage/sendMessageToFrontEnd");
+const swapToIFrame0 = require("./frame-swaps/swapToIFrame0");
+const clickCheckMyPropertiesCheckBox = require("./clickCheckMyPropertiesCheckBox");
 // Constants
 const { ptaxLoginPage } = require("../../constants/urls");
 // Selectors
@@ -12,37 +16,58 @@ const {
   passWordSelector,
 } = require("../../constants/selectors/allSelectors");
 
-const loginToPTAX = async (username, password) => {
+const loginToPtax = async (username, password, ipcBusClientNodeMain) => {
   try {
-    let driver = await buildDriver();
-    let ptaxWindow = await driver.getWindowHandle();
-    await driver.get(ptaxLoginPage);
-    const usernameInput = await driver.findElement(By.name(userNameSelector));
+    const objToReturn = {
+      driver: null,
+      ptaxWindow: null,
+    };
+
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: "Logging into Ptax",
+      messageColor: "regular",
+      errorMessage: null,
+    });
+
+    objToReturn.driver = await buildDriver(ipcBusClientNodeMain);
+    objToReturn.ptaxWindow = await objToReturn.driver.getWindowHandle();
+
+    await objToReturn.driver.get(ptaxLoginPage);
+    const usernameInput = await objToReturn.driver.findElement(
+      By.name(userNameSelector)
+    );
     await usernameInput.sendKeys(username);
-    const paswordInput = await driver.findElement(By.name(passWordSelector));
+    const paswordInput = await objToReturn.driver.findElement(
+      By.name(passWordSelector)
+    );
     await paswordInput.sendKeys(password, Key.RETURN);
 
     try {
-      const alertText = await swapToAndDismissAlert(driver);
+      const alertText = await swapToAndDismissAlert(objToReturn.driver);
       if (
         alertText === "Invalid Login.  Remember, passwords are CaseSensitive."
       ) {
-        await invalidLoginInfo(driver);
-
-        /* This is here to check if the login fails in the automation. Then
-        the value of ptaxWindow and driver will be checked to ensure it is 
-        not null before proceeding with execution*/
-
-        ptaxWindow = null;
-        driver = null;
+        await invalidLoginInfo(objToReturn.driver, ipcBusClientNodeMain);
+        await closingAutomationSystem(objToReturn.driver, ipcBusClientNodeMain);
       }
     } catch (error) {
-      console.log("Login successful");
+      await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+        primaryMessage: "Login into Ptax Successful!",
+        messageColor: "regular",
+        errorMessage: null,
+      });
+
+      await swapToIFrame0(objToReturn.driver);
+      await clickCheckMyPropertiesCheckBox(objToReturn.driver);
     }
-    return [ptaxWindow, driver];
+    return objToReturn;
   } catch (error) {
-    console.log("Unknown error occurred while logging in, please try again.");
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: `Unknown error occurred while logging in, please try again. ${error.mesage}`,
+      messageColor: "red",
+      errorMessage: null,
+    });
   }
 };
 
-module.exports = loginToPTAX;
+module.exports = loginToPtax;

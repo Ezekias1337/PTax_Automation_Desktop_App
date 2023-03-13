@@ -10,7 +10,7 @@ const handleAutomationCancel = (ipcBusClientNodeMain, driver) => {
   ipcBusClientNodeMain.addListener(
     "cancel-automation",
     async (ipcBusEvent, msg) => {
-      await closingAutomationSystem(driver);
+      await closingAutomationSystem(driver, ipcBusClientNodeMain);
     }
   );
 };

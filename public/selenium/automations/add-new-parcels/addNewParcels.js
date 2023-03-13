@@ -1,12 +1,11 @@
 // Library Imports
 const colors = require("colors");
 // Functions, Helpers, Utils
-const loginToPTAX = require("../../functions/ptax-specific/loginToPTAX");
+const loginToPtax = require("../../functions/ptax-specific/loginToPtax");
 const closingAutomationSystem = require("../../functions/driver/closingAutomationSystem");
 const swapToIFrameDefaultContent = require("../../functions/ptax-specific/frame-swaps/swapToIFrameDefaultContent");
 const swapToIFrame0 = require("../../functions/ptax-specific/frame-swaps/swapToIFrame0");
 const swapToIFrame1 = require("../../functions/ptax-specific/frame-swaps/swapToIFrame1");
-const clickCheckMyPropertiesCheckBox = require("../../functions/ptax-specific/clickCheckMyPropertiesCheckBox");
 const logErrorMessageCatch = require("../../functions/general/logErrorMessageCatch");
 const clickNavbarMenu = require("../../functions/ptax-specific/click-navbar/clickNavbarMenu");
 
@@ -20,7 +19,6 @@ const sendKeysInputFields = require("../../utils/web-elements/sendKeysInputField
 const scrollElementIntoView = require("../../utils/web-elements/scrollElementIntoView");
 
 const sendMessageToFrontEnd = require("../../functions/ipc-bus/sendMessage/sendMessageToFrontEnd");
-const handleAutomationCancel = require("../../functions/ipc-bus/handleAutomationCancel");
 // Selectors
 const {
   searchByLocationSelector,
@@ -34,35 +32,11 @@ const addNewParcels = async (
   ipcBusClientNodeMain
 ) => {
   try {
-    console.log(`Running add new parcel automation: `);
-
-    const [ptaxWindow, driver] = await loginToPTAX(ptaxUsername, ptaxPassword);
-    handleAutomationCancel(ipcBusClientNodeMain, driver);
-
-    /* 
-        These values will be null if the login failed, this will cause the execution
-        to stop. If it fails before even loading ptax, it means
-        that the chrome web driver is out of date. Otherwise,
-        it means the login credentials are incorrect 
-    */
-
-    if (ptaxWindow === null || driver === null) {
-      await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
-        primaryMessage:
-          "Login to PTax failed! Please check your username and password.",
-        messageColor: "red",
-      });
-
-      return;
-    }
-
-    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
-      primaryMessage: "Login to Ptax Successful!",
-      messageColor: "regular",
-    });
-
-    await swapToIFrame0(driver);
-    await clickCheckMyPropertiesCheckBox(driver);
+    const { driver } = await loginToPtax(
+      ptaxUsername,
+      ptaxPassword,
+      ipcBusClientNodeMain
+    );
 
     for (const item of spreadsheetContents) {
       try {
@@ -334,7 +308,7 @@ const addNewParcels = async (
       messageColor: "regular",
     });
 
-    await closingAutomationSystem(driver);
+    await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
     await handleGlobalError(ipcBusClientNodeMain, error.message);
   }

@@ -79,7 +79,7 @@ const checkAssessorAndCollectorUrls = async () => {
       return;
     }
 
-    driver = await buildDriver();
+    driver = await buildDriver(ipcBusClientNodeMain);
     console.log(`Running check Assessor URL automation: `);
 
     for (const item of dataFromSpreadsheet) {
@@ -125,7 +125,7 @@ const checkAssessorAndCollectorUrls = async () => {
       `Reports have been generated for URLs that were added successful and unsuccessfuly, located in the output folder. Please check the 'Failed Operations' tab to verify if any results need manual review.`
     )
   );
-  await closingAutomationSystem(driver);
+  await closingAutomationSystem(driver, ipcBusClientNodeMain);
 };
 
 module.exports = checkAssessorAndCollectorUrls;

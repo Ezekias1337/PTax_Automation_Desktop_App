@@ -1,6 +1,19 @@
-const closingAutomationSystem = async (driver) => {
+// Functions, Helpers, and Utils
+const sendMessageToFrontEnd = require("../ipc-bus/sendMessage/sendMessageToFrontEnd");
+
+const closingAutomationSystem = async (driver, ipcBusClientNodeMain) => {
   if (driver && driver !== undefined) {
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: "Closing browser window",
+      messageColor: "regular",
+      errorMessage: null,
+    });
     await driver.quit();
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: "Browser window closed",
+      messageColor: "regular",
+      errorMessage: null,
+    });
   }
 };
 

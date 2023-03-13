@@ -1,6 +1,6 @@
 // Functions, Helpers, Utils
 const consoleLogLine = require("../../functions/general/consoleLogLine");
-const loginToPTAX = require("../../functions/ptax-specific/loginToPTAX");
+const loginToPtax = require("../../functions/ptax-specific/loginToPtax");
 const swapToIFrame0 = require("../../functions/ptax-specific/frame-swaps/swapToIFrame0");
 const swapToIFrame1 = require("../../functions/ptax-specific/frame-swaps/swapToIFrame1");
 const swapToIFrameDefaultContent = require("../../functions/ptax-specific/frame-swaps/swapToIFrameDefaultContent");
@@ -29,17 +29,12 @@ const updateParcelNames = async () => {
   } */
 
   const { username, password } = await promptLogin();
-  const [ptaxWindow, driver] = await loginToPTAX(username, password);
+  const { driver } = await loginToPtax(
+    username,
+    password,
+    ipcBusClientNodeMain
+  );
 
-  /* These values will be null if the login failed, this will cause the execution
-    to stop */
-
-  if (ptaxWindow === null || driver === null) {
-    return;
-  }
-
-  await swapToIFrame0(driver);
-  await clickCheckMyPropertiesCheckBox(driver);
   let arrayOfSuccessfulParcels = [];
   let arrayOfFailedParcels = [];
 
