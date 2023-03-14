@@ -19,7 +19,10 @@ import {
 } from "../../redux/actionCreators/automationCreators";
 // Functions, Helpers, Utils, and Hooks
 import { renderSelectOptions } from "../../functions/forms/renderSelectOptions";
+
 import { camelCasifyString } from "../../utils/strings/camelCasifyString";
+
+import { useIsComponentLoaded } from "../../hooks/useIsComponentLoaded";
 import { useIsFormFilled } from "../../hooks/useIsFormFilled";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
@@ -27,6 +30,7 @@ import { useAutomationData } from "../../hooks/ipc/useAutomationData";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
+import { Loader } from "../general-page-layout/loader";
 import { EventLog } from "../automation/eventLog";
 import { ProgressBar } from "../automation/progressBar";
 import { TimeTracker } from "../automation/timeTracker";
@@ -55,6 +59,7 @@ export const SpreadsheetTemplateViewer = () => {
   usePersistentSettings();
   useAnimatedBackground();
 
+  const [isLogicCompleted, setIsLogicCompleted] = useState(false);
   const [downloadOptions, setDownloadOptions] = useState({
     automation: "",
     fileName: "",
@@ -63,6 +68,10 @@ export const SpreadsheetTemplateViewer = () => {
   const [selectedSpreadsheetData, setSelectedSpreadsheetData] = useState([]);
   const [formReady, setFormReady] = useState(false);
   useIsFormFilled(downloadOptions, setFormReady);
+  const isComponentLoaded = useIsComponentLoaded({
+    conditionsToTest: [isLogicCompleted],
+    testForBoolean: true,
+  });
 
   useEffect(() => {
     if (downloadOptions.automation !== "") {
@@ -70,7 +79,26 @@ export const SpreadsheetTemplateViewer = () => {
         spreadsheetTemplates[camelCasifyString(downloadOptions.automation)]
       );
     }
+    setIsLogicCompleted(true);
   }, [downloadOptions.automation]);
+
+  if (isComponentLoaded === false) {
+    return (
+      <div
+        className="automation"
+        id="element-to-animate"
+        data-theme={
+          state.settings.colorTheme !== undefined
+            ? state.settings.colorTheme
+            : "Gradient"
+        }
+      >
+        <TitleBar />
+        <Header pageTitle="Spreadsheet Templates" />
+        <Loader showLoader={true} />;
+      </div>
+    );
+  }
 
   return (
     <div

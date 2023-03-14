@@ -9,12 +9,15 @@ import { actionCreators } from "../../redux/allActions";
 // Functions, Helpers, Utils, and Hooks
 import { showToast } from "../../functions/toast/showToast";
 import { saveUserSettings } from "../../functions/settings/saveUserSettings";
+
+import { useIsComponentLoaded } from "../../hooks/useIsComponentLoaded";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 // Constants
 import { listOfSettings } from "../../constants/listOfSettings";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
+import { Loader } from "../general-page-layout/loader";
 import { SaveButton } from "../buttons/saveButton";
 import { DropDown } from "../input-fields/dropdown";
 import { FileOrDirectoryPicker } from "../input-fields/fileOrDirectoryPicker";
@@ -32,6 +35,8 @@ export const Settings = () => {
     actionCreators.settingsCreators,
     dispatch
   );
+
+  const [isLogicCompleted, setIsLogicCompleted] = useState(false);
   const [arrayOfSettings, setArrayOfSettings] = useState([]);
   const [userSettings, setUserSettings] = useState({
     colorTheme: "Gradient",
@@ -42,6 +47,10 @@ export const Settings = () => {
     downloadDirectory: "",
     uploadDirectory: "",
     launchWindowinCurrentPosition: false,
+  });
+  const isComponentLoaded = useIsComponentLoaded({
+    conditionsToTest: [isLogicCompleted],
+    testForBoolean: true,
   });
 
   useEffect(() => {
@@ -100,7 +109,26 @@ export const Settings = () => {
     }
 
     setArrayOfSettings(tempArrayOfSettings);
+    setIsLogicCompleted(true);
   }, [state, userSettings]);
+
+  if (isComponentLoaded === false) {
+    return (
+      <div
+        className="automation"
+        id="element-to-animate"
+        data-theme={
+          state.settings.colorTheme !== undefined
+            ? state.settings.colorTheme
+            : "Gradient"
+        }
+      >
+        <TitleBar />
+        <Header pageTitle="Settings" />
+        <Loader showLoader={true} />;
+      </div>
+    );
+  }
 
   return (
     <div

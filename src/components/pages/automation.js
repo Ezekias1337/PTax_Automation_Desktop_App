@@ -21,11 +21,13 @@ import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 import { useIsFormFilled } from "../../hooks/useIsFormFilled";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
-import { useResetRedux } from "../../hooks/useResetRedux"
+import { useResetRedux } from "../../hooks/useResetRedux";
 import { useAutomationData } from "../../hooks/ipc/useAutomationData";
+import { useIsComponentLoaded } from "../../hooks/useIsComponentLoaded";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
+import { Loader } from "../general-page-layout/loader";
 import { EventLog } from "../automation/eventLog";
 import { ProgressBar } from "../automation/progressBar";
 import { TimeTracker } from "../automation/timeTracker";
@@ -45,6 +47,7 @@ const { ipcRenderer } = window.require("electron");
 
 export const Automation = ({ automationName, preOperationQuestions }) => {
   usePersistentSettings();
+  useResetRedux();
 
   const state = useSelector((state) => state);
   const spreadsheetState = state.spreadsheet;
@@ -57,6 +60,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
     automationState.automationFinished[AUTOMATION_FINISHED];
   const currentIteration = automationState.currentIteration[RECEIVE_ITERATION];
 
+  const [isLogicCompleted, setIsLogicCompleted] = useState(false);
   const [arrayOfDropdownQuestions, setArrayOfDropdownQuestions] = useState([]);
   const [selectedChoices, setSelectedChoices] = useState({
     automation: automationName,
@@ -77,6 +81,10 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const completedIterations = automationState.contents[COMPLETED_ITERATIONS];
   const failedIterations = automationState.contents[FAILED_ITERATIONS];
 
+  const isComponentLoaded = useIsComponentLoaded({
+    conditionsToTest: [isLogicCompleted],
+    testForBoolean: true,
+  });
   useAutomationData(busClientRenderer);
   useIsFormFilled(selectedChoices, setFormReady, true);
   useAnimatedBackground();
@@ -161,6 +169,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
     }
 
     setChildrenChoices(tempChildrenChoices);
+    setIsLogicCompleted(true);
   }, [setChildrenChoices, preOperationQuestions]);
 
   /* 
@@ -193,6 +202,24 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
     ipcRenderer.send("startIpcBusBroker", null);
   }, []);
 
+  if (isComponentLoaded === false) {
+    return (
+      <div
+        className="automation"
+        id="element-to-animate"
+        data-theme={
+          state.settings.colorTheme !== undefined
+            ? state.settings.colorTheme
+            : "Gradient"
+        }
+      >
+        <TitleBar />
+        <Header pageTitle={automationName} />
+        <Loader showLoader={true} />;
+      </div>
+    );
+  }
+
   return (
     <div
       className="automation"
@@ -205,7 +232,6 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
     >
       <TitleBar />
       <Header pageTitle={automationName} />
-
       <div className="container-for-scroll" ref={animationParentTop}>
         <ToastContainer
           position="top-center"
@@ -236,7 +262,7 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
               automationName={automationName}
               automationFinished={automationFinished}
             />
-            <TimeTracker 
+            <TimeTracker
               automationName={automationName}
               currentIteration={currentIteration}
             />

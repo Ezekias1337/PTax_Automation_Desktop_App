@@ -16,6 +16,8 @@ import {
 // Functions, Helpers, Utils, and Hooks
 import { renderPostAutomationSummaryCard } from "../../functions/automation/renderPostAutomationSummaryCard";
 import { showToast } from "../../functions/toast/showToast";
+
+import { useIsComponentLoaded } from "../../hooks/useIsComponentLoaded";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { useResetRedux } from "../../hooks/useResetRedux";
 import { useIsFormFilled } from "../../hooks/useIsFormFilled";
@@ -49,6 +51,7 @@ export const PostAutomationSummary = () => {
   const failedIterations = automationState.contents[FAILED_ITERATIONS];
   const cancelledIterations = automationState.contents[CANCELLED_ITERATIONS];
 
+  const [isLogicCompleted, setIsLogicCompleted] = useState(false);
   const [numberOfCompletedIterations, setNumberOfCompletedIterations] =
     useState(0);
   const [numberOfFailedIterations, setNumberOfFailedIterations] = useState(0);
@@ -66,6 +69,10 @@ export const PostAutomationSummary = () => {
     arrayOfSheets: [],
   });
 
+  const isComponentLoaded = useIsComponentLoaded({
+    conditionsToTest: [isLogicCompleted],
+    testForBoolean: true,
+  });
   useIsFormFilled(downloadOptions, setFormReady);
 
   /* 
@@ -136,6 +143,7 @@ export const PostAutomationSummary = () => {
     setNumberOfCompletedIterations(tempCompletedIterationsQty);
     setNumberOfCancelledIterations(tempCancelledIterationsQty);
     setNumberOfFailedIterations(tempFailedIterationsQty);
+    setIsLogicCompleted(true);
   }, [completedIterations, failedIterations, cancelledIterations]);
 
   /* 
