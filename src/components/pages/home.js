@@ -17,24 +17,35 @@ import "../../css/styles.scss";
 import "../../css/home.scss";
 // Assets and Images
 import logo from "../../../src/images/PTax_Logo.png";
+import { useEffect } from "react";
 
 export const Home = () => {
   const isFirstTimeRunning = useIsFirstTimeRunning();
   usePersistentSettings();
   useResetRedux();
   useAnimatedBackground();
-
   const state = useSelector((state) => state);
+  const { backgroundPositionX, backgroundPositionY, animationName } =
+    state.animatedBackground.contents;
+
+  useEffect(() => {
+    console.log("animationName: ", animationName);
+  }, [animationName]);
 
   return (
     <div
-      className="home"
+      className="home-page"
       id="element-to-animate"
       data-theme={
-        state.settings.colorTheme !== undefined
-          ? state.settings.colorTheme
+        state.settings.contents.colorTheme !== undefined
+          ? state.settings.contents.colorTheme
           : "Gradient"
       }
+      data-animation-name={animationName}
+      style={{
+        backgroundPositionX: backgroundPositionX,
+        backgroundPositionY: backgroundPositionY,
+      }}
     >
       <TitleBar />
       <header className="App-header home-body">

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Functions, Helpers, Utils, and Hooks
 import { pickIconForCard } from "../../helpers/pickIconForCard";
 
@@ -21,6 +22,10 @@ import "../../css/styles.scss";
 
 export const SelectAnAutomation = () => {
   const state = useSelector((state) => state);
+  const { backgroundPositionX, backgroundPositionY, animationName } =
+    state.animatedBackground.contents;
+  const [animationParent] = useAutoAnimate();
+
   usePersistentSettings();
   useResetRedux();
   useAnimatedBackground();
@@ -53,15 +58,20 @@ export const SelectAnAutomation = () => {
   if (isComponentLoaded === false) {
     return (
       <div
-        className="automation"
         id="element-to-animate"
         data-theme={
-          state.settings.colorTheme !== undefined
-            ? state.settings.colorTheme
+          state.settings.contents.colorTheme !== undefined
+            ? state.settings.contents.colorTheme
             : "Gradient"
         }
+        data-animation-name={animationName}
+        style={{
+          backgroundPositionX: backgroundPositionX,
+          backgroundPositionY: backgroundPositionY,
+        }}
       >
         <TitleBar />
+        <Header pageTitle="Select an Automation" includeArrow={false} />
         <Loader showLoader={true} />;
       </div>
     );
@@ -69,18 +79,25 @@ export const SelectAnAutomation = () => {
 
   return (
     <div
+      id="element-to-animate"
       data-theme={
-        state.settings.colorTheme !== undefined
-          ? state.settings.colorTheme
+        state.settings.contents.colorTheme !== undefined
+          ? state.settings.contents.colorTheme
           : "Gradient"
       }
-      id="element-to-animate"
+      data-animation-name={animationName}
+      style={{
+        backgroundPositionX: backgroundPositionX,
+        backgroundPositionY: backgroundPositionY,
+      }}
     >
       <TitleBar />
 
       <div className="container-for-scroll">
         <Header pageTitle="Select an Automation" includeArrow={false} />
-        <div className="row mx-1">{arrayOfAutomations}</div>
+        <div className="row mx-1" ref={animationParent}>
+          {arrayOfAutomations}
+        </div>
       </div>
     </div>
   );

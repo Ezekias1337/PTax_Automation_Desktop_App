@@ -6,19 +6,12 @@ import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Constants
 import { automationList } from "../../constants/automation-list/automationList";
 import { spreadsheetTemplates } from "../../constants/spreadsheet-templates/allTemplates";
-// Action Types
-import {
-  READ_SPREADSHEET,
-  SELECT_SPREADSHEET,
-} from "../../redux/actionCreators/spreadsheetCreators";
-import {
-  RECEIVE_ITERATION,
-  AUTOMATION_FINISHED,
-  COMPLETED_ITERATIONS,
-  FAILED_ITERATIONS,
-} from "../../redux/actionCreators/automationCreators";
+// Redux
+//Redux
+import { SAVE_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
 // Functions, Helpers, Utils, and Hooks
 import { renderSelectOptions } from "../../functions/forms/renderSelectOptions";
+import { showToast } from "../../functions/toast/showToast";
 
 import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 
@@ -26,44 +19,36 @@ import { useIsComponentLoaded } from "../../hooks/useIsComponentLoaded";
 import { useIsFormFilled } from "../../hooks/useIsFormFilled";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
-import { useAutomationData } from "../../hooks/ipc/useAutomationData";
+import { useSpreadsheetData } from "../../hooks/ipc/useSpreadsheetData";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
 import { Loader } from "../general-page-layout/loader";
-import { EventLog } from "../automation/eventLog";
-import { ProgressBar } from "../automation/progressBar";
-import { TimeTracker } from "../automation/timeTracker";
-import { SpreadSheetExampleAndValidator } from "../automation/spreadSheetExampleAndValidator";
 import { SpreadsheetPreviewer } from "../spreadsheet-previewer/spreadsheetPreviewer";
-import { NumericalProgressTracker } from "../automation/numericalProgressTracker";
-import { CascadingInputs } from "../input-fields/cascadingInputs";
-import { StartAutomationButton } from "../buttons/startAutomationButton";
-import { StopAutomationButton } from "../buttons/stopAutomationButton";
-import { Card } from "../card/card";
-import { GeneralAlert } from "../alert/generalAlert";
-import { ViewPostAutomationSummaryButton } from "../buttons/viewPostAutomationSummaryButton";
-import { SpreadsheetButton } from "../buttons/spreadsheetButton";
 import { DownloadButton } from "../buttons/downloadButton";
 import { DropDown } from "../input-fields/dropdown";
-import { Switch } from "../input-fields/switch";
 import { TextInput } from "../input-fields/textInput";
 import { FileOrDirectoryPicker } from "../input-fields/fileOrDirectoryPicker";
 // CSS
 import "../../css/styles.scss";
-// window.require Imports
-const { ipcRenderer } = window.require("electron");
 
 export const SpreadsheetTemplateViewer = () => {
   const state = useSelector((state) => state);
+  const { backgroundPositionX, backgroundPositionY, animationName } =
+    state.animatedBackground.contents;
+  const saveSpreadsheetMessages = state.spreadsheet.messages[SAVE_SPREADSHEET];
+  const [animationParent] = useAutoAnimate();
+
   usePersistentSettings();
   useAnimatedBackground();
+  useSpreadsheetData();
 
   const [isLogicCompleted, setIsLogicCompleted] = useState(false);
   const [downloadOptions, setDownloadOptions] = useState({
     automation: "",
     fileName: "",
     downloadDirectory: "",
+    arrayOfSheets: [],
   });
   const [selectedSpreadsheetData, setSelectedSpreadsheetData] = useState([]);
   const [formReady, setFormReady] = useState(false);
@@ -72,6 +57,11 @@ export const SpreadsheetTemplateViewer = () => {
     conditionsToTest: [isLogicCompleted],
     testForBoolean: true,
   });
+
+  /* 
+    Update the spreadsheet previewer when the user changes the
+    automation
+  */
 
   useEffect(() => {
     if (downloadOptions.automation !== "") {
@@ -82,16 +72,53 @@ export const SpreadsheetTemplateViewer = () => {
     setIsLogicCompleted(true);
   }, [downloadOptions.automation]);
 
+  /* 
+    Update the spreadsheet data that will be sent to the backend
+    for writing file to system
+  */
+
+  useEffect(() => {
+    setDownloadOptions((prevState) => ({
+      ...prevState,
+      arrayOfSheets: selectedSpreadsheetData,
+    }));
+  }, [selectedSpreadsheetData]);
+
+  /* 
+    Show success toast when spreadsheet saves successfully
+  */
+
+  useEffect(() => {
+    let tempSaveSpreadsheetMessages = [...saveSpreadsheetMessages];
+
+    if (tempSaveSpreadsheetMessages.slice(-1)[0] === "Download Successful") {
+      showToast("Spreadsheet Saved!", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [saveSpreadsheetMessages]);
+
   if (isComponentLoaded === false) {
     return (
       <div
-        className="automation"
         id="element-to-animate"
         data-theme={
-          state.settings.colorTheme !== undefined
-            ? state.settings.colorTheme
+          state.settings.contents.colorTheme !== undefined
+            ? state.settings.contents.colorTheme
             : "Gradient"
         }
+        data-animation-name={animationName}
+        style={{
+          backgroundPositionX: backgroundPositionX,
+          backgroundPositionY: backgroundPositionY,
+        }}
       >
         <TitleBar />
         <Header pageTitle="Spreadsheet Templates" />
@@ -102,17 +129,34 @@ export const SpreadsheetTemplateViewer = () => {
 
   return (
     <div
+      id="element-to-animate"
       data-theme={
-        state.settings.colorTheme !== undefined
-          ? state.settings.colorTheme
+        state.settings.contents.colorTheme !== undefined
+          ? state.settings.contents.colorTheme
           : "Gradient"
       }
-      id="element-to-animate"
+      data-animation-name={animationName}
+      style={{
+        backgroundPositionX: backgroundPositionX,
+        backgroundPositionY: backgroundPositionY,
+      }}
     >
       <TitleBar />
 
       <div className="container-for-scroll">
         <Header pageTitle="Spreadsheet Templates" includeArrow={false} />
+        <ToastContainer
+          position="bottom-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
 
         <div className="row mx-1 mt-2">
           <DropDown
@@ -157,7 +201,7 @@ export const SpreadsheetTemplateViewer = () => {
           </div>
         </div>
 
-        <div className="row mx-1 mt-2">
+        <div className="row mx-1 mt-2" ref={animationParent}>
           <SpreadsheetPreviewer spreadSheetData={selectedSpreadsheetData} />
         </div>
       </div>

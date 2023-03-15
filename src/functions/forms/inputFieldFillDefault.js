@@ -11,22 +11,23 @@ export const inputFieldFillDefault = (
   if (isDropDown === true) {
     if (
       inputField?.toLowerCase() ===
-      state?.settings[settingToCheckFor]?.toLowerCase()
+      state?.settings?.contents[settingToCheckFor]?.toLowerCase()
     ) {
       return true;
     } else {
       return false;
     }
   } else if (isSwitch === true) {
-    if (state?.settings[settingToCheckFor] === true) {
+    if (state?.settings.contents[settingToCheckFor] === true) {
       return true;
     } else {
       return false;
     }
   } else if (isDropDown === false) {
     const inputFieldCamelCasified = camelCasifyString(inputField);
-    if (state?.settings[inputFieldCamelCasified] !== undefined) {
-      return state.settings[inputFieldCamelCasified];
+
+    if (state?.settings?.contents[inputFieldCamelCasified] !== undefined) {
+      return state.settings.contents[inputFieldCamelCasified];
     } else {
       return null;
     }

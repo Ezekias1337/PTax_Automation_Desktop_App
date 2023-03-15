@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // Redux
@@ -29,12 +30,15 @@ import "../../css/inputs.scss";
 
 export const Settings = () => {
   useAnimatedBackground();
-  const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const state = useSelector((state) => state);
   const { saveSettings } = bindActionCreators(
     actionCreators.settingsCreators,
     dispatch
   );
+  const { backgroundPositionX, backgroundPositionY, animationName } =
+    state.animatedBackground.contents;
+  const [animationParent] = useAutoAnimate();
 
   const [isLogicCompleted, setIsLogicCompleted] = useState(false);
   const [arrayOfSettings, setArrayOfSettings] = useState([]);
@@ -42,11 +46,14 @@ export const Settings = () => {
     colorTheme: "Gradient",
     firstTimeRunning: false,
     screenResolution: "800x600",
-    username: "",
-    password: "",
+    ptaxUsername: "",
+    ptaxPassword: "",
+    parcelQuestUsername: "",
+    parcelQuestPassword: "",
     downloadDirectory: "",
     uploadDirectory: "",
     launchWindowinCurrentPosition: false,
+    launchWindowinCurrentPositionvalue: "0x0",
   });
   const isComponentLoaded = useIsComponentLoaded({
     conditionsToTest: [isLogicCompleted],
@@ -115,13 +122,17 @@ export const Settings = () => {
   if (isComponentLoaded === false) {
     return (
       <div
-        className="automation"
         id="element-to-animate"
         data-theme={
-          state.settings.colorTheme !== undefined
-            ? state.settings.colorTheme
+          state.settings.contents.colorTheme !== undefined
+            ? state.settings.contents.colorTheme
             : "Gradient"
         }
+        data-animation-name={animationName}
+        style={{
+          backgroundPositionX: backgroundPositionX,
+          backgroundPositionY: backgroundPositionY,
+        }}
       >
         <TitleBar />
         <Header pageTitle="Settings" />
@@ -132,12 +143,17 @@ export const Settings = () => {
 
   return (
     <div
+      id="element-to-animate"
       data-theme={
-        state.settings.colorTheme !== undefined
-          ? state.settings.colorTheme
+        state.settings.contents.colorTheme !== undefined
+          ? state.settings.contents.colorTheme
           : "Gradient"
       }
-      id="element-to-animate"
+      data-animation-name={animationName}
+      style={{
+        backgroundPositionX: backgroundPositionX,
+        backgroundPositionY: backgroundPositionY,
+      }}
     >
       <TitleBar />
       <Header pageTitle="Settings" includeArrow={false} />
@@ -154,7 +170,9 @@ export const Settings = () => {
           pauseOnHover
           theme="colored"
         />
-        <div className="row mx-1">{arrayOfSettings}</div>
+        <div className="row mx-1" ref={animationParent}>
+          {arrayOfSettings}
+        </div>
         <div className="row mt-3">
           <div className="col col-5"></div>
           <div className="col col-2">
@@ -163,6 +181,7 @@ export const Settings = () => {
               onClickHandler={() => {
                 const settingsToPass = saveUserSettings(userSettings);
                 saveSettings(settingsToPass);
+
                 showToast("Settings Saved!", {
                   position: "bottom-center",
                   autoClose: 2500,

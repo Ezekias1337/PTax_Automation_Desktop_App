@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Constants
 import { automationList } from "../../constants/automation-list/automationList";
-// Action Types
+// Redux
 import {
   READ_SPREADSHEET,
   SELECT_SPREADSHEET,
@@ -52,6 +52,8 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const state = useSelector((state) => state);
   const spreadsheetState = state.spreadsheet;
   const automationState = state.automation;
+  const { backgroundPositionX, backgroundPositionY, animationName } =
+    state.animatedBackground.contents;
 
   const spreadsheetContents = spreadsheetState.contents[READ_SPREADSHEET];
   const selectedSpreadsheetContents =
@@ -205,13 +207,17 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   if (isComponentLoaded === false) {
     return (
       <div
-        className="automation"
         id="element-to-animate"
         data-theme={
-          state.settings.colorTheme !== undefined
-            ? state.settings.colorTheme
+          state.settings.contents.colorTheme !== undefined
+            ? state.settings.contents.colorTheme
             : "Gradient"
         }
+        data-animation-name={animationName}
+        style={{
+          backgroundPositionX: backgroundPositionX,
+          backgroundPositionY: backgroundPositionY,
+        }}
       >
         <TitleBar />
         <Header pageTitle={automationName} />
@@ -222,13 +228,17 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
 
   return (
     <div
-      className="automation"
       id="element-to-animate"
       data-theme={
-        state.settings.colorTheme !== undefined
-          ? state.settings.colorTheme
+        state.settings.contents.colorTheme !== undefined
+          ? state.settings.contents.colorTheme
           : "Gradient"
       }
+      data-animation-name={animationName}
+      style={{
+        backgroundPositionX: backgroundPositionX,
+        backgroundPositionY: backgroundPositionY,
+      }}
     >
       <TitleBar />
       <Header pageTitle={automationName} />

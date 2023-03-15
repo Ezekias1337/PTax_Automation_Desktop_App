@@ -26,6 +26,7 @@ import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
+import { Loader } from "../general-page-layout/loader";
 import { Card } from "../card/card";
 import { SpreadsheetButton } from "../buttons/spreadsheetButton";
 import { DownloadButton } from "../buttons/downloadButton";
@@ -46,6 +47,8 @@ export const PostAutomationSummary = () => {
   const automationState = state.automation;
   const spreadsheetState = state.spreadsheet.contents[SELECT_SPREADSHEET];
   const saveSpreadsheetMessages = state.spreadsheet.messages[SAVE_SPREADSHEET];
+  const { backgroundPositionX, backgroundPositionY, animationName } =
+    state.animatedBackground.contents;
 
   const completedIterations = automationState.contents[COMPLETED_ITERATIONS];
   const failedIterations = automationState.contents[FAILED_ITERATIONS];
@@ -274,14 +277,40 @@ export const PostAutomationSummary = () => {
     }
   }, [saveSpreadsheetMessages]);
 
+  if (isComponentLoaded === false) {
+    return (
+      <div
+        id="element-to-animate"
+        data-theme={
+          state.settings.contents.colorTheme !== undefined
+            ? state.settings.contents.colorTheme
+            : "Gradient"
+        }
+        data-animation-name={animationName}
+        style={{
+          backgroundPositionX: backgroundPositionX,
+          backgroundPositionY: backgroundPositionY,
+        }}
+      >
+        <TitleBar />
+        <Loader showLoader={true} />;
+      </div>
+    );
+  }
+
   return (
     <div
+      id="element-to-animate"
       data-theme={
-        state.settings.colorTheme !== undefined
-          ? state.settings.colorTheme
+        state.settings.contents.colorTheme !== undefined
+          ? state.settings.contents.colorTheme
           : "Gradient"
       }
-      id="element-to-animate"
+      data-animation-name={animationName}
+      style={{
+        backgroundPositionX: backgroundPositionX,
+        backgroundPositionY: backgroundPositionY,
+      }}
     >
       <TitleBar />
 

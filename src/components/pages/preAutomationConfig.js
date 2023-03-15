@@ -1,16 +1,15 @@
 // Library Imports
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { Button } from "reactstrap";
 // Functions, Helpers, Utils, and Hooks
+import { useIsComponentLoaded } from "../../hooks/useIsComponentLoaded";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { useResetRedux } from "../../hooks/useResetRedux";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
-// Constants
-import { automationListArrayExport } from "../../constants/automation-list/automationList";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { Header } from "../general-page-layout/header";
+import { Loader } from "../general-page-layout/loader";
 // CSS
 import "../../css/styles.scss";
 
@@ -22,38 +21,61 @@ import "../../css/styles.scss";
 
 export const PreAutomationConfig = () => {
   const state = useSelector((state) => state);
+  const { backgroundPositionX, backgroundPositionY, animationName } =
+    state.animatedBackground.contents;
   usePersistentSettings();
   useResetRedux();
   useAnimatedBackground();
 
-  const arrayOfAutomations = [];
+  const [isLogicCompleted, setIsLogicCompleted] = useState(false);
+  const isComponentLoaded = useIsComponentLoaded({
+    conditionsToTest: [isLogicCompleted],
+    testForBoolean: true,
+  });
 
-  for (const item of automationListArrayExport) {
-    arrayOfAutomations.push(
-      <div key={item.key} className="col col-6 mt-3">
-        <Link to={`/${item.name.split(" ").join("-").toLowerCase()}`}>
-          <Button className="full-width-button styled-button">
-            {item.name}
-          </Button>
-        </Link>
+  useEffect(() => {
+    setIsLogicCompleted(true);
+  }, []);
+
+  if (isComponentLoaded === false) {
+    return (
+      <div
+        id="element-to-animate"
+        data-theme={
+          state.settings.contents.colorTheme !== undefined
+            ? state.settings.contents.colorTheme
+            : "Gradient"
+        }
+        data-animation-name={animationName}
+        style={{
+          backgroundPositionX: backgroundPositionX,
+          backgroundPositionY: backgroundPositionY,
+        }}
+      >
+        <TitleBar />
+        <Loader showLoader={true} />;
       </div>
     );
   }
 
   return (
     <div
+      id="element-to-animate"
       data-theme={
-        state.settings.colorTheme !== undefined
-          ? state.settings.colorTheme
+        state.settings.contents.colorTheme !== undefined
+          ? state.settings.contents.colorTheme
           : "Gradient"
       }
-      id="element-to-animate"
+      data-animation-name={animationName}
+      style={{
+        backgroundPositionX: backgroundPositionX,
+        backgroundPositionY: backgroundPositionY,
+      }}
     >
       <TitleBar />
 
       <div className="container-for-scroll">
         <Header pageTitle="Select an Automation" includeArrow={true} />
-        <div className="row mx-1">{arrayOfAutomations}</div>
       </div>
     </div>
   );

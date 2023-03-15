@@ -7,16 +7,23 @@ import "../../css/styles.scss";
 
 export const Updater = () => {
   const state = useSelector((state) => state);
+  const { backgroundPositionX, backgroundPositionY, animationName } =
+    state.animatedBackground.contents;
   useAnimatedBackground();
 
   return (
     <div
+      id="element-to-animate"
       data-theme={
-        state.settings.colorTheme !== undefined
-          ? state.settings.colorTheme
+        state.settings.contents.colorTheme !== undefined
+          ? state.settings.contents.colorTheme
           : "Gradient"
       }
-      id="element-to-animate"
+      data-animation-name={animationName}
+      style={{
+        backgroundPositionX: backgroundPositionX,
+        backgroundPositionY: backgroundPositionY,
+      }}
     ></div>
   );
 };

@@ -7,7 +7,12 @@ import { nanoid } from "nanoid";
 import { actionCreators } from "../../redux/allActions";
 // Functions, Helpers, Utils, and Hooks
 import { renderEmptyTds } from "../../functions/spreadsheet-previewer/renderEmptyTds";
+
 import { pascalCasifyString } from "../../utils/strings/pascalCasifyString";
+
+import { useIsComponentLoaded } from "../../hooks/useIsComponentLoaded";
+// Components
+import { Loader } from "../general-page-layout/loader";
 // Constants
 import { alphabet } from "../../constants/alphabet";
 // CSS
@@ -30,8 +35,13 @@ export const SpreadsheetPreviewer = ({
     dispatch
   );
 
+  const [isLogicCompleted, setIsLogicCompleted] = useState(false);
   const [numOfColumns, setNumOfColumns] = useState(0);
   const [selectedSheetIndex, setSelectedSheetIndex] = useState(0);
+  const isComponentLoaded = useIsComponentLoaded({
+    conditionsToTest: [isLogicCompleted],
+    testForBoolean: true,
+  });
 
   /* 
     When the user changes the tab they are viewing, save
@@ -45,6 +55,7 @@ export const SpreadsheetPreviewer = ({
     if (isPreautomation === true) {
       selectSpreadsheet(spreadSheetData[selectedSheetIndex]);
     }
+    setIsLogicCompleted(true);
   }, [spreadSheetData, selectedSheetIndex]);
 
   /* 
@@ -62,6 +73,10 @@ export const SpreadsheetPreviewer = ({
       );
     }
   }, [spreadSheetData, selectedSheetIndex]);
+
+  if (isComponentLoaded === false) {
+    return <Loader showLoader={true} />;
+  }
 
   if (spreadSheetData?.length === 0) {
     return <></>;
