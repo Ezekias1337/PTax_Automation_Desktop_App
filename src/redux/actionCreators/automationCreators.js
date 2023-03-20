@@ -12,7 +12,7 @@ export const FAILED_ITERATIONS = `${typeBase}FAILED_ITERATIONS`;
 export const AUTOMATION_FINISHED = `${typeBase}AUTOMATION_FINISHED`;
 
 /* 
-  Although the sender paramter is unused in these action creators,
+  Although the sender parameter is unused in these action creators,
   I cannot remove the parameter, because Electron will send the event object
   instead of the contents of the message from the backend
 */

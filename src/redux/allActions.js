@@ -3,6 +3,7 @@ import * as spreadsheetCreators from "./actionCreators/spreadsheetCreators";
 import * as automationCreators from "./actionCreators/automationCreators";
 import * as eventLogCreators from "./actionCreators/eventLogCreators";
 import * as animatedBackgroundCreators from "./actionCreators/animatedBackgroundCreators";
+import * as updateCreators from "./actionCreators/updateCreators";
 
 export const actionCreators = {
   settingsCreators: settingsCreators,
@@ -10,4 +11,5 @@ export const actionCreators = {
   automationCreators: automationCreators,
   eventLogCreators: eventLogCreators,
   animatedBackground: animatedBackgroundCreators,
+  update: updateCreators,
 };

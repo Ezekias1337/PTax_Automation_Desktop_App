@@ -12,6 +12,7 @@ import { propertyPointOfContactQuestions } from "./constants/automation-question
 import { propertyTaxBillsQuestions } from "./constants/automation-questions/propertyTaxBillsQuestions";
 import { updateParcelNamesQuestions } from "./constants/automation-questions/updateParcelNamesQuestions";
 // Components
+import { SplashScreen } from "./components/pages/splashScreen";
 import { Home } from "./components/pages/home";
 import { SelectAnAutomation } from "./components/pages/selectAnAutomation";
 import { Settings } from "./components/pages/settings";
@@ -26,7 +27,8 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route path="/" element={<SplashScreen />}></Route>
+        <Route path="/home" element={<Home />}></Route>
         <Route
           path="/select-an-automation"
           element={<SelectAnAutomation />}
@@ -109,7 +111,6 @@ const App = () => {
             />
           }
         ></Route>
-
         <Route
           path="/update-parcel-names"
           element={

@@ -1,12 +1,27 @@
 // Library Imports
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
 // Functions, Helpers, Utils and Hooks
+import { createIpcBusClientRenderer } from "../../functions/ipc/bus/create/createIpcBusClientRenderer";
+import { sendToIpc } from "../../functions/ipc/renderer/send/sendToIpc";
+
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { useIsFirstTimeRunning } from "../../hooks/useIsFirstTimeRunning";
 import { useResetRedux } from "../../hooks/useResetRedux";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
+import { useUpdateData } from "../../hooks/ipc/useUpdateData";
+// Constants
+import {
+  CHECK_FOR_UPDATE_PENDING,
+  CHECK_FOR_UPDATE_SUCCESS,
+  CHECK_FOR_UPDATE_FAILURE,
+  DOWNLOAD_UPDATE_PENDING,
+  DOWNLOAD_UPDATE_SUCCESS,
+  DOWNLOAD_UPDATE_FAILURE,
+  QUIT_AND_INSTALL_UPDATE,
+} from "../../constants/updateActions";
+import { version as currentAppVersion } from "../../../package.json";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { SettingsButton } from "../buttons/settingsButton";
@@ -17,13 +32,14 @@ import "../../css/styles.scss";
 import "../../css/home.scss";
 // Assets and Images
 import logo from "../../../src/images/PTax_Logo.png";
-import { useEffect } from "react";
+// window.require Imports
+const { ipcRenderer } = window.require("electron");
 
-export const Home = () => {
-  const isFirstTimeRunning = useIsFirstTimeRunning();
+export const SplashScreen = () => {
   usePersistentSettings();
   useResetRedux();
   useAnimatedBackground();
+  useUpdateData();
   const state = useSelector((state) => state);
   const { backgroundPositionX, backgroundPositionY, animationName } =
     state.animatedBackground.contents;
@@ -46,33 +62,7 @@ export const Home = () => {
       <TitleBar />
       <header className="App-header home-body">
         <img src={logo} className="App-logo mb-5" alt="logo" />
-        <div className="container">
-          <div className="row">
-            <div className="col col-12 col-md-4">
-              <Link to={"/select-an-automation"}>
-                <Button className="full-width-button styled-button">
-                  Select Automation
-                </Button>
-              </Link>
-            </div>
-            <div className="col col-12 col-md-4">
-              <Link to={"/spreadsheet-templates"}>
-                <Button className="full-width-button styled-button">
-                  Spreadsheet Templates
-                </Button>
-              </Link>
-            </div>
-            <div className="col col-12 col-md-4">
-              <SettingsButton isAnimated={isFirstTimeRunning}></SettingsButton>
-            </div>
-          </div>
-          <GeneralAlert
-            isVisible={isFirstTimeRunning}
-            colorClassName="info"
-            alertText="&nbsp;Looks like this is your first time running this application.
-            Click on the flashing settings button above to get started."
-          ></GeneralAlert>
-        </div>
+        <div className="container"></div>
       </header>
     </div>
   );

@@ -7,7 +7,7 @@ export const RECEIVE_EVENT_LOG_DATA_ERROR = `${typeBase}RECEIVE_EVENT_LOG_DATA_E
 export const RECEIVE_EVENT_LOG_DATA_RESET = `${typeBase}RECEIVE_EVENT_LOG_DATA_RESET`;
 
 /* 
-  Although the sender paramter is unused in these action creators,
+  Although the sender parameter is unused in these action creators,
   I cannot remove the parameter, because Electron will send the event object
   instead of the contents of the message from the backend
 */

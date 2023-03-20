@@ -7,6 +7,7 @@ const {
 const {
   saveSpreadsheetListener,
 } = require("./file-operations/saveSpreadsheetListener");
+const { updaterListener } = require("./updater/updaterListener");
 
 module.exports = {
   directoryListener,
@@ -14,4 +15,5 @@ module.exports = {
   browserListener,
   readSpreadsheetListener,
   saveSpreadsheetListener,
+  updaterListener,
 };

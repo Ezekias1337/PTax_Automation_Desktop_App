@@ -4,6 +4,7 @@ import spreadsheetReducer from "./individual/spreadsheetReducer";
 import automationReducer from "./individual/automationReducers";
 import eventLogReducer from "./individual/eventLogReducers";
 import animatedBackgroundReducer from "./individual/animatedBackgroundReducers";
+import updateReducer from "./individual/updateReducers";
 
 const reducers = combineReducers({
   settings: settingsReducer,
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   automation: automationReducer,
   eventLog: eventLogReducer,
   animatedBackground: animatedBackgroundReducer,
+  update: updateReducer,
 });
 
 export default reducers;
