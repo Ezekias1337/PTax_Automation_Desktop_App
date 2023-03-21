@@ -12,8 +12,6 @@ const DOWNLOAD_UPDATE_FAILURE = "downloadUpdateFailure";
 
 const QUIT_AND_INSTALL_UPDATE = "quitAndInstallUpdate";
 
-const updaterListener = () => {};
-
 module.exports = {
   checkForUpdatePending: ipcMain.on(
     CHECK_FOR_UPDATE_PENDING,

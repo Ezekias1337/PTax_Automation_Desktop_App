@@ -47,6 +47,7 @@ export const useUpdateData = () => {
   } = bindActionCreators(actionCreators.update, dispatch);
 
   useEffect(() => {
+    checkForUpdatePending();
     sendToIpc(CHECK_FOR_UPDATE_PENDING, true);
   }, []);
 

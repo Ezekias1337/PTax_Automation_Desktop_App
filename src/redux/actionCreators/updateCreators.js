@@ -10,56 +10,56 @@ export const DOWNLOAD_UPDATE_PENDING = `${typeBase}DOWNLOAD_UPDATE_PENDING`;
 export const DOWNLOAD_UPDATE_SUCCESS = `${typeBase}DOWNLOAD_UPDATE_SUCCESS`;
 export const DOWNLOAD_UPDATE_FAILURE = `${typeBase}DOWNLOAD_UPDATE_FAILURE`;
 
-export const checkForUpdatePending = (status) => {
+export const checkForUpdatePending = () => {
   return (dispatch) => {
     dispatch({
       type: CHECK_FOR_UPDATE_PENDING,
-      payload: status,
+      payload: true,
     });
   };
 };
 
-export const checkForUpdateSuccess = (status) => {
+export const checkForUpdateSuccess = () => {
   return (dispatch) => {
     dispatch({
       type: CHECK_FOR_UPDATE_SUCCESS,
-      payload: status,
+      payload: true,
     });
   };
 };
 
-export const checkForUpdateFailure = (status) => {
+export const checkForUpdateFailure = () => {
   return (dispatch) => {
     dispatch({
       type: CHECK_FOR_UPDATE_FAILURE,
-      payload: status,
+      payload: true,
     });
   };
 };
 
-export const downloadUpdatePending = (status) => {
+export const downloadUpdatePending = () => {
   return (dispatch) => {
     dispatch({
       type: DOWNLOAD_UPDATE_PENDING,
-      payload: status,
+      payload: true,
     });
   };
 };
 
-export const downloadUpdateSuccess = (status) => {
+export const downloadUpdateSuccess = () => {
   return (dispatch) => {
     dispatch({
       type: DOWNLOAD_UPDATE_SUCCESS,
-      payload: status,
+      payload: true,
     });
   };
 };
 
-export const downloadUpdateFailure = (status) => {
+export const downloadUpdateFailure = () => {
   return (dispatch) => {
     dispatch({
       type: DOWNLOAD_UPDATE_FAILURE,
-      payload: status,
+      payload: true,
     });
   };
 };
