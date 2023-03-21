@@ -4,4 +4,22 @@
 div.home-page {
   background-image: url("../images/Gradient-Outline.jpg");
   overflow-y: hidden;
+  animation-name: fade-in;
+  animation-duration: 3s;
+}
+
+.home-body div.container {
+  animation-name: fade-in;
+  animation-duration: 1.5s;
+  animation-delay: 1s;
+  animation-fill-mode: backwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
 }

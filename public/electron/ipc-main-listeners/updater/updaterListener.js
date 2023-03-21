@@ -1,16 +1,17 @@
 // Library Imports
-const { dialog, app, ipcMain } = require("electron");
+const { app, ipcMain } = require("electron");
 const { autoUpdater } = require("electron-updater");
 // Constants
-const CHECK_FOR_UPDATE_PENDING = "checkForUpdatePending";
-const CHECK_FOR_UPDATE_SUCCESS = "checkForUpdateSuccess";
-const CHECK_FOR_UPDATE_FAILURE = "checkForUpdateFailure";
-
-const DOWNLOAD_UPDATE_PENDING = "downloadUpdatePending";
-const DOWNLOAD_UPDATE_SUCCESS = "downloadUpdateSuccess";
-const DOWNLOAD_UPDATE_FAILURE = "downloadUpdateFailure";
-
-const QUIT_AND_INSTALL_UPDATE = "quitAndInstallUpdate";
+const {
+  CHECK_FOR_UPDATE_PENDING,
+  CHECK_FOR_UPDATE_SUCCESS,
+  CHECK_FOR_UPDATE_FAILURE,
+  DOWNLOAD_UPDATE_PENDING,
+  DOWNLOAD_UPDATE_SUCCESS,
+  DOWNLOAD_UPDATE_FAILURE,
+  QUIT_AND_INSTALL_UPDATE,
+  UPDATE_INSTALLED_SUCCESS,
+} = require("../../constants/updateActions");
 
 module.exports = {
   checkForUpdatePending: ipcMain.on(
@@ -21,16 +22,16 @@ module.exports = {
 
       // Automatically invoke success on development environment.
       if (isDev === true) {
-        sender.send(DOWNLOAD_UPDATE_SUCCESS);
+        sender.send(CHECK_FOR_UPDATE_SUCCESS);
       } else {
-        const result = autoUpdater.downloadUpdate();
+        const result = autoUpdater.checkForUpdates();
 
         result
           .then(() => {
-            sender.send(DOWNLOAD_UPDATE_SUCCESS);
+            sender.send(CHECK_FOR_UPDATE_SUCCESS);
           })
           .catch(() => {
-            sender.send(DOWNLOAD_UPDATE_FAILURE);
+            sender.send(CHECK_FOR_UPDATE_FAILURE);
           });
       }
     }
@@ -44,44 +45,29 @@ module.exports = {
 
       // Automatically invoke success on development environment.
       if (isDev === true) {
-        sender.send(CHECK_FOR_UPDATE_SUCCESS);
+        sender.send(DOWNLOAD_UPDATE_SUCCESS);
       } else {
-        const result = autoUpdater.checkForUpdates();
-
-        /* 
-        ! Look into the updateInfo paremeter below and see what it
-        ! actually sends
-        */
+        const result = autoUpdater.downloadUpdate();
 
         result
           .then((checkResult) => {
-            const { updateInfo } = checkResult;
-            sender.send(CHECK_FOR_UPDATE_SUCCESS, updateInfo);
+            sender.send(DOWNLOAD_UPDATE_SUCCESS, checkResult);
           })
           .catch(() => {
-            sender.send(CHECK_FOR_UPDATE_FAILURE);
+            sender.send(DOWNLOAD_UPDATE_FAILURE);
           });
       }
     }
   ),
 
-  updateDownloaded: autoUpdater.on(
-    "update-downloaded",
-    (_event, releaseNotes, releaseName) => {
-      const dialogOpts = {
-        type: "info",
-        buttons: ["Restart", "Later"],
-        title: "Application Update",
-        message: process.platform === "win32" ? releaseNotes : releaseName,
-        detail:
-          "A new version has been downloaded. Restart the application to apply the updates.",
-      };
-      dialog.showMessageBox(dialogOpts).then((returnValue) => {
-        if (returnValue.response === 0) {
-          autoUpdater.quitAndInstall();
-          app.exit();
-        }
-      });
+  quitAndInstall: ipcMain.on(QUIT_AND_INSTALL_UPDATE, (event, message) => {
+    const { sender } = event;
+    const isDev = !app.isPackaged;
+
+    if (isDev === true) {
+      sender.send(UPDATE_INSTALLED_SUCCESS);
+    } else {
+      autoUpdater.quitAndInstall(true, true);
     }
-  ),
+  }),
 };

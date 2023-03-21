@@ -17,7 +17,6 @@ import "../../css/styles.scss";
 import "../../css/home.scss";
 // Assets and Images
 import logo from "../../../src/images/PTax_Logo.png";
-import { useEffect } from "react";
 
 export const Home = () => {
   const isFirstTimeRunning = useIsFirstTimeRunning();

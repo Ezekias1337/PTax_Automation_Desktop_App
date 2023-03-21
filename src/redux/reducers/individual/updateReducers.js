@@ -6,6 +6,7 @@ import {
   DOWNLOAD_UPDATE_PENDING,
   DOWNLOAD_UPDATE_SUCCESS,
   DOWNLOAD_UPDATE_FAILURE,
+  UPDATE_INSTALLED_SUCCESS,
 } from "../../actionCreators/updateCreators";
 
 const INITIAL_STATE = {
@@ -16,6 +17,7 @@ const INITIAL_STATE = {
     downloadPending: false,
     downloadSuccess: false,
     downloadFailure: false,
+    installSuccess: false,
   },
 };
 
@@ -69,6 +71,14 @@ const reducer = (state = INITIAL_STATE, action) => {
       };
 
       newStateObject.contents.downloadFailure = true;
+      return newStateObject;
+
+    case UPDATE_INSTALLED_SUCCESS:
+      newStateObject = {
+        ...state,
+      };
+
+      newStateObject.contents.installSuccess = true;
       return newStateObject;
 
     default:

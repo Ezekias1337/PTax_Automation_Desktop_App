@@ -3,8 +3,12 @@ const { app, crashReporter } = require("electron");
 // Library Imports
 const Store = require("electron-store");
 const log = require("electron-log");
-//Functions
+// Functions
 const { handleLaunch } = require("./electron/functions/launch/handleLaunch");
+// Constants
+const {
+  UPDATE_INSTALLED_SUCCESS,
+} = require("./electron/constants/updateActions");
 // Listeners
 require("./electron/ipc-main-listeners/allListeners");
 
@@ -31,6 +35,7 @@ app.whenReady().then(() => {
 
 app.on("before-quit", function () {
   tray.destroy();
+  window.webContents.send(UPDATE_INSTALLED_SUCCESS, true);
 });
 
 /* 
@@ -72,7 +77,7 @@ process.on("uncaughtException", function (err) {
   //relaunch the app
   app.relaunch();
   app.exit();
-  log.info("Relaunching application...")
+  log.info("Relaunching application...");
   handleLaunch(tray, window, store, __dirname);
 });
 
@@ -82,7 +87,7 @@ process.on("SIGTERM", function (err) {
   //relaunch the app
   app.relaunch();
   app.exit();
-  log.info("Relaunching application...")
+  log.info("Relaunching application...");
   handleLaunch(tray, window, store, __dirname);
 });
 

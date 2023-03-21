@@ -10,6 +10,8 @@ export const DOWNLOAD_UPDATE_PENDING = `${typeBase}DOWNLOAD_UPDATE_PENDING`;
 export const DOWNLOAD_UPDATE_SUCCESS = `${typeBase}DOWNLOAD_UPDATE_SUCCESS`;
 export const DOWNLOAD_UPDATE_FAILURE = `${typeBase}DOWNLOAD_UPDATE_FAILURE`;
 
+export const UPDATE_INSTALLED_SUCCESS = `${typeBase}UPDATE_INSTALLED_SUCCESS`;
+
 export const checkForUpdatePending = () => {
   return (dispatch) => {
     dispatch({
@@ -59,6 +61,15 @@ export const downloadUpdateFailure = () => {
   return (dispatch) => {
     dispatch({
       type: DOWNLOAD_UPDATE_FAILURE,
+      payload: true,
+    });
+  };
+};
+
+export const updateInstalledSuccess = () => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_INSTALLED_SUCCESS,
       payload: true,
     });
   };

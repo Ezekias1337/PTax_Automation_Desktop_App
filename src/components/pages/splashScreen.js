@@ -1,48 +1,111 @@
 // Library Imports
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Button } from "reactstrap";
+import { useNavigate } from "react-router-dom";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Functions, Helpers, Utils and Hooks
-import { createIpcBusClientRenderer } from "../../functions/ipc/bus/create/createIpcBusClientRenderer";
-import { sendToIpc } from "../../functions/ipc/renderer/send/sendToIpc";
-
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
-import { useIsFirstTimeRunning } from "../../hooks/useIsFirstTimeRunning";
 import { useResetRedux } from "../../hooks/useResetRedux";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 import { useUpdateData } from "../../hooks/ipc/useUpdateData";
 // Constants
-import {
-  CHECK_FOR_UPDATE_PENDING,
-  CHECK_FOR_UPDATE_SUCCESS,
-  CHECK_FOR_UPDATE_FAILURE,
-  DOWNLOAD_UPDATE_PENDING,
-  DOWNLOAD_UPDATE_SUCCESS,
-  DOWNLOAD_UPDATE_FAILURE,
-  QUIT_AND_INSTALL_UPDATE,
-} from "../../constants/updateActions";
 import { version as currentAppVersion } from "../../../package.json";
 // Components
-import { TitleBar } from "../general-page-layout/titlebar";
-import { SettingsButton } from "../buttons/settingsButton";
-import { GeneralAlert } from "../alert/generalAlert";
+import { Card } from "../card/card";
 // CSS
 import "../../App.css";
 import "../../css/styles.scss";
 import "../../css/home.scss";
 // Assets and Images
 import logo from "../../../src/images/PTax_Logo.png";
-// window.require Imports
-const { ipcRenderer } = window.require("electron");
+
+/* 
+  Auto-updater tutorial:
+  https://mmelikes.medium.com/electron-auto-updater-with-frontend-manipulation-33d3bc5057f3
+*/
 
 export const SplashScreen = () => {
   usePersistentSettings();
   useResetRedux();
   useAnimatedBackground();
   useUpdateData();
+  const [animationParent] = useAutoAnimate();
   const state = useSelector((state) => state);
   const { backgroundPositionX, backgroundPositionY, animationName } =
     state.animatedBackground.contents;
+  const {
+    updatePending,
+    updateSuccess,
+    updateFailure,
+    downloadPending,
+    downloadSuccess,
+    downloadFailure,
+    installSuccess,
+  } = state.update.contents;
+  const navigate = useNavigate();
+
+  const [updateStatusMessage, setUpdateStatusMessage] = useState("");
+
+  useEffect(() => {
+    if (
+      updatePending === true &&
+      downloadPending === false &&
+      downloadSuccess === false &&
+      installSuccess === false
+    ) {
+      setUpdateStatusMessage("Checking for update...");
+    }
+  }, [updatePending, downloadPending, downloadSuccess, installSuccess]);
+
+  useEffect(() => {
+    if (updateSuccess === true) {
+      setUpdateStatusMessage("Update found!");
+    } else if (updateFailure === true) {
+      setUpdateStatusMessage("Failed to find an update!");
+      setTimeout(() => {
+        navigate("/home");
+      }, 5000);
+    }
+  }, [updateSuccess, updateFailure, navigate]);
+
+  useEffect(() => {
+    if (
+      downloadPending === true &&
+      downloadSuccess === false &&
+      downloadFailure === false &&
+      installSuccess === false
+    ) {
+      setUpdateStatusMessage("Downloading update...");
+    }
+  }, [downloadPending, downloadSuccess, downloadFailure, installSuccess]);
+
+  useEffect(() => {
+    if (
+      downloadSuccess === true &&
+      downloadFailure === false &&
+      installSuccess === false
+    ) {
+      setUpdateStatusMessage("Update downloaded!");
+    } else if (
+      downloadSuccess === false &&
+      downloadFailure === true &&
+      installSuccess === false
+    ) {
+      setUpdateStatusMessage("Failed to download update!");
+      setTimeout(() => {
+        navigate("/home");
+      }, 5000);
+    }
+  }, [downloadSuccess, downloadFailure, installSuccess, navigate]);
+
+  useEffect(() => {
+    if (installSuccess === true) {
+      setUpdateStatusMessage("Update Installed! Launching Application...");
+      setTimeout(() => {
+        navigate("/home");
+      }, 5000);
+    }
+  }, [installSuccess, navigate]);
 
   return (
     <div
@@ -59,10 +122,17 @@ export const SplashScreen = () => {
         backgroundPositionY: backgroundPositionY,
       }}
     >
-      <TitleBar />
       <header className="App-header home-body">
         <img src={logo} className="App-logo mb-5" alt="logo" />
-        <div className="container"></div>
+        <div className="container">
+          <div className="row">
+            <div className="col col-12 col-md-2"></div>
+            <div className="col col-12 col-md-8" ref={animationParent}>
+              <Card cardText={updateStatusMessage} />
+            </div>
+            <div className="col col-12 col-md-2"></div>
+          </div>
+        </div>
       </header>
     </div>
   );
