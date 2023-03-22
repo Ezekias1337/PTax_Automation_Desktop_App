@@ -11,6 +11,7 @@ const handleAutomationCancel = (ipcBusClientNodeMain, driver) => {
     "cancel-automation",
     async (ipcBusEvent, msg) => {
       await closingAutomationSystem(driver, ipcBusClientNodeMain);
+      return;
     }
   );
 };

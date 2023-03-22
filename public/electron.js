@@ -17,7 +17,7 @@ require("./electron/ipc-main-listeners/allListeners");
 */
 log.info("CREATING STORE");
 let store = new Store();
-let tray, window;
+let tray, updaterWindow, mainWindow;
 
 /* 
     The whenReady method will be called when Electron has finished
@@ -26,7 +26,7 @@ let tray, window;
 */
 
 app.whenReady().then(() => {
-  handleLaunch(tray, window, store, __dirname);
+  handleLaunch(tray, updaterWindow, mainWindow, store, __dirname);
 });
 
 /* 

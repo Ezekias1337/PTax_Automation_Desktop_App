@@ -4,8 +4,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Functions, Helpers, Utils and Hooks
-import { usePersistentSettings } from "../../hooks/usePersistentSettings";
-import { useResetRedux } from "../../hooks/useResetRedux";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 import { useUpdateData } from "../../hooks/ipc/useUpdateData";
 // Constants
@@ -19,14 +17,7 @@ import "../../css/home.scss";
 // Assets and Images
 import logo from "../../../src/images/PTax_Logo.png";
 
-/* 
-  Auto-updater tutorial:
-  https://mmelikes.medium.com/electron-auto-updater-with-frontend-manipulation-33d3bc5057f3
-*/
-
 export const SplashScreen = () => {
-  usePersistentSettings();
-  useResetRedux();
   useAnimatedBackground();
   useUpdateData();
   const [animationParent] = useAutoAnimate();

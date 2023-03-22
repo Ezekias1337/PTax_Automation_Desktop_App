@@ -4,7 +4,7 @@ import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 export const GeneralAlert = ({ isVisible, colorClassName, alertText }) => {
   return (
-    <div className={`row ${isVisible === true ? "mt-2" : "mt-0"}`}>
+    <div className={`row ${isVisible === true ? "mt-5" : "mt-0"}`}>
       <div className="col col-2"></div>
       <div className="col col-8">
         <div

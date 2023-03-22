@@ -11,9 +11,8 @@
 }
 
 #spreadsheetPreviewerWrapper {
-  max-height: 50vh;
   width: 100%;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 #spreadsheetPreviewer {

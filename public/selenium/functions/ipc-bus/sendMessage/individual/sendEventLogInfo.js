@@ -3,7 +3,6 @@
 */
 
 const sendEventLogInfo = async (ipcBusClientNodeMain, eventLogObj) => {
-  console.log("eventLogObj in sendEventLogInfo: ", eventLogObj);
   await ipcBusClientNodeMain.send("event-log-update", eventLogObj);
 };
 

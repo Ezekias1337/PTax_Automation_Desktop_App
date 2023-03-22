@@ -55,6 +55,7 @@
     "nodemon": "^2.0.15"
   },
   "scripts": {
+    "incrementVersion": "npm version patch",
     "app": "concurrently \"cross-env BROWSER=none npm start\" \"wait-on http://localhost:3000 && electronmon .\"",
     "prestart": "browserify -o ./public/preload.bundle.js -x electron ./preload.js",
     "start": "cross-env GENERATE_SOURCEMAP=false && set ELECTRON_ENABLE_LOGGING=true",

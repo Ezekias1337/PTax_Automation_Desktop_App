@@ -294,7 +294,7 @@ const performDataEntryAndDownload = async (
         consoleLogLine();
       } catch (error) {
         console.log(colors.red.bold(`Failed for parcel: ${item.ParcelNumber}`));
-        console.log(error);
+        console.log(error.message);
         consoleLogLine();
         arrayOfFailedOperations.push(item);
 
@@ -308,6 +308,14 @@ const performDataEntryAndDownload = async (
           messageColor: "red",
           errorMessage: null,
         });
+
+        if (
+          error.message.includes(
+            "This driver instance does not have a valid session ID"
+          )
+        ) {
+          break;
+        }
       }
     }
 
@@ -324,7 +332,7 @@ const performDataEntryAndDownload = async (
 
     await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
-    await handleGlobalError(ipcBusClientNodeMain, error.errorMessage)
+    await handleGlobalError(ipcBusClientNodeMain, error.errorMessage);
   }
 };
 

@@ -115,8 +115,10 @@ export const useAnimatedBackground = () => {
 */
 
   useLayoutEffect(() => {
+    let bgTimeOut;
+
     if (backgroundObject.animationName === "animate-to-top-left") {
-      setTimeout(() => {
+      bgTimeOut = setTimeout(() => {
         setBackgroundObject({
           backgroundPositionX: "0%",
           backgroundPositionY: "0%",
@@ -124,7 +126,7 @@ export const useAnimatedBackground = () => {
       }, 4999);
       updateBackground(backgroundObject);
     } else if (backgroundObject.animationName === "animate-to-top-center") {
-      setTimeout(() => {
+      bgTimeOut = setTimeout(() => {
         setBackgroundObject({
           backgroundPositionX: "50%",
           backgroundPositionY: "0%",
@@ -133,7 +135,7 @@ export const useAnimatedBackground = () => {
       updateBackground(backgroundObject);
     }
     if (backgroundObject.animationName === "animate-to-top-right") {
-      setTimeout(() => {
+      bgTimeOut = setTimeout(() => {
         setBackgroundObject({
           backgroundPositionX: "100%",
           backgroundPositionY: "0%",
@@ -142,7 +144,7 @@ export const useAnimatedBackground = () => {
       updateBackground(backgroundObject);
     }
     if (backgroundObject.animationName === "animate-to-center-left") {
-      setTimeout(() => {
+      bgTimeOut = setTimeout(() => {
         setBackgroundObject({
           backgroundPositionX: "0%",
           backgroundPositionY: "50%",
@@ -151,7 +153,7 @@ export const useAnimatedBackground = () => {
       updateBackground(backgroundObject);
     }
     if (backgroundObject.animationName === "animate-to-center-center") {
-      setTimeout(() => {
+      bgTimeOut = setTimeout(() => {
         setBackgroundObject({
           backgroundPositionX: "50%",
           backgroundPositionY: "50%",
@@ -160,7 +162,7 @@ export const useAnimatedBackground = () => {
       updateBackground(backgroundObject);
     }
     if (backgroundObject.animationName === "animate-to-center-right") {
-      setTimeout(() => {
+      bgTimeOut = setTimeout(() => {
         setBackgroundObject({
           backgroundPositionX: "100%",
           backgroundPositionY: "50%",
@@ -169,7 +171,7 @@ export const useAnimatedBackground = () => {
       updateBackground(backgroundObject);
     }
     if (backgroundObject.animationName === "animate-to-bottom-left") {
-      setTimeout(() => {
+      bgTimeOut = setTimeout(() => {
         setBackgroundObject({
           backgroundPositionX: "0%",
           backgroundPositionY: "100%",
@@ -178,7 +180,7 @@ export const useAnimatedBackground = () => {
       updateBackground(backgroundObject);
     }
     if (backgroundObject.animationName === "animate-to-bottom-center") {
-      setTimeout(() => {
+      bgTimeOut = setTimeout(() => {
         setBackgroundObject({
           backgroundPositionX: "50%",
           backgroundPositionY: "100%",
@@ -187,7 +189,7 @@ export const useAnimatedBackground = () => {
       updateBackground(backgroundObject);
     }
     if (backgroundObject.animationName === "animate-to-bottom-right") {
-      setTimeout(() => {
+      bgTimeOut = setTimeout(() => {
         setBackgroundObject({
           backgroundPositionX: "100%",
           backgroundPositionY: "100%",
@@ -195,5 +197,9 @@ export const useAnimatedBackground = () => {
       }, 4999);
       updateBackground(backgroundObject);
     }
+
+    return () => {
+      clearTimeout(bgTimeOut);
+    };
   }, [backgroundObject.animationName]);
 };

@@ -16,7 +16,6 @@ export const FileOrDirectoryPicker = ({
   setStateHook,
   inputValueState = null,
   reduxStateName = null,
-  isFullWidth = false,
 }) => {
   const [inputPromptType, setInputPromptType] = useState(null);
   const [ipcEventListener, setIpcEventListener] = useState(null);

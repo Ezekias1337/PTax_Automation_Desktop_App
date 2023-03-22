@@ -21,7 +21,6 @@ import { camelCasifyString } from "../../utils/strings/camelCasifyString";
 import { useIsFormFilled } from "../../hooks/useIsFormFilled";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
-import { useResetRedux } from "../../hooks/useResetRedux";
 import { useAutomationData } from "../../hooks/ipc/useAutomationData";
 import { useIsComponentLoaded } from "../../hooks/useIsComponentLoaded";
 // Components
@@ -47,7 +46,6 @@ const { ipcRenderer } = window.require("electron");
 
 export const Automation = ({ automationName, preOperationQuestions }) => {
   usePersistentSettings();
-  useResetRedux();
 
   const state = useSelector((state) => state);
   const spreadsheetState = state.spreadsheet;

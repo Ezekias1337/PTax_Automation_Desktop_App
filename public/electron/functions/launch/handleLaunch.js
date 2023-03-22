@@ -1,12 +1,22 @@
 // Library Imports
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
+const { IpcBusBridge, IpcBusClient } = require("electron-common-ipc");
 const log = require("electron-log");
-//Functions
+// Functions
 const { createIpcBusBridge } = require("../ipc/createIpcBusBridge");
 const { createWindow } = require("../window/createWindow");
 const { createTray } = require("../tray/createTray");
+const { closeWindow } = require("../window/closeWindow");
+// Constants
+const { UPDATE_INSTALLED_SUCCESS } = require("../../constants/updateActions");
 
-const handleLaunch = async (tray, window, store, directoryName) => {
+const handleLaunch = async (
+  tray,
+  updaterWindow,
+  mainWindow,
+  store,
+  directoryName
+) => {
   const isDev = !app.isPackaged;
   if (isDev === true) {
     const reactDevToolsId = "fmkadmapgofadopljbjfkapdkoienihi";
@@ -18,14 +28,36 @@ const handleLaunch = async (tray, window, store, directoryName) => {
       .then((name) => console.log(`Added Extension:  ${name}`))
       .catch((err) => console.log("An error occurred: ", err));
   }
-  log.info("CREATING WINDOW...........");
-  window = createWindow(directoryName, process, store, isDev);
-  if (tray !== undefined) {
-    tray.destroy();
-  }
 
-  tray = createTray(window, directoryName, process);
+  log.info("CREATING IPC Bridge...........");
   await createIpcBusBridge();
+  log.info("CREATING UPDATER WINDOW...........");
+  updaterWindow = createWindow(directoryName, true, store, isDev);
+
+  IpcBusBridge.
+  
+  IpcBusBridge.on(UPDATE_INSTALLED_SUCCESS, (event, message) => {
+    console.log("UPDATE SUCCESS INSIDE HANDLELAUNCH");
+    if (isDev === true) {
+      log.info("CREATING MAIN WINDOW...........");
+      console.log("UPDATE SUCCESS INSIDE HANDLELAUNCH");
+
+      closeWindow(updaterWindow);
+    }
+  });
+
+  /* 
+      Create the main window after the update window has been closed
+  */
+
+  updaterWindow.on("closed", () => {
+    mainWindow = createWindow(directoryName, false, store, isDev);
+    if (tray !== undefined) {
+      tray.destroy();
+    }
+
+    tray = createTray(mainWindow, directoryName, process);
+  });
 
   app.on("activate", function () {
     /* 
@@ -33,7 +65,7 @@ const handleLaunch = async (tray, window, store, directoryName) => {
       dock icon is clicked and there are no other windows open.
     */
     if (BrowserWindow.getAllWindows().length === 0)
-      createWindow(window, tray, directoryName, process, store);
+      createWindow(directoryName, false, store, isDev);
   });
 };
 

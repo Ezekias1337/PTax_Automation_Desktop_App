@@ -84,7 +84,6 @@ export const CascadingInputs = ({
                 setStateHook={setStateHook}
                 inputValueState={inputValueState}
                 reduxStateName="uploadDirectory"
-                isFullWidth={true}
               />
             );
             break;
@@ -105,7 +104,6 @@ export const CascadingInputs = ({
                 setStateHook={setStateHook}
                 inputValueState={inputValueState}
                 reduxStateName="downloadDirectory"
-                isFullWidth={true}
               />
             );
             break;

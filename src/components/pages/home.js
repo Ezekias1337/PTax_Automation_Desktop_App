@@ -2,11 +2,14 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Functions, Helpers, Utils and Hooks
 import { usePersistentSettings } from "../../hooks/usePersistentSettings";
 import { useIsFirstTimeRunning } from "../../hooks/useIsFirstTimeRunning";
 import { useResetRedux } from "../../hooks/useResetRedux";
 import { useAnimatedBackground } from "../../hooks/useAnimatedBackground";
+// Constants
+import packageInfo from "../../../package.json";
 // Components
 import { TitleBar } from "../general-page-layout/titlebar";
 import { SettingsButton } from "../buttons/settingsButton";
@@ -23,6 +26,7 @@ export const Home = () => {
   usePersistentSettings();
   useResetRedux();
   useAnimatedBackground();
+  const [animationParent] = useAutoAnimate();
   const state = useSelector((state) => state);
   const { backgroundPositionX, backgroundPositionY, animationName } =
     state.animatedBackground.contents;
@@ -71,6 +75,17 @@ export const Home = () => {
             alertText="&nbsp;Looks like this is your first time running this application.
             Click on the flashing settings button above to get started."
           ></GeneralAlert>
+          <div className="row mt-5">
+            <div className="col col-12 col-md-2"></div>
+            <div
+              id="versionNumberWrapper"
+              className="col col-12 col-md-8 full-flex"
+              ref={animationParent}
+            >
+              <span>Version: {packageInfo.version}</span>
+            </div>
+            <div className="col col-12 col-md-2"></div>
+          </div>
         </div>
       </header>
     </div>

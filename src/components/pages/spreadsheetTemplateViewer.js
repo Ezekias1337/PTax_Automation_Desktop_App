@@ -183,7 +183,6 @@ export const SpreadsheetTemplateViewer = () => {
             setStateHook={setDownloadOptions}
             inputValueState={downloadOptions?.downloadDirectory}
             reduxStateName="downloadDirectory"
-            isFullWidth={true}
           />
           <div
             className="col col-6 mt-2"

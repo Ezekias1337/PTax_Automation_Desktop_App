@@ -1,6 +1,7 @@
 // Library Imports
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //Redux
@@ -72,6 +73,7 @@ export const PostAutomationSummary = () => {
     arrayOfSheets: [],
   });
 
+  const [animationParent] = useAutoAnimate();
   const isComponentLoaded = useIsComponentLoaded({
     conditionsToTest: [isLogicCompleted],
     testForBoolean: true,
@@ -142,7 +144,11 @@ export const PostAutomationSummary = () => {
     if (failedIterations?.length) {
       tempFailedIterationsQty = failedIterations.length;
     }
-
+    
+    console.log("tempCompletedIterationsQty: ", tempCompletedIterationsQty)
+    console.log("tempCancelledIterationsQty: ", tempCancelledIterationsQty)
+    console.log("tempFailedIterationsQty: ", tempFailedIterationsQty)
+    
     setNumberOfCompletedIterations(tempCompletedIterationsQty);
     setNumberOfCancelledIterations(tempCancelledIterationsQty);
     setNumberOfFailedIterations(tempFailedIterationsQty);
@@ -314,7 +320,7 @@ export const PostAutomationSummary = () => {
     >
       <TitleBar />
 
-      <div className="container-for-scroll">
+      <div className="container-for-scroll" ref={animationParent}>
         <Header pageTitle="Post Automation Summary" includeArrow={false} />
         <ToastContainer
           position="bottom-center"
@@ -366,7 +372,6 @@ export const PostAutomationSummary = () => {
             setStateHook={setDownloadOptions}
             inputValueState={downloadOptions?.downloadDirectory}
             reduxStateName="downloadDirectory"
-            isFullWidth={true}
           />
           <Switch
             data={{ name: "Include Completed Iterations" }}

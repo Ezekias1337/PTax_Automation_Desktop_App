@@ -67,6 +67,7 @@ module.exports = {
     if (isDev === true) {
       sender.send(UPDATE_INSTALLED_SUCCESS);
     } else {
+      sender.send(UPDATE_INSTALLED_SUCCESS);
       autoUpdater.quitAndInstall(true, true);
     }
   }),
