@@ -5,10 +5,6 @@ const Store = require("electron-store");
 const log = require("electron-log");
 // Functions
 const { handleLaunch } = require("./electron/functions/launch/handleLaunch");
-// Constants
-const {
-  UPDATE_INSTALLED_SUCCESS,
-} = require("./electron/constants/updateActions");
 // Listeners
 require("./electron/ipc-main-listeners/allListeners");
 
@@ -35,7 +31,7 @@ app.whenReady().then(() => {
 
 app.on("before-quit", function () {
   tray.destroy();
-  window.webContents.send(UPDATE_INSTALLED_SUCCESS, true);
+  //window.webContents.send(UPDATE_INSTALLED_SUCCESS, true);
 });
 
 /* 

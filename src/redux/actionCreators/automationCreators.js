@@ -1,6 +1,9 @@
 // Constants
 const typeBase = "automation/";
 // Action Types
+export const RECEIVE_AUTOMATION_CONFIG = `${typeBase}RECEIVE_AUTOMATION_CONFIG`;
+export const RECEIVE_AUTOMATION_CONFIG_RESET = `${typeBase}RECEIVE_AUTOMATION_CONFIG_RESET`;
+
 export const RECEIVE_ITERATION = `${typeBase}RECEIVE_ITERATION`;
 export const RECEIVE_ITERATION_LOADING_TOGGLE = `${typeBase}RECEIVE_ITERATION_LOADING_TOGGLE`;
 export const RECEIVE_ITERATION_ERROR = `${typeBase}RECEIVE_ITERATION_ERROR`;
@@ -16,6 +19,24 @@ export const AUTOMATION_FINISHED = `${typeBase}AUTOMATION_FINISHED`;
   I cannot remove the parameter, because Electron will send the event object
   instead of the contents of the message from the backend
 */
+
+export const recieveAutomationConfig = (sender, automationData) => {
+  return (dispatch) => {
+    dispatch({
+      type: RECEIVE_AUTOMATION_CONFIG,
+      payload: automationData,
+    });
+  };
+};
+
+export const recieveAutomationConfigReset = () => {
+  return (dispatch) => {
+    dispatch({
+      type: RECEIVE_AUTOMATION_CONFIG_RESET,
+      payload: null,
+    });
+  };
+};
 
 export const recieveIteration = (sender, iterationData) => {
   return (dispatch) => {

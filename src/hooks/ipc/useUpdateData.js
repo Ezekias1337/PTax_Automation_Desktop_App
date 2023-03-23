@@ -1,5 +1,5 @@
 // Library Imports
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 // Constants
@@ -24,9 +24,8 @@ const { ipcRenderer } = window.require("electron");
 export const useUpdateData = () => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state.update.contents);
-  const { updateSuccess, downloadSuccess } = state;
+  const { updateSuccess, downloadSuccess, installSuccess } = state;
   const isFirstTimeRunning = useIsFirstTimeRunning();
-
   const {
     checkForUpdatePending,
     checkForUpdateSuccess,
@@ -36,6 +35,9 @@ export const useUpdateData = () => {
     downloadUpdateFailure,
     updateInstalledSuccess,
   } = bindActionCreators(actionCreators.update, dispatch);
+
+  const [backEndNotifiedToCloseUpdater, setBackEndNotifiedToCloseUpdater] =
+    useState(false);
 
   /* 
     Updates Redux for checkForUpdatePending to true and
@@ -75,6 +77,18 @@ export const useUpdateData = () => {
       sendToIpc(QUIT_AND_INSTALL_UPDATE, true);
     }
   }, [downloadSuccess]);
+
+  /* 
+    After the update has finished installing, close
+    the updater window
+  */
+
+  useEffect(() => {
+    if (installSuccess === true && backEndNotifiedToCloseUpdater === false) {
+      setBackEndNotifiedToCloseUpdater(true);
+      sendToIpc(UPDATE_INSTALLED_SUCCESS, true);
+    }
+  }, [installSuccess, backEndNotifiedToCloseUpdater]);
 
   useEffect(() => {
     ipcRenderer.on(CHECK_FOR_UPDATE_PENDING, checkForUpdatePending);

@@ -13,8 +13,13 @@ div.home-page {
   animation-fill-mode: backwards;
 }
 
-#versionNumberWrapper {
+#versionNumberWrapper,
+#updateMessageWrapper {
   border-radius: 0.25rem;
+}
+
+#updateMessageWrapper span {
+  font-size: x-large;
 }
 
 /* 
@@ -22,7 +27,8 @@ div.home-page {
 */
 
 [data-theme="Light"] {
-  #versionNumberWrapper {
+  #versionNumberWrapper,
+  #updateMessageWrapper {
     background-color: transparentize($color: $bg-light, $amount: 0.6);
     color: $color-text-light;
   }
@@ -30,7 +36,8 @@ div.home-page {
 
 [data-theme="Gradient"],
 [data-theme="Dark"] {
-  #versionNumberWrapper {
+  #versionNumberWrapper,
+  #updateMessageWrapper {
     background-color: transparentize($color: $bg-secondary-dark, $amount: 0.6);
     color: $color-text-dark;
   }

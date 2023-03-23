@@ -1,6 +1,5 @@
 // Library Imports
 const { app, BrowserWindow, ipcMain } = require("electron");
-const { IpcBusBridge, IpcBusClient } = require("electron-common-ipc");
 const log = require("electron-log");
 // Functions
 const { createIpcBusBridge } = require("../ipc/createIpcBusBridge");
@@ -34,23 +33,19 @@ const handleLaunch = async (
   log.info("CREATING UPDATER WINDOW...........");
   updaterWindow = createWindow(directoryName, true, store, isDev);
 
-  IpcBusBridge.
-  
-  IpcBusBridge.on(UPDATE_INSTALLED_SUCCESS, (event, message) => {
-    console.log("UPDATE SUCCESS INSIDE HANDLELAUNCH");
+  ipcMain.once(UPDATE_INSTALLED_SUCCESS, (event, message) => {
     if (isDev === true) {
-      log.info("CREATING MAIN WINDOW...........");
-      console.log("UPDATE SUCCESS INSIDE HANDLELAUNCH");
-
+      log.info("CLOSING UPDATER WINDOW...........");
       closeWindow(updaterWindow);
     }
   });
 
   /* 
-      Create the main window after the update window has been closed
+    Create the main window after the update window has been closed
   */
 
   updaterWindow.on("closed", () => {
+    log.info("CREATING MAIN WINDOW...........");
     mainWindow = createWindow(directoryName, false, store, isDev);
     if (tray !== undefined) {
       tray.destroy();
@@ -59,11 +54,12 @@ const handleLaunch = async (
     tray = createTray(mainWindow, directoryName, process);
   });
 
+  /* 
+    On macOS it's common to re-create a window in the app when the
+    dock icon is clicked and there are no other windows open.
+  */
+
   app.on("activate", function () {
-    /* 
-      On macOS it's common to re-create a window in the app when the
-      dock icon is clicked and there are no other windows open.
-    */
     if (BrowserWindow.getAllWindows().length === 0)
       createWindow(directoryName, false, store, isDev);
   });
