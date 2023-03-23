@@ -22,8 +22,6 @@ export const SplashScreen = () => {
   useUpdateData();
   const [animationParent] = useAutoAnimate();
   const state = useSelector((state) => state);
-  const { backgroundPositionX, backgroundPositionY, animationName } =
-    state.animatedBackground.contents;
   const {
     updatePending,
     updateSuccess,
@@ -45,7 +43,7 @@ export const SplashScreen = () => {
     ? specific object attribute in the dependancy array and see if that
     ? fixes the performance issues when testing with delays
   */
-  
+
   /* 
     When the main browser window opens immediately redirect to home
     page
@@ -154,15 +152,10 @@ export const SplashScreen = () => {
       className="home-page"
       id="element-to-animate"
       data-theme={
-        state.settings.contents.colorTheme !== undefined
-          ? state.settings.contents.colorTheme
+        state.settings.colorTheme !== undefined
+          ? state.settings.colorTheme
           : "Gradient"
       }
-      data-animation-name={animationName}
-      style={{
-        backgroundPositionX: backgroundPositionX,
-        backgroundPositionY: backgroundPositionY,
-      }}
     >
       <header className="App-header home-body">
         <img src={logo} className="App-logo mb-5" alt="logo" />

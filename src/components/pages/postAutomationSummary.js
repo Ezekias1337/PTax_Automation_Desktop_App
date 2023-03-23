@@ -48,8 +48,6 @@ export const PostAutomationSummary = () => {
   const automationState = state.automation;
   const spreadsheetState = state.spreadsheet.contents[SELECT_SPREADSHEET];
   const saveSpreadsheetMessages = state.spreadsheet.messages[SAVE_SPREADSHEET];
-  const { backgroundPositionX, backgroundPositionY, animationName } =
-    state.animatedBackground.contents;
 
   const completedIterations = automationState.contents[COMPLETED_ITERATIONS];
   const failedIterations = automationState.contents[FAILED_ITERATIONS];
@@ -144,11 +142,11 @@ export const PostAutomationSummary = () => {
     if (failedIterations?.length) {
       tempFailedIterationsQty = failedIterations.length;
     }
-    
-    console.log("tempCompletedIterationsQty: ", tempCompletedIterationsQty)
-    console.log("tempCancelledIterationsQty: ", tempCancelledIterationsQty)
-    console.log("tempFailedIterationsQty: ", tempFailedIterationsQty)
-    
+
+    console.log("tempCompletedIterationsQty: ", tempCompletedIterationsQty);
+    console.log("tempCancelledIterationsQty: ", tempCancelledIterationsQty);
+    console.log("tempFailedIterationsQty: ", tempFailedIterationsQty);
+
     setNumberOfCompletedIterations(tempCompletedIterationsQty);
     setNumberOfCancelledIterations(tempCancelledIterationsQty);
     setNumberOfFailedIterations(tempFailedIterationsQty);
@@ -288,15 +286,10 @@ export const PostAutomationSummary = () => {
       <div
         id="element-to-animate"
         data-theme={
-          state.settings.contents.colorTheme !== undefined
-            ? state.settings.contents.colorTheme
+          state.settings.colorTheme !== undefined
+            ? state.settings.colorTheme
             : "Gradient"
         }
-        data-animation-name={animationName}
-        style={{
-          backgroundPositionX: backgroundPositionX,
-          backgroundPositionY: backgroundPositionY,
-        }}
       >
         <TitleBar />
         <Loader showLoader={true} />;
@@ -308,15 +301,10 @@ export const PostAutomationSummary = () => {
     <div
       id="element-to-animate"
       data-theme={
-        state.settings.contents.colorTheme !== undefined
-          ? state.settings.contents.colorTheme
+        state.settings.colorTheme !== undefined
+          ? state.settings.colorTheme
           : "Gradient"
       }
-      data-animation-name={animationName}
-      style={{
-        backgroundPositionX: backgroundPositionX,
-        backgroundPositionY: backgroundPositionY,
-      }}
     >
       <TitleBar />
 

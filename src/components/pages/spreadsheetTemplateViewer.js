@@ -34,8 +34,6 @@ import "../../css/styles.scss";
 
 export const SpreadsheetTemplateViewer = () => {
   const state = useSelector((state) => state);
-  const { backgroundPositionX, backgroundPositionY, animationName } =
-    state.animatedBackground.contents;
   const saveSpreadsheetMessages = state.spreadsheet.messages[SAVE_SPREADSHEET];
   const [animationParent] = useAutoAnimate();
 
@@ -110,15 +108,10 @@ export const SpreadsheetTemplateViewer = () => {
       <div
         id="element-to-animate"
         data-theme={
-          state.settings.contents.colorTheme !== undefined
-            ? state.settings.contents.colorTheme
+          state.settings.colorTheme !== undefined
+            ? state.settings.colorTheme
             : "Gradient"
         }
-        data-animation-name={animationName}
-        style={{
-          backgroundPositionX: backgroundPositionX,
-          backgroundPositionY: backgroundPositionY,
-        }}
       >
         <TitleBar />
         <Header pageTitle="Spreadsheet Templates" />
@@ -131,15 +124,10 @@ export const SpreadsheetTemplateViewer = () => {
     <div
       id="element-to-animate"
       data-theme={
-        state.settings.contents.colorTheme !== undefined
-          ? state.settings.contents.colorTheme
+        state.settings.colorTheme !== undefined
+          ? state.settings.colorTheme
           : "Gradient"
       }
-      data-animation-name={animationName}
-      style={{
-        backgroundPositionX: backgroundPositionX,
-        backgroundPositionY: backgroundPositionY,
-      }}
     >
       <TitleBar />
 

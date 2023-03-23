@@ -36,8 +36,6 @@ export const Settings = () => {
     actionCreators.settingsCreators,
     dispatch
   );
-  const { backgroundPositionX, backgroundPositionY, animationName } =
-    state.animatedBackground.contents;
   const [animationParent] = useAutoAnimate();
 
   const [isLogicCompleted, setIsLogicCompleted] = useState(false);
@@ -124,15 +122,10 @@ export const Settings = () => {
       <div
         id="element-to-animate"
         data-theme={
-          state.settings.contents.colorTheme !== undefined
-            ? state.settings.contents.colorTheme
+          state.settings.colorTheme !== undefined
+            ? state.settings.colorTheme
             : "Gradient"
         }
-        data-animation-name={animationName}
-        style={{
-          backgroundPositionX: backgroundPositionX,
-          backgroundPositionY: backgroundPositionY,
-        }}
       >
         <TitleBar />
         <Header pageTitle="Settings" />
@@ -145,15 +138,10 @@ export const Settings = () => {
     <div
       id="element-to-animate"
       data-theme={
-        state.settings.contents.colorTheme !== undefined
-          ? state.settings.contents.colorTheme
+        state.settings.colorTheme !== undefined
+          ? state.settings.colorTheme
           : "Gradient"
       }
-      data-animation-name={animationName}
-      style={{
-        backgroundPositionX: backgroundPositionX,
-        backgroundPositionY: backgroundPositionY,
-      }}
     >
       <TitleBar />
       <Header pageTitle="Settings" includeArrow={false} />

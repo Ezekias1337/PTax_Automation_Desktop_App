@@ -16,6 +16,8 @@ export const useIsFormFilled = (
     const tempSelectedChoices = { ...selectedChoices };
     let doesEmptyValueExist = false;
     let isSpreadsheetSelected = false;
+    let isFourDigitYearNecessary = false;
+    let isFourDigitYearSelected = false;
 
     for (const [key, value] of Object.entries(tempSelectedChoices)) {
       if (value === "" || value === undefined) {
@@ -27,10 +29,26 @@ export const useIsFormFilled = (
         if (checkFileExtension.toLowerCase() === ".xlsx") {
           isSpreadsheetSelected = true;
         }
+      } else if (key.toLowerCase().includes("year")) {
+        isFourDigitYearNecessary = true;
+        if (value?.length === 4) {
+          isFourDigitYearSelected = true;
+        } else {
+          isFourDigitYearSelected = false;
+          setStateHook(false);
+        }
       }
     }
 
-    if (includeSpreadsheet === true) {
+    if (isFourDigitYearNecessary === true && includeSpreadsheet === true) {
+      if (
+        isFourDigitYearSelected === true &&
+        doesEmptyValueExist === false &&
+        isSpreadsheetSelected === true
+      ) {
+        setStateHook(true);
+      }
+    } else if (includeSpreadsheet === true) {
       if (doesEmptyValueExist === false && isSpreadsheetSelected === true) {
         setStateHook(true);
       } else if (doesEmptyValueExist === true) {

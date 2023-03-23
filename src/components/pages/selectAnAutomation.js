@@ -22,8 +22,6 @@ import "../../css/styles.scss";
 
 export const SelectAnAutomation = () => {
   const state = useSelector((state) => state);
-  const { backgroundPositionX, backgroundPositionY, animationName } =
-    state.animatedBackground.contents;
   const [animationParent] = useAutoAnimate();
 
   usePersistentSettings();
@@ -60,15 +58,10 @@ export const SelectAnAutomation = () => {
       <div
         id="element-to-animate"
         data-theme={
-          state.settings.contents.colorTheme !== undefined
-            ? state.settings.contents.colorTheme
+          state.settings.colorTheme !== undefined
+            ? state.settings.colorTheme
             : "Gradient"
         }
-        data-animation-name={animationName}
-        style={{
-          backgroundPositionX: backgroundPositionX,
-          backgroundPositionY: backgroundPositionY,
-        }}
       >
         <TitleBar />
         <Header pageTitle="Select an Automation" includeArrow={false} />
@@ -81,15 +74,10 @@ export const SelectAnAutomation = () => {
     <div
       id="element-to-animate"
       data-theme={
-        state.settings.contents.colorTheme !== undefined
-          ? state.settings.contents.colorTheme
+        state.settings.colorTheme !== undefined
+          ? state.settings.colorTheme
           : "Gradient"
       }
-      data-animation-name={animationName}
-      style={{
-        backgroundPositionX: backgroundPositionX,
-        backgroundPositionY: backgroundPositionY,
-      }}
     >
       <TitleBar />
 

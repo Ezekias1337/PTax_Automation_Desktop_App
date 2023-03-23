@@ -28,23 +28,16 @@ export const Home = () => {
   useAnimatedBackground();
   const [animationParent] = useAutoAnimate();
   const state = useSelector((state) => state);
-  const { backgroundPositionX, backgroundPositionY, animationName } =
-    state.animatedBackground.contents;
 
   return (
     <div
       className="home-page"
       id="element-to-animate"
       data-theme={
-        state.settings.contents.colorTheme !== undefined
-          ? state.settings.contents.colorTheme
+        state.settings.colorTheme !== undefined
+          ? state.settings.colorTheme
           : "Gradient"
       }
-      data-animation-name={animationName}
-      style={{
-        backgroundPositionX: backgroundPositionX,
-        backgroundPositionY: backgroundPositionY,
-      }}
     >
       <TitleBar />
       <header className="App-header home-body">

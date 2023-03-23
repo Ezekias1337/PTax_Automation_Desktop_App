@@ -50,8 +50,6 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const state = useSelector((state) => state);
   const spreadsheetState = state.spreadsheet;
   const automationState = state.automation;
-  const { backgroundPositionX, backgroundPositionY, animationName } =
-    state.animatedBackground.contents;
 
   const spreadsheetContents = spreadsheetState.contents[READ_SPREADSHEET];
   const selectedSpreadsheetContents =
@@ -207,15 +205,10 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
       <div
         id="element-to-animate"
         data-theme={
-          state.settings.contents.colorTheme !== undefined
-            ? state.settings.contents.colorTheme
+          state.settings.colorTheme !== undefined
+            ? state.settings.colorTheme
             : "Gradient"
         }
-        data-animation-name={animationName}
-        style={{
-          backgroundPositionX: backgroundPositionX,
-          backgroundPositionY: backgroundPositionY,
-        }}
       >
         <TitleBar />
         <Header pageTitle={automationName} />
@@ -228,15 +221,10 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
     <div
       id="element-to-animate"
       data-theme={
-        state.settings.contents.colorTheme !== undefined
-          ? state.settings.contents.colorTheme
+        state.settings.colorTheme !== undefined
+          ? state.settings.colorTheme
           : "Gradient"
       }
-      data-animation-name={animationName}
-      style={{
-        backgroundPositionX: backgroundPositionX,
-        backgroundPositionY: backgroundPositionY,
-      }}
     >
       <TitleBar />
       <Header pageTitle={automationName} />
