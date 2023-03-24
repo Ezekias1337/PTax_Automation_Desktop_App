@@ -31,7 +31,6 @@ app.whenReady().then(() => {
 
 app.on("before-quit", function () {
   tray.destroy();
-  //window.webContents.send(UPDATE_INSTALLED_SUCCESS, true);
 });
 
 /* 
@@ -91,7 +90,9 @@ process.on("SIGTERM", function (err) {
 ---------------------------END OF BASE TEMPLATE---------------------------
 */
 
-/*  console.log("Settings path: ", app.getPath("userData"));
+/*  
+  console.log("Settings path: ", app.getPath("userData"));
   console.log("Crash log path: ", app.getPath("crashDumps"));
-  console.log("Temp path: ", app.getPath("temp")); */
+  console.log("Temp path: ", app.getPath("temp")); 
+*/
 log.info("BUILD SUCCESSFUL");

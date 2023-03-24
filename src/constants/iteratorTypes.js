@@ -5,7 +5,7 @@ export const iteratorTypes = {
   ImportPropertyValues: "ParcelNumber",
   ParcelQuestCharges: "TO BE DETERMINED",
   PaymentConfirmations: "ParcelNumber",
-  PropertyPointOfContact: "ParcelNumber",
+  PropertyPointOfContact: "Property",
   PropertyTaxBills: "ParcelNumber",
   UpdateParcelNames: "ParcelNumber",
 };

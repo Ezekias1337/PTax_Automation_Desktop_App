@@ -3,7 +3,7 @@ const findOptionByKey = require("./helpers/findOptionByKey");
 const parseNestedObjectAutomation = require("./helpers/parseNestedObjectAutomation");
 const parseObjectStateOrCity = require("./helpers/parseObjectStateOrCity");
 // Constants
-const automationList = require("./constants/automation-list/automationList")
+const automationList = require("./constants/automation-list/automationList");
 
 const automation = async (automationConfigObject, ipcBusClientNodeMain) => {
   /* 

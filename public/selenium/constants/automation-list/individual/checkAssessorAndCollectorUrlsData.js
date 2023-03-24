@@ -2,7 +2,7 @@ const checkAssessorAndCollectorUrls = require("../../../automations/check-assess
 
 const checkAssessorAndCollectorUrlsData = {
   key: 3,
-  name: "Check all the links for Assessors/Collectors",
+  name: "Check Assessor And Collector Urls",
   function: checkAssessorAndCollectorUrls,
 };
 

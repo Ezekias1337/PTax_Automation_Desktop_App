@@ -64,11 +64,7 @@ const performDataEntryAndDownload = async (
     downloadDirectory,
     ptaxUsername,
     ptaxPassword,
-    parcelQuestUsername,
-    parcelQuestPassword,
     spreadsheetContents,
-    county,
-    installmentNumber,
   },
   ipcBusClientNodeMain
 ) => {
@@ -76,8 +72,6 @@ const performDataEntryAndDownload = async (
   const arrayOfFailedOperations = [];
 
   try {
-    console.log(`Running download Tax Bill automation: `);
-
     const assessmentYearEnd = parseInt(assessmentYear) + 1;
 
     const { ptaxWindow, driver } = await loginToPtax(

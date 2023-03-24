@@ -7,6 +7,7 @@ const swapToIFrameDefaultContent = require("../../functions/ptax-specific/frame-
 const swapToIFrame0 = require("../../functions/ptax-specific/frame-swaps/swapToIFrame0");
 const swapToIFrame1 = require("../../functions/ptax-specific/frame-swaps/swapToIFrame1");
 const clickNavbarMenu = require("../../functions/ptax-specific/click-navbar/clickNavbarMenu");
+const waitForLoading = require("../../functions/ptax-specific/waitForLoading");
 
 const handleGlobalError = require("../../helpers/handleGlobalError");
 
@@ -269,7 +270,8 @@ const addNewParcels = async (
         );
         await scrollElementIntoView(driver, saveButton);
         await saveButton.click();
-        await driver.sleep(5000);
+        await waitForLoading(driver);
+
         let itemErrorColRemoved = item;
         if (itemErrorColRemoved?.Error) {
           delete itemErrorColRemoved.Error;
@@ -301,10 +303,15 @@ const addNewParcels = async (
       }
     }
 
-    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Automation Complete");
+    await sendMessageToFrontEnd(
+      ipcBusClientNodeMain,
+      "Automation Completed",
+      {}
+    );
     await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
       primaryMessage: "The automation is complete.",
       messageColor: "regular",
+      errorMessage: null,
     });
 
     await closingAutomationSystem(driver, ipcBusClientNodeMain);

@@ -2,15 +2,9 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useStopwatch, useTimer } from "react-timer-hook";
+import { useStopwatch } from "react-timer-hook";
 // Functions, Helpers, Utils, and Hooks
-import { removeSpacesFromString } from "../../utils/strings/removeSpacesFromString";
-import { roundDecimal } from "../../utils/numbers/roundDecimal";
 import { useCurrentIteration } from "../../hooks/useCurrentIteration";
-// Constants
-import { iteratorTypes } from "../../constants/iteratorTypes";
-// Components
-import { Loader } from "../general-page-layout/loader";
 // Action Types
 import { SELECT_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
 import { RECEIVE_ITERATION } from "../../redux/actionCreators/automationCreators";
@@ -26,33 +20,11 @@ export const TimeTracker = ({ automationName, currentIteration }) => {
 
   const [animationParent] = useAutoAnimate();
 
-  const [numberOfDataPoints, setNumberOfDataPoints] = useState(0);
-  const [percentagePerDataPoint, setPercentagePerDataPoint] = useState(0);
-  const [currentPercentage, setCurrentPercentage] = useState(0);
   const [currentIterationNumber, setCurrentIterationNumber] = useState(0);
   const [attributeToFindCurrentIteration, setAttributeToFindCurrentIteration] =
     useState(null);
 
-  const [timePerIterationList, setTimePerIterationList] = useState([]);
-  const [estimatedTimeRemaining, setEstimatedTimeRemaining] = useState({
-    seconds: 0,
-    minutes: 0,
-    hours: 0,
-  });
-  const [initializationTime, setInitializationTime] = useState({
-    seconds: 0,
-    minutes: 0,
-    hours: 0,
-  });
-
-  const {
-    seconds,
-    minutes,
-    hours,
-    start,
-    /* pause,
-    reset, */
-  } = useStopwatch({ autoStart: false });
+  const { seconds, minutes, hours, start } = useStopwatch({ autoStart: false });
 
   useCurrentIteration(
     automationName,
@@ -111,18 +83,6 @@ export const TimeTracker = ({ automationName, currentIteration }) => {
           <h5 id="timeElapsed">
             Time Elapsed: {`${hours}:${minutes}:${seconds}`}
           </h5>
-        </div>
-        <div className="col col-12 col-md-6">
-          {estimatedTimeRemaining.seconds === 0 &&
-          estimatedTimeRemaining.minutes === 0 &&
-          estimatedTimeRemaining.hours === 0 ? (
-            <Loader showLoader={true} />
-          ) : (
-            <h5 id="estimatedTimeRemaining">
-              Estimated Time Remaining:{" "}
-              {`${estimatedTimeRemaining.hours}:${estimatedTimeRemaining.minutes}:${estimatedTimeRemaining.seconds}`}
-            </h5>
-          )}
         </div>
       </div>
     </div>

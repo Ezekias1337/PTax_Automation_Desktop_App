@@ -143,10 +143,6 @@ export const PostAutomationSummary = () => {
       tempFailedIterationsQty = failedIterations.length;
     }
 
-    console.log("tempCompletedIterationsQty: ", tempCompletedIterationsQty);
-    console.log("tempCancelledIterationsQty: ", tempCancelledIterationsQty);
-    console.log("tempFailedIterationsQty: ", tempFailedIterationsQty);
-
     setNumberOfCompletedIterations(tempCompletedIterationsQty);
     setNumberOfCancelledIterations(tempCancelledIterationsQty);
     setNumberOfFailedIterations(tempFailedIterationsQty);

@@ -40,11 +40,3 @@ const automationList = {
 };
 
 module.exports = automationList;
-
-/* const automationListArray = [];
-
-for (const item of Object.entries(automationList)) {
-  automationListArray.push(item[1]);
-}
-
-export const automationListArrayExport = automationListArray; */

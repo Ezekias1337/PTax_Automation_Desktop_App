@@ -1,5 +1,6 @@
 export const propertyPointOfContactColumns = [
   "Property",
-  "ProducingLeader",
-  "Producer",
+  "ClientPointOfContact",
+  "ClientProducingOffice",
+  "ClientProducer",
 ];

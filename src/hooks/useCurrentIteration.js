@@ -1,5 +1,5 @@
 // Library Imports
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 // Functions, Helpers, Utils, and Hooks
 import { removeSpacesFromString } from "../utils/strings/removeSpacesFromString";
 // Constants
@@ -21,8 +21,6 @@ export const useCurrentIteration = (
   setCurrentIterationNumber,
   addOne = true
 ) => {
-  const [oneAdded, setOneAdded] = useState(false);
-
   /* 
     Use the iteratorTypes const file to find the name of the "iterator" for the
     automation. In most cases this is ParcelNumber, but it can be "URL" for
@@ -39,11 +37,15 @@ export const useCurrentIteration = (
 
   /* 
     Find the index of the current iteration in the spreadsheetContents,
-    then add 1 to it to display the progress to the user
+    then add 1 to it if addOne === true, then update the 
+    currentIterationNumber 
   */
 
   useEffect(() => {
-    if (attributeToFindCurrentIteration !== null) {
+    if (
+      attributeToFindCurrentIteration !== null &&
+      automationCurrentIteration !== null
+    ) {
       let tempCurrentIterationNumber = spreadsheetContents.data.findIndex(
         (spreadSheetRow) =>
           spreadSheetRow[attributeToFindCurrentIteration] ===
@@ -51,9 +53,8 @@ export const useCurrentIteration = (
       );
 
       if (tempCurrentIterationNumber >= 0) {
-        if (addOne === true && oneAdded === false) {
+        if (addOne === true) {
           tempCurrentIterationNumber += 1;
-          setOneAdded(true);
         }
 
         setCurrentIterationNumber(tempCurrentIterationNumber);
@@ -65,6 +66,5 @@ export const useCurrentIteration = (
     spreadsheetContents,
     setCurrentIterationNumber,
     addOne,
-    oneAdded,
   ]);
 };

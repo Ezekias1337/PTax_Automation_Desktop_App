@@ -1,146 +1,88 @@
-// Library Imports
-const colors = require("colors");
 // Functions, Helpers, Utils
-const buildDriver = require("../../functions/driver/buildDriver");
+const loginToPtax = require("../../functions/ptax-specific/loginToPtax");
+const closingAutomationSystem = require("../../functions/driver/closingAutomationSystem");
+const sendMessageToFrontEnd = require("../../functions/ipc-bus/sendMessage/sendMessageToFrontEnd");
 
+const navigateToProperty = require("./helpers/navigateToProperty");
+const updatePointOfContactInfo = require("./helpers/updatePointOfContactInfo");
+const handleIterationError = require("../../helpers/handleIterationError");
 const handleGlobalError = require("../../helpers/handleGlobalError");
 
-const propertyPointOfContact = async (sublocation) => {
-  const driver = await buildDriver(ipcBusClientNodeMain);
-  console.log(
-    `Running change property point of contact automation for: ${sublocation}`
-  );
-};
-
-async function updatePropertyPOC(property, producingLeader, producer) {
+const propertyPointOfContact = async (
+  { ptaxUsername, ptaxPassword, spreadsheetContents },
+  ipcBusClientNodeMain
+) => {
   try {
-    const propertyXPath = `//*[text()='${property}']`;
-
-    let driver = await new Builder().forBrowser("chrome").build();
-    await driver.get("https://ptax.ptaxsolution.com/Default.aspx");
-
-    //await driver.manage().window().fullscreen();
-
-    await driver.findElement(By.name("txtUserName")).sendKeys("fedwards");
-    await driver
-      .findElement(By.name("txtPassword"))
-      .sendKeys("p@ssw0rd", Key.RETURN);
-
-    //swap to iframe
-    await driver.switchTo().frame(0);
-
-    //swaps back to normal if needed for later
-    /* await driver.switchTo().defaultContent(); */
-
-    let checkBox = await driver.wait(
-      until.elementLocated(By.name("CheckMyProperties"))
+    const { driver } = await loginToPtax(
+      ptaxUsername,
+      ptaxPassword,
+      ipcBusClientNodeMain
     );
-    await driver.findElement(By.id("CheckMyProperties")).click();
 
-    await driver
-      .findElement(By.xpath("/html/body/form/div[4]/ul/li[24]/div/span[2]"))
-      .click();
-    /* "fmeMain" */
-
-    let propertyToClick = await driver.wait(
-      until.elementLocated(By.xpath(propertyXPath))
-    );
-    await propertyToClick.click();
-
-    await driver.switchTo().defaultContent();
-    // Store the web element
-    const iframe = driver.findElement(By.css("#fmeMain"));
-    // Switch to the frame
-    await driver.switchTo().frame(iframe);
-
-    for (const x of placeholder) {
+    for (const item of spreadsheetContents) {
       try {
-        let editPropertyButton = await driver.wait(
-          until.elementLocated(
-            By.xpath(
-              "/html/body/form/div[4]/table/tbody/tr/td[1]/table[1]/tbody/tr[3]/td[2]/span/button"
-            )
-          )
-        );
-        await editPropertyButton.click();
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Current Iteration", {
+          primaryMessage: item.Property,
+          messageColor: null,
+          errorMessage: null,
+        });
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Working on Property: ${item.Property}`,
+          messageColor: "regular",
+          errorMessage: null,
+        });
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Navigating to property: ${item.Property} in Ptax`,
+          messageColor: "orange",
+        });
+        await navigateToProperty(driver, item);
 
-        let clientPOC = await driver.wait(
-          until.elementLocated(
-            By.xpath(
-              "/html/body/form/div[14]/table/tbody/tr[3]/td[2]/select/option[24]"
-            )
-          )
-        );
-        await clientPOC.click();
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Performing data entry...`,
+          messageColor: "yellow",
+        });
+        await updatePointOfContactInfo(driver, item);
 
-        if (producingLeader === "Nick") {
-          const producingLeaderXPath =
-            "/html/body/form/div[14]/table/tbody/tr[4]/td[2]/select/option[18]";
-          let producingOfficerLeader = await driver.wait(
-            until.elementLocated(By.xpath(producingLeaderXPath))
-          );
-          await producingOfficerLeader.click();
-        } else if (producingLeader === "Tim") {
-          const producingLeaderXPath =
-            "/html/body/form/div[14]/table/tbody/tr[4]/td[2]/select/option[23]";
-          let producingOfficerLeader = await driver.wait(
-            until.elementLocated(By.xpath(producingLeaderXPath))
-          );
-          await producingOfficerLeader.click();
-        } else if (producingLeader === "Chelley") {
-          const producingLeaderXPath =
-            "/html/body/form/div[14]/table/tbody/tr[4]/td[2]/select/option[5]";
-          let producingOfficerLeader = await driver.wait(
-            until.elementLocated(By.xpath(producingLeaderXPath))
-          );
-          await producingOfficerLeader.click();
-        } else if (producingLeader === "Chelsea") {
-          const producingLeaderXPath =
-            "/html/body/form/div[14]/table/tbody/tr[4]/td[2]/select/option[6]";
-          let producingOfficerLeader = await driver.wait(
-            until.elementLocated(By.xpath(producingLeaderXPath))
-          );
-          await producingOfficerLeader.click();
+        let itemErrorColRemoved = item;
+        if (itemErrorColRemoved?.Error) {
+          delete itemErrorColRemoved.Error;
         }
 
-        if (producer === "Chase") {
-          const producerXPath =
-            "/html/body/form/div[14]/table/tbody/tr[5]/td[2]/select/option[4]";
-          let producerToClick = await driver.wait(
-            until.elementLocated(By.xpath(producerXPath))
-          );
-          await producerToClick.click();
-        } else if (producer === "Justin") {
-          const producerXPath =
-            "/html/body/form/div[14]/table/tbody/tr[5]/td[2]/select/option[15]";
-          let producerToClick = await driver.wait(
-            until.elementLocated(By.xpath(producerXPath))
-          );
-          await producerToClick.click();
-        } else if (producer === "David") {
-          const producerXPath =
-            "/html/body/form/div[14]/table/tbody/tr[5]/td[2]/select/option[8]";
-          let producerToClick = await driver.wait(
-            until.elementLocated(By.xpath(producerXPath))
-          );
-          await producerToClick.click();
-        } else if (producer === "Jenn") {
-          const producerXPath =
-            "/html/body/form/div[14]/table/tbody/tr[5]/td[2]/select/option[13]";
-          let producerToClick = await driver.wait(
-            until.elementLocated(By.xpath(producerXPath))
-          );
-          await producerToClick.click();
-        }
-
-        await driver.findElement(By.id("SaveButton")).click();
-      } catch (error) {}
+        await sendMessageToFrontEnd(
+          ipcBusClientNodeMain,
+          "Successful Iteration",
+          {
+            primaryMessage: itemErrorColRemoved,
+          }
+        );
+        await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+          primaryMessage: `Succeeded for property: ${item.Property}`,
+          messageColor: "green",
+        });
+      } catch (error) {
+        await handleIterationError({
+          driver,
+          ipcBusClientNodeMain,
+          message: `Failed for parcel: ${item.Property}`,
+          iterator: item.Property,
+        });
+      }
     }
+
+    await sendMessageToFrontEnd(
+      ipcBusClientNodeMain,
+      "Automation Completed",
+      {}
+    );
+    await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+      primaryMessage: "The automation is complete.",
+      messageColor: "regular",
+      errorMessage: null,
+    });
+    await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
     await handleGlobalError(ipcBusClientNodeMain, error.message);
   }
-}
-
-//updatePropertyPOC('The Globe','Tim','Justin');
+};
 
 module.exports = propertyPointOfContact;

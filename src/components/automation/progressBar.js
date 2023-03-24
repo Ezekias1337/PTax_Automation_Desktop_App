@@ -3,11 +3,8 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 // Functions, Helpers, Utils, and Hooks
-import { removeSpacesFromString } from "../../utils/strings/removeSpacesFromString";
 import { roundDecimal } from "../../utils/numbers/roundDecimal";
 import { useCurrentIteration } from "../../hooks/useCurrentIteration";
-// Constants
-import { iteratorTypes } from "../../constants/iteratorTypes";
 // Action Types
 import { SELECT_SPREADSHEET } from "../../redux/actionCreators/spreadsheetCreators";
 import { RECEIVE_ITERATION } from "../../redux/actionCreators/automationCreators";
@@ -88,12 +85,12 @@ export const ProgressBar = ({ automationName, automationFinished }) => {
   }, [automationFinished, setCurrentPercentage]);
 
   return (
-    <div
-      className="container mx-auto"
-      id="progressBarWrapper"
-      ref={animationParent}
-    >
-      <div id="progressBar" style={{ width: `${currentPercentage}%` }}></div>
+    <div className="container mx-auto" id="progressBarWrapper">
+      <div
+        id="progressBar"
+        style={{ width: `${currentPercentage}%` }}
+        ref={animationParent}
+      ></div>
       <div
         id="progressBarFrostEffect"
         style={{ width: `${currentPercentage}%` }}

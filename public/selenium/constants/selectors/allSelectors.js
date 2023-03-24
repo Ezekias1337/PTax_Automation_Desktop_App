@@ -15,18 +15,20 @@ const newParcelHeader = require("./individual/newParcelHeader");
 const reserveDocument = require("./individual/reserveDocument");
 const uploadDocument = require("./individual/uploadDocument");
 const taxBillDrivenTabSelector = require("./individual/taxBillDrivenTabSelector");
-const navbarAppealsSelectors = require("./navbarDropdowns/navbarAppeals/navbarAppealsSelectors");
-const navbarDocumentsSelectors = require("./navbarDropdowns/navbarDocuments/navbarDocumentsSelectors");
-const navbarEditSelectors = require("./navbarDropdowns/navbarEdit/navbarEditSelectors");
-const navbarFileSelectors = require("./navbarDropdowns/navbarFile/navbarFileSelectors");
-const navbarHelpSelectors = require("./navbarDropdowns/navbarHelp/navbarHelpSelectors");
-const navbarLinksSelectors = require("./navbarDropdowns/navbarLinks/navbarLinksSelectors");
-const navbarPaymentsSelectors = require("./navbarDropdowns/navbarPayments/navbarPaymentsSelectors");
-const navbarReportsSelectors = require("./navbarDropdowns/navbarReports/navbarReportsSelectors");
-const navbarViewSelectors = require("./navbarDropdowns/navbarView/navbarViewSelectors");
-const addNewParcelsSelectors = require("./addNewParcelsSelectors/addNewParcelsSelectors");
-const assessmentNoticesSelectors = require("./assessmentNoticesSelectors/assessmentNoticesSelectors");
-const taxBillSelectors = require("./taxBillSelectors/taxBillSelectors");
+const navbarAppealsSelectors = require("./navbar-dropdowns/navbar-appeals/navbarAppealsSelectors");
+const navbarDocumentsSelectors = require("./navbar-dropdowns/navbar-documents/navbarDocumentsSelectors");
+const navbarEditSelectors = require("./navbar-dropdowns/navbar-edit/navbarEditSelectors");
+const navbarFileSelectors = require("./navbar-dropdowns/navbar-file/navbarFileSelectors");
+const navbarHelpSelectors = require("./navbar-dropdowns/navbar-help/navbarHelpSelectors");
+const navbarLinksSelectors = require("./navbar-dropdowns/navbar-links/navbarLinksSelectors");
+const navbarPaymentsSelectors = require("./navbar-dropdowns/navbar-payments/navbarPaymentsSelectors");
+const navbarReportsSelectors = require("./navbar-dropdowns/navbar-reports/navbarReportsSelectors");
+const navbarViewSelectors = require("./navbar-dropdowns/navbar-view/navbarViewSelectors");
+const addNewParcelsSelectors = require("./add-new-parcels-selectors/addNewParcelsSelectors");
+const assessmentNoticesSelectors = require("./assessment-notices-selectors/assessmentNoticesSelectors");
+const checkAssessorAndCollectorUrlsSelectors = require("./check-assessor-and-collector-urls-selectors/checkAssessorAndCollectorUrlsSelectors")
+const propertyPointOfContactSelectors = require("./property-point-of-contact-selectors/propertyPointOfContactSelectors");
+const taxBillSelectors = require("./tax-bill-selectors/taxBillSelectors");
 const {
   userNameSelector,
   passWordSelector,
@@ -58,6 +60,8 @@ const allSelectors = {
   navbarViewSelectors,
   addNewParcelsSelectors,
   assessmentNoticesSelectors,
+  checkAssessorAndCollectorUrlsSelectors,
+  propertyPointOfContactSelectors,
   taxBillSelectors,
 };
 
