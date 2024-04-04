@@ -8,6 +8,9 @@ const {
   saveSpreadsheetListener,
 } = require("./file-operations/saveSpreadsheetListener");
 const { updaterListener } = require("./updater/updaterListener");
+const {
+  chromeDriverDownloadUpdatePending,
+} = require("./updater/chromeDriverUpdaterListener");
 
 module.exports = {
   directoryListener,
@@ -16,4 +19,5 @@ module.exports = {
   readSpreadsheetListener,
   saveSpreadsheetListener,
   updaterListener,
+  chromeDriverDownloadUpdatePending,
 };

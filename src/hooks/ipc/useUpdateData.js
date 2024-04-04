@@ -97,6 +97,7 @@ export const useUpdateData = () => {
     ipcRenderer.on(DOWNLOAD_UPDATE_PENDING, downloadUpdatePending);
     ipcRenderer.on(DOWNLOAD_UPDATE_SUCCESS, downloadUpdateSuccess);
     ipcRenderer.on(DOWNLOAD_UPDATE_FAILURE, downloadUpdateFailure);
+
     ipcRenderer.on(UPDATE_INSTALLED_SUCCESS, updateInstalledSuccess);
 
     return () => {

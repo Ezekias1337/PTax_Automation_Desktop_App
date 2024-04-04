@@ -10,6 +10,8 @@ import { sendToIpc } from "../../functions/ipc/renderer/send/sendToIpc";
 // Constants
 import { version as currentAppVersion } from "../../../package.json";
 import { QUIT_AND_INSTALL_UPDATE } from "../../constants/updateActions";
+// Components
+import { Loader } from "../general-page-layout/loader";
 // CSS
 import "../../App.css";
 import "../../css/styles.scss";
@@ -34,6 +36,7 @@ export const SplashScreen = () => {
   const navigate = useNavigate();
 
   const [updateStatusMessage, setUpdateStatusMessage] = useState("");
+  const [chromeDriverDownloaded, setChromeDriverDownloaded] = useState(false);
   const [applicationRelaunched, setApplicationRelaunched] = useState(false);
 
   /* 
@@ -56,7 +59,7 @@ export const SplashScreen = () => {
   }, [applicationRelaunched, navigate]);
 
   /* 
-    Update the statusMessage when the backEnd confirms there
+    Update the statusMessage when the backEnd confirms
     it has started checking for an update
   */
 
@@ -104,6 +107,23 @@ export const SplashScreen = () => {
       setUpdateStatusMessage("Downloading update...");
     }
   }, [downloadPending, downloadSuccess, downloadFailure, installSuccess]);
+
+  /* 
+    Download the Chrome Webdrivers latest version
+  */
+
+  useEffect(() => {
+    if (chromeDriverDownloaded === false) {
+      sendToIpc("chromeDriverDownloadUpdatePending");
+    }
+  }, [chromeDriverDownloaded]);
+  
+  useEffect(() => {
+    if (chromeDriverDownloaded === false) {
+      sendToIpc("chromeDriverDownloadUpdatePending");
+    }
+  }, [chromeDriverDownloaded]);
+  
 
   /* 
     Update the statusMessage when the backEnd confirms the
@@ -168,6 +188,11 @@ export const SplashScreen = () => {
               ref={animationParent}
             >
               <span className="full-flex">{updateStatusMessage}</span>
+            </div>
+            <div className="col col-1"></div>
+            <div className="col col-1"></div>
+            <div className="col col-10">
+              <Loader showLoader={true} />
             </div>
             <div className="col col-1"></div>
           </div>

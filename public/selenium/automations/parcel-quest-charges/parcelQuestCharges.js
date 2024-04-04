@@ -44,7 +44,23 @@ const parcelQuestCharges = async (
     });
     await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
-    await handleGlobalError(ipcBusClientNodeMain, error.message);
+    if (
+      error.message === "unknown error: Failed to create Chrome process.." ||
+      error.message.includes("Chrome failed to start")
+    ) {
+      await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+        primaryMessage:
+          "Either Google Chrome is not installed or it is corrupt. Please uninstall Google Chrome and reinstall it. Contact the developer for assistance if the issue persists after closing and restarting the app.",
+        messageColor: "red",
+        errorMessage: null,
+      });
+    } else {
+      await sendMessageToFrontEnd(ipcBusClientNodeMain, "Event Log", {
+        primaryMessage: `Unknown error occurred while logging in, please try again. ${error.mesage}`,
+        messageColor: "red",
+        errorMessage: null,
+      });
+    }
   }
 };
 
