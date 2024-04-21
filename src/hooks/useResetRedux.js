@@ -19,10 +19,12 @@ export const useResetRedux = () => {
     actionCreators.spreadsheetCreators,
     dispatch
   );
-  const { recieveIterationReset } = bindActionCreators(
-    actionCreators.automationCreators,
-    dispatch
-  );
+  const {
+    recieveIterationReset,
+    chromeDriverNeedsUpdateReset,
+    chromeNotInstalledReset,
+    unknownErrorReset,
+  } = bindActionCreators(actionCreators.automationCreators, dispatch);
   const { recieveEventLogReset } = bindActionCreators(
     actionCreators.eventLogCreators,
     dispatch
@@ -34,6 +36,9 @@ export const useResetRedux = () => {
       selectSpreadsheetReset();
       recieveIterationReset();
       recieveEventLogReset();
+      chromeDriverNeedsUpdateReset();
+      chromeNotInstalledReset();
+      unknownErrorReset();
     };
   }, []);
 };

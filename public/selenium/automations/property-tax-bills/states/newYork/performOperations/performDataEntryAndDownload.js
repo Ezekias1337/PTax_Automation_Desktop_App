@@ -476,7 +476,25 @@ const performDataEntryAndDownload = async (
 
     await closingAutomationSystem(driver, ipcBusClientNodeMain);
   } catch (error) {
-    await handleGlobalError(ipcBusClientNodeMain, error.message);
+    if (
+      error.message ===
+      "Cannot destructure property 'driver' of '(intermediate value)' as it is undefined."
+    ) {
+      await handleGlobalError(
+        ipcBusClientNodeMain,
+        "Chrome Driver Needs Update"
+      );
+    } else if (
+      error.message.includes("Failed to create Chrome process") || error.message.includes("Chrome failed to start")
+    ) {
+      await handleGlobalError(ipcBusClientNodeMain, "Chrome Not Installed");
+    } else {
+      await handleGlobalError(
+        ipcBusClientNodeMain,
+        "Unknown Error",
+        error.message
+      );
+    }
   }
 };
 

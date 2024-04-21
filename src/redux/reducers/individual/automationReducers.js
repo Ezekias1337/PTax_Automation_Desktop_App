@@ -12,6 +12,12 @@ import {
   CANCELLED_ITERATIONS,
   FAILED_ITERATIONS,
   AUTOMATION_FINISHED,
+  CHROME_DRIVER_NEEDS_UPDATE,
+  CHROME_NOT_INSTALLED,
+  UNKNOWN_ERROR,
+  CHROME_DRIVER_NEEDS_UPDATE_RESET,
+  CHROME_NOT_INSTALLED_RESET,
+  UNKNOWN_ERROR_RESET,
 } from "../../actionCreators/automationCreators";
 
 const buildAutomationState = () => {
@@ -30,6 +36,10 @@ const buildAutomationState = () => {
   INITIAL_STATE.automationFinished = {};
   INITIAL_STATE.automationFinished[AUTOMATION_FINISHED] = false;
   INITIAL_STATE.contents[RECEIVE_AUTOMATION_CONFIG] = {};
+
+  INITIAL_STATE.contents.chromeDriverNeedsUpdate = false;
+  INITIAL_STATE.contents.chromeNotInstalled = false;
+  INITIAL_STATE.contents.unknownError = "";
 
   return INITIAL_STATE;
 };
@@ -145,6 +155,54 @@ const reducer = (state = INITIAL_STATE, action) => {
 
       newStateObject.automationFinished[AUTOMATION_FINISHED] = true;
 
+      return newStateObject;
+
+    case CHROME_DRIVER_NEEDS_UPDATE:
+      newStateObject = {
+        ...state,
+      };
+
+      newStateObject.contents.chromeDriverNeedsUpdate = true;
+      return newStateObject;
+
+    case CHROME_NOT_INSTALLED:
+      newStateObject = {
+        ...state,
+      };
+
+      newStateObject.contents.chromeNotInstalled = true;
+      return newStateObject;
+
+    case UNKNOWN_ERROR:
+      newStateObject = {
+        ...state,
+      };
+
+      newStateObject.contents.unknownError = action.payload;
+      return newStateObject;
+
+    case CHROME_DRIVER_NEEDS_UPDATE_RESET:
+      newStateObject = {
+        ...state,
+      };
+
+      newStateObject.contents.chromeDriverNeedsUpdate = false;
+      return newStateObject;
+
+    case CHROME_NOT_INSTALLED_RESET:
+      newStateObject = {
+        ...state,
+      };
+
+      newStateObject.contents.chromeNotInstalled = false;
+      return newStateObject;
+
+    case UNKNOWN_ERROR_RESET:
+      newStateObject = {
+        ...state,
+      };
+
+      newStateObject.contents.unknownError = "";
       return newStateObject;
 
     default:

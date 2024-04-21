@@ -322,18 +322,18 @@ const addNewParcels = async (
     ) {
       await handleGlobalError(
         ipcBusClientNodeMain,
-        "There is a mismatch between between the version of Google Chrome you are running and the Chrome Webdriver that runs the automations. Contact the developer for assistance if the issue persists after closing and restarting the app."
+        "Chrome Driver Needs Update"
       );
     } else if (
-      error.message ===
-      "unknown error: Failed to create Chrome process."
+      error.message.includes("Failed to create Chrome process") || error.message.includes("Chrome failed to start")
     ) {
+      await handleGlobalError(ipcBusClientNodeMain, "Chrome Not Installed");
+    } else {
       await handleGlobalError(
         ipcBusClientNodeMain,
-        "Either Google Chrome is not installed or it is corrupt. Please uninstall Google Chrome and reinstall it. Contact the developer for assistance if the issue persists after closing and restarting the app."
+        "Unknown Error",
+        error.message
       );
-    } else {
-      await handleGlobalError(ipcBusClientNodeMain, error.message);
     }
   }
 };

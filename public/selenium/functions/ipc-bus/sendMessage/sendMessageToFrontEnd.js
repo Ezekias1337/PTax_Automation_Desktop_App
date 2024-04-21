@@ -5,6 +5,11 @@ const sendEventLogInfo = require("./individual/sendEventLogInfo");
 const sendFailedIteration = require("./individual/sendFailedIteration");
 const sendSuccessfulIteration = require("./individual/sendSuccessfulIteration");
 
+const sendChromeDriverNeedsUpdate = require("./individual/sendChromeDriverNeedsUpdate");
+const sendChromeNotInstalled = require("./individual/sendChromeNotInstalled");
+
+const sendUnknownError = require("./individual/sendUnknownError");
+
 const sendMessageToFrontEnd = async (
   ipcBusClientNodeMain,
   messageType,
@@ -33,6 +38,15 @@ const sendMessageToFrontEnd = async (
       break;
     case "Successful Iteration":
       await sendSuccessfulIteration(ipcBusClientNodeMain, primaryMessage);
+      break;
+    case "Chrome Driver Needs Update":
+      await sendChromeDriverNeedsUpdate(ipcBusClientNodeMain);
+      break;
+    case "Chrome Not Installed":
+      await sendChromeNotInstalled(ipcBusClientNodeMain);
+      break;
+    case "Unknown Error":
+      await sendUnknownError(ipcBusClientNodeMain, errorMessage);
       break;
     default:
       console.log("No matching messageType found, check spelling.");

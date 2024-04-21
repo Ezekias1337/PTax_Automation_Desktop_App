@@ -18,6 +18,9 @@ export const useAutomationData = (busClientRenderer) => {
     cancelledIteration,
     failedIteration,
     automationFinished,
+    chromeDriverNeedsUpdate,
+    chromeNotInstalled,
+    unknownError,
   } = bindActionCreators(actionCreators.automationCreators, dispatch);
 
   useEffect(() => {
@@ -27,6 +30,14 @@ export const useAutomationData = (busClientRenderer) => {
       busClientRenderer.on("send-cancelled-iteration", cancelledIteration);
       busClientRenderer.on("send-failed-iteration", failedIteration);
       busClientRenderer.on("send-automation-completed", automationFinished);
+
+      busClientRenderer.on(
+        "send-chrome-driver-needs-update",
+        chromeDriverNeedsUpdate
+      );
+      busClientRenderer.on("send-chrome-not-installed", chromeNotInstalled);
+
+      busClientRenderer.on("send-unknown-error", unknownError);
     }
 
     return () => {
@@ -52,6 +63,17 @@ export const useAutomationData = (busClientRenderer) => {
           "send-automation-completed",
           automationFinished
         );
+
+        busClientRenderer.removeListener(
+          "send-chrome-driver-needs-update",
+          chromeDriverNeedsUpdate
+        );
+        busClientRenderer.removeListener(
+          "send-chrome-not-installed",
+          chromeNotInstalled
+        );
+
+        busClientRenderer.removeListener("send-unknown-error", unknownError);
       }
     };
   }, [
@@ -61,5 +83,8 @@ export const useAutomationData = (busClientRenderer) => {
     cancelledIteration,
     failedIteration,
     automationFinished,
+    chromeDriverNeedsUpdate,
+    chromeNotInstalled,
+    unknownError,
   ]);
 };

@@ -39,6 +39,7 @@ import { StopAutomationButton } from "../buttons/stopAutomationButton";
 import { Card } from "../card/card";
 import { GeneralAlert } from "../alert/generalAlert";
 import { ViewPostAutomationSummaryButton } from "../buttons/viewPostAutomationSummaryButton";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 // CSS
 import "../../css/styles.scss";
 // window.require Imports
@@ -57,6 +58,9 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const automationFinished =
     automationState.automationFinished[AUTOMATION_FINISHED];
   const currentIteration = automationState.currentIteration[RECEIVE_ITERATION];
+  const chromeDriverNeedsUpdate = automationState.contents.chromeDriverNeedsUpdate;
+  const chromeNotInstalled = automationState.contents.chromeNotInstalled;
+  const unknownError = automationState.contents.unknownError;
 
   const [isLogicCompleted, setIsLogicCompleted] = useState(false);
   const [arrayOfDropdownQuestions, setArrayOfDropdownQuestions] = useState([]);
@@ -72,6 +76,11 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
   const [automationStatus, setAutomationStatus] = useState("Idle");
   const [busClientRenderer, setBusClientRenderer] = useState(null);
 
+  const [showModal, setShowModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalBody, setModalBody] = useState("");
+  const [modalFooter, setModalFooter] = useState(<></>);
+
   const [animationParentLeft] = useAutoAnimate();
   const [animationParentRight] = useAutoAnimate();
   const [animationParentTop] = useAutoAnimate();
@@ -83,9 +92,11 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
     conditionsToTest: [isLogicCompleted],
     testForBoolean: true,
   });
+
   useAutomationData(busClientRenderer);
   useIsFormFilled(selectedChoices, setFormReady, true);
   useAnimatedBackground();
+  const toggleModal = () => setShowModal(!showModal);
 
   /* 
     Initialize the selectedOptions object
@@ -200,6 +211,37 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
     ipcRenderer.send("startIpcBusBroker", null);
   }, []);
 
+  /* 
+    Shows the modal if user attention is needed
+  */
+
+  useEffect(() => {
+    if (chromeDriverNeedsUpdate || chromeNotInstalled || unknownError !== "") {
+      toggleModal();
+    }
+  }, [chromeDriverNeedsUpdate, chromeNotInstalled, unknownError]);
+
+  /* 
+    Updates Modal contents
+  */
+
+  useEffect(() => {
+    if (chromeDriverNeedsUpdate) {
+      setModalTitle("Chrome WebDriver Not Found");
+      setModalBody(
+        "You are currently missing the Chrome WebDriver. This is required for the application to run it's automations. Click the button below to download the latest version of the Chrome WebDriver."
+      );
+    } else if (chromeNotInstalled) {
+      setModalTitle("Chrome Not Installed");
+      setModalBody(
+        "Google Chrome is currently either not installed or corrupt. Please install it and try again."
+      );
+    } else if (unknownError !== "") {
+      setModalTitle("Unexpected Error Occurred");
+      setModalBody(unknownError);
+    }
+  }, [chromeDriverNeedsUpdate, chromeNotInstalled, unknownError]);
+
   if (isComponentLoaded === false) {
     return (
       <div
@@ -241,6 +283,17 @@ export const Automation = ({ automationName, preOperationQuestions }) => {
           pauseOnHover
           theme="colored"
         />
+
+        <Modal
+          isOpen={showModal}
+          toggle={toggleModal}
+          size="lg"
+          centered={true}
+        >
+          <ModalHeader toggle={toggleModal}>{modalTitle}</ModalHeader>
+          <ModalBody>{modalBody}</ModalBody>
+          <ModalFooter>{modalFooter}</ModalFooter>
+        </Modal>
 
         {selectedSpreadsheetContents?.length !== 0 &&
         automationStatus === "In Progress" ? (

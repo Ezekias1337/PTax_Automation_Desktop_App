@@ -14,6 +14,14 @@ export const CANCELLED_ITERATIONS = `${typeBase}CANCELLED_ITERATIONS`;
 export const FAILED_ITERATIONS = `${typeBase}FAILED_ITERATIONS`;
 export const AUTOMATION_FINISHED = `${typeBase}AUTOMATION_FINISHED`;
 
+export const CHROME_DRIVER_NEEDS_UPDATE = `${typeBase}CHROME_DRIVER_NEEDS_UPDATE`;
+export const CHROME_DRIVER_NEEDS_UPDATE_RESET = `${typeBase}CHROME_DRIVER_NEEDS_UPDATE_RESET`;
+export const CHROME_NOT_INSTALLED = `${typeBase}CHROME_NOT_INSTALLED`;
+export const CHROME_NOT_INSTALLED_RESET = `${typeBase}CHROME_NOT_INSTALLED_RESET`;
+
+export const UNKNOWN_ERROR = `${typeBase}UNKNOWN_ERROR`;
+export const UNKNOWN_ERROR_RESET = `${typeBase}UNKNOWN_ERROR_RESET`;
+
 /* 
   Although the sender parameter is unused in these action creators,
   I cannot remove the parameter, because Electron will send the event object
@@ -105,6 +113,60 @@ export const automationFinished = (sender, iterationData) => {
   return (dispatch) => {
     dispatch({
       type: AUTOMATION_FINISHED,
+      payload: null,
+    });
+  };
+};
+
+export const chromeDriverNeedsUpdate = (sender, iterationData) => {
+  return (dispatch) => {
+    dispatch({
+      type: CHROME_DRIVER_NEEDS_UPDATE,
+      payload: null,
+    });
+  };
+};
+
+export const chromeDriverNeedsUpdateReset = () => {
+  return (dispatch) => {
+    dispatch({
+      type: CHROME_DRIVER_NEEDS_UPDATE_RESET,
+      payload: null,
+    });
+  };
+};
+
+export const chromeNotInstalled = (sender, iterationData) => {
+  return (dispatch) => {
+    dispatch({
+      type: CHROME_NOT_INSTALLED,
+      payload: null,
+    });
+  };
+};
+
+export const chromeNotInstalledReset = () => {
+  return (dispatch) => {
+    dispatch({
+      type: CHROME_NOT_INSTALLED_RESET,
+      payload: null,
+    });
+  };
+};
+
+export const unknownError = (sender, errorMsg) => {
+  return (dispatch) => {
+    dispatch({
+      type: UNKNOWN_ERROR,
+      payload: errorMsg,
+    });
+  };
+};
+
+export const unknownErrorReset = () => {
+  return (dispatch) => {
+    dispatch({
+      type: UNKNOWN_ERROR_RESET,
       payload: null,
     });
   };

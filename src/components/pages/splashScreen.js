@@ -36,7 +36,6 @@ export const SplashScreen = () => {
   const navigate = useNavigate();
 
   const [updateStatusMessage, setUpdateStatusMessage] = useState("");
-  const [chromeDriverDownloaded, setChromeDriverDownloaded] = useState(false);
   const [applicationRelaunched, setApplicationRelaunched] = useState(false);
 
   /* 
@@ -107,23 +106,6 @@ export const SplashScreen = () => {
       setUpdateStatusMessage("Downloading update...");
     }
   }, [downloadPending, downloadSuccess, downloadFailure, installSuccess]);
-
-  /* 
-    Download the Chrome Webdrivers latest version
-  */
-
-  useEffect(() => {
-    if (chromeDriverDownloaded === false) {
-      sendToIpc("chromeDriverDownloadUpdatePending");
-    }
-  }, [chromeDriverDownloaded]);
-  
-  useEffect(() => {
-    if (chromeDriverDownloaded === false) {
-      sendToIpc("chromeDriverDownloadUpdatePending");
-    }
-  }, [chromeDriverDownloaded]);
-  
 
   /* 
     Update the statusMessage when the backEnd confirms the
